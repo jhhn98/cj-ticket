@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=5.0">
+    <title>청주시 통합예약</title>
+    <link rel="preload" href="/common/font/EDB-R.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/common/font/EDB-R.woff" as="font" type="font/woff" crossorigin>
+    <link rel="stylesheet" href="/site/www/css/font.css">
+    <link rel="stylesheet" href="/common/css/style-reset.css">
+    <link rel="stylesheet" href="/site/www/css/common.css">
+    <link rel="stylesheet" href="/site/www/css/sub.css">
+    <link rel="stylesheet" href="/site/www/css/program.css">
+</head>
+<body>
+<h1>청주시 통합예약 서브</h1>
+<div class="bg-circle">
+    <div class="circle colorGreen"></div>
+    <div class="circle colorBlue"></div>
+    <div class="circle colorOrange"></div>
+</div>
+<header class="userLogin"><!-- 로그인 상태일 경우 userLogin 클래스 추가 -->
+    <h2>통합예약 메뉴 및 보조기능</h2>
+    <div class="headerWrapper">
+        <div class="headerLogo"><span class="cj-logo"><i>청주시 CHEONGJU CITY</i></span><span class="site-name"><i>통합예약</i></span></div>
+        <button type="button" class="mobile-navigation" aria-controls="global-navigation" aria-expanded="false"><svg class="icon-menuBar"><use href="/site/www/images/common/sprite-common-side.svg#icon-menuBar"></use></svg><svg class="icon-close"><use href="/site/www/images/common/sprite-common-side.svg#icon-close"></use></svg><span>메뉴 열기</span></button>
+        <nav id="global-navigation" class="navigation">
+            <div class="mobile-navigation-head">
+                <div class="mobileHeaderLogo"><span class="cj-logo"><i>청주시 CHEONGJU CITY</i></span><span class="site-name"><i>통합예약</i></span></div>
+                <form method="post" action="">
+                    <fieldset>
+                        <legend>통합예약 검색</legend>
+                        <div class="mobile-search">
+                            <input type="text" title="검색어 입력" placeholder="어떤 예약을 도와드릴까요?">
+                            <button type="submit"><svg><use href="/site/www/images/common/sprite-common-side.svg#icon-view"></use></svg><span>검색</span></button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <ul data-navigation="depth1Wrap" class="navDepth1Wrap">
+                <li class="current">
+                    <a href="#" data-navigation-depth="1" class="navDepth1">
+                        관광&middot;체험
+                        <!-- 하위메뉴가 존재할 때만 넣어주세요 -->
+                        <svg class="mobile-icon"><use href="/site/www/images/common/sprite-common-side.svg#icon-menu-arr"></use></svg>
+                    </a>
+                    <div class="navDepth2Wrapper" data-navigation="depth2Wrap">
+                        <div class="innerWrapper">
+                            <div class="navigationTitle">
+                                <strong>관광&middot;체험</strong>
+                            </div>
+                            <ul class="navDepth2Wrap">
+                                <li><a href="#" data-navigation-depth="2" class="navDepth2">관광/체험(전체)</a></li>
+                                <li><a href="#" data-navigation-depth="2" class="navDepth2">관람</a></li>
+                                <li><a href="#" data-navigation-depth="2" class="navDepth2">체험/레포츠</a></li>
+                                <li><a href="#" data-navigation-depth="2" class="navDepth2">관광/견학</a></li>
+                                <li class="current">
+                                    <a href="#" data-navigation-depth="2" class="navDepth2">
+                                        캠핑장
+                                        <!-- 하위메뉴가 존재할 때만 넣어주세요 -->
+                                        <svg class="mobile-icon"><use href="/site/www/images/common/sprite-common-side.svg#icon-menu-arr"></use></svg>
+                                    </a>
+                                    <ul data-navigation="depth3Wrap" class="navDepth3Wrap">
+                                        <li><a href="#" target="_blank" title="새창" data-navigation-depth="3" class="navDepth3">문암생태공원<svg class="icon-blank"><use href="/site/www/images/common/sprite-common-side.svg#icon-blank"></use></svg></a></li>
+                                        <li><a href="#" target="_blank" title="새창" data-navigation-depth="3" class="navDepth3 current">오창미래지농촌테마공원<svg class="icon-blank"><use href="/site/www/images/common/sprite-common-side.svg#icon-blank"></use></svg></a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#" data-navigation-depth="2" class="navDepth2">기타</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <a href="#" data-navigation-depth="1" class="navDepth1">
+                        시설예약
+                        <!-- 하위메뉴가 존재할 때만 넣어주세요 -->
+                        <svg class="mobile-icon"><use href="/site/www/images/common/sprite-common-side.svg#icon-menu-arr"></use></svg>
+                    </a>
+                    <div class="navDepth2Wrapper" data-navigation="depth2Wrap">
+                        <div class="innerWrapper">
+                            <div class="navigationTitle">
+                                <strong>시설예약</strong>
+                            </div>
+                            <ul class="navDepth2Wrap">
+                                <li>
+                                    <a href="#" data-navigation-depth="2" class="navDepth2">
+                                        시설예약(전체)
+                                        <!-- 하위메뉴가 존재할 때만 넣어주세요 -->
+                                        <svg class="mobile-icon"><use href="/site/www/images/common/sprite-common-side.svg#icon-menu-arr"></use></svg>
+                                    </a>
+                                    <ul data-navigation="depth3Wrap" class="navDepth3Wrap">
+                                        <li><a href="#" target="_blank" title="새창" data-navigation-depth="3" class="navDepth3">문암생태공원<svg class="icon-blank"><use href="/site/www/images/common/sprite-common-side.svg#icon-blank"></use></svg></a></li>
+                                        <li><a href="#" target="_blank" title="새창" data-navigation-depth="3" class="navDepth3">오창미래지농촌테마공원<svg class="icon-blank"><use href="/site/www/images/common/sprite-common-side.svg#icon-blank"></use></svg></a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#" data-navigation-depth="2" class="navDepth2">체육시설과</a></li>
+                                <li><a href="#" data-navigation-depth="2" class="navDepth2">청주시설관리공단</a></li>
+                                <li><a href="#" data-navigation-depth="2" class="navDepth2">상당구 행정지원과</a></li>
+                                <li>
+                                    <a href="#" data-navigation-depth="2" class="navDepth2">
+                                        환경관리본부
+                                        <!-- 하위메뉴가 존재할 때만 넣어주세요 -->
+                                        <svg class="mobile-icon"><use href="/site/www/images/common/sprite-common-side.svg#icon-menu-arr"></use></svg>
+                                    </a>
+                                    <ul data-navigation="depth3Wrap" class="navDepth3Wrap">
+                                        <li><a href="#" target="_blank" title="새창" data-navigation-depth="3" class="navDepth3">문암생태공원<svg class="icon-blank"><use href="/site/www/images/common/sprite-common-side.svg#icon-blank"></use></svg></a></li>
+                                        <li><a href="#" target="_blank" title="새창" data-navigation-depth="3" class="navDepth3">오창미래지농촌테마공원<svg class="icon-blank"><use href="/site/www/images/common/sprite-common-side.svg#icon-blank"></use></svg></a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#" data-navigation-depth="2" class="navDepth2">남일면</a></li>
+                                <li><a href="#" data-navigation-depth="2" class="navDepth2">고인쇄박물관</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <a href="#" data-navigation-depth="1" class="navDepth1">
+                        교육/강좌
+                        <!-- 하위메뉴가 존재할 때만 넣어주세요 -->
+                        <svg class="mobile-icon"><use href="/site/www/images/common/sprite-common-side.svg#icon-menu-arr"></use></svg>
+                    </a>
+                    <div class="navDepth2Wrapper" data-navigation="depth2Wrap">
+                        <div class="innerWrapper">
+                            <div class="navigationTitle">
+                                <strong>교육/강좌</strong>
+                            </div>
+                            <ul class="navDepth2Wrap">
+                                <li><a href="#" data-navigation-depth="2" class="navDepth2">교육/강좌(전체)</a></li>
+                                <li><a href="#" data-navigation-depth="2" class="navDepth2">주민자치센터</a></li>
+                                <li><a href="#" data-navigation-depth="2" class="navDepth2">고인쇄박물관</a></li>
+                                <li><a href="#" data-navigation-depth="2" class="navDepth2">문예운영과</a></li>
+                                <li><a href="#" data-navigation-depth="2" class="navDepth2">농업기술센터</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+                <li><a href="#" data-navigation-depth="1" class="navDepth1">공연/영화</a></li>
+                <li>
+                    <a href="#" data-navigation-depth="1" class="navDepth1">
+                        행정서비스
+                        <!-- 하위메뉴가 존재할 때만 넣어주세요 -->
+                        <svg class="mobile-icon"><use href="/site/www/images/common/sprite-common-side.svg#icon-menu-arr"></use></svg>
+                    </a>
+                    <div class="navDepth2Wrapper" data-navigation="depth2Wrap">
+                        <div class="innerWrapper">
+                            <div class="navigationTitle">
+                                <strong>행정서비스</strong>
+                            </div>
+                            <ul class="navDepth2Wrap">
+                                <li><a href="#" target="_blank" title="새창" data-navigation-depth="2" class="navDepth2">대형폐기물 배출신청<svg class="icon-blank"><use href="/site/www/images/common/sprite-common-side.svg#icon-blank"></use></svg></a></li>
+                                <li><a href="#" target="_blank" title="새창" data-navigation-depth="2" class="navDepth2">가로등보안등 고장접수<svg class="icon-blank"><use href="/site/www/images/common/sprite-common-side.svg#icon-blank"></use></svg></a></li>
+                                <li><a href="#" target="_blank" title="새창" data-navigation-depth="2" class="navDepth2">면접용 정장대여신청<svg class="icon-blank"><use href="/site/www/images/common/sprite-common-side.svg#icon-blank"></use></svg></a></li>
+                                <li><a href="#" target="_blank" title="새창" data-navigation-depth="2" class="navDepth2">교통분실물신고센터<svg class="icon-blank"><use href="/site/www/images/common/sprite-common-side.svg#icon-blank"></use></svg></a></li>
+                                <li><a href="#" target="_blank" title="새창" data-navigation-depth="2" class="navDepth2">생활불편신고<svg class="icon-blank"><use href="/site/www/images/common/sprite-common-side.svg#icon-blank"></use></svg></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <a href="#" data-navigation-depth="1" class="navDepth1">
+                        이용안내
+                        <!-- 하위메뉴가 존재할 때만 넣어주세요 -->
+                        <svg class="mobile-icon"><use href="/site/www/images/common/sprite-common-side.svg#icon-menu-arr"></use></svg>
+                    </a>
+                    <div class="navDepth2Wrapper" data-navigation="depth2Wrap">
+                        <div class="innerWrapper">
+                            <div class="navigationTitle">
+                                <strong>이용안내</strong>
+                            </div>
+                            <ul class="navDepth2Wrap">
+                                <li><a href="#" data-navigation-depth="2" class="navDepth2">예약확인</a></li>
+                                <li><a href="#" data-navigation-depth="2" class="navDepth2">공지사항</a></li>
+                                <li><a href="#" data-navigation-depth="2" class="navDepth2">자주찾는 질문</a></li>
+                                <li><a href="#" data-navigation-depth="2" class="navDepth2">이용안내</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+                <li data-visible-on="mobile"><!-- 홈페이지가이드 메뉴도 함께 표출해주세요~ data-visible-on="mobile" 이 속성을 꼭 넣어주셔야 합니다! 부탁드립니다! -->
+                    <a href="#" data-navigation-depth="1" class="navDepth1">
+                        홈페이지가이드
+                        <!-- 하위메뉴가 존재할 때만 넣어주세요 -->
+                        <svg class="mobile-icon"><use href="/site/www/images/common/sprite-common-side.svg#icon-menu-arr"></use></svg>
+                    </a>
+                    <div class="navDepth2Wrapper" data-navigation="depth2Wrap">
+                        <div class="innerWrapper">
+                            <div class="navigationTitle">
+                                <strong>홈페이지가이드</strong>
+                            </div>
+                            <ul class="navDepth2Wrap">
+                                <li><a href="#" data-navigation-depth="2" class="navDepth2">개인정보처리방침</a></li>
+                                <li><a href="#" data-navigation-depth="2" class="navDepth2">저작권 정책</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+        <aside class="aside-links">
+            <ul>
+                <li class="myPage">
+                    <svg><use href="/site/www/images/common/sprite-common-side.svg#icon-user"></use></svg>
+                    <div class="linkLayer">
+                        <svg><use href="/site/www/images/common/sprite-common-side.svg#icon-arrTop"></use></svg>
+                        <a href="./"><span>마이페이지</span></a>
+                    </div>
+                </li>
+                <!--<li><a href="./login.do" class="account"><svg><use href="/site/www/images/common/sprite-common-side.svg#icon-account-off"></use></svg><span>로그인</span></a></li>-->
+                <li><a href="./logout.do" class="account"><svg><use href="/site/www/images/common/sprite-common-side.svg#icon-account-on"></use></svg><span>로그아웃</span></a></li>
+                <li class="feature">
+                    <span>화면조정</span>
+                    <button type="button" class="viewZoom in"><span>확대</span></button>
+                    <button type="button" class="viewZoom out"><span>축소</span></button>
+                    <button type="button" class="contrast">
+                        <svg class="off"><use href="/site/www/images/common/sprite-common-side.svg#icon-contrast-off"></use></svg>
+                        <svg class="on"><use href="/site/www/images/common/sprite-common-side.svg#icon-contrast-on"></use></svg>
+                        <span>고대비 모드 켜기</span>
+                    </button>
+                </li>
+            </ul>
+        </aside>
+    </div>
+</header>
+<main>
+    <h2 class="page-title">체험&middot;견학</h2>
+    <section class="content-option">
+        <nav class="contentNavigation">
+            <a href="./index.do" class="navHome"><span>홈으로</span></a>
+            <ul class="contentNavigationList">
+                <li>
+                    <button type="button">관광/체험</button>
+                    <ul>
+                        <li><a href="#">시설예약</a></li>
+                        <li><a href="#">교육/강좌</a></li>
+                        <li><a href="#">공연/영화</a></li>
+                        <li><a href="#">행정서비스</a></li>
+                        <li><a href="#">이용안내</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <button type="button">가로등보안등 고장접수</button>
+                    <ul>
+                        <li><a href="#">2차메뉴 리스트1</a></li>
+                        <li><a href="#">2차메뉴 리스트2</a></li>
+                        <li><a href="#">2차메뉴 리스트3</a></li>
+                        <li><a href="#">2차메뉴 리스트4</a></li>
+                        <li><a href="#">2차메뉴 리스트5</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <button type="button">3차메뉴</button>
+                    <ul>
+                        <li><a href="#">3차메뉴 리스트1</a></li>
+                        <li><a href="#">3차메뉴 리스트2</a></li>
+                        <li><a href="#">3차메뉴 리스트3</a></li>
+                        <li><a href="#">3차메뉴 리스트4</a></li>
+                        <li><a href="#">3차메뉴 리스트5</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        <aside class="asideLinks">
+            <ul>
+                <li>
+                    <button type="button" class="contentShare"><svg class="active-icon"><use href="/site/www/images/sub/sprite-sub-icon.svg#icon-share"></use></svg><svg class="inactive-icon"><use href="/site/www/images/sub/sprite-sub-icon.svg#icon-dismiss"></use></svg><span>컨텐츠 공유 열기</span></button>
+                    <div class="shareList">
+                        <span>공유하기</span>
+                        <ul>
+                            <li><button type="button" class="facebook"><span>FaceBook</span></button></li>
+                            <li><button type="button" class="instagram"><span>Instagram</span></button></li>
+                            <li><button type="button" class="meta"><span>Meta</span></button></li>
+                            <li><button type="button" class="naver-blog"><span>NaverBlog</span></button></li>
+                            <li><button type="button" class="link"><span>link</span></button></li>
+                        </ul>
+                    </div>
+                </li>
+                <li><button type="button" class="contentPrint"><svg><use href="/site/www/images/sub/sprite-sub-icon.svg#icon-print"></use></svg><span>컨텐츠 출력</span></button></li>
+            </ul>
+        </aside>
+    </section>
+    <article class="content-area">
+        <section class="content program">
+            <h3>시설예약 상세보기 - "게시물 제목"</h3>
+            <div class="viewProgram simpleInformation">
+                <div class="simpleTextArea">
+                    <div class="title">
+                        <span class="stateType type1">접수대기</span>
+                        <strong>하수처리장 테니스A</strong>
+                    </div>
+                    <div class="linkGroup">
+                        <a href="" class="anchorButton wide line-color-green">신청하기</a>
+                        <a href="" class="anchorButton wide line-color-green">예약확인</a>
+                        <a href="" class="anchorButton">목록</a>
+                        <a href="" class="anchorButton">공지사항</a>
+                    </div>
+                </div>
+                <div class="simpleImage">
+                    <div class="imageSlide">
+                        <div class="slideList">
+                            <div class="slideItem">
+                                <img src="/site/www/images/search/testImage.png" alt="대체텍스트">
+                            </div>
+                            <div class="slideItem no-image">
+                                <img src="/site/www/images/program/no-image-grey.png" alt="대체텍스트">
+                            </div>
+                        </div>
+                        <div class="controller">
+                            <div class="count">
+                                <span class="current">0</span>/<span class="total">0</span>
+                            </div>
+                            <button type="button" class="prev"><span>이전</span></button>
+                            <button type="button" class="next"><span>다음</span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="viewProgram detailInformation">
+                <div class="infoTab">
+                    <div class="tabButton">
+                        <a href="#tab1" data-content-key="tab1" class="current"><span>시설정보</span></a>
+                        <a href="#tab2" data-content-key="tab2"><span>상세내용</span></a>
+                        <a href="#tab3" data-content-key="tab3"><span>위치안내</span></a>
+                        <a href="#tab4" data-content-key="tab4"><span>유의사항</span></a>
+                        <a href="#tab5" data-content-key="tab5"><span>환불정책</span></a>
+                    </div>
+                    <div class="tabContent">
+                        <div class="tabContentItem" data-content-key="tab1" id="tab1">
+                            <h4 class="noLine">시설정보</h4>
+                            <div class="itemWrap">
+                                <table class="table default" data-table-response>
+                                    <caption>시설정보 - 운영기관, 기수(회차), 대상, 장소, 주소, 접수기간, 운영기간, 모집인원, 이용요금, 선별방법, 예약방법, 문의전화, 강의계획서</caption>
+                                    <colgroup>
+                                        <col style="width:200px">
+                                        <col>
+                                    </colgroup>
+                                    <tbody>
+                                    <tr>
+                                        <th scope="row" class="first">운영기관</th>
+                                        <td>공원관리과</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="first">기수(회차)</th>
+                                        <td>[상반기]9기(2025년)</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="first">대상</th>
+                                        <td>성인</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="first">장소</th>
+                                        <td>하수처리장</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="first">주소</th>
+                                        <td>충북 청주시 청원구 밀레니엄1로 18 (주중동)</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="first">접수기간</th>
+                                        <td>2025-07-07 09시~2025-07-14 18시</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="first">운영기간</th>
+                                        <td>2025-08-04~2025-12-22</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="first">모집인원</th>
+                                        <td>20명</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="first">이용요금</th>
+                                        <td>무료</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="first">선별방법</th>
+                                        <td>선착순</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="first">예약방법</th>
+                                        <td>온라인 접수</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="first">문의전화</th>
+                                        <td>043-640-0000</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="first">강의계획서</th>
+                                        <td><a href="" class="link download"><span>토요공부방.hwp</span></a></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tabContentItem" data-content-key="tab2" id="tab2">
+                            <h4>상세내용</h4>
+                            <div class="itemWrap">
+                                O 시설예약 : 하수처리장 테니스 A
+                            </div>
+                        </div>
+                        <div class="tabContentItem" data-content-key="tab3" id="tab3">
+                            <h4>위치안내</h4>
+                            <div class="itemWrap">
+                                <strong class="locationTitle">하수처리장</strong>
+                                <div class="locationInformation">
+                                    <ul>
+                                        <li>
+                                            <span class="locationInformationTitle">주소</span>
+                                            <p class="locationInformationText">청주시 평생학습관</p>
+                                        </li>
+                                        <li>
+                                            <span class="locationInformationTitle">전화번호</span>
+                                            <p class="locationInformationText">043-222-2222</p>
+                                        </li>
+                                    </ul>
+                                    <a href="" class="mapLink">길찾기</a>
+                                </div>
+                                <div class="locationMap">
+                                    <div id="map"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tabContentItem" data-content-key="tab4" id="tab4">
+                            <h4>유의사항</h4>
+                        </div>
+                        <div class="tabContentItem" data-content-key="tab5" id="tab5">
+                            <h4>환불정책</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="infoState">
+                    <div class="programCalendar">
+                        <div class="calendar viewPlan">
+                            <div class="calendarHeader">
+                                <strong>2025년 7월</strong>
+                                <button class="prevButton"><span>이전달 달력 보기</span></button>
+                                <button class="nextButton"><span>다음달 달력 보기</span></button>
+                            </div>
+                            <div class="calendarBody">
+                                <ul class="weekly">
+                                    <li data-weekly-element><span>일</span></li>
+                                    <li data-weekly-element><span>월</span></li>
+                                    <li data-weekly-element><span>화</span></li>
+                                    <li data-weekly-element><span>수</span></li>
+                                    <li data-weekly-element><span>목</span></li>
+                                    <li data-weekly-element><span>금</span></li>
+                                    <li data-weekly-element><span>토</span></li>
+                                </ul>
+                                <div class="scrollWrap-day is-start">
+                                    <ul class="day">
+                                        <li class="first sunday" data-day-element></li>
+                                        <li data-day-element>
+                                            <div class="viewDay disabled">
+                                                <span class="day">1</span>
+                                                <span class="reserveCount">예약불가</span>
+                                            </div>
+                                        </li>
+                                        <li data-day-element>
+                                            <div class="viewDay disabled">
+                                                <span class="day">2</span>
+                                                <span class="reserveCount">예약불가</span>
+                                            </div>
+                                        </li>
+                                        <li data-day-element>
+                                            <div class="viewDay disabled">
+                                                <span class="day">3</span>
+                                                <span class="reserveCount">예약불가</span>
+                                            </div>
+                                        </li>
+                                        <li data-day-element>
+                                            <div class="viewDay disabled">
+                                                <span class="day">4</span>
+                                                <span class="reserveCount">예약불가</span>
+                                            </div>
+                                        </li>
+                                        <li data-day-element>
+                                            <div class="viewDay disabled">
+                                                <span class="day">5</span>
+                                                <span class="reserveCount">예약불가</span>
+                                            </div>
+                                        </li>
+                                        <li class="last" data-day-element>
+                                            <div class="viewDay disabled">
+                                                <span class="day">6</span>
+                                                <span class="reserveCount">예약불가</span>
+                                            </div>
+                                        </li>
+                                        <li class="first sunday" data-day-element>
+                                            <div class="viewDay">
+                                                <span class="day">7</span>
+                                                <span class="reserveCount">99/99</span>
+                                            </div>
+                                        </li>
+                                        <li class="today period start" data-day-element>
+                                            <div class="viewDay">
+                                                <span class="day">8</span>
+                                                <span class="reserveCount">99/99</span>
+                                            </div>
+                                        </li>
+                                        <li class="period" data-day-element>
+                                            <div class="viewDay">
+                                                <span class="day">9</span>
+                                                <span class="reserveCount">99/99</span>
+                                            </div>
+                                        </li>
+                                        <li class="period" data-day-element>
+                                            <div class="viewDay">
+                                                <span class="day">10</span>
+                                                <span class="reserveCount">99/99</span>
+                                            </div>
+                                        </li>
+                                        <li class="period" data-day-element>
+                                            <div class="viewDay">
+                                                <span class="day">11</span>
+                                                <span class="reserveCount">99/99</span>
+                                            </div>
+                                        </li>
+                                        <li class="period" data-day-element>
+                                            <div class="viewDay">
+                                                <span class="day">12</span>
+                                                <span class="reserveCount">99/99</span>
+                                            </div>
+                                        </li>
+                                        <li class="last period" data-day-element>
+                                            <div class="viewDay">
+                                                <span class="day">13</span>
+                                                <span class="reserveCount">99/99</span>
+                                            </div>
+                                        </li>
+                                        <li class="first sunday period" data-day-element>
+                                            <div class="viewDay">
+                                                <span class="day">14</span>
+                                                <span class="reserveCount">99/99</span>
+                                            </div>
+                                        </li>
+                                        <li class="period end" data-day-element>
+                                            <div class="viewDay">
+                                                <span class="day">15</span>
+                                                <span class="reserveCount">99/99</span>
+                                            </div>
+                                        </li>
+                                        <li data-day-element>
+                                            <div class="viewDay">
+                                                <span class="day">16</span>
+                                                <span class="reserveCount">99/99</span>
+                                            </div>
+                                        </li>
+                                        <li data-day-element>
+                                            <div class="viewDay">
+                                                <span class="day">17</span>
+                                                <span class="reserveCount">99/99</span>
+                                            </div>
+                                        </li>
+                                        <li data-day-element>
+                                            <div class="viewDay">
+                                                <span class="day">18</span>
+                                                <span class="reserveCount">99/99</span>
+                                            </div>
+                                        </li>
+                                        <li data-day-element>
+                                            <div class="viewDay">
+                                                <span class="day">19</span>
+                                                <span class="reserveCount">99/99</span>
+                                            </div>
+                                        </li>
+                                        <li class="last" data-day-element>
+                                            <div class="viewDay">
+                                                <span class="day">20</span>
+                                                <span class="reserveCount">99/99</span>
+                                            </div>
+                                        </li>
+                                        <li class="first sunday" data-day-element>
+                                            <div class="viewDay">
+                                                <span class="day">21</span>
+                                                <span class="reserveCount">99/99</span>
+                                            </div>
+                                        </li>
+                                        <li data-day-element>
+                                            <div class="viewDay">
+                                                <span class="day">22</span>
+                                                <span class="reserveCount">99/99</span>
+                                            </div>
+                                        </li>
+                                        <li data-day-element>
+                                            <div class="viewDay">
+                                                <span class="day">23</span>
+                                                <span class="reserveCount">99/99</span>
+                                            </div>
+                                        </li>
+                                        <li data-day-element>
+                                            <div class="viewDay">
+                                                <span class="day">24</span>
+                                                <span class="reserveCount">99/99</span>
+                                            </div>
+                                        </li>
+                                        <li class="period start" data-day-element>
+                                            <div class="viewDay">
+                                                <span class="day">25</span>
+                                                <span class="reserveCount">99/99</span>
+                                            </div>
+                                        </li>
+                                        <li class="period" data-day-element>
+                                            <div class="viewDay">
+                                                <span class="day">26</span>
+                                                <span class="reserveCount">99/99</span>
+                                            </div>
+                                        </li>
+                                        <li class="last period" data-day-element>
+                                            <div class="viewDay">
+                                                <span class="day">27</span>
+                                                <span class="reserveCount">99/99</span>
+                                            </div>
+                                        </li>
+                                        <li class="first sunday period" data-day-element>
+                                            <div class="viewDay">
+                                                <span class="day">28</span>
+                                                <span class="reserveCount">99/99</span>
+                                            </div>
+                                        </li>
+                                        <li class="period" data-day-element>
+                                            <div class="viewDay">
+                                                <span class="day">29</span>
+                                                <span class="reserveCount">99/99</span>
+                                            </div>
+                                        </li>
+                                        <li class="period end" data-day-element>
+                                            <div class="viewDay">
+                                                <span class="day">30</span>
+                                                <span class="reserveCount">99/99</span>
+                                            </div>
+                                        </li>
+                                        <li data-day-element>
+                                            <div class="viewDay">
+                                                <span class="day">31</span>
+                                                <span class="reserveCount">99/99</span>
+                                            </div>
+                                        </li>
+                                        <li data-day-element></li>
+                                        <li data-day-element></li>
+                                        <li class="last" data-day-element></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="calendarFooter">
+                                <div class="selectCount">
+                                    <span class="count">00/00</span>
+                                    <span class="text">신청수/총모집수</span>
+                                </div>
+                                <div class="calendarLegend">
+                                    <span class="today">오늘</span>
+                                    <span class="disabled">예약불가</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="shortLink">
+                        <span class="stateType type1">접수대기</span>
+                        <strong>하수처리장 테니스A</strong>
+                        <div class="linkGroup">
+                            <a href="" class="anchorButton wide line-color-green">신청하기</a>
+                            <a href="" class="anchorButton wide line-color-green">예약확인</a>
+                            <a href="" class="anchorButton">목록</a>
+                            <a href="" class="anchorButton">공지사항</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </article>
+</main>
+<footer>
+    <div class="footer-wrapper">
+        <nav class="footer-nav">
+            <ul>
+                <li><a href="./sub.do?key=" class="privacyPolicy">개인정보처리방침</a></li>
+                <li><a href="./sub.do?key=">저작권보호정책</a></li>
+                <li><a href="./sub.do?key=">홈페이지가이드</a></li>
+            </ul>
+        </nav>
+        <address>[28527] 충청북도 청주시 상당구 상당로69번길 38 (청주시청 임시청사)</address>
+        <ul class="site-info">
+            <li>대표전화 : <em>043－201－0001</em></li>
+            <li>상호명 : <em>청주시 통합예약</em></li>
+            <li>대표자명 : <em>이범석</em></li>
+            <li>사업자등록번호 : <em>301－83－00793</em></li>
+        </ul>
+        <p class="copyright">COPYRIGHT CHEONGJU CITY. ALL RIGHTS RESERVED.</p>
+    </div>
+</footer>
+<script src="/lib/jquery-3.7.1.min.js"></script>
+<script src="/lib/slick/slick.min.js"></script>
+<script src="/site/www/js/commonFunction.js"></script>
+<script src="/site/www/js/subFunction.js"></script>
+<!--<script src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=YOUR_CLIENT_ID"></script>
+<script>
+    const map = new naver.maps.Map('map', {
+        center: new naver.maps.LatLng(37.5665, 126.9780), // 서울
+        zoom: 13
+    });
+
+    const marker = new naver.maps.Marker({
+        position: new naver.maps.LatLng(37.5665, 126.9780),
+        map
+    });
+
+    naver.maps.Event.addListener(map, 'click', (e) => {
+        marker.setPosition(e.coord);
+    });
+</script>-->
+</body>
+</html>

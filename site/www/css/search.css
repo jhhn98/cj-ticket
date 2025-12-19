@@ -1,0 +1,868 @@
+.pagination-searchResult a span, .table-searchResult caption, .searchNavigation h4, .searchMain .content-area h3, .searchForm h3 {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+.searchMain {
+  position: relative;
+}
+
+.searchForm {
+  position: absolute;
+  top: 170px;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  width: 1330px;
+  height: 250px;
+  margin: 0 auto 0;
+}
+.searchForm::before, .searchForm::after {
+  display: block;
+  position: absolute;
+  width: 100%;
+}
+.searchForm::before {
+  bottom: 0;
+  height: 168px;
+  background: #f5f8fa;
+  border-radius: 40px;
+}
+.searchForm::after {
+  top: 0;
+  height: 150px;
+  background: linear-gradient(120deg, #42c0a7 30%, #009f99 78%);
+  border-radius: 75px;
+}
+.searchForm .formInner {
+  position: relative;
+  z-index: 1;
+}
+.searchForm .inputArea {
+  position: relative;
+  width: 750px;
+  height: 70px;
+  margin: 40px auto 0;
+  padding: 18px 90px 0 55px;
+  background: #fff;
+  border-radius: 35px;
+}
+.searchForm .inputArea svg {
+  position: absolute;
+  top: 25px;
+  left: 24px;
+  width: 20px;
+  height: 20px;
+}
+.searchForm .inputArea input {
+  display: block;
+  width: 100%;
+  border: none;
+  color: #8c8c8c;
+  font-size: 22px;
+  line-height: 24px;
+}
+.searchForm .inputArea button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 80px;
+  height: 54px;
+  padding: 0 0 3px;
+  background: #009991;
+  border: none;
+  border-radius: 27px;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+}
+.searchForm .searchResult {
+  margin: 77px 0 0;
+  font-size: 28px;
+  line-height: 30px;
+  text-align: center;
+}
+
+.searchMain .content-area {
+  margin-top: 115px;
+  padding-top: 200px;
+  padding-bottom: 1px;
+}
+.contentAreaWrap {
+  width: 100%;
+  max-width: 1530px;
+  margin: 0 auto;
+}
+
+.searchNavigation {
+  display: flex;
+  margin: 40px auto;
+}
+.searchNavigation a {
+  display: block;
+  flex: 0 0 12.5%;
+  padding: 19px 0 17px;
+  border: 1px solid #d5d7dd;
+  border-bottom-color: #009991;
+  border-radius: 7px 7px 0 0;
+  text-align: center;
+}
+.searchNavigation a.current {
+  border-color: #009991;
+  border-bottom-color: #fff;
+  color: #009991;
+}
+
+.searchDetailResult {
+  padding-bottom: 40px;
+}
+.searchDetailResult .titleArea {
+  display: flex;
+  position: relative;
+  min-height: 40px;
+  margin: 0 0 20px;
+  padding: 14px 110px 0 0;
+}
+.searchDetailResult .titleArea h4 {
+  color: #1d2845;
+  font-family: SB;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 26px;
+}
+.searchDetailResult .titleArea .resultCount {
+  display: block;
+  position: relative;
+  margin: 0 0 0 30px;
+  padding: 0 0 0 26px;
+  color: #515862;
+  font-size: 17px;
+  line-height: 19px;
+}
+.searchDetailResult .titleArea .resultCount::before {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 16px;
+  height: 20px;
+  background: url(../images/search/icon-document.png) no-repeat;
+}
+.searchDetailResult .titleArea a {
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 7px 10px 9px;
+  border: 1px solid #757b8e;
+  border-radius: 7px;
+  color: #515862;
+  font-size: 17px;
+  line-height: 19px;
+  vertical-align: middle;
+}
+.searchDetailResult .titleArea a::after {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  margin: 0 0 0 5px;
+  background: url(../images/search/icon-plus.png) no-repeat;
+}
+
+.table-searchResult {
+  width: 100%;
+  border-bottom: 1px solid #26293d;
+}
+.table-searchResult thead th {
+  position: relative;
+  padding: 20px 10px;
+  border-top: 1px solid #26293d;
+}
+.table-searchResult thead th::before {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 1px;
+  height: 14px;
+  background: #e3e5e8;
+  transform: translateY(-50%);
+}
+.table-searchResult thead th.first::before {
+  display: none;
+}
+.table-searchResult td {
+  padding: 17px 10px;
+  border-top: 1px solid #e3e5e8;
+}
+.table-searchResult tbody tr:first-child td {
+  border-top-color: #898f9d;
+}
+
+.imageList-searchResult {
+  display: flex;
+  width: calc(100% + 30px);
+  margin: 0 0 0 -30px;
+}
+.imageList-searchResult li {
+  flex: 0 0 calc(25% - 30px);
+  margin: 0 0 0 30px;
+}
+.imageList-searchResult a {
+  display: block;
+  padding: 0 0 30px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  overflow: hidden;
+}
+.imageList-searchResult .image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 506px;
+  margin: 0 0 18px;
+  overflow: hidden;
+  background: #f5f8fa;
+  border-bottom: 1px solid #ccc;
+}
+.imageList-searchResult .image.no-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.imageList-searchResult .image.no-image img {
+  width: 90%;
+  max-width: 220px;
+}
+.imageList-searchResult .image img {
+  width: 100%;
+  max-height: 100%;
+}
+.imageList-searchResult .place {
+  display: inline-block;
+  margin: 0 0 0 20px;
+  padding: 3px 8px 5px;
+  background: #e8e8f8;
+  border-radius: 15px;
+  color: #3b3b3b;
+  font-size: 17px;
+  line-height: 19px;
+}
+.imageList-searchResult .title {
+  display: block;
+  height: 52px;
+  overflow: hidden;
+  margin: 20px 20px 15px;
+  color: #202223;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 26px;
+}
+.imageList-searchResult .date, .imageList-searchResult .time {
+  display: block;
+  position: relative;
+  margin: 4px 20px;
+  padding: 0 0 0 15px;
+  color: #515862;
+  font-size: 17px;
+  line-height: 19px;
+}
+.imageList-searchResult .date::before, .imageList-searchResult .time::before {
+  display: block;
+  position: absolute;
+  top: 8px;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  background: #e1e1e1;
+  border-radius: 50%;
+}
+
+.textList-searchResult {
+  border-top: 1px solid #1f1f1f;
+  border-bottom: 1px solid #757b8e;
+}
+.textList-searchResult li {
+  padding: 20px 0;
+  border-top: 1px solid #e3e5e8;
+  color: #515862;
+  font-size: 17px;
+  line-height: 19px;
+}
+.textList-searchResult li:first-child {
+  border-top: none;
+}
+.textList-searchResult span {
+  display: block;
+}
+.textList-searchResult .title {
+  display: flex;
+  margin: 0 0 15px;
+}
+.textList-searchResult .title .titleText {
+  color: #202223;
+  font-weight: 600;
+}
+.textList-searchResult .title .date {
+  margin: 0 0 0 10px;
+}
+.textList-searchResult .text {
+  line-height: 21px;
+}
+.textList-searchResult .url {
+  display: flex;
+  justify-content: flex-start;
+  margin: 20px 0 0;
+}
+.textList-searchResult .url::after {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin: 3px 0 0 10px;
+  background: url(../images/search/icon-link.png) no-repeat;
+}
+
+.pagination-searchResult {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 55px 0 0;
+}
+.pagination-searchResult a {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  margin: 0 5px;
+  padding: 9px 0 0;
+  border-radius: 50%;
+  color: #4d4d4d;
+  font-size: 16px;
+  line-height: 18px;
+  text-align: center;
+}
+.pagination-searchResult a:hover {
+  background: #f5f8fa;
+}
+.pagination-searchResult a.current {
+  color: #009991;
+  background: #f5f8fa;
+}
+.pagination-searchResult .movePage {
+  display: inline-block;
+  position: relative;
+  width: 48px;
+  height: 48px;
+  border: 1px solid #d6d8de;
+  border-radius: 50%;
+}
+.pagination-searchResult .movePage::before {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  background-repeat: no-repeat;
+  background-position: 0 0;
+}
+.pagination-searchResult .movePage.first::before, .pagination-searchResult .movePage.last::before {
+  width: 11px;
+  height: 11px;
+  background-image: url(../images/search/icon-arr-double.png);
+}
+.pagination-searchResult .movePage.prev::before, .pagination-searchResult .movePage.next::before {
+  width: 6px;
+  height: 11px;
+  background-image: url(../images/search/icon-arr.png);
+}
+.pagination-searchResult .movePage.next::before, .pagination-searchResult .movePage.last::before {
+  transform: rotate(180deg);
+}
+
+.lectureState {
+  display: inline-block;
+  padding: 3px 10px 5px;
+  border: 1px solid #d5d7dd;
+  border-radius: 12px;
+  color: #808080;
+  font-size: 15px;
+  line-height: 17px;
+}
+.lectureState.state1 {
+  border-color: #18c3a2;
+  color: #18c3a2;
+}
+.lectureState.state2 {
+  border-color: #3f65d9;
+  color: #3f65d9;
+}
+.lectureState.state3 {
+  border-color: #d5d7dd;
+  color: #808080;
+}
+
+.noSearchResult {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px 20px 65px;
+  border-top: 1px solid #1f1f1f;
+  border-bottom: 1px solid #757b8e;
+}
+.noSearchResult::before {
+  display: block;
+  width: 210px;
+  height: 137px;
+  background: url(../images/search/img-noImage.png) no-repeat;
+}
+.noSearchResult p {
+  margin: 40px 0 0 20px;
+  color: #515862;
+  font-size: 20px;
+  line-height: 22px;
+}
+
+.redB {
+  color: #f14d64;
+  font-weight: 700;
+}
+
+.textAlignCenter {
+  text-align: center;
+}
+
+.textAlignLeft {
+  text-align: left;
+}
+
+.textAlignRight {
+  text-align: right;
+}
+
+.activeContrast {
+  color: #bdc5d5;
+}
+.activeContrast a {
+  color: #bdc5d5;
+}
+.activeContrast input {
+  color: #bdc5d5;
+}
+.activeContrast input::placeholder {
+  color: #bdc5d5;
+}
+.activeContrast .searchForm::after {
+  background: linear-gradient(120deg, #195d53 27%, #143837 100%);
+}
+.activeContrast .searchForm::before {
+  background: #1d2124;
+}
+.activeContrast .searchForm .inputArea {
+  background: #1d2124;
+}
+.activeContrast .searchForm .inputArea svg {
+  color: #fff;
+}
+.activeContrast .searchForm .inputArea input {
+  background: transparent;
+  color: #bdc5d5;
+}
+.activeContrast .searchNavigation a.current {
+  border-bottom-color: #0a0e11;
+}
+.activeContrast .searchDetailResult .titleArea h4 {
+  color: #fff;
+}
+.activeContrast .searchDetailResult .titleArea .resultCount {
+  color: #bdc5d5;
+}
+.activeContrast .searchDetailResult .titleArea a {
+  color: #bdc5d5;
+}
+.activeContrast .noSearchResult p {
+  color: #bdc5d5;
+}
+.activeContrast .imageList-searchResult a {
+  border-color: #4a4c58;
+}
+.activeContrast .imageList-searchResult .title {
+  color: #fff;
+}
+.activeContrast .imageList-searchResult .date, .activeContrast .imageList-searchResult .time {
+  color: #bdc5d5;
+}
+.activeContrast .imageList-searchResult .image {
+  background: #2a3136;
+  border-bottom-color: #4a4c58;
+}
+.activeContrast .textList-searchResult .title .titleText {
+  color: #fff;
+}
+.activeContrast .table-searchResult {
+  border-bottom-color: #6c7582;
+}
+.activeContrast .table-searchResult thead th {
+  border-top-color: #eeeff1;
+}
+.activeContrast .table-searchResult td {
+  border-top-color: #2d2f3d;
+}
+.activeContrast .table-searchResult tbody tr:first-child td {
+  border-top-color: #6c7582;
+}
+
+@media all and (max-width: 1600px) {
+  .contentAreaWrap {
+    width: calc(100% - 60px);
+    margin: 0 30px;
+  }
+}
+@media all and (max-width: 1400px) {
+  .searchForm {
+    width: calc(100% - 60px);
+  }
+}
+@media all and (max-width: 1000px) {
+  .searchMain .content-area {
+    margin-top: 66px;
+    padding-top: 90px;
+  }
+  .searchForm {
+    top: 60px;
+    height: 150px;
+  }
+  .searchForm::before {
+    height: 98px;
+    border-radius: 20px;
+  }
+  .searchForm::after {
+    height: 92px;
+  }
+  .searchForm .inputArea {
+    height: 50px;
+    margin: 20px auto 0;
+    padding: 8px 90px 0 55px;
+  }
+  .searchForm .inputArea svg {
+    top: 14px;
+    left: 20px;
+  }
+  .searchForm .inputArea input {
+    font-size: 16px;
+    line-height: 18px;
+  }
+  .searchForm .inputArea button {
+    top: 7px;
+    right: 7px;
+    height: 36px;
+    font-size: 16px;
+    line-height: 18px;
+  }
+  .searchForm .searchResult {
+    margin: 37px 0 0;
+    font-size: 16px;
+    line-height: 18px;
+  }
+  .searchDetailResult .titleArea {
+    min-height: 30px;
+    margin: 0 0 10px;
+    padding: 5px 80px 0 0;
+  }
+  .searchDetailResult .titleArea h4 {
+    font-size: 18px;
+    line-height: 20px;
+  }
+  .searchDetailResult .titleArea .resultCount {
+    padding: 0 0 0 18px;
+    font-size: 14px;
+    line-height: 16px;
+  }
+  .searchDetailResult .titleArea .resultCount::before {
+    top: 1px;
+    width: 12px;
+    height: 15px;
+    background-size: 100% auto;
+  }
+  .searchDetailResult .titleArea a {
+    padding: 5px 7px 7px;
+    font-size: 14px;
+    line-height: 16px;
+  }
+  .searchDetailResult .titleArea a::after {
+    width: 10px;
+    height: 10px;
+    background-size: 100% auto;
+  }
+  .noSearchResult {
+    padding: 24px 20px 40px;
+  }
+  .noSearchResult::before {
+    width: 100px;
+    height: 65px;
+    background-size: 100% auto;
+  }
+  .noSearchResult p {
+    margin: 12px 0 0 20px;
+    font-size: 14px;
+    line-height: 16px;
+  }
+  .imageList-searchResult {
+    flex-wrap: wrap;
+    width: calc(100% + 20px);
+    margin: 0 0 0 -20px;
+  }
+  .imageList-searchResult li {
+    flex: 0 0 calc(50% - 20px);
+    margin: 20px 0 0 20px;
+  }
+  .imageList-searchResult .place {
+    font-size: 14px;
+    line-height: 16px;
+  }
+  .imageList-searchResult .title {
+    height: 40px;
+    margin: 10px 20px;
+    font-size: 16px;
+    line-height: 20px;
+  }
+  .imageList-searchResult .date, .imageList-searchResult .time {
+    padding: 0 0 0 10px;
+    font-size: 14px;
+    line-height: 16px;
+  }
+  .imageList-searchResult .date::before, .imageList-searchResult .time::before {
+    top: 7px;
+    width: 4px;
+    height: 4px;
+  }
+  .textList-searchResult li {
+    font-size: 14px;
+    line-height: 16px;
+  }
+  .textList-searchResult .title {
+    margin: 0 0 5px;
+  }
+  .textList-searchResult .url {
+    margin: 10px 0 0;
+  }
+  .textList-searchResult .url::after {
+    width: 12px;
+    height: 12px;
+    background-size: 100% auto;
+  }
+  .tableScroll {
+    overflow: hidden;
+    overflow-x: auto;
+  }
+  .tableScroll th, .tableScroll td {
+    white-space: nowrap;
+  }
+  .table-searchResult {
+    font-size: 14px;
+    line-height: 16px;
+  }
+  .table-searchResult th, .table-searchResult td {
+    padding: 10px 5px;
+  }
+  .table-searchResult thead th {
+    padding: 14px 5px;
+  }
+  .lectureState {
+    font-size: 14px;
+    line-height: 16px;
+  }
+  .pagination-searchResult a {
+    padding: 10px 0 0;
+    font-size: 14px;
+    line-height: 16px;
+  }
+}
+@media all and (max-width: 880px) {
+  .contentAreaWrap {
+    width: calc(100% - 40px);
+    margin: 0 20px;
+  }
+  .searchForm {
+    width: calc(100% - 40px);
+  }
+  .searchForm .inputArea {
+    width: auto;
+    margin: 20px;
+  }
+  .searchForm .searchResult {
+    margin: 20px 0 0;
+  }
+  .searchNavigation {
+    display: block;
+    padding: 15px;
+    border: 1px solid #d5d7dd;
+    border-radius: 7px;
+    text-align: center;
+  }
+  .searchNavigation a {
+    display: inline-block;
+    position: relative;
+    width: auto;
+    margin: 0 5px;
+    padding: 5px 10px 7px 10px;
+    border: none;
+    font-size: 14px;
+    line-height: 16px;
+    white-space: nowrap;
+  }
+  .searchNavigation a::before {
+    display: block;
+    position: absolute;
+    top: 11px;
+    left: 0;
+    width: 4px;
+    height: 4px;
+    background: #d5d7dd;
+    border-radius: 2px;
+  }
+  .searchNavigation a.current::before {
+    background-color: #009991;
+  }
+}
+@media all and (max-width: 800px) {
+  .pagination-searchResult a {
+    width: 28px;
+    height: 28px;
+    padding: 4px 0 0;
+  }
+  .pagination-searchResult .movePage {
+    width: 28px;
+    height: 28px;
+  }
+  .pagination-searchResult .movePage::before {
+    background-size: 100% auto;
+  }
+  .pagination-searchResult .movePage.first::before, .pagination-searchResult .movePage.last::before {
+    width: 7px;
+    height: 7px;
+  }
+  .pagination-searchResult .movePage.prev::before, .pagination-searchResult .movePage.next::before {
+    width: 4px;
+    height: 8px;
+  }
+}
+@media all and (max-width: 600px) {
+  .imageList-searchResult .image {
+    height: 280px;
+  }
+  .textList-searchResult .url {
+    display: block;
+    word-wrap: break-word;
+  }
+  .textList-searchResult .url::after {
+    display: none;
+  }
+  .pagination-searchResult {
+    display: block;
+    position: relative;
+    width: 50px;
+    margin: 20px auto 0;
+  }
+  .pagination-searchResult a {
+    display: none;
+    margin: 5px auto;
+  }
+  .pagination-searchResult a.current {
+    display: block;
+    position: relative;
+    width: 50px;
+    margin: 0 auto;
+    padding: 5px 0 0 10px;
+    border-radius: 5px;
+    text-align: left;
+  }
+  .pagination-searchResult a.current::before, .pagination-searchResult a.current::after {
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 8px;
+    height: 2px;
+    margin: auto 0;
+    background: #009991;
+    border-radius: 2px;
+  }
+  .pagination-searchResult a.current::before {
+    right: 10px;
+  }
+  .pagination-searchResult a.current::after {
+    right: 10px;
+    transform: rotate(90deg);
+  }
+  .pagination-searchResult a.current.active::after {
+    transform: none;
+  }
+  .pagination-searchResult .movePage {
+    display: block;
+    position: absolute;
+    top: 0;
+    margin: 0;
+  }
+  .pagination-searchResult .movePage.first {
+    left: -71px;
+  }
+  .pagination-searchResult .movePage.prev {
+    left: -38px;
+  }
+  .pagination-searchResult .movePage.next {
+    left: 60px;
+  }
+  .pagination-searchResult .movePage.last {
+    left: 93px;
+  }
+  .pagination-searchResult.active a {
+    display: block;
+  }
+}
+@media all and (max-width: 460px) {
+  .searchForm .inputArea {
+    padding: 8px 50px 0 14px;
+  }
+  .searchForm .inputArea svg {
+    display: none;
+  }
+  .searchForm .inputArea input {
+    font-size: 14px;
+    line-height: 16px;
+  }
+  .searchForm .inputArea input::placeholder {
+    font-size: 14px;
+    line-height: 16px;
+  }
+  .searchForm .inputArea button {
+    width: 40px;
+    border-radius: 15px;
+    font-size: 14px;
+    line-height: 16px;
+  }
+  .imageList-searchResult {
+    width: 100%;
+    margin: 0;
+  }
+  .imageList-searchResult li {
+    flex: 0 0 100%;
+    margin: 15px 0 0;
+  }
+  .imageList-searchResult li:first-child {
+    margin: 0;
+  }
+  .imageList-searchResult .image {
+    height: auto;
+    min-height: 150px;
+  }
+}
+
+/*# sourceMappingURL=search.css.map */

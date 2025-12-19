@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=5.0">
+    <title>청주시 통합예약</title>
+    <link rel="preload" href="/common/font/EDB-R.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/common/font/EDB-R.woff" as="font" type="font/woff" crossorigin>
+    <link rel="stylesheet" href="/site/www/css/font.css">
+    <link rel="stylesheet" href="/common/css/style-reset.css">
+    <link rel="stylesheet" href="/site/www/css/sub.css">
+    <link rel="stylesheet" href="/site/www/css/program.css">
+</head>
+<body class="login">
+<h1>청주시 통합예약 로그인</h1>
+<div class="loginBg">
+    <div class="circle colorGreen"></div>
+    <div class="circle colorBlue"></div>
+    <div class="circle colorOrange"></div>
+</div>
+<main>
+    <h2><span>청주시 CHEONGJU CITY 통합예약 로그인</span></h2>
+    <strong class="loginTitle"><span class="point-color-green">청주시의 다양한 예약</span>을 한 곳에서!</strong>
+    <p class="loginText">홈페이지서비스이용과 익명의 사용자로 인한 피해를 방지하고자 본인확인제도를 시행하고 있습니다.<br>아래 본인(휴대폰)인증, I-PIN인증, SNS인증 중 하나를 선택하여 본인확인을 해 주시기 바랍니다.</p>
+    <ul class="loginType">
+        <li>
+            <strong>휴대폰 본인인증</strong>
+            <p>생년월일과 본인 명의의 휴대폰 정보를 이용하여 가상식별번호를 부여받아 활용하는 본인확인 서비스입니다.</p>
+            <a href="" class="loginButton"><span>인증하기</span></a>
+        </li>
+        <li>
+            <strong>아이핀 인증</strong>
+            <p>본인 명의의 아이핀 인증을 통해 청주시청 통합예약 누리집 서비스를 이용하실 수 있습니다.</p>
+            <a href="" class="loginButton"><span>인증하기</span></a>
+        </li>
+    </ul>
+    <div class="flexHAlignCenter">
+        <p class="iconText caution">본인인증 방법 선택 후 팝업창이 나타나지 않으면, 브라우저의 <span class="point-color-red">팝업차단을 해제</span>해주시기 바랍니다.</p>
+    </div>
+    <div class="snsLogin">
+        <strong>SNS인증</strong>
+        <ul class="text">
+            <li>SNS 로그인 시 <span class="point-color-red">최초 1회 본인인증이 필요</span>합니다.</li>
+            <li>SNS인증 정보는 최초 인증일 기준 <span class="point-color-red">1년 후 자동 삭제</span>됩니다.</li>
+        </ul>
+        <ul class="link">
+            <li><button type="button" data-modal-button="login1">카카오 로그인</button></li>
+            <li><button type="button" data-modal-button="login1">네이버 로그인</button></li>
+        </ul>
+    </div>
+</main>
+<div class="programModal" data-modal-layer="login1">
+    <div class="modalHeader">
+        <strong>SNS로그인</strong>
+    </div>
+    <div class="modalBody">
+        <p class="modalLoginText">SNS로그인 시 <span class="point-color-red">최초 1회 본인인증이 필요</span>합니다.</p>
+        <div class="modalAgreeBox">
+            <strong class="agreeTitle">개인정보 수집 및 이용 동의 <span class="point-color-red">(필수)</span></strong>
+            <div class="formGroup">
+                <label for="agree1-1" class="customRadioButton">
+                    <input type="radio" id="agree1-1" name="agree1">
+                    <span class="customStyle">
+                        <i class="radioButton"></i>
+                        <span>동의함</span>
+                    </span>
+                </label>
+                <label for="agree1-2" class="customRadioButton">
+                    <input type="radio" id="agree1-2" name="agree1">
+                    <span class="customStyle">
+                        <i class="radioButton"></i>
+                        <span>동의하지 않음</span>
+                    </span>
+                </label>
+            </div>
+            <div class="agreeExplanation">
+                <div class="agreeInnerBox">
+                    <p>개인정보보호법 제17조에 따라 아래와 같은 사항을 안내하고 동의를 받아 귀하의 개인정보를 이용&middot;제공할 수 있도록 합니다.</p>
+                    <ul>
+                        <li>1. 제공받는자: 원주시 산하 실과&middot;사업소, 동주민센터</li>
+                        <li>2. 제공받는 자의 수집&middot;이용 목적: 청주시 통합예약시스템 서비스 예약자 확인 및 관리</li>
+                        <li>3. 제공하는 개인정보 항목
+                            <ul>
+                                <li>- 예약자 정보: 성명, 생년월일, 휴대폰번호, 주소, 성별, 이메일, 차량번호</li>
+                                <li>- 예약자 결제 정보: 성명, 카드번호, 은행명, 계좌번호</li>
+                            </ul>
+                        </li>
+                        <li>4. 개인정보 보유 및 이용기간
+                            <ul>
+                                <li>- 예약자 정보: 1년간 보관 후 즉시 파기(성명, 단체명, 생년월일, 휴대폰번호, 주소, 성별)</li>
+                                <li>- 예약자 결제정보: 5년간 보관 후 즉시 파기(성명, 카드번호, 은행명, 계좌번호)</li>
+                            </ul>
+                        </li>
+                        <li>5. 동의를 거부할 권리가 있다는 사실과 동의 거부에 따른 불이익 내용: 개인정보 수집 및 이용&middot;제공에 대해 동의를 거부할 권리가 있으며, 동의 거부 시에는 예약 서비스 이용이 제한됩니다.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modalFooter">
+        <button type="submit" class="loginModalButton phone">휴대폰 인증하기</button>
+        <button type="submit" class="loginModalButton ipin">아이핀 인증하기</button>
+        <button class="modalCloseButton"><span>닫기</span></button>
+    </div>
+</div>
+<script src="/site/www/js/subFunction.js"></script>
+</body>
+</html>

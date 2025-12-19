@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="1bdc8545-1ff2-468a-987e-41328b851ad4" name="NEO-CJTICKET">
+        <fileTransfer rootFolder="/webapp/jsphome/NeoCMS_TICKETCJ" accessType="SFTP" host="192.168.0.247" port="52120" sshConfigId="7ec25996-508c-4594-859b-d487ce01d9b4" sshConfig="hanshin@192.168.0.247:52120 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

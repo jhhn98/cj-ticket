@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" serverName="NEO-CJTICKET" remoteFilesAllowedToDisappearOnAutoupload="false">
+    <serverData>
+      <paths name="NEO-CJTICKET">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+          <excludedPaths>
+            <excludedPath path="/DATA" />
+            <excludedPath path="/neo" />
+            <excludedPath path="/repository" />
+            <excludedPath path="/sn3hcv" />
+            <excludedPath path="/WEB-INF/classes" />
+            <excludedPath path="/WEB-INF/config" />
+            <excludedPath path="/WEB-INF/icc" />
+            <excludedPath path="/WEB-INF/lib" />
+            <excludedPath path="/WEB-INF/sh" />
+            <excludedPath path="/WEB-INF/tlds" />
+            <excludedPath path="/WEB-INF/decorators.xml" />
+            <excludedPath path="/WEB-INF/jboss-deployment-structure.xml" />
+            <excludedPath path="/WEB-INF/jboss-web.xml" />
+            <excludedPath path="/WEB-INF/jeus-web-dd.xml" />
+            <excludedPath path="/WEB-INF/neoDecorators.xml" />
+            <excludedPath path="/WEB-INF/sitemesh.xml" />
+            <excludedPath path="/WEB-INF/web.xml" />
+            <excludedPath path="/gmuser_sdfsaKLAI343Avqekg.txt" />
+            <excludedPath path="/index.html" />
+            <excludedPath path="/index.jsp" />
+            <excludedPath path="/test.jsp" />
+            <excludedPath path="/site/www/css" />
+          </excludedPaths>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>

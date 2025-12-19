@@ -1,0 +1,93 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="tsu" uri="http://www.hanshinit.co.kr/jstl/tagStringUtil"%>
+
+<c:set var="year" value="${fcltySchdWebVO.year}"/>
+<c:set var="month" value="${fcltySchdWebVO.month}"/>
+<c:set var="prevMonth" value="${fcltySchdWebVO.prevMonth}"/>
+<c:set var="nextMonth" value="${fcltySchdWebVO.nextMonth}"/>
+<c:set var="arrCalendar" value="${fcltySchdWebVO.arrCalendar}"/>
+<c:set var="operSttus" value="${fcltySchdWebVO.operSttus}"/>
+<c:set var="fcltyDe" value="${fcltySchdWebVO.fcltyDe}"/>
+
+<div class="calendarHeader">
+    <strong><c:out value="${year}"/>년 <c:out value="${month}"/>월</strong>
+    <button type="button" class="prevButton" data-year="<c:out value="${prevMonth[0]}"/>" data-month="<c:out value="${prevMonth[1]}"/>"><span>이전달 달력 보기</span></button>
+    <button type="button" class="nextButton" data-year="<c:out value="${nextMonth[0]}"/>" data-month="<c:out value="${nextMonth[1]}"/>"><span>다음달 달력 보기</span></button>
+</div>
+<div class="calendarBody">
+    <ul class="weekly">
+        <li data-weekly-element><span>일</span></li>
+        <li data-weekly-element><span>월</span></li>
+        <li data-weekly-element><span>화</span></li>
+        <li data-weekly-element><span>수</span></li>
+        <li data-weekly-element><span>목</span></li>
+        <li data-weekly-element><span>금</span></li>
+        <li data-weekly-element><span>토</span></li>
+    </ul>
+    <div class="scrollWrap-day is-start">
+        <ul class="day">
+            <c:set var="lineChk" value="0"/>
+            <c:forEach var="i" begin="0" end="5">
+                <c:forEach var="j" begin="0" end="6">
+
+                    <c:choose>
+                        <c:when test="${!empty arrCalendar[i][j][0]}">
+
+                            <fmt:formatNumber var="dayChk" minIntegerDigits="2" value="${arrCalendar[i][j][0]}" type="number"/>
+                            <c:set var="ymd" value="${year}${month}${dayChk}" />
+                            <c:set var="yoil" value="${arrCalendar[i][j][1]}"/>
+
+                            <c:set var="sundayClass" value="${yoil == '0' ? ' sunday' : ''}" />
+                            <c:set var="todayClass" value="${arrCalendar[i][j][2] == '1' ? ' today' : ''}" />
+
+                            <%-- 예약가능한 날짜가 아니면 disabled 클래스 --%>
+                            <c:set var="disabledClass" value="${arrCalendar[i][j][3] != 'Y' ? ' disabled' : ''}" />
+
+                            <%-- 선택된 날짜면 selected 클래스 --%>
+                            <c:set var="selectedClass" value="${arrCalendar[i][j][3] == fcltyDe ? ' selected' : ''}" />
+
+                            <%-- 예약현황(신청수/모집수) --%>
+                            <c:set var="reserveCount" value="" />
+                            <c:if test="${arrCalendar[i][j][3] == 'Y'}">
+                                <c:set var="reserveCount" value="${arrCalendar[i][j][4]}" />
+                            </c:if>
+                            <c:if test="${arrCalendar[i][j][3] == 'F'}">
+                                <c:set var="reserveCount" value="접수마감" />
+                            </c:if>
+
+                            <%-- 접수 중이 아니면 모든 날짜 disabled 클래스로 --%>
+                            <c:if test="${operSttus != 'RCPT_ING'}">
+                                <c:set var="disabledClass" value=" disabled" />
+                            </c:if>
+
+                            <li class="<c:out value="${sundayClass}"/><c:out value="${todayClass}"/>" data-day-element>
+                                <button type="button"<c:out value="${disabledClass}"/> class="ymdBtn<c:out value="${disabledClass}"/><c:out value="${selectedClass}"/>" id="ymdBtn<c:out value="${ymd}"/>" data-ymd="<c:out value="${ymd}"/>" data-yoil="<c:out value="${yoil}"/>">
+                                    <span class="day"><c:out value="${arrCalendar[i][j][0]}"/></span>
+                                    <span class="reserveCount"><c:out value="${reserveCount}"/></span>
+                                </button>
+                            </li>
+
+                        </c:when>
+
+                        <c:otherwise>
+                            <li class="<c:out value="${firstClass}"/><c:out value="${lastClass}"/>" data-day-element></li>
+                        </c:otherwise>
+
+                    </c:choose>
+                </c:forEach>
+            </c:forEach>
+        </ul>
+    </div>
+</div>
+<div class="calendarFooter">
+    <div class="selectCount">
+        <span class="count">00/00</span>
+        <span class="text">신청수/총모집수</span>
+    </div>
+    <div class="calendarLegend">
+        <span class="today">오늘</span>
+        <span class="disabled">예약불가</span>
+    </div>
+</div>

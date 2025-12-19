@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=5.0">
+    <title>청주시 통합예약</title>
+    <link rel="preload" href="/common/font/EDB-R.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/common/font/EDB-R.woff" as="font" type="font/woff" crossorigin>
+    <link rel="stylesheet" href="/site/www/css/font.css">
+    <link rel="stylesheet" href="/common/css/style-reset.css">
+    <link rel="stylesheet" href="/site/www/css/common.css">
+    <link rel="stylesheet" href="/site/www/css/sub.css">
+    <link rel="stylesheet" href="/site/www/css/program.css">
+</head>
+<body><!-- Modal 활성시 modalShow -->
+<h1>청주시 통합예약 서브</h1>
+<div class="bg-circle">
+    <div class="circle colorGreen"></div>
+    <div class="circle colorBlue"></div>
+    <div class="circle colorOrange"></div>
+</div>
+<header class="userLogin"><!-- 로그인 상태일 경우 userLogin 클래스 추가 -->
+    <h2>통합예약 메뉴 및 보조기능</h2>
+    <div class="headerWrapper">
+        <div class="headerLogo"><span class="cj-logo"><i>청주시 CHEONGJU CITY</i></span><span class="site-name"><i>통합예약</i></span></div>
+        <button type="button" class="mobile-navigation" aria-controls="global-navigation" aria-expanded="false"><svg class="icon-menuBar"><use href="/site/www/images/common/sprite-common-side.svg#icon-menuBar"></use></svg><svg class="icon-close"><use href="/site/www/images/common/sprite-common-side.svg#icon-close"></use></svg><span>메뉴 열기</span></button>
+        <nav id="global-navigation" class="navigation">
+            <div class="mobile-navigation-head">
+                <div class="mobileHeaderLogo"><span class="cj-logo"><i>청주시 CHEONGJU CITY</i></span><span class="site-name"><i>통합예약</i></span></div>
+                <form method="post" action="">
+                    <fieldset>
+                        <legend>통합예약 검색</legend>
+                        <div class="mobile-search">
+                            <input type="text" title="검색어 입력" placeholder="어떤 예약을 도와드릴까요?">
+                            <button type="submit"><svg><use href="/site/www/images/common/sprite-common-side.svg#icon-view"></use></svg><span>검색</span></button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <ul data-navigation="depth1Wrap" class="navDepth1Wrap">
+                <li class="current">
+                    <a href="#" data-navigation-depth="1" class="navDepth1">
+                        관광&middot;체험
+                        <!-- 하위메뉴가 존재할 때만 넣어주세요 -->
+                        <svg class="mobile-icon"><use href="/site/www/images/common/sprite-common-side.svg#icon-menu-arr"></use></svg>
+                    </a>
+                    <div class="navDepth2Wrapper" data-navigation="depth2Wrap">
+                        <div class="innerWrapper">
+                            <div class="navigationTitle">
+                                <strong>관광&middot;체험</strong>
+                            </div>
+                            <ul class="navDepth2Wrap">
+                                <li><a href="#" data-navigation-depth="2" class="navDepth2">관광/체험(전체)</a></li>
+                                <li><a href="#" data-navigation-depth="2" class="navDepth2">관람</a></li>
+                                <li><a href="#" data-navigation-depth="2" class="navDepth2">체험/레포츠</a></li>
+                                <li><a href="#" data-navigation-depth="2" class="navDepth2">관광/견학</a></li>
+                                <li class="current">
+                                    <a href="#" data-navigation-depth="2" class="navDepth2">
+                                        캠핑장
+                                        <!-- 하위메뉴가 존재할 때만 넣어주세요 -->
+                                        <svg class="mobile-icon"><use href="/site/www/images/common/sprite-common-side.svg#icon-menu-arr"></use></svg>
+                                    </a>
+                                    <ul data-navigation="depth3Wrap" class="navDepth3Wrap">
+                                        <li><a href="#" target="_blank" title="새창" data-navigation-depth="3" class="navDepth3">문암생태공원<svg class="icon-blank"><use href="/site/www/images/common/sprite-common-side.svg#icon-blank"></use></svg></a></li>
+                                        <li><a href="#" target="_blank" title="새창" data-navigation-depth="3" class="navDepth3 current">오창미래지농촌테마공원<svg class="icon-blank"><use href="/site/www/images/common/sprite-common-side.svg#icon-blank"></use></svg></a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#" data-navigation-depth="2" class="navDepth2">기타</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <a href="#" data-navigation-depth="1" class="navDepth1">
+                        시설예약
+                        <!-- 하위메뉴가 존재할 때만 넣어주세요 -->
+                        <svg class="mobile-icon"><use href="/site/www/images/common/sprite-common-side.svg#icon-menu-arr"></use></svg>
+                    </a>
+                    <div class="navDepth2Wrapper" data-navigation="depth2Wrap">
+                        <div class="innerWrapper">
+                            <div class="navigationTitle">
+                                <strong>시설예약</strong>
+                            </div>
+                            <ul class="navDepth2Wrap">
+                                <li>
+                                    <a href="#" data-navigation-depth="2" class="navDepth2">
+                                        시설예약(전체)
+                                        <!-- 하위메뉴가 존재할 때만 넣어주세요 -->
+                                        <svg class="mobile-icon"><use href="/site/www/images/common/sprite-common-side.svg#icon-menu-arr"></use></svg>
+                                    </a>
+                                    <ul data-navigation="depth3Wrap" class="navDepth3Wrap">
+                                        <li><a href="#" target="_blank" title="새창" data-navigation-depth="3" class="navDepth3">문암생태공원<svg class="icon-blank"><use href="/site/www/images/common/sprite-common-side.svg#icon-blank"></use></svg></a></li>
+                                        <li><a href="#" target="_blank" title="새창" data-navigation-depth="3" class="navDepth3">오창미래지농촌테마공원<svg class="icon-blank"><use href="/site/www/images/common/sprite-common-side.svg#icon-blank"></use></svg></a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#" data-navigation-depth="2" class="navDepth2">체육시설과</a></li>
+                                <li><a href="#" data-navigation-depth="2" class="navDepth2">청주시설관리공단</a></li>
+                                <li><a href="#" data-navigation-depth="2" class="navDepth2">상당구 행정지원과</a></li>
+                                <li>
+                                    <a href="#" data-navigation-depth="2" class="navDepth2">
+                                        환경관리본부
+                                        <!-- 하위메뉴가 존재할 때만 넣어주세요 -->
+                                        <svg class="mobile-icon"><use href="/site/www/images/common/sprite-common-side.svg#icon-menu-arr"></use></svg>
+                                    </a>
+                                    <ul data-navigation="depth3Wrap" class="navDepth3Wrap">
+                                        <li><a href="#" target="_blank" title="새창" data-navigation-depth="3" class="navDepth3">문암생태공원<svg class="icon-blank"><use href="/site/www/images/common/sprite-common-side.svg#icon-blank"></use></svg></a></li>
+                                        <li><a href="#" target="_blank" title="새창" data-navigation-depth="3" class="navDepth3">오창미래지농촌테마공원<svg class="icon-blank"><use href="/site/www/images/common/sprite-common-side.svg#icon-blank"></use></svg></a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#" data-navigation-depth="2" class="navDepth2">남일면</a></li>
+                                <li><a href="#" data-navigation-depth="2" class="navDepth2">고인쇄박물관</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <a href="#" data-navigation-depth="1" class="navDepth1">
+                        교육/강좌
+                        <!-- 하위메뉴가 존재할 때만 넣어주세요 -->
+                        <svg class="mobile-icon"><use href="/site/www/images/common/sprite-common-side.svg#icon-menu-arr"></use></svg>
+                    </a>
+                    <div class="navDepth2Wrapper" data-navigation="depth2Wrap">
+                        <div class="innerWrapper">
+                            <div class="navigationTitle">
+                                <strong>교육/강좌</strong>
+                            </div>
+                            <ul class="navDepth2Wrap">
+                                <li><a href="#" data-navigation-depth="2" class="navDepth2">교육/강좌(전체)</a></li>
+                                <li><a href="#" data-navigation-depth="2" class="navDepth2">주민자치센터</a></li>
+                                <li><a href="#" data-navigation-depth="2" class="navDepth2">고인쇄박물관</a></li>
+                                <li><a href="#" data-navigation-depth="2" class="navDepth2">문예운영과</a></li>
+                                <li><a href="#" data-navigation-depth="2" class="navDepth2">농업기술센터</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+                <li><a href="#" data-navigation-depth="1" class="navDepth1">공연/영화</a></li>
+                <li>
+                    <a href="#" data-navigation-depth="1" class="navDepth1">
+                        행정서비스
+                        <!-- 하위메뉴가 존재할 때만 넣어주세요 -->
+                        <svg class="mobile-icon"><use href="/site/www/images/common/sprite-common-side.svg#icon-menu-arr"></use></svg>
+                    </a>
+                    <div class="navDepth2Wrapper" data-navigation="depth2Wrap">
+                        <div class="innerWrapper">
+                            <div class="navigationTitle">
+                                <strong>행정서비스</strong>
+                            </div>
+                            <ul class="navDepth2Wrap">
+                                <li><a href="#" target="_blank" title="새창" data-navigation-depth="2" class="navDepth2">대형폐기물 배출신청<svg class="icon-blank"><use href="/site/www/images/common/sprite-common-side.svg#icon-blank"></use></svg></a></li>
+                                <li><a href="#" target="_blank" title="새창" data-navigation-depth="2" class="navDepth2">가로등보안등 고장접수<svg class="icon-blank"><use href="/site/www/images/common/sprite-common-side.svg#icon-blank"></use></svg></a></li>
+                                <li><a href="#" target="_blank" title="새창" data-navigation-depth="2" class="navDepth2">면접용 정장대여신청<svg class="icon-blank"><use href="/site/www/images/common/sprite-common-side.svg#icon-blank"></use></svg></a></li>
+                                <li><a href="#" target="_blank" title="새창" data-navigation-depth="2" class="navDepth2">교통분실물신고센터<svg class="icon-blank"><use href="/site/www/images/common/sprite-common-side.svg#icon-blank"></use></svg></a></li>
+                                <li><a href="#" target="_blank" title="새창" data-navigation-depth="2" class="navDepth2">생활불편신고<svg class="icon-blank"><use href="/site/www/images/common/sprite-common-side.svg#icon-blank"></use></svg></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <a href="#" data-navigation-depth="1" class="navDepth1">
+                        이용안내
+                        <!-- 하위메뉴가 존재할 때만 넣어주세요 -->
+                        <svg class="mobile-icon"><use href="/site/www/images/common/sprite-common-side.svg#icon-menu-arr"></use></svg>
+                    </a>
+                    <div class="navDepth2Wrapper" data-navigation="depth2Wrap">
+                        <div class="innerWrapper">
+                            <div class="navigationTitle">
+                                <strong>이용안내</strong>
+                            </div>
+                            <ul class="navDepth2Wrap">
+                                <li><a href="#" data-navigation-depth="2" class="navDepth2">예약확인</a></li>
+                                <li><a href="#" data-navigation-depth="2" class="navDepth2">공지사항</a></li>
+                                <li><a href="#" data-navigation-depth="2" class="navDepth2">자주찾는 질문</a></li>
+                                <li><a href="#" data-navigation-depth="2" class="navDepth2">이용안내</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+                <li data-visible-on="mobile"><!-- 홈페이지가이드 메뉴도 함께 표출해주세요~ data-visible-on="mobile" 이 속성을 꼭 넣어주셔야 합니다! 부탁드립니다! -->
+                    <a href="#" data-navigation-depth="1" class="navDepth1">
+                        홈페이지가이드
+                        <!-- 하위메뉴가 존재할 때만 넣어주세요 -->
+                        <svg class="mobile-icon"><use href="/site/www/images/common/sprite-common-side.svg#icon-menu-arr"></use></svg>
+                    </a>
+                    <div class="navDepth2Wrapper" data-navigation="depth2Wrap">
+                        <div class="innerWrapper">
+                            <div class="navigationTitle">
+                                <strong>홈페이지가이드</strong>
+                            </div>
+                            <ul class="navDepth2Wrap">
+                                <li><a href="#" data-navigation-depth="2" class="navDepth2">개인정보처리방침</a></li>
+                                <li><a href="#" data-navigation-depth="2" class="navDepth2">저작권 정책</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+        <aside class="aside-links">
+            <ul>
+                <li class="myPage">
+                    <svg><use href="/site/www/images/common/sprite-common-side.svg#icon-user"></use></svg>
+                    <div class="linkLayer">
+                        <svg><use href="/site/www/images/common/sprite-common-side.svg#icon-arrTop"></use></svg>
+                        <a href="./"><span>마이페이지</span></a>
+                    </div>
+                </li>
+                <!--<li><a href="./login.do" class="account"><svg><use href="/site/www/images/common/sprite-common-side.svg#icon-account-off"></use></svg><span>로그인</span></a></li>-->
+                <li><a href="./logout.do" class="account"><svg><use href="/site/www/images/common/sprite-common-side.svg#icon-account-on"></use></svg><span>로그아웃</span></a></li>
+                <li class="feature">
+                    <span>화면조정</span>
+                    <button type="button" class="viewZoom in"><span>확대</span></button>
+                    <button type="button" class="viewZoom out"><span>축소</span></button>
+                    <button type="button" class="contrast">
+                        <svg class="off"><use href="/site/www/images/common/sprite-common-side.svg#icon-contrast-off"></use></svg>
+                        <svg class="on"><use href="/site/www/images/common/sprite-common-side.svg#icon-contrast-on"></use></svg>
+                        <span>고대비 모드 켜기</span>
+                    </button>
+                </li>
+            </ul>
+        </aside>
+    </div>
+</header>
+<main>
+    <h2 class="page-title">체험&middot;견학</h2>
+    <section class="content-option">
+        <nav class="contentNavigation">
+            <a href="./index.do" class="navHome"><span>홈으로</span></a>
+            <ul class="contentNavigationList">
+                <li>
+                    <button type="button">관광/체험</button>
+                    <ul>
+                        <li><a href="#">시설예약</a></li>
+                        <li><a href="#">교육/강좌</a></li>
+                        <li><a href="#">공연/영화</a></li>
+                        <li><a href="#">행정서비스</a></li>
+                        <li><a href="#">이용안내</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <button type="button">가로등보안등 고장접수</button>
+                    <ul>
+                        <li><a href="#">2차메뉴 리스트1</a></li>
+                        <li><a href="#">2차메뉴 리스트2</a></li>
+                        <li><a href="#">2차메뉴 리스트3</a></li>
+                        <li><a href="#">2차메뉴 리스트4</a></li>
+                        <li><a href="#">2차메뉴 리스트5</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <button type="button">3차메뉴</button>
+                    <ul>
+                        <li><a href="#">3차메뉴 리스트1</a></li>
+                        <li><a href="#">3차메뉴 리스트2</a></li>
+                        <li><a href="#">3차메뉴 리스트3</a></li>
+                        <li><a href="#">3차메뉴 리스트4</a></li>
+                        <li><a href="#">3차메뉴 리스트5</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        <aside class="asideLinks">
+            <ul>
+                <li>
+                    <button type="button" class="contentShare"><svg class="active-icon"><use href="/site/www/images/sub/sprite-sub-icon.svg#icon-share"></use></svg><svg class="inactive-icon"><use href="/site/www/images/sub/sprite-sub-icon.svg#icon-dismiss"></use></svg><span>컨텐츠 공유 열기</span></button>
+                    <div class="shareList">
+                        <span>공유하기</span>
+                        <ul>
+                            <li><button type="button" class="facebook"><span>FaceBook</span></button></li>
+                            <li><button type="button" class="instagram"><span>Instagram</span></button></li>
+                            <li><button type="button" class="meta"><span>Meta</span></button></li>
+                            <li><button type="button" class="naver-blog"><span>NaverBlog</span></button></li>
+                            <li><button type="button" class="link"><span>link</span></button></li>
+                        </ul>
+                    </div>
+                </li>
+                <li><button type="button" class="contentPrint"><svg><use href="/site/www/images/sub/sprite-sub-icon.svg#icon-print"></use></svg><span>컨텐츠 출력</span></button></li>
+            </ul>
+        </aside>
+    </section>
+    <article class="content-area">
+        <section class="content program">
+            <h3 class="programPageTitle">마이페이지-목록</h3>
+            <ul class="tabButtons">
+                <li><a href="" class="current">전체(20)</a></li>
+                <li><a href="">교육/강좌(20)</a></li>
+                <li><a href="">체험/견학(20)</a></li>
+                <li><a href="">시설예약(20)</a></li>
+            </ul>
+            <div class="flexWrap marginTop40">
+                <div class="flexLeft">
+                    <h4>교육/강좌</h4>
+                </div>
+                <div class="flexRight">
+                    <a href="" class="customLink isIcon afterIcon plus"><span>더보기</span></a>
+                </div>
+            </div>
+            <div class="scrollWrap-table">
+                <table class="table boardList">
+                    <caption>교육/강좌-예약번호, 프로그램명, 운영기관, 운영기간, 운영시간/요일, 이수여부, 결재상태, 예약상태, 예약취소</caption>
+                    <thead>
+                    <tr>
+                        <th scope="col" class="first">예약번호</th>
+                        <th scope="col">프로그램명</th>
+                        <th scope="col">운영기관</th>
+                        <th scope="col">운영기간</th>
+                        <th scope="col">운영시간/요일</th>
+                        <th scope="col">이수여부</th>
+                        <th scope="col">결재상태</th>
+                        <th scope="col">예약상태</th>
+                        <th scope="col">예약취소</th>
+                    </tr>
+                    </thead>
+                    <tbody class="textAlignCenter">
+                    <!-- 목록 데이터 없을때 공통으로 사용해주세요. td에 colspan 속성 thead의 th갯수에 맞춰주세요 -->
+                    <tr>
+                        <td class="first" colspan="9">
+                            <div>
+                                <img src="/site/www/images/search/img-noImage.png" alt="데이터가 없습니다">
+                                <p class="textAlignCenter marginTop20">예약한 프로그램이 없습니다</p>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="flexWrap marginTop40">
+                <div class="flexLeft">
+                    <h4>교육/강좌</h4>
+                </div>
+                <div class="flexRight">
+                    <a href="" class="customLink isIcon afterIcon plus"><span>더보기</span></a>
+                </div>
+            </div>
+            <div class="scrollWrap-table">
+                <table class="table boardList">
+                    <caption>교육/강좌-예약번호, 프로그램명, 운영기관, 운영기간, 운영시간/요일, 이수여부, 결재상태, 예약상태, 예약취소</caption>
+                    <thead>
+                    <tr>
+                        <th scope="col" class="first">예약번호</th>
+                        <th scope="col">프로그램명</th>
+                        <th scope="col">운영기관</th>
+                        <th scope="col">운영기간</th>
+                        <th scope="col">운영시간/요일</th>
+                        <th scope="col">이수여부</th>
+                        <th scope="col">결재상태</th>
+                        <th scope="col">예약상태</th>
+                        <th scope="col">예약취소</th>
+                    </tr>
+                    </thead>
+                    <tbody class="textAlignCenter">
+                    <tr>
+                        <td class="first">GNSS0831-001</td>
+                        <td class="textAlignLeft">ITQ 파워포인트 자격취득과정</td>
+                        <td>평생학습관</td>
+                        <td>2025.10.31 ~ 2025.11.01</td>
+                        <td>10:00 ~ 12:00 / 수</td>
+                        <td>미이수</td>
+                        <td>결제대기</td>
+                        <td>승인대기</td>
+                        <td>
+                            <button type="button" class="customLink" data-modal-button="modal3"><span>취소</span></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="first">GNSS0831-001</td>
+                        <td class="textAlignLeft">ITQ 파워포인트 자격취득과정</td>
+                        <td>평생학습관</td>
+                        <td>2025.10.31 ~ 2025.11.01</td>
+                        <td>10:00 ~ 12:00 / 수</td>
+                        <td><a href="" class="customLink"><span>수료증</span></a></td>
+                        <td><a href="" class="customLink bgBlack"><span>결제하기</span></a></td>
+                        <td>승인대기</td>
+                        <td>
+                            <button type="button" class="customLink" data-modal-button="modal3"><span>취소</span></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="first">GNSS0831-001</td>
+                        <td class="textAlignLeft">ITQ 파워포인트 자격취득과정</td>
+                        <td>평생학습관</td>
+                        <td>2025.10.31 ~ 2025.11.01</td>
+                        <td>10:00 ~ 12:00 / 수</td>
+                        <td><a href="" class="customLink"><span>수료증</span></a></td>
+                        <td><a href="" class="customLink bgBlack"><span>결제하기</span></a></td>
+                        <td>승인대기</td>
+                        <td>
+                            <button type="button" class="customLink" data-modal-button="modal3"><span>취소</span></button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="flexWrap marginTop40">
+                <div class="flexLeft">
+                    <h4>체험/견학</h4>
+                </div>
+                <div class="flexRight">
+                    <a href="" class="customLink isIcon afterIcon plus"><span>더보기</span></a>
+                </div>
+            </div>
+            <div class="scrollWrap-table">
+                <table class="table boardList">
+                    <caption>교육/강좌-예약번호, 프로그램명, 운영기관, 운영기간, 운영시간/요일, 이수여부, 결재상태, 예약상태, 예약취소</caption>
+                    <thead>
+                    <tr>
+                        <th scope="col" class="first">예약번호</th>
+                        <th scope="col">프로그램명</th>
+                        <th scope="col">운영기관</th>
+                        <th scope="col">운영기간</th>
+                        <th scope="col">운영시간/요일</th>
+                        <th scope="col">이수여부</th>
+                        <th scope="col">결재상태</th>
+                        <th scope="col">예약상태</th>
+                        <th scope="col">예약취소</th>
+                    </tr>
+                    </thead>
+                    <tbody class="textAlignCenter">
+                    <tr>
+                        <td class="first">GNSS0831-001</td>
+                        <td class="textAlignLeft">ITQ 파워포인트 자격취득과정</td>
+                        <td>평생학습관</td>
+                        <td>2025.10.31 ~ 2025.11.01</td>
+                        <td>10:00 ~ 12:00 / 수</td>
+                        <td>미이수</td>
+                        <td>결제대기</td>
+                        <td>승인대기</td>
+                        <td>
+                            <button type="button" class="customLink" data-modal-button="modal3"><span>취소</span></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="first">GNSS0831-001</td>
+                        <td class="textAlignLeft">ITQ 파워포인트 자격취득과정</td>
+                        <td>평생학습관</td>
+                        <td>2025.10.31 ~ 2025.11.01</td>
+                        <td>10:00 ~ 12:00 / 수</td>
+                        <td><a href="" class="customLink"><span>수료증</span></a></td>
+                        <td><a href="" class="customLink bgBlack"><span>결제하기</span></a></td>
+                        <td>승인대기</td>
+                        <td>
+                            <button type="button" class="customLink" data-modal-button="modal3"><span>취소</span></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="first">GNSS0831-001</td>
+                        <td class="textAlignLeft">ITQ 파워포인트 자격취득과정</td>
+                        <td>평생학습관</td>
+                        <td>2025.10.31 ~ 2025.11.01</td>
+                        <td>10:00 ~ 12:00 / 수</td>
+                        <td><a href="" class="customLink"><span>수료증</span></a></td>
+                        <td><a href="" class="customLink bgBlack"><span>결제하기</span></a></td>
+                        <td>승인대기</td>
+                        <td>
+                            <button type="button" class="customLink" data-modal-button="modal3"><span>취소</span></button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="flexWrap marginTop40">
+                <div class="flexLeft">
+                    <h4>시설예약</h4>
+                </div>
+                <div class="flexRight">
+                    <a href="" class="customLink isIcon afterIcon plus"><span>더보기</span></a>
+                </div>
+            </div>
+            <div class="scrollWrap-table">
+                <table class="table boardList">
+                    <caption>교육/강좌-예약번호, 프로그램명, 운영기관, 운영기간, 운영시간/요일, 이수여부, 결재상태, 예약상태, 예약취소</caption>
+                    <thead>
+                    <tr>
+                        <th scope="col" class="first">예약번호</th>
+                        <th scope="col">프로그램명</th>
+                        <th scope="col">운영기관</th>
+                        <th scope="col">운영기간</th>
+                        <th scope="col">운영시간/요일</th>
+                        <th scope="col">이수여부</th>
+                        <th scope="col">결재상태</th>
+                        <th scope="col">예약상태</th>
+                        <th scope="col">예약취소</th>
+                    </tr>
+                    </thead>
+                    <tbody class="textAlignCenter">
+                    <tr>
+                        <td class="first">GNSS0831-001</td>
+                        <td class="textAlignLeft">ITQ 파워포인트 자격취득과정</td>
+                        <td>평생학습관</td>
+                        <td>2025.10.31 ~ 2025.11.01</td>
+                        <td>10:00 ~ 12:00 / 수</td>
+                        <td><a href="" class="customLink"><span>수료증</span></a></td>
+                        <td><a href="" class="customLink bgBlack"><span>결제하기</span></a></td>
+                        <td>승인대기</td>
+                        <td>
+                            <button type="button" class="customLink" data-modal-button="modal3"><span>취소</span></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="first">GNSS0831-001</td>
+                        <td class="textAlignLeft">ITQ 파워포인트 자격취득과정</td>
+                        <td>평생학습관</td>
+                        <td>2025.10.31 ~ 2025.11.01</td>
+                        <td>10:00 ~ 12:00 / 수</td>
+                        <td>미이수</td>
+                        <td>결제대기</td>
+                        <td>승인대기</td>
+                        <td>
+                            <button type="button" class="customLink" data-modal-button="modal3"><span>취소</span></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="first">GNSS0831-001</td>
+                        <td class="textAlignLeft">ITQ 파워포인트 자격취득과정</td>
+                        <td>평생학습관</td>
+                        <td>2025.10.31 ~ 2025.11.01</td>
+                        <td>10:00 ~ 12:00 / 수</td>
+                        <td><a href="" class="customLink"><span>수료증</span></a></td>
+                        <td><a href="" class="customLink bgBlack"><span>결제하기</span></a></td>
+                        <td>승인대기</td>
+                        <td>
+                            <button type="button" class="customLink" data-modal-button="modal3"><span>취소</span></button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </article>
+</main>
+<footer>
+    <div class="footer-wrapper">
+        <nav class="footer-nav">
+            <ul>
+                <li><a href="./sub.do?key=" class="privacyPolicy">개인정보처리방침</a></li>
+                <li><a href="./sub.do?key=">저작권보호정책</a></li>
+                <li><a href="./sub.do?key=">홈페이지가이드</a></li>
+            </ul>
+        </nav>
+        <address>[28527] 충청북도 청주시 상당구 상당로69번길 38 (청주시청 임시청사)</address>
+        <ul class="site-info">
+            <li>대표전화 : <em>043－201－0001</em></li>
+            <li>상호명 : <em>청주시 통합예약</em></li>
+            <li>대표자명 : <em>이범석</em></li>
+            <li>사업자등록번호 : <em>301－83－00793</em></li>
+        </ul>
+        <p class="copyright">COPYRIGHT CHEONGJU CITY. ALL RIGHTS RESERVED.</p>
+    </div>
+</footer>
+<div class="programModal" data-modal-layer="modal3">
+    <div class="modalHeader">
+        <strong>예약취소</strong>
+    </div>
+    <div class="modalBody">
+        <strong class="modalSubTitle">신청하신 예약내용을 취소하시겠습니까?</strong>
+        <p>취소사유 및 납부하신 이용요금을 환불 받으실 계좌정보를 정확하게 입력해주세요.</p>
+    </div>
+    <div class="modalBody2">
+        <strong class="modalSubTitle">환불계좌정보</strong>
+        <table class="table modalTable">
+            <caption>환불계좌정보</caption>
+            <colgroup>
+                <col style="width:30%">
+                <col>
+            </colgroup>
+            <tbody>
+            <tr>
+                <th scope="row"><div class="innerCell"><label for="bank">은행명<span class="point-color-red">*</span></label></div></th>
+                <td>
+                    <div class="innerCell">
+                        <input type="text" id="bank" class="customInputDefault">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row"><div class="innerCell"><label for="bankNum">계좌번호</label></div></th>
+                <td>
+                    <div class="innerCell">
+                        <input type="text" id="bankNum" class="customInputDefault">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row"><div class="innerCell"><label for="name">예금주</label></div></th>
+                <td>
+                    <div class="innerCell">
+                        <input type="text" id="name" class="customInputDefault">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row"><div class="innerCell"><label for="reason">취소사유</label></div></th>
+                <td>
+                    <div class="innerCell">
+                        <input type="text" id="reason" class="customInputDefault">
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="modalFooter">
+        <div class="formButtonGroup">
+            <button type="submit" class="button bgFill">환불요청</button>
+            <button type="submit" class="button" data-modal-close>취소</button>
+            <button class="modalCloseButton" data-modal-close><span>닫기</span></button>
+        </div>
+    </div>
+</div>
+<script src="/site/www/js/commonFunction.js"></script>
+<script src="/site/www/js/subFunction.js"></script>
+</body>
+</html>
