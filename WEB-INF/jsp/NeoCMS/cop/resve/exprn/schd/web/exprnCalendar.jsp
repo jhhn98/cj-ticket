@@ -55,7 +55,7 @@
                                 <c:set var="reserveCount" value="${arrCalendar[i][j][4]}" />
                             </c:if>
                             <c:if test="${arrCalendar[i][j][3] == 'F'}">
-                                <c:set var="reserveCount" value="신청마감" />
+                                <c:set var="reserveCount" value="예약마감" />
                             </c:if>
 
                             <li class="<c:out value="${firstClass}"/><c:out value="${lastClass}"/><c:out value="${sundayClass}"/><c:out value="${todayClass}"/>">

@@ -15,9 +15,9 @@
     <%-- 예약현황(신청수/모집수) text --%>
     <c:set var="rcritCnt" value="${result.rcritCnt}" />
     <c:set var="applCnt" value="${result.resveCnt}" />
-    <c:set var="reserveCountText" value="${applCnt} / ${rcritCnt}" />
+    <c:set var="reserveCountText" value="예약가능" />
     <c:if test="${result.closeYn == 'Y'}">
-        <c:set var="reserveCountText" value="접수마감" />
+        <c:set var="reserveCountText" value="예약완료" />
     </c:if>
 
     <c:set var="fcltyBgnHm" value="${tsu:toDateFormat(result.fcltyBgnHm, 'HHmm', 'HH:mm')}"/>

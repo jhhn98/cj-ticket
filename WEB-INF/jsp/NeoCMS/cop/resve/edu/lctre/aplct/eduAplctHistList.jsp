@@ -26,6 +26,7 @@
 			<fieldset>
 				<legend>수강이력 검색</legend>
 				<input type="hidden" name="key" value="${key}"/>
+				<input type="hidden" name="prgSe" value="EDU"/>
 				<input type="hidden" name="eduAplyNo" value="${eduAplctVO.eduAplyNo}"/>
 				<input name="searchApplNm" value="${eduAplctVO.searchApplNm}" title="신청자명 입력" placeholder="신청자명 입력" class="p-input p-input--auto"/>
 				<button type="submit" class="p-button p-button--small primary">검색</button>
@@ -72,7 +73,7 @@
 			<td><c:out value="${result.insttNm}"/></td>
 			<td><c:out value="${result.ctgryNm}"/></td>
 			<td class="p-subject">
-				<a href="./updateEduAplctView.do?eduAplyNo=${result.eduAplyNo}&amp;<c:out value="${eduAplctVO.params}"/>">
+				<a href="./updateEduAplctView.do?eduAplyNo=${result.eduAplyNo}&amp;insttNo=${result.insttNo}&amp;<c:out value="${eduAplctVO.params}"/>">
 				<c:out value="${result.lctreNm}"/></a>
 			</td>
 			<td><c:out value="${result.applNm}"/></td>

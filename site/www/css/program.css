@@ -723,7 +723,7 @@
   text-overflow: ellipsis;
 }
 .dataList-program .listWrap.thumbnail .option .stateType {
-  max-width: 70px;
+  max-width: 82px;
   border: 1px solid #ccc;
   color: #ccc;
 }
@@ -889,6 +889,9 @@
   padding: 38px 10px 30px;
   vertical-align: middle;
   * vertical-align: middle;
+}
+.dataList-program .listWrap.detail table tbody td .mobile-th {
+  display: none;
 }
 .dataList-program .listWrap.detail table .trFullLink {
   display: block;
@@ -2001,6 +2004,9 @@
 .program .viewProgram.detailInformation .infoTab {
   flex: 0 0 calc(100% - 460px - 100px);
   margin: 0 100px 0 0;
+}
+.program .viewProgram.detailInformation .infoTab .itemWrap + .linkGroup {
+  display: none;
 }
 .program .viewProgram.detailInformation .infoTab .tabButton {
   display: flex;
@@ -3230,6 +3236,9 @@
   .program .viewProgram.detailInformation .infoState .shortLink {
     display: none;
   }
+  .program .viewProgram.detailInformation .infoTab .itemWrap + .linkGroup {
+    display: flex;
+  }
 }
 @media all and (max-width: 1000px) {
   .customSelect, .customInputDefault, .customInputDefault[type=text] {
@@ -3517,9 +3526,53 @@
     font-size: 14px;
     line-height: 16px;
   }
+  .dataList-program .listWrap.detail table thead {
+    display: none;
+  }
   .dataList-program .listWrap.detail table thead th {
     font-size: 14px;
     line-height: 16px;
+  }
+  .dataList-program .listWrap.detail table {
+    colgroup{display:none;}
+  }
+  .dataList-program .listWrap.detail table tbody {
+    display: block;
+    width: 100%;
+  }
+  .dataList-program .listWrap.detail table tbody tr {
+    display: block;
+    width: 100%;
+    margin: 10px 0 0;
+    padding: 15px 0;
+  }
+  .dataList-program .listWrap.detail table tbody tr:first-child {
+    margin:0;
+  }
+  .dataList-program .listWrap.detail table tbody td {
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+    margin: 10px 0 0;
+    padding: 5px 10px;
+    text-align: left;
+    white-space: wrap;
+  }
+  .dataList-program .listWrap.detail table tbody td:first-child {
+    margin: 0;
+  }
+  .dataList-program .listWrap.detail table .trFullLink {
+    top: 0;
+  }
+  .dataList-program .listWrap.detail table .titleArea::before {
+    display: none;
+  }
+  .dataList-program .listWrap.detail table tbody td .mobile-th {
+    flex: 0 0 120px;
+    display: block;
+    margin: 0 20px 5px 0;
+    font-weight: 700;
+    text-align: right;
   }
   .dataList-program .listWrap.detail table .tableProgramTitle {
     font-size: 15px;
@@ -3529,6 +3582,10 @@
     margin: 5px 0 0;
     font-size: 14px;
     line-height: 16px;
+    flex-wrap: wrap;
+  }
+  .dataList-program .listWrap.detail table .programDetailInformation span {
+    white-space: nowrap;
   }
   .eventSelectMonth {
     justify-content: center;
@@ -3677,6 +3734,14 @@
   .login .snsLogin .link li button::after {
     top: 16px;
     right: 20px;
+  }
+  .login .programModal .modalBody .modalAgreeBox .agreeTitle {
+    font-size: 16px;
+    line-height: 18px;
+  }
+  .login .programModal .modalBody .modalAgreeBox .agreeExplanation .agreeInnerBox {
+    font-size: 14px;
+    line-height: 18px;
   }
 }
 @media all and (max-width: 900px) {
@@ -3975,6 +4040,20 @@
     width: calc(100% - 40px);
     margin: 40px 20px 15px;
   }
+  .login .programModal .modalBody .modalAgreeBox .formGroup {
+    flex: 0 0 100%;
+    margin: 10px 0 0;
+  }
+  .login .programModal .modalFooter .loginModalButton {
+    flex: 0 0 calc(50% - 10px);
+    margin: 0 5px;
+  }
+  .login .programModal .modalFooter .loginModalButton + .loginModalButton {
+    margin: 0 5px;
+  }
+  .login .programModal .modalFooter .loginModalButton::before, .login .programModal .modalFooter .loginModalButton::after {
+    display: none;
+  }
 }
 @media all and (max-width: 600px) {
   /*.pagination-default{display:block;position:relative;width:50px;margin:20px auto 0;
@@ -4150,6 +4229,30 @@
 @media all and (max-width: 400px) {
   .programSearch .customIconOption {
     flex: 0 0 calc(50% - 8px);
+  }
+  .dataList-program .listWrap.detail table tbody td {
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .dataList-program .listWrap.detail table tbody td .mobile-th {
+    flex: 0 0 auto;
+    position:relative;
+    margin:0 20px 3px 0;
+    text-align: left;
+  }
+  .dataList-program .listWrap.detail table tbody td .mobile-th::before {
+    display: block;
+    position: absolute;
+    top: 2px;
+    right: -10px;
+    bottom: 0;
+    width: 1px;
+    height: 14px;
+    margin: auto 0;
+    background: #333;
+  }
+  .dataList-program .listWrap.detail table .tableProgramTitle {
+    color: #666;
   }
 }
 

@@ -1,0 +1,33 @@
+.sitemap{width:100%;max-width:900px;overflow:hidden;}
+.sitemap_col{width:103.333333%;margin:0 0 70px -3.333333%;}
+.sitemap_box{float:left;width:30%;margin:0 0 0 3.333333%;}
+.sitemap_col.col4{width:103%;margin:0 0 70px -3%;}
+.sitemap_col.col4 .sitemap_box{width:22%;margin:0 0 0 3%;}
+.contents .sitemap_box h3{margin:0;padding:15px 0;background:#535353;color:#fff;font-size:16px;font-weight:500;line-height:18px;text-align:center;}
+.contents .sitemap_box h3:before{display:none;}
+.sitemap_box h3 a{color:#fff;font-size:16px;font-weight:500;line-height:18px;}
+.sm2depth > li{padding:1px 0 0 0;}
+.sm2depth > li > a{display:block;margin:10px 0 0 0;padding:14px 0;border:1px solid #5c5c5c;color:#313131;font-size:15px;font-weight:500;line-height:17px;text-align:center;}
+.sm3depth{padding:0;}
+.sm3depth a{display:block;margin:10px 20px;padding:0 0 0 20px;color:#414141;font-size:1.071em;}
+.sm4depth{padding:5px 12px;background-color:#f0f0f0;}
+.sm4depth li{margin:5px 2px;}
+.sm4depth a{display:block;padding:0 0 0 10px;color:#414141;font-size:1.071em;}
+
+
+#banner_box{display:block;width:100%;margin:20px 0 0;}
+.banner_info{margin:10px 0 0;}
+.banner_info li{margin:0 0 15px;}
+.banner_info a{display:block;color:#333;}
+.banner_info a *{display:inline-block;vertical-align:middle;line-height:40px;}
+
+.pop_info{width:calc(100% + 15px);margin:10px 0 0 -15px;font-size:0;}
+.pop_info li{display:inline-block;width:calc(50% - 15px);margin:0 0 0 15px;}
+.pop_info .img{display:block;margin:0;padding:0;border:1px solid #ddd;font-size:0;line-height:0;}
+.pop_info img{display:block;width:100% !important;height:auto !important;min-height:145px;margin:0;padding:0;font-size:0;line-height:0;}
+.pop_info .title{display:block;margin:5px 0 0;color:#333;font-size:15px;line-height:17px;text-align:center;}
+
+.link_info{margin:10px 0 0;font-size:0;}
+.link_info li{display:inline-block;width:50%;background-color:#f6f6f6;border-bottom:1px dashed #ccc;font-size:15px;}
+.link_info li:nth-child(even){background-color:#dadada;border-color:#999;}
+.link_info a{display:block;padding:10px 15px;color:#333;font-size:15px;line-height:17px;}

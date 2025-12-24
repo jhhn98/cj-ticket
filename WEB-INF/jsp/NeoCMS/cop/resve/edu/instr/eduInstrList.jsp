@@ -25,6 +25,7 @@
 				<fieldset>
 					<legend>강사 검색</legend>
 					<input type="hidden" name="key" value="${key}"/>
+					<input type="hidden" name="prgSe" value="EDU"/>
 				<select id="searchInsttNo" name="searchInsttNo" onchange="insttNoChange(this.value)" class="p-input p-input--auto">
 					<option value="">기관 선택</option>
 					<c:forEach var="instt" items="${eduInsttList}">

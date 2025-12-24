@@ -173,7 +173,7 @@
                         <span class="image">
                             <c:choose>
                                 <c:when test="${empty result.mainImg}">
-                                    <img src="/site/www/images/program/no-image-grey.png" alt="<c:out value="${result.exprnNm}"/> 이미지 없음">
+                                    <img src="/site/www/images/program/no-image.png" alt="<c:out value="${result.exprnNm}"/> 이미지 없음">
                                 </c:when>
                                 <c:otherwise>
                                     <img src="/<c:out value="${result.mainImg.storePath}"/>/thumb/p_<c:out value="${result.mainImg.storeFileNm}"/>" alt="<c:out value="${result.exprnNm}"/> 이미지">
@@ -181,7 +181,24 @@
                             </c:choose>
                         </span>
                         <div class="option">
-                            <span class="stateType type1"><c:out value="${operSttusMap[result.operSttus]}"/></span>
+                            <c:set var="operSttus" value="${result.operSttus}"/>
+                            <c:set var="sttusType" value=""/>
+                            <c:if test="${operSttus == 'RCPT_WAIT'}">
+                                <c:set var="sttusType" value="type1"/>
+                            </c:if>
+                            <c:if test="${operSttus == 'RCPT_ING'}">
+                                <c:set var="sttusType" value="type2"/>
+                            </c:if>
+                            <c:if test="${operSttus == 'RCPT_END'}">
+                                <c:set var="sttusType" value="type3"/>
+                            </c:if>
+                            <c:if test="${operSttus == 'OPER_ING'}">
+                                <c:set var="sttusType" value="type2"/>
+                            </c:if>
+                            <c:if test="${operSttus == 'OPER_END'}">
+                                <c:set var="sttusType" value="type3"/>
+                            </c:if>
+                            <span class="stateType <c:out value="${sttusType}"/>"><c:out value="${operSttusMap[result.operSttus]}"/></span>
                             <span class="organ">
                                 <c:set var="insttNo" value="instt${result.insttNo}"/>
                                 <c:out value="${expInsttMap[insttNo]}"/>

@@ -41,13 +41,13 @@ function contentNavigation() {
 
     navigationButton.forEach( item => {
         item.addEventListener('click', (e) => {
-            if( item.classList.contains('active') ) {
-                item.classList.remove('active');
-                item.closest('li').classList.remove('active');
-            } else {
-                item.classList.add('active');
-                item.closest('li').classList.add('active');
-            }
+            contentNavigation.querySelectorAll('.active').forEach(el => {
+                el.classList.remove('active');
+            });
+
+            // 2. 클릭된 버튼 + 부모 li에만 active 추가
+            item.classList.add('active');
+            item.closest('li').classList.add('active');
         });
     });
 }

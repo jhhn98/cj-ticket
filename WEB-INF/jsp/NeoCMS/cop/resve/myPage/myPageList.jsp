@@ -127,7 +127,14 @@
                 </td>
                 <td>
                     <span class="mobile-th">결제상태</span>
-                    <c:out value="${eduPayMap[result.paySttusCd]}"/>
+                    <c:choose>
+                        <c:when test="${result.payMthdCd == 'ELCTRN' && result.paySttusCd == 'PAY_WAIT' && empty result.tossMethod}">
+                            <a href="./myPageViewByEdu.do?key=<c:out value="${key}"/>&amp;eduAplyNo=<c:out value="${result.eduAplyNo}"/>&amp;myPageMode=VIEW" class="customLink bgBlack"><span>결제하기</span></a>
+                        </c:when>
+                        <c:otherwise>
+                            <c:out value="${eduPayMap[result.paySttusCd]}"/>
+                        </c:otherwise>
+                    </c:choose>
                 </td>
                 <td><span class="mobile-th">예약상태</span><c:out value="${eduRsvMap[result.resveSttusCd]}"/></td>
                 <td>
@@ -234,7 +241,7 @@
                 <td><span class="mobile-th">체험시간</span><c:out value="${tsu:toDateFormat(result.exprnBgnHm, 'HHmm', 'HH:mm')}"/> ~ <c:out value="${tsu:toDateFormat(result.exprnEndHm, 'HHmm', 'HH:mm')}"/></td>
                 <td><span class="mobile-th">결제상태</span>
                     <c:choose>
-                        <c:when test="${result.payMthdCd == 'ELCTRN' && result.paySttusCd == 'PAY_WAIT' && empty result.tossMethod}">
+                        <c:when test="${result.payMthdCd == 'ELCTRN' && result.rsvSttusCd == 'APPL_CMPL' && result.paySttusCd == 'PAY_WAIT' && empty result.tossMethod}">
                             <a href="./myPageViewByExprn.do?key=<c:out value="${key}"/>&amp;exprnApplNo=<c:out value="${result.exprnApplNo}"/>&amp;myPageMode=VIEW" class="customLink bgBlack"><span>결제하기</span></a>
                         </c:when>
                         <c:otherwise>
@@ -255,7 +262,7 @@
                             - 결제상태 : 무료(PAY_FREE) or 결제대기(PAY_WAIT)+전자결제(가상계좌)X / 결제대기의 경우 전자결제(가상계좌)는 가상계좌 발급했기 때문에 환불요청을 해야한다.
                         --%>
                         <c:if test="${!fn:contains(result.rsvSttusCd, 'CNCL') && (result.paySttusCd == 'PAY_FREE' || (result.paySttusCd == 'PAY_WAIT' && result.tossMethod != '가상계좌'))}">
-                            <button type="button" class="customLink" onclick="fn_exprnApplCnclAjax(<c:out value="${result.exprnApplNo}"/>)"><span>취소</span></button>
+                            <button type="button" class="customLink" onclick="fn_applCnclAjax(<c:out value="${result.exprnApplNo}"/>)"><span>취소</span></button>
                         </c:if>
                         <%--
                             아래 상태값에 해당하는 경우에만 환불 요청 버튼 활성화
@@ -369,42 +376,54 @@
         });
     });
 
-    function fn_exprnApplCnclAjax(exprnApplNo) {
+    function fn_applCnclAjax(cancelApplNo) {
         if (!confirm('취소하시겠습니까?')) {
             return false;
         }
 
-        $.ajax({
-            cache: false,
-            url: './updateExprnApplCnclAjax.do',
-            type: 'POST',
-            data: {
-                exprnApplNo: exprnApplNo
-            },
-            success: function (res) {
-                if (res == 1) {
-                    alert("취소 처리되었습니다.");
-                    location.reload();
-                } else if (res == -1) {
-                    alert("신청 정보를 확인할 수 없습니다.");
-                } else if (res == -2) {
-                    alert("이미 취소된 건입니다. 다시 확인해주시기 바랍니다.");
-                } else if (res == -3) {
-                    alert("결제가 완료되었거나 환불 요청이 필요한 상태입니다. 다시 확인해주시기 바랍니다.");
-                }  else if (res == -4) {
-                    alert("취소가능일자가 지나 취소가 불가합니다.");
-                }else {
-                    alert("처리된 내역이 없습니다.");
-                }
-            }, // success
-            error: function (request,xhr, status) {
-                //alert(request.responseText);
-                alert("에러가 발생하였습니다.");
-                console.log("code:",request.status);
-                console.log("message:",request.responseText);
-                console.log("error:"+error)
+
+        var ajaxUrl = '';
+        var ajaxData = {};
+
+        var prgSe = $('input[name=prgSe]');
+        if (prgSe != '') {
+            if (prgSe == 'EXP') {
+                ajaxUrl = './updateExprnApplCnclAjax.do';
+                ajaxData = {
+                    exprnApplNo: cancelApplNo,
+                };
             }
-        });
+
+            $.ajax({
+                cache: false,
+                url: ajaxUrl,
+                type: 'POST',
+                data: ajaxData,
+                success: function (res) {
+                    if (res == 1) {
+                        alert("취소 처리되었습니다.");
+                        location.reload();
+                    } else if (res == -1) {
+                        alert("신청 정보를 확인할 수 없습니다.");
+                    } else if (res == -2) {
+                        alert("이미 취소된 건입니다. 다시 확인해주시기 바랍니다.");
+                    } else if (res == -3) {
+                        alert("결제가 완료되었거나 환불 요청이 필요한 상태입니다. 다시 확인해주시기 바랍니다.");
+                    } else if (res == -4) {
+                        alert("취소가능일자가 지나 취소가 불가합니다.");
+                    } else {
+                        alert("처리된 내역이 없습니다.");
+                    }
+                }, // success
+                error: function (request, xhr, status) {
+                    //alert(request.responseText);
+                    alert("에러가 발생하였습니다.");
+                    console.log("code:", request.status);
+                    console.log("message:", request.responseText);
+                    console.log("error:" + error)
+                }
+            });
+        }
     }
 
     function fn_applRfnd() {

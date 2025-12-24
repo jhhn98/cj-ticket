@@ -55,6 +55,10 @@
             <th scope="row">프로그램CODE</th>
             <td><c:out value="${program.progrmCode}"/></td>
         </tr>
+		<tr>
+            <th scope="row">프로그램 구분</th>
+            <td><c:out value="${program.progrmSe}"/></td>
+        </tr>
         </tbody>
     </table>
 

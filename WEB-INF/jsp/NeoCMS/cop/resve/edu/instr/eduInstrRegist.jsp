@@ -30,8 +30,7 @@
 	<fieldset>
        <legend>등록정보 작성</legend>
 		<input type="hidden" name="key" value="${key}"/>
-		<input type="hidden" name="actionMod" value="REGIST"/>
-		<input type="hidden" name="prgSe" value="${vos.prgSe}"/>
+		<input type="hidden" name="prgSe" value="EDU"/>
 		<c:forEach var="map" items="${eduInstrVO.paramsMap}">
 		<input type="hidden" name="${map.key}" value="${map.value}"/>
 		</c:forEach>
@@ -47,7 +46,24 @@
 		<td>
 			<form:select path="insttNo" id="insttNo" cssClass="p-input p-input--auto">
 				<form:option value="">선택하세요</form:option>
-				<form:options items="${eduInsttList}" itemValue="insttNo" itemLabel="insttNm"/>
+				<c:choose>
+					<c:when test="${not empty insttMap}">
+						<%-- 기관담당자 또는 강사: 권한 있는 기관만 표시 --%>
+						<c:forEach var="item" items="${insttMap}">
+							<option value="${item.key}"${item.key eq eduInstrVO.insttNo ? ' selected="selected"':''}>
+								${item.value}
+							</option>
+						</c:forEach>
+					</c:when>
+					<c:otherwise>
+						<%-- 최고관리자: 전체 기관 표시 --%>
+						<c:forEach var="instt" items="${eduInsttList}">
+							<option value="${instt.insttNo}"${instt.insttNo eq eduInstrVO.insttNo ? ' selected="selected"':''}>
+								<c:out value="${instt.insttNm}"/>
+							</option>
+						</c:forEach>
+					</c:otherwise>
+				</c:choose>
 			</form:select>
 			<form:errors path="insttNo" cssClass="form_error" />
 		</td>

@@ -186,9 +186,16 @@
                 <c:otherwise>
                     <c:forEach var="result" items="${eduLctreList}" varStatus="status">
                         <li>
-                            <a href="./selectEduLctreWebView.do?key=${key}&lctreNo=${result.lctreNo}">
-                                <span class="image">
-                                    <img src="/<c:out value="${result.mainImg.storePath}"/>/thumb/p_<c:out value="${result.mainImg.storeFileNm}"/>" alt="<c:out value="${result.lctreNm}"/> 이미지">
+                            <a href="./selectEduLctreWebView.do?key=<c:out value="${key}"/>&lctreNo=<c:out value="${result.lctreNo}"/>">
+                                <span class="image<c:if test="${empty result.mainImg}"> noImage</c:if>">
+                                    <c:choose>
+                                        <c:when test="${not empty result.mainImg}">
+                                            <img src="/<c:out value="${result.mainImg.storePath}"/>/thumb/p_<c:out value="${result.mainImg.storeFileNm}"/>" alt="<c:out value="${result.lctreNm}"/> 이미지">
+                                        </c:when>
+                                        <c:otherwise>
+                                            <img src="/site/www/images/program/no-image.png" alt="<c:out value="${result.lctreNm}"/> 이미지 없음">
+                                        </c:otherwise>
+                                    </c:choose>
                                 </span>
                                 <div class="option">
                                     <%-- [운영상태]
@@ -377,10 +384,23 @@
                             </td>
                             <td>
                                 <span class="mobile-th">대상</span>
-                                <c:forEach var="targetCd" items="${result.trgetList}" varStatus="status">
-                                    <c:out value="${targetMap[targetCd]}"/>
-                                    <c:if test="${!status.last}">|</c:if>
+                                <c:set var="isAllTargets" value="${not empty trgetList}"/>
+                                <c:forEach var="cd" items="${trgetList}">
+                                    <c:if test="${isAllTargets and !result.trgetList.contains(cd.code)}">
+                                        <c:set var="isAllTargets" value="false"/>
+                                    </c:if>
                                 </c:forEach>
+                                <c:choose>
+                                    <c:when test="${isAllTargets}">
+                                        제한없음
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:forEach var="targetCd" items="${result.trgetList}" varStatus="status">
+                                            <c:out value="${targetMap[targetCd]}"/>
+                                            <c:if test="${!status.last}">|</c:if>
+                                        </c:forEach>
+                                    </c:otherwise>
+                                </c:choose>
                             </td>
                             <td><span class="mobile-th">이용요금</span><span class="pay">
                         <c:choose>

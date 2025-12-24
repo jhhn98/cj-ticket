@@ -17,7 +17,7 @@
     <c:set var="applCnt" value="${result.resveCnt}" />
     <c:set var="reserveCountText" value="${applCnt} / ${rcritCnt}" />
     <c:if test="${result.closeYn == 'Y'}">
-        <c:set var="reserveCountText" value="접수마감" />
+        <c:set var="reserveCountText" value="예약마감" />
     </c:if>
 
     <c:set var="exprnBgnHm" value="${tsu:toDateFormat(result.exprnBgnHm, 'HHmm', 'HH:mm')}"/>

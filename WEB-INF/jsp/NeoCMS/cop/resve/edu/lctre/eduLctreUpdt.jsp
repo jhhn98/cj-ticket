@@ -21,7 +21,7 @@
             <span class="p-form__required--icon">필수</span> 표시는 필수 항목 입니다.
         </div>
         <div class="col-12 right margin_t_5">
-            <a href="/${menuInfo.siteId}/selectEduLctreList.do?<c:out value="${eduLctreVO.params}"/>"
+            <a href="/${menuInfo.siteId}/selectEduLctreList.do?<c:out value="${eduLctreSearchVO.params}"/>"
                class="p-button cancel">목록 </a>
         </div>
     </div>
@@ -31,6 +31,7 @@
         <fieldset>
             <legend>수정정보 작성</legend>
             <input type="hidden" name="key" value="${key}"/>
+            <input type="hidden" name="prgSe" value="EDU"/>
             <input type="hidden" name="lctreNo" value="${eduLctreVO.lctreNo}"/>
             <c:forEach var="map" items="${eduLctreVO.paramsMap}">
                 <input type="hidden" name="${map.key}" value="${map.value}"/>
@@ -47,11 +48,27 @@
                     <th scope="row"><label for="insttNo">기관명 선택</label> <span class="p-form__required--icon">필수</span>
                     </th>
                     <td>
-                        <form:select path="insttNo" id="insttNo" onchange="insttNoChange(this.value);"
-                                     class="p-input p-input--auto">
-                            <form:option value="">선택하세요</form:option>
-                            <form:options items="${eduInsttList}" itemValue="insttNo" itemLabel="insttNm"/>
-                        </form:select>
+                        <select name="insttNo" id="insttNo" onchange="insttNoChange(this.value);" class="p-input p-input--auto">
+                            <option value="">선택하세요</option>
+                            <c:choose>
+                                <c:when test="${not empty insttMap}">
+                                    <%-- 기관담당자 또는 강사: 권한 있는 기관만 표시 --%>
+                                    <c:forEach var="item" items="${insttMap}">
+                                        <option value="${item.key}" <c:if test="${item.key eq eduLctreVO.insttNo}">selected</c:if>>
+                                            ${item.value}
+                                        </option>
+                                    </c:forEach>
+                                </c:when>
+                                <c:otherwise>
+                                    <%-- 최고관리자: 전체 기관 표시 --%>
+                                    <c:forEach var="instt" items="${eduInsttList}">
+                                        <option value="${instt.insttNo}" <c:if test="${instt.insttNo eq eduLctreVO.insttNo}">selected</c:if>>
+                                            <c:out value="${instt.insttNm}"/>
+                                        </option>
+                                    </c:forEach>
+                                </c:otherwise>
+                            </c:choose>
+                        </select>
                         <span id="error_insttNo" class="form_error"></span>
                     </td>
                 </tr>
@@ -611,12 +628,15 @@
                 <tr id="bankInfo"${not empty eduLctreVO.bankNm ? '' : ' style="display:none;"'}>
                     <th scope="row"><label for="bankNm">은행정보</label></th>
                     <td>
+                        <span>은행명 </span>
                         <input type="text" id="bankNm" name="bankNm" value="<c:out value='${eduLctreVO.bankNm}'/>"
-                               class="p-input w100p" placeholder="은행명" maxlength="40"/>
+                               class="p-input w20p" placeholder="은행명" maxlength="40"/><br/>
+                        <span>계좌번호 </span>
                         <input type="text" id="acctNo" name="acctNo" value="<c:out value='${eduLctreVO.acctNo}'/>"
-                               class="p-input w100p" placeholder="계좌번호" maxlength="20"/>
+                               class="p-input w20p" placeholder="계좌번호" maxlength="20"/><br/>
+                        <span>예금주명 </span>
                         <input type="text" id="dpstrNm" name="dpstrNm" value="<c:out value='${eduLctreVO.dpstrNm}'/>"
-                               class="p-input w100p" placeholder="예금주명" maxlength="100"/>
+                               class="p-input w20p" placeholder="예금주명" maxlength="100"/>
                     </td>
                 </tr>
                 <!-- 온라인인원/대기인원 -->
@@ -992,6 +1012,12 @@
         var totalTarget = $(".target-item").length;
         var checkedTarget = $(".target-item:checked").length;
         $("#targetAll").prop("checked", totalTarget === checkedTarget && totalTarget > 0);
+
+        // 페이지 로드 시 기존 선택된 기관번호로 하위 데이터 필터링
+        var selectedInsttNo = $('#insttNo').val();
+        if (selectedInsttNo) {
+            insttNoChange(selectedInsttNo);
+        }
     });
 
     // 자동입력 필드 초기화 함수
@@ -1032,7 +1058,7 @@
     // 과목 선택 시 자동 입력 함수
     function autoFillSubjectData(subjectNo) {
         // 먼저 필드 초기화
-        // clearAutoFillFields();
+        clearAutoFillFields();
 
         // 과목이 선택되지 않았거나 데이터가 없으면 종료
         if (!subjectNo || !subjectDataMap[subjectNo]) return;
@@ -1045,10 +1071,18 @@
         }
 
         // 수강대상 체크박스
-        if (data.targetCdList && data.targetCdList.length > 0) {
-            data.targetCdList.forEach(function (code) {
-                $("input[name='targetCdList'][value='" + code + "']").prop("checked", true);
+        if (data.targetCd) {
+            var targetCdList = data.targetCd.split(',');
+            targetCdList.forEach(function (code) {
+                if (code.trim()) {
+                    $("input[name='targetCdList'][value='" + code.trim() + "']").prop("checked", true);
+                }
             });
+
+            // 전체 체크박스 상태 업데이트
+            var total = $(".target-item").length;
+            var checked = $(".target-item:checked").length;
+            $("#targetAll").prop("checked", total === checked && total > 0);
         }
 
         // 교육시간 (HHmm 형식을 시/분으로 분리)
@@ -1135,11 +1169,13 @@
 
         // 카테고리 처리
         var isValCtgry = false;
+        var selectedCtgryNo = $('#ctgryNo').val(); // 기존 선택된 카테고리 번호 저장
         $('#ctgryNo').empty();
         $('#ctgryNo').append('<option value="">선택하세요</option>');
         <c:forEach var="result" items="${eduCategoryList}">
         if (val == "${result.insttNo}") {
-            var option = $("<option value=\"${result.ctgryNo}\">${result.ctgryNm}</option>");
+            var isSelected = (selectedCtgryNo == "${result.ctgryNo}") ? ' selected' : '';
+            var option = $("<option value=\"${result.ctgryNo}\"" + isSelected + ">${result.ctgryNm}</option>");
             $('#ctgryNo').append(option);
             isValCtgry = true;
         }
@@ -1153,17 +1189,15 @@
             $('#text_ctgryNo').text("");
         }
 
-        // 과목 초기화
-        $('#subjectNo').empty();
-        $('#subjectNo').append('<option value="">선택하세요</option>');
-
         // 교육장소 처리
         var isValPlace = false;
+        var selectedPlaceNo = $('#placeNo').val(); // 기존 선택된 교육장소 번호 저장
         $('#placeNo').empty();
         $('#placeNo').append('<option value="">선택하세요</option>');
         <c:forEach var="place" items="${eduPlaceList}">
         if (val == "${place.insttNo}") {
-            var option = $("<option value=\"${place.placeNo}\">${place.placeNm}</option>");
+            var isSelected = (selectedPlaceNo == "${place.placeNo}") ? ' selected' : '';
+            var option = $("<option value=\"${place.placeNo}\"" + isSelected + ">${place.placeNm}</option>");
             $('#placeNo').append(option);
             isValPlace = true;
         }
@@ -1179,11 +1213,13 @@
 
         // 강사 처리
         var isValInstr = false;
+        var selectedUserId = $('#userId').val(); // 기존 선택된 강사 아이디 저장
         $('#userId').empty();
         $('#userId').append('<option value="">선택하세요</option>');
         <c:forEach var="instr" items="${eduInstrList}">
         if (val == "${instr.insttNo}") {
-            var option = $("<option value=\"${instr.userId}\">${instr.instrNm}</option>");
+            var isSelected = (selectedUserId == "${instr.userId}") ? ' selected' : '';
+            var option = $("<option value=\"${instr.userId}\"" + isSelected + ">${instr.instrNm}</option>");
             $('#userId').append(option);
             isValInstr = true;
         }
@@ -1196,6 +1232,12 @@
             $('#userId').attr("disabled", false);
             $('#text_userId').text("");
         }
+
+        // 카테고리가 선택되어 있으면 과목도 자동으로 필터링
+        var selectedCtgryNo = $('#ctgryNo').val();
+        if (selectedCtgryNo) {
+            ctgryNoChange(selectedCtgryNo);
+        }
     }
 
     // 카테고리 선택 이벤트
@@ -1204,11 +1246,13 @@
         // clearAutoFillFields();
 
         var isVal = false;
+        var selectedSubjectNo = $('#subjectNo').val(); // 기존 선택된 과목 번호 저장
         $('#subjectNo').empty();
         $('#subjectNo').append('<option value="">선택하세요</option>');
         <c:forEach var="result" items="${eduSubjectList}">
         if (val == "${result.ctgryNo}") {
-            var option = $("<option value=\"${result.subjectNo}\">${result.subjectNm}</option>");
+            var isSelected = (selectedSubjectNo == "${result.subjectNo}") ? ' selected' : '';
+            var option = $("<option value=\"${result.subjectNo}\"" + isSelected + ">${result.subjectNm}</option>");
             $('#subjectNo').append(option);
             isVal = true;
         }
@@ -1500,6 +1544,32 @@
             if (isNaN(frm.eduAmt.value) || Number(frm.eduAmt.value) < 0) {
                 alert("수강료 금액은 0 이상 숫자로 입력해주세요.");
                 frm.eduAmt.focus();
+                return false;
+            }
+        }
+
+        // 무통장입금 선택 시 은행정보 필수 체크
+        var isBankSelected = false;
+        $('input[name="payMthdCdList"]:checked').each(function() {
+            if ($(this).val().indexOf("무통장") >= 0 || $(this).val() == "NBKRCP") {
+                isBankSelected = true;
+            }
+        });
+
+        if (isBankSelected) {
+            if (!frm.bankNm.value.trim()) {
+                alert("은행명을 입력해주세요.");
+                frm.bankNm.focus();
+                return false;
+            }
+            if (!frm.acctNo.value.trim()) {
+                alert("계좌번호를 입력해주세요.");
+                frm.acctNo.focus();
+                return false;
+            }
+            if (!frm.dpstrNm.value.trim()) {
+                alert("예금주명을 입력해주세요.");
+                frm.dpstrNm.focus();
                 return false;
             }
         }

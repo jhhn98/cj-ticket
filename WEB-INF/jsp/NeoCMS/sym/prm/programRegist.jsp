@@ -108,6 +108,16 @@
                     </div>
                 </td>
             </tr>
+			<tr>
+                <th scope="row"><form:label path="progrmSe">프로그램 구분</form:label></th>
+                <td>
+                    <div class="form_element">
+                        <span class="element_wrap">
+                            <form:input path="progrmSe" size="80" maxlength="10"/> <form:errors path="progrmSe"/>
+                        </span>
+                    </div>
+                </td>
+            </tr>
             </tbody>
         </table>
         <div class="arrangementWrap data_button">

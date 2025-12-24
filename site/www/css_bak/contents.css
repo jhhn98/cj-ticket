@@ -1,0 +1,130 @@
+.key60-linkList {
+  display: flex;
+  flex-wrap: wrap;
+  width: calc(100% + 30px);
+  margin: 0 0 0 -30px;
+}
+.key60-linkList > li {
+  flex: 0 0 calc(33.3333333333% - 30px);
+  margin: 30px 0 0 30px;
+}
+.key60-linkList a {
+  display: block;
+  width: 100%;
+  height: 260px;
+  padding: 30px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+.key60-linkList .linkLogo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 155px;
+}
+.key60-linkList .linkLogo::before {
+  flex: 0 0 100%;
+  display: block;
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  background-size: 100% auto;
+}
+.key60-linkList .linkLogo.link1::before {
+  max-width: 170px;
+  height: 68px;
+  background-image: url(../images/contents/key60-logo1.png);
+}
+.key60-linkList .linkLogo.link2::before {
+  max-width: 314px;
+  height: 45px;
+  background-image: url(../images/contents/key60-logo2.png);
+}
+.key60-linkList .linkLogo.link3::before {
+  max-width: 170px;
+  height: 68px;
+  background-image: url(../images/contents/key60-logo3.png);
+}
+.key60-linkList .linkLogo.link4::before {
+  max-width: 314px;
+  height: 45px;
+  background-image: url(../images/contents/key60-logo4.png);
+}
+.key60-linkList .linkLogo.link5::before {
+  max-width: 201px;
+  height: 60px;
+  background-image: url(../images/contents/key60-logo5.png);
+}
+.key60-linkList .linkText {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 24px 0 0;
+  border-top: 1px solid #d4d4d4;
+  color: #000;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 22px;
+}
+.key60-linkList .linkText::after {
+  display: block;
+  width: 18px;
+  height: 18px;
+  margin: 0 0 0 15px;
+  background: url(../images/contents/key60-icon-blank.png) no-repeat 0 0;
+}
+
+@media all and (min-width: 1001px) {
+  .key60-linkList a:hover {
+    border-color: #009991;
+    color: #009991;
+  }
+  .key60-linkList a:hover .linkText {
+    color: #009991;
+  }
+  .key60-linkList a:hover .linkText::after {
+    background-position: -28px 0;
+  }
+}
+@media all and (max-width: 1000px) {
+  .key60-linkList {
+    width: calc(100% + 15px);
+    margin: 0 0 0 -15px;
+  }
+  .key60-linkList > li {
+    flex: 0 0 calc(33.333333% - 15px);
+    margin: 15px 0 0 15px;
+  }
+  .key60-linkList .linkLogo {
+    height: 90px;
+  }
+  .key60-linkList .linkText {
+    font-size: 15px;
+    line-height: 17px;
+  }
+  .key60-linkList .linkText::after {
+    margin: 0 0 0 5px;
+  }
+  .key60-linkList a {
+    height: auto;
+    padding: 15px 15px 30px 15px;
+  }
+}
+@media all and (max-width: 680px) {
+  .key60-linkList > li {
+    flex: 0 0 calc(50% - 15px);
+  }
+}
+@media all and (max-width: 470px) {
+  .key60-linkList {
+    width: 100%;
+    margin: 0;
+  }
+  .key60-linkList > li {
+    flex: 0 0 100%;
+    margin: 15px 0 0;
+  }
+}
+
+/*# sourceMappingURL=contents.css.map */

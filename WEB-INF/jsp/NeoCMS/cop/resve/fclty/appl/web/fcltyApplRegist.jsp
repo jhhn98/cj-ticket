@@ -3,6 +3,7 @@
 <%@ taglib prefix="tsu" uri="http://www.hanshinit.co.kr/jstl/tagStringUtil"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <html>
 <head>
@@ -176,41 +177,20 @@
                     </td>
                 </tr>
             </c:if>
-            <tr>
-                <th scope="row" class="first">
-                    <div class="innerCell">
-                        <label for="totalCnt" title="필수 입력 항목입니다.">
-                            신청인원
-                            <span class="point-color-red">*</span>
-                        </label>
-                    </div>
-                </th>
-                <td>
-                    <div class="innerCell">
-                        총  <input type="number" id="totalCnt" class="customInputDefault textAlignCenter" name="totalCnt" value="<c:out value="${fcltyApplVO.totalCnt}"/>">  명
-                    </div>
-                    <c:if test="${fcltyVO.detailNmprUseYn == 'Y'}">
-                        <div class="innerCell">
-                            <input type="number" id="adltCnt" placeholder="성인" class="customInputDefault" name="adltCnt" min="0" value="<c:out value="${fcltyApplVO.adltCnt}"/>">
-                            <input type="number" id="teenCnt" placeholder="청소년" class="customInputDefault" name="teenCnt" min="0" value="<c:out value="${fcltyApplVO.teenCnt}"/>">
-                            <input type="number" id="elmntCnt" placeholder="초등학생" class="customInputDefault" name="elmntCnt" min="0" value="<c:out value="${fcltyApplVO.elmntCnt}"/>">
-                            <input type="number" id="childCnt" placeholder="아동" class="customInputDefault" name="childCnt" min="0" value="<c:out value="${fcltyApplVO.childCnt}"/>">
-                            <input type="number" id="infantCnt" placeholder="영유아" class="customInputDefault" name="infantCnt" min="0" value="<c:out value="${fcltyApplVO.infantCnt}"/>">
-                        </div>
-                    </c:if>
-                    <c:if test="${fcltyVO.nmprMinCnt > 0 || fcltyVO.nmprMaxCnt > 0}">
-                        <p class="iconText caution">
-                            <c:if test="${fcltyVO.nmprMinCnt > 0}">
-                                최소 신청인원 : <c:out value="${fcltyVO.nmprMinCnt}"/> 명
-                            </c:if>
-                            <c:if test="${fcltyVO.nmprMinCnt > 0 && nmprMaxCnt > 0}"> / </c:if>
-                            <c:if test="${fcltyVO.nmprMaxCnt > 0}">
-                                최대 신청인원 : <c:out value="${fcltyVO.nmprMaxCnt}"/> 명
-                            </c:if>
-                        </p>
-                    </c:if>
-                </td>
-            </tr>
+
+            <input type="hidden" name="totalCnt" value="<c:out value="${fcltyApplVO.totalCnt}"/>" />
+<%--                    <c:if test="${fcltyVO.nmprMinCnt > 0 || fcltyVO.nmprMaxCnt > 0}">--%>
+<%--                        <p class="iconText caution">--%>
+<%--                            <c:if test="${fcltyVO.nmprMinCnt > 0}">--%>
+<%--                                최소 신청인원 : <c:out value="${fcltyVO.nmprMinCnt}"/> 명--%>
+<%--                            </c:if>--%>
+<%--                            <c:if test="${fcltyVO.nmprMinCnt > 0 && nmprMaxCnt > 0}"> / </c:if>--%>
+<%--                            <c:if test="${fcltyVO.nmprMaxCnt > 0}">--%>
+<%--                                최대 신청인원 : <c:out value="${fcltyVO.nmprMaxCnt}"/> 명--%>
+<%--                            </c:if>--%>
+<%--                        </p>--%>
+<%--                    </c:if>--%>
+
             <tr>
                 <th scope="row" class="first"><div class="innerCell">이메일</div></th>
                 <td>
@@ -345,10 +325,14 @@
                         <div class="innerCell">
                             <div class="customSelect inlineBlock">
                                 <%-- 결제방식 공통코드 - ELCTRN : 전자결제 / NBKRCP : 무통장입금 / DIRECT : 현장결제 --%>
+                                <c:set var="payMthdCd" value="${fcltyVO.payMthdCd}|" />
                                 <select id="selectedElement" name="payMthdCd">
                                     <option value="">선택해주세요.</option>
                                     <c:forEach var="result" items="${payMthdList}" varStatus="status">
-                                        <option value="<c:out value="${result.code}"/>"<c:if test="${result.code == fcltyApplVO.payMthdCd}"> selected</c:if>><c:out value="${result.codeNm}"/></option>
+                                        <c:set var="mtchCd" value="${result.code}|" />
+                                        <c:if test="${fn:contains(payMthdCd, mtchCd)}">
+                                            <option value="<c:out value="${result.code}"/>"<c:if test="${result.code == fcltyApplVO.payMthdCd}"> selected</c:if>><c:out value="${result.codeNm}"/></option>
+                                        </c:if>
                                     </c:forEach>
                                 </select>
                             </div>

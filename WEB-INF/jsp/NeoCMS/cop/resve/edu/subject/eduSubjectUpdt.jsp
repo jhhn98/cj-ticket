@@ -31,6 +31,7 @@
 	<fieldset>
 		<legend>등록정보 수정</legend>
 		<input type="hidden" name="key" value="${key}"/>
+		<input type="hidden" name="prgSe" value="EDU"/>
 		<c:forEach var="map" items="${eduSubjectVO.paramsMap}">
 		<input type="hidden" name="${map.key}" value="${map.value}"/>
 		</c:forEach>
@@ -46,7 +47,24 @@
 			<td>
 				<form:select path="insttNo" id="insttNo" class="p-input p-input--auto" onchange="insttNoChange(this.value);">
 					<form:option value="" label="기관명 선택"/>
-					<form:options items="${eduInsttList}" itemValue="insttNo" itemLabel="insttNm"/>
+					<c:choose>
+						<c:when test="${not empty insttMap}">
+							<%-- 기관담당자 또는 강사: 권한 있는 기관만 표시 --%>
+							<c:forEach var="item" items="${insttMap}">
+								<option value="${item.key}"${item.key eq eduSubjectVO.insttNo ? ' selected="selected"':''}>
+									${item.value}
+								</option>
+							</c:forEach>
+						</c:when>
+						<c:otherwise>
+							<%-- 최고관리자: 전체 기관 표시 --%>
+							<c:forEach var="instt" items="${eduInsttList}">
+								<option value="${instt.insttNo}"${instt.insttNo eq eduSubjectVO.insttNo ? ' selected="selected"':''}>
+									<c:out value="${instt.insttNm}"/>
+								</option>
+							</c:forEach>
+						</c:otherwise>
+					</c:choose>
 				</form:select>
 				<span id="error_insttNo" class="form_error"></span>
 			</td>

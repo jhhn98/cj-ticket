@@ -35,6 +35,7 @@
     <div class="circle colorOrange"></div>
 </div>
 <main>
+    <a href="/www/index.do" class="login-link-index"><span>통합예약 메인 페이지로 이동하기</span></a>
     <h2><span>청주시 CHEONGJU CITY 통합예약 로그인</span></h2>
     <strong class="loginTitle"><span class="point-color-green">청주시의 다양한 예약</span>을 한 곳에서!</strong>
     <p class="loginText">홈페이지서비스이용과 익명의 사용자로 인한 피해를 방지하고자 본인확인제도를 시행하고 있습니다.<br>아래 본인(휴대폰)인증, I-PIN인증, SNS인증 중 하나를 선택하여 본인확인을 해 주시기 바랍니다.</p>
@@ -148,6 +149,8 @@
         // 본인인증 모달 표시
         var modal = document.querySelector('[data-modal-layer="login1"]');
         var body = document.querySelector('body');
+        var isModalClosed = false; // 모달이 닫혔는지 여부
+        
         if(modal) {
             modal.classList.add('show');
             if(body && !body.classList.contains('modalShow')) {
@@ -158,13 +161,24 @@
             var closeButton = modal.querySelector('.modalCloseButton');
             if(closeButton) {
                 closeButton.addEventListener('click', function() {
-                    modal.classList.remove('show');
-                    if(body.classList.contains('modalShow')) {
-                        body.classList.remove('modalShow');
-                    }
+                    // 모달 닫기 시 SNS 로그인 세션 해제
+                    isModalClosed = true;
+                    // SNS 로그인 취소 처리
+                    window.location.href = '/loginView.do?snsIntrlckMode=snsCancel';
                 });
             }
         }
+        
+        // 페이지를 벗어날 때 (브라우저 닫기, 뒤로가기 등) SNS 로그인 세션 해제
+        window.addEventListener('beforeunload', function(e) {
+            // 모달이 열려있고 아직 닫히지 않았을 때만 처리
+            if(modal && modal.classList.contains('show') && !isModalClosed) {
+                // 비동기로 SNS 세션 해제 요청 (페이지 이동 중이므로 navigator.sendBeacon 사용)
+                if(navigator.sendBeacon) {
+                    navigator.sendBeacon('/loginView.do?snsIntrlckMode=snsCancel');
+                }
+            }
+        });
     });
     </c:if>
 </script>

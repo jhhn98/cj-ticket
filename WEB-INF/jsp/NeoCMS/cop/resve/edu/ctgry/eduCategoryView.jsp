@@ -27,6 +27,7 @@
                 <fieldset>
                     <legend>카테고리 검색</legend>
                     <input type="hidden" name="key" value="${key}"/>
+                    <input type="hidden" name="prgSe" value="EDU"/>
                     <form:select path="pageUnit" cssClass="p-input p-input--auto" title="목록수" onchange="this.form.submit()">
                         <form:option value="10">10개씩 보기</form:option>
                         <form:option value="20">20개씩 보기</form:option>
@@ -58,11 +59,24 @@
                 <td>
                     <select id="insttNo" name="insttNo" class="p-input p-input--auto">
                         <option value="">선택하세요</option>
-                        <c:forEach var="instt" items="${eduInsttList}">
-                            <option value="${instt.insttNo}">
-                                <c:out value="${instt.insttNm}"/>
-                            </option>
-                        </c:forEach>
+                        <c:choose>
+                            <c:when test="${not empty insttMap}">
+                                <%-- 기관담당자 또는 강사: 권한 있는 기관만 표시 --%>
+                                <c:forEach var="item" items="${insttMap}">
+                                    <option value="${item.key}"${item.key eq eduLctreVO.searchInsttNo ? ' selected="true"':''}>
+                                            ${item.value}
+                                    </option>
+                                </c:forEach>
+                            </c:when>
+                            <c:otherwise>
+                                <%-- 최고관리자: 전체 기관 표시 --%>
+                                <c:forEach var="instt" items="${eduInsttList}">
+                                    <option value="${instt.insttNo}"${instt.insttNo eq eduLctreVO.searchInsttNo ? ' selected="true"':''}>
+                                        <c:out value="${instt.insttNm}"/>
+                                    </option>
+                                </c:forEach>
+                            </c:otherwise>
+                        </c:choose>
                     </select>
                 </td>
                 <th scope="row"><label for="ctgryNm">카테고리명</label> <span class="p-form__required--icon">필수</span></th>

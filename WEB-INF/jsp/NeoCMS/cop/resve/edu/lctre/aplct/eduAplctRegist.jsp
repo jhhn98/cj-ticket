@@ -161,6 +161,7 @@
             <fieldset>
                 <legend>신청자 정보 입력</legend>
                  <input type="hidden" name="key" value="${key}"/>
+                <input type="hidden" name="prgSe" value="EDU"/>
                  <input type="hidden" name="lctreNo" value="${eduAplctVO.lctreNo}"/>
                  <input type="hidden" name="resveSttusCd" id="resveSttusCdHidden" value=""/> <!-- 예약상태 (form 제출 전 script에서 설정) -->
                  <input type="hidden" name="paySttusCd" value="01"/> <!-- 기본값: 미결제 -->

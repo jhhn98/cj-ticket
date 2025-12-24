@@ -124,6 +124,7 @@
 }
 .searchDetailResult .titleArea {
   display: flex;
+  align-items: baseline;
   position: relative;
   min-height: 40px;
   margin: 0 0 20px;
@@ -195,6 +196,9 @@
   transform: translateY(-50%);
 }
 .table-searchResult thead th.first::before {
+  display: none;
+}
+.table-searchResult .mobile-th {
   display: none;
 }
 .table-searchResult td {
@@ -674,6 +678,29 @@
   }
   .table-searchResult thead th {
     padding: 14px 5px;
+  }
+  .table-searchResult thead {
+    display: none;
+  }
+  .table-searchResult tr {
+    display: block;
+    padding: 15px;
+    border-top: 1px solid #26293d;
+  }
+  .table-searchResult tr,.table-searchResult td {
+    width: 100%;
+  }
+  .table-searchResult td {
+    display: flex;
+    padding:3px;
+    border: none;
+    text-align: left;
+  }
+  .table-searchResult .mobile-th {
+    display: block;
+    flex: 0 0 65px;
+    margin: 0 20px 0 0;
+    text-align: right;
   }
   .lectureState {
     font-size: 14px;

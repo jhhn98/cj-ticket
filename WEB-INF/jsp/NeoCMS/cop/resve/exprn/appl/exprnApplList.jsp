@@ -128,6 +128,7 @@
             <col style="width:100px">
             <col style="width:90px">
             <col style="width:90px">
+            <col style="width:90px">
             <col style="width:50px">
         </colgroup>
         <thead>
@@ -144,6 +145,7 @@
             <th scope="col">개인/단체</th>
             <th scope="col">인원</th>
             <th scope="col">체험일자</th>
+            <th scope="col">거주지</th>
             <th scope="col">예약상태</th>
             <th scope="col">결제상태</th>
             <th scope="col">관리</th>
@@ -180,19 +182,20 @@
                     <c:out value="${tsu:toDateFormat(result.applDtMs, 'yyyyMMddHHmmssSS', 'HH:mm:ss:SS')}"/>
                 </td>
                 <td>
-                    <c:if test="${empty result.grpNm}">개인</c:if>
-                    <c:if test="${!empty result.grpNm}"><c:out value="${result.grpNm}"/></c:if>
+                    <c:if test="${exprnApplVO.nmprSeCd == 'IND'}">개인</c:if>
+                    <c:if test="${exprnApplVO.nmprSeCd == 'GRP'}">단체(<c:out value="${exprnApplVO.grpNm}"/>)</c:if>
                 </td>
                 <td><c:out value="${result.totalCnt}"/></td>
                 <td>
                     <c:out value="${tsu:toDateFormat(result.exprnDe, 'yyyyMMdd', 'yyyy-MM-dd')}"/><br/>
                     <c:out value="${tsu:toDateFormat(result.exprnBgnHm, 'HHmm', 'HH:mm')}"/> ~ <c:out value="${tsu:toDateFormat(result.exprnEndHm, 'HHmm', 'HH:mm')}"/>
                 </td>
+                <td><c:out value="${lgldongMap[result.resInqCd]}"/></td>
                 <td><c:out value="${rsvSttusMap[result.rsvSttusCd]}"/></td>
                 <td>
                     <%--TODOSDB: 감면관련 상태값 추가--%>
                     <c:out value="${paySttusMap[result.paySttusCd]}"/>
-                    <c:if test="${result.paySttusCd == 'PAY_WAIT'}">
+                    <c:if test="${result.rsvSttusCd == 'APPL_CMPL' && result.paySttusCd == 'PAY_WAIT'}">
                         <br/><c:out value="${tsu:toDateFormat(result.payDeadlineDt, 'yyyyMMddHHmmss', 'yyyy-MM-dd')}"/>
                         <br/><c:out value="${tsu:toDateFormat(result.payDeadlineDt, 'yyyyMMddHHmmss', 'HH:mm:ss')}"/>
                     </c:if>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" serverName="NEO-CJTICKET" remoteFilesAllowedToDisappearOnAutoupload="false">
+  <component name="PublishConfigData" serverName="NEO-CJTICKET" remoteFilesAllowedToDisappearOnAutoupload="false" confirmBeforeUploading="false">
+    <option name="confirmBeforeUploading" value="false" />
     <serverData>
       <paths name="NEO-CJTICKET">
         <serverdata>
@@ -29,7 +30,26 @@
             <excludedPath path="/index.html" />
             <excludedPath path="/index.jsp" />
             <excludedPath path="/test.jsp" />
-            <excludedPath path="/site/www/css" />
+            <excludedPath local="true" path="$PROJECT_DIR$/site/www/index.html" />
+            <excludedPath local="true" path="$PROJECT_DIR$/site/www/login.html" />
+            <excludedPath local="true" path="$PROJECT_DIR$/site/www/main.html" />
+            <excludedPath local="true" path="$PROJECT_DIR$/site/www/search.html" />
+            <excludedPath local="true" path="$PROJECT_DIR$/site/www/sub.html" />
+            <excludedPath local="true" path="$PROJECT_DIR$/site/www/sub1-1.html" />
+            <excludedPath local="true" path="$PROJECT_DIR$/site/www/sub1-2.html" />
+            <excludedPath local="true" path="$PROJECT_DIR$/site/www/sub1-3.html" />
+            <excludedPath local="true" path="$PROJECT_DIR$/site/www/sub2.html" />
+            <excludedPath local="true" path="$PROJECT_DIR$/site/www/sub2-1.html" />
+            <excludedPath local="true" path="$PROJECT_DIR$/site/www/sub2-2.html" />
+            <excludedPath local="true" path="$PROJECT_DIR$/site/www/sub2-3.html" />
+            <excludedPath local="true" path="$PROJECT_DIR$/site/www/sub3-1.html" />
+            <excludedPath local="true" path="$PROJECT_DIR$/site/www/sub3-2.html" />
+            <excludedPath local="true" path="$PROJECT_DIR$/site/www/sub4.html" />
+            <excludedPath local="true" path="$PROJECT_DIR$/index.js" />
+            <excludedPath local="true" path="$PROJECT_DIR$/package.json" />
+            <excludedPath local="true" path="$PROJECT_DIR$/README.md" />
+            <excludedPath local="true" path="$PROJECT_DIR$/site/www/css_bak" />
+            <excludedPath local="true" path="$PROJECT_DIR$/common/css/css_bak" />
           </excludedPaths>
         </serverdata>
       </paths>

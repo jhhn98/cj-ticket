@@ -55,7 +55,7 @@
                 <c:choose>
                     <c:when test="${fn:length(cmmnAtchImgList) == 0}">
                         <div class="slideItem no-image">
-                            <img src="/site/www/images/program/no-image-grey.png" alt="<c:out value="${exprnVO.exprnNm}"/> 이미지 없음">
+                            <img src="/site/www/images/program/no-image.png" alt="<c:out value="${exprnVO.exprnNm}"/> 이미지 없음">
                         </div>
                     </c:when>
                     <c:otherwise>

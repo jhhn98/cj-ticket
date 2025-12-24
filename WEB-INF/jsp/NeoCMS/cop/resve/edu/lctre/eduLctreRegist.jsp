@@ -30,6 +30,7 @@
         <fieldset>
             <legend>등록정보 작성</legend>
             <input type="hidden" name="key" value="${key}"/>
+            <input type="hidden" name="prgSe" value="EDU"/>
             <c:forEach var="map" items="${eduLctreVO.paramsMap}">
                 <input type="hidden" name="${map.key}" value="${map.value}"/>
             </c:forEach>
@@ -45,11 +46,27 @@
                     <th scope="row"><label for="insttNo">기관명 선택</label> <span class="p-form__required--icon">필수</span>
                     </th>
                     <td>
-                        <form:select path="insttNo" id="insttNo" onchange="insttNoChange(this.value);"
-                                     cssClass="p-input p-input--auto">
-                            <form:option value="">선택하세요</form:option>
-                            <form:options items="${eduInsttList}" itemValue="insttNo" itemLabel="insttNm"/>
-                        </form:select>
+                        <select name="insttNo" id="insttNo" onchange="insttNoChange(this.value);" class="p-input p-input--auto">
+                            <option value="">선택하세요</option>
+                            <c:choose>
+                                <c:when test="${not empty insttMap}">
+                                    <%-- 기관담당자 또는 강사: 권한 있는 기관만 표시 --%>
+                                    <c:forEach var="item" items="${insttMap}">
+                                        <option value="${item.key}" <c:if test="${item.key eq eduLctreVO.insttNo}">selected</c:if>>
+                                            ${item.value}
+                                        </option>
+                                    </c:forEach>
+                                </c:when>
+                                <c:otherwise>
+                                    <%-- 최고관리자: 전체 기관 표시 --%>
+                                    <c:forEach var="instt" items="${eduInsttList}">
+                                        <option value="${instt.insttNo}" <c:if test="${instt.insttNo eq eduLctreVO.insttNo}">selected</c:if>>
+                                            <c:out value="${instt.insttNm}"/>
+                                        </option>
+                                    </c:forEach>
+                                </c:otherwise>
+                            </c:choose>
+                        </select>
                         <form:errors path="insttNo" cssClass="form_error"/>
                     </td>
                 </tr>

@@ -158,8 +158,8 @@
             <tr>
                 <th scope="row">개인 / 단체</th>
                 <td>
-                    <c:if test="${empty exprnApplVO.grpNm}">개인</c:if>
-                    <c:if test="${!empty exprnApplVO.grpNm}"><c:out value="${exprnApplVO.grpNm}"/></c:if>
+                    <c:if test="${exprnApplVO.nmprSeCd == 'IND'}">개인</c:if>
+                    <c:if test="${exprnApplVO.nmprSeCd == 'GRP'}">단체(<c:out value="${exprnApplVO.grpNm}"/>)</c:if>
                 </td>
             </tr>
             <tr>
@@ -194,6 +194,10 @@
                         </select>
                     </div>
                 </td>
+            </tr>
+            <tr>
+                <th scope="row">거주지 조회</th>
+                <td><c:out value="${lgldongMap[exprnApplVO.resInqCd]}"/></td>
             </tr>
             <%--<tr>
                 <th scope="row">감면혜택</th>
@@ -267,36 +271,40 @@
                 <th scope="row">신청완료(승인)일시</th>
                 <td colspan="3">
                     <div class="p-form-group w20p">
-                        <c:out value="${tsu:toDateFormat(exprnApplVO.applCmplDt, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss')}"/>
-                        <%--<form:input path="payDeadlineDt" style="width:100px;" class="p-input p-input--auto" placeholder="yyyy-MM-dd"/>
+                        <c:set var="applCmplDt" value="${exprnApplVO.applCmplDt}"/>
+                        <c:set var="applCmplDe" value="${fn:substring(applCmplDt,0,8)}"/>
+                        <input type="text" name="applCmplDe" id="applCmplDe" style="width:100px;" class="p-input p-input--auto" placeholder="yyyy-MM-dd" value="<c:out value="${tsu:toDateFormat(applCmplDe, 'yyyyMMdd', 'yyyy-MM-dd')}"/>" readonly/>
                         <span class="p-input__addon">
-                                <button type="button" class="p-input__item" title="시작일 선택" onclick="getCalendar(document.exprnVO.rcptBgnDe);"> <!--getCalendar(document.bbsNttForm.start_date);-->
-                                    <svg width="14" height="16" fill="#888" focusable="false">
-                                        <use xlink:href="/common/images/program/p-icon.svg#calendar-alt"></use>
-                                    </svg>
-                                </button>
-                            </span>
+                            <button type="button" class="p-input__item" title="시작일 선택" onclick="getCalendar(document.exprnApplVO.applCmplDe);"> <!--getCalendar(document.bbsNttForm.start_date);-->
+                                <svg width="14" height="16" fill="#888" focusable="false">
+                                    <use xlink:href="/common/images/program/p-icon.svg#calendar-alt"></use>
+                                </svg>
+                            </button>
+                        </span>
                         <span class="p-form__split"></span>
-                        <form:select path="payDeadlineDt" class="p-input p-input--auto">
+                        <c:set var="applCmplHh" value="${fn:substring(applCmplDt,8,10)}"/>
+                        <select name="applCmplHh" id="applCmplHh" class="p-input p-input--auto">
                             <c:forEach var="result" begin="0" end="23">
                                 <fmt:formatNumber var="hh" value="${result}" pattern="00"/>
-                                <form:option value="${hh}"/>
+                                <option value="${hh}" label="${hh}"<c:if test="${applCmplHh == hh}"> selected</c:if>/>
                             </c:forEach>
-                        </form:select>
+                        </select>
                         <span class="p-form__split">:</span>
-                        <form:select path="payDeadlineDt" class="p-input p-input--auto">
+                        <c:set var="applCmplMm" value="${fn:substring(applCmplDt,10,12)}"/>
+                        <select name="applCmplMm" id="applCmplMm" class="p-input p-input--auto">
                             <c:forEach var="result" begin="0" end="59">
                                 <fmt:formatNumber var="mm" value="${result}" pattern="00"/>
-                                <form:option value="${mm}"/>
+                                <option value="${mm}" label="${mm}"<c:if test="${applCmplMm == mm}"> selected</c:if>/>
                             </c:forEach>
-                        </form:select>
+                        </select>
                         <span class="p-form__split">:</span>
-                        <form:select path="payDeadlineDt" class="p-input p-input--auto">
+                        <c:set var="applCmplSs" value="${fn:substring(applCmplDt,12,14)}"/>
+                        <select name="applCmplSs" id="applCmplSs" class="p-input p-input--auto">
                             <c:forEach var="result" begin="0" end="59">
-                                <fmt:formatNumber var="mm" value="${result}" pattern="00"/>
-                                <form:option value="${mm}"/>
+                                <fmt:formatNumber var="ss" value="${result}" pattern="00"/>
+                                <option value="${ss}" label="${ss}"<c:if test="${applCmplSs == ss}"> selected</c:if>/>
                             </c:forEach>
-                        </form:select>--%>
+                        </select>
                     </div>
                 </td>
                 <th scope="row">총결제금액</th>
@@ -312,38 +320,42 @@
                 <th scope="row">취소일시</th>
                 <td colspan="3">
                     <div class="p-form-group w20p">
-                        <c:out value="${tsu:toDateFormat(exprnApplVO.canclClosDt, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss')}"/>
-                        <c:out value="${tsu:toDateFormat(exprnApplVO.cancelDt, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss')}"/>
-                        <%--<form:input path="payDeadlineDt" style="width:100px;" class="p-input p-input--auto" placeholder="yyyy-MM-dd"/>
+                        <c:set var="cancelDt" value="${exprnApplVO.cancelDt}"/>
+                        <c:set var="cancelDe" value="${fn:substring(cancelDt,0,8)}"/>
+                        <input type="text" name="cancelDe" style="width:100px;" class="p-input p-input--auto" placeholder="yyyy-MM-dd" value="<c:out value="${tsu:toDateFormat(cancelDe, 'yyyyMMdd', 'yyyy-MM-dd')}"/>" readonly/>
                         <span class="p-input__addon">
-                                <button type="button" class="p-input__item" title="시작일 선택" onclick="getCalendar(document.exprnVO.rcptBgnDe);"> <!--getCalendar(document.bbsNttForm.start_date);-->
+                                <button type="button" class="p-input__item" title="시작일 선택" onclick="getCalendar(document.exprnApplVO.cancelDe);"> <!--getCalendar(document.bbsNttForm.start_date);-->
                                     <svg width="14" height="16" fill="#888" focusable="false">
                                         <use xlink:href="/common/images/program/p-icon.svg#calendar-alt"></use>
                                     </svg>
                                 </button>
                             </span>
                         <span class="p-form__split"></span>
-                        <form:select path="payDeadlineDt" class="p-input p-input--auto">
+                        <c:set var="cancelHh" value="${fn:substring(cancelDt,8,10)}"/>
+                        <select name="cancelHh" id="cancelHh" class="p-input p-input--auto">
                             <c:forEach var="result" begin="0" end="23">
                                 <fmt:formatNumber var="hh" value="${result}" pattern="00"/>
-                                <form:option value="${hh}"/>
+                                <option value="${hh}" label="${hh}"<c:if test="${cancelHh == ss}"> selected</c:if>/>
                             </c:forEach>
-                        </form:select>
+                        </select>
                         <span class="p-form__split">:</span>
-                        <form:select path="payDeadlineDt" class="p-input p-input--auto">
+                        <c:set var="cancelMm" value="${fn:substring(cancelDt,10,12)}"/>
+                        <select name="cancelMm" id="cancelMm" class="p-input p-input--auto">
                             <c:forEach var="result" begin="0" end="59">
                                 <fmt:formatNumber var="mm" value="${result}" pattern="00"/>
-                                <form:option value="${mm}"/>
+                                <option value="${mm}" label="${mm}"<c:if test="${cancelMm == ss}"> selected</c:if>/>
                             </c:forEach>
-                        </form:select>
+                        </select>
                         <span class="p-form__split">:</span>
-                        <form:select path="payDeadlineDt" class="p-input p-input--auto">
+                        <c:set var="cancelSs" value="${fn:substring(cancelDt,12,14)}"/>
+                        <select name="cancelSs" id="cancelSs" class="p-input p-input--auto">
                             <c:forEach var="result" begin="0" end="59">
-                                <fmt:formatNumber var="mm" value="${result}" pattern="00"/>
-                                <form:option value="${mm}"/>
+                                <fmt:formatNumber var="ss" value="${result}" pattern="00"/>
+                                <option value="${ss}" label="${ss}"<c:if test="${cancelSs == ss}"> selected</c:if>/>
                             </c:forEach>
-                        </form:select>--%>
+                        </select>
                     </div>
+                    취소가능일시 : <c:out value="${tsu:toDateFormat(exprnApplVO.canclClosDt, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss')}"/>
                 </td>
                 <th scope="row">감면금액</th>
                 <td>
@@ -358,41 +370,45 @@
             <tr>
                 <th scope="row">취소사유</th>
                 <td colspan="3">
-                    <pre><c:out value="${exprnApplVO.cancelReason}"/></pre>
+                    <form:input path="cancelReason" style="width:300px" class="p-input"/>
                 </td>
                 <th scope="row">결제기한</th>
                 <td colspan="3">
                     <div class="p-form-group w20p">
-                        <c:out value="${tsu:toDateFormat(exprnApplVO.payDeadlineDt, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss')}"/>
-                        <%--<form:input path="payDeadlineDt" style="width:100px;" class="p-input p-input--auto" placeholder="yyyy-MM-dd"/>
+                        <c:set var="payDeadlineDt" value="${exprnApplVO.payDeadlineDt}"/>
+                        <c:set var="payDeadlineDe" value="${fn:substring(payDeadlineDt,0,8)}"/>
+                        <input type="text" name="payDeadlineDe" style="width:100px;" class="p-input p-input--auto" placeholder="yyyy-MM-dd" value="<c:out value="${tsu:toDateFormat(payDeadlineDe, 'yyyyMMdd', 'yyyy-MM-dd')}"/>" readonly/>
                         <span class="p-input__addon">
-                                <button type="button" class="p-input__item" title="시작일 선택" onclick="getCalendar(document.exprnVO.rcptBgnDe);"> <!--getCalendar(document.bbsNttForm.start_date);-->
+                                <button type="button" class="p-input__item" title="시작일 선택" onclick="getCalendar(document.exprnApplVO.payDeadlineDe);"> <!--getCalendar(document.bbsNttForm.start_date);-->
                                     <svg width="14" height="16" fill="#888" focusable="false">
                                         <use xlink:href="/common/images/program/p-icon.svg#calendar-alt"></use>
                                     </svg>
                                 </button>
                             </span>
                         <span class="p-form__split"></span>
-                        <form:select path="payDeadlineDt" class="p-input p-input--auto">
+                        <c:set var="payDeadlineHh" value="${fn:substring(payDeadlineDt,8,10)}"/>
+                        <select name="payDeadlineHh" id="payDeadlineHh" class="p-input p-input--auto">
                             <c:forEach var="result" begin="0" end="23">
                                 <fmt:formatNumber var="hh" value="${result}" pattern="00"/>
-                                <form:option value="${hh}"/>
+                                <option value="${hh}" label="${hh}"<c:if test="${payDeadlineHh == ss}"> selected</c:if>/>
                             </c:forEach>
-                        </form:select>
+                        </select>
                         <span class="p-form__split">:</span>
-                        <form:select path="payDeadlineDt" class="p-input p-input--auto">
+                        <c:set var="payDeadlineMm" value="${fn:substring(payDeadlineDt,10,12)}"/>
+                        <select name="payDeadlineMm" id="payDeadlineMm" class="p-input p-input--auto">
                             <c:forEach var="result" begin="0" end="59">
                                 <fmt:formatNumber var="mm" value="${result}" pattern="00"/>
-                                <form:option value="${mm}"/>
+                                <option value="${mm}" label="${mm}"<c:if test="${payDeadlineMm == ss}"> selected</c:if>/>
                             </c:forEach>
-                        </form:select>
+                        </select>
                         <span class="p-form__split">:</span>
-                        <form:select path="payDeadlineDt" class="p-input p-input--auto">
+                        <c:set var="payDeadlineSs" value="${fn:substring(payDeadlineDt,12,14)}"/>
+                        <select name="payDeadlineSs" id="payDeadlineSs" class="p-input p-input--auto">
                             <c:forEach var="result" begin="0" end="59">
-                                <fmt:formatNumber var="mm" value="${result}" pattern="00"/>
-                                <form:option value="${mm}"/>
+                                <fmt:formatNumber var="ss" value="${result}" pattern="00"/>
+                                <option value="${ss}" label="${ss}"<c:if test="${payDeadlineSs == ss}"> selected</c:if>/>
                             </c:forEach>
-                        </form:select>--%>
+                        </select>
                     </div>
                 </td>
             </tr>
@@ -436,41 +452,49 @@
                 <td colspan="3">
                     <div class="p-form-group w20p">
                         <c:out value="${tsu:toDateFormat(exprnApplVO.payDt, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss')}"/>
-                        <%--<form:input path="payDeadlineDt" style="width:100px;" class="p-input p-input--auto" placeholder="yyyy-MM-dd"/>
+                        <c:set var="payDt" value="${exprnApplVO.payDt}"/>
+                        <c:set var="payDe" value="${fn:substring(payDt,0,8)}"/>
+                        <input type="text" name="payDe" style="width:100px;" class="p-input p-input--auto" placeholder="yyyy-MM-dd" value="<c:out value="${tsu:toDateFormat(payDe, 'yyyyMMdd', 'yyyy-MM-dd')}"/>" readonly/>
                         <span class="p-input__addon">
-                                <button type="button" class="p-input__item" title="시작일 선택" onclick="getCalendar(document.exprnVO.rcptBgnDe);"> <!--getCalendar(document.bbsNttForm.start_date);-->
+                                <button type="button" class="p-input__item" title="시작일 선택" onclick="getCalendar(document.exprnApplVO.payDe);"> <!--getCalendar(document.bbsNttForm.start_date);-->
                                     <svg width="14" height="16" fill="#888" focusable="false">
                                         <use xlink:href="/common/images/program/p-icon.svg#calendar-alt"></use>
                                     </svg>
                                 </button>
                             </span>
                         <span class="p-form__split"></span>
-                        <form:select path="payDeadlineDt" class="p-input p-input--auto">
+                        <c:set var="payHh" value="${fn:substring(payDt,8,10)}"/>
+                        <select name="payHh" id="payHh" class="p-input p-input--auto">
                             <c:forEach var="result" begin="0" end="23">
                                 <fmt:formatNumber var="hh" value="${result}" pattern="00"/>
-                                <form:option value="${hh}"/>
+                                <option value="${hh}" label="${hh}"<c:if test="${payHh == ss}"> selected</c:if>/>
                             </c:forEach>
-                        </form:select>
+                        </select>
                         <span class="p-form__split">:</span>
-                        <form:select path="payDeadlineDt" class="p-input p-input--auto">
+                        <c:set var="payMm" value="${fn:substring(payDt,10,12)}"/>
+                        <select name="payMm" id="payMm" class="p-input p-input--auto">
                             <c:forEach var="result" begin="0" end="59">
                                 <fmt:formatNumber var="mm" value="${result}" pattern="00"/>
-                                <form:option value="${mm}"/>
+                                <option value="${mm}" label="${mm}"<c:if test="${payMm == ss}"> selected</c:if>/>
                             </c:forEach>
-                        </form:select>
+                        </select>
                         <span class="p-form__split">:</span>
-                        <form:select path="payDeadlineDt" class="p-input p-input--auto">
+                        <c:set var="paySs" value="${fn:substring(payDt,12,14)}"/>
+                        <select name="paySs" id="paySs" class="p-input p-input--auto">
                             <c:forEach var="result" begin="0" end="59">
-                                <fmt:formatNumber var="mm" value="${result}" pattern="00"/>
-                                <form:option value="${mm}"/>
+                                <fmt:formatNumber var="ss" value="${result}" pattern="00"/>
+                                <option value="${ss}" label="${ss}"<c:if test="${paySs == ss}"> selected</c:if>/>
                             </c:forEach>
-                        </form:select>--%>
+                        </select>
                     </div>
                 </td>
             </tr>
             <tr>
                 <th scope="row">환불계좌</th>
                 <td colspan="3">
+                    <form:input path="rfndBankNm" style="width:300px" class="p-input" placeholder="은행명"/>
+                    <form:input path="rfndAcctNo" style="width:300px" class="p-input" placeholder="계좌번호"/>
+                    <form:input path="rfndDpstrNm" style="width:300px" class="p-input" placeholder="예금주"/>
                     <pre><c:out value="${exprnApplVO.rfndAcctNo}"/></pre>
                 </td>
                 <th scope="row" rowspan="3">메모</th>
@@ -481,7 +505,7 @@
             <tr>
                 <th scope="row">환불사유</th>
                 <td colspan="3">
-                        <c:out value="${exprnApplVO.rfndReason}"/>
+                    <form:input path="rfndReason" style="width:300px" class="p-input"/>
                 </td>
             </tr>
             <tr>

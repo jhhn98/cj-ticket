@@ -104,9 +104,11 @@
     <p class="iconText caution">예약정보 수정, 예약취소 및 결제는 <span class="point-color-green">나의 예약현황'</span>에서 가능합니다.</p>
 </div>
 <div class="formButtonGroup">
-<c:if test="${fcltyApplVO.fcltyAmt > 0}">
-    <a href="" class="button" onclick="alert('개발 진행 중입니다.'); return false;"><span>바로 결제하기</span></a>
-</c:if>
+    <c:if test="${fcltyApplVO.payMthdCd eq 'ELCTRN'}">
+        <c:if test="${fcltyApplVO.fcltyAmt > 0}">
+            <a href="" class="button" onclick="alert('개발 진행 중입니다.'); return false;"><span>바로 결제하기</span></a>
+        </c:if>
+    </c:if>
     <a href="./myPageList.do?key=59" class="button"><span>나의 예약현황 보기</span></a>
 </div>
 

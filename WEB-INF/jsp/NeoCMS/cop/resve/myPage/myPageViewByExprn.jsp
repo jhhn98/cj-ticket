@@ -134,7 +134,7 @@
                         <div class="innerCell">
                             <c:out value="${paySttusMap[exprnApplVO.paySttusCd]}"/>
                             <%-- 결제대기인 경우 결제기한까지 표출--%>
-                            <c:if test="${exprnApplVO.paySttusCd == 'PAY_WAIT'}">
+                            <c:if test="${result.rsvSttusCd == 'APPL_CMPL' && exprnApplVO.paySttusCd == 'PAY_WAIT'}">
                                 <p class="iconText caution point-color-green">
                                     <c:if test="${todate < exprnApplVO.payDeadlineDt}">
                                         결제기한: <c:out value="${tsu:toDateFormat(exprnApplVO.payDeadlineDt, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss')}"/> 까지
@@ -176,7 +176,7 @@
                                         (<c:out value="${exprnVO.bankNm}"/> <c:out value="${exprnVO.acctNo}"/> (예금주:<c:out value="${exprnVO.dpstrNm}"/>))
                                     </c:if>
                                 </p>
-                                <c:if test="${exprnApplVO.payMthdCd == 'ELCTRN' && exprnApplVO.paySttusCd == 'PAY_WAIT'}">
+                                <c:if test="${exprnApplVO.payMthdCd == 'ELCTRN' && result.rsvSttusCd == 'APPL_CMPL' && exprnApplVO.paySttusCd == 'PAY_WAIT'}">
                                     <c:if test="${todate < exprnApplVO.payDeadlineDt}">
                                         <c:import url="/tosspaymentsView.do">
                                             <c:param name="insttNo" value="${exprnApplVO.insttNo}" />
@@ -309,6 +309,10 @@
                             </c:if>
                         </div>
                     </td>
+                </tr>
+                <tr>
+                    <th scope="row" class="first"><div class="innerCell">거주지 조회</div></th>
+                    <td><div class="innerCell"><c:out value="${lgldongMap[exprnApplVO.resInqCd]}"/></div></td>
                 </tr>
                 <!-- 유료 옵션 -->
                 <%--<tr> TODOSDB: 감면신청 여부

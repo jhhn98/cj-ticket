@@ -17,16 +17,31 @@
     <div class="card">
         <form id="searchListFrm" method="get" action="/${menuInfo.siteId}/selectEduLctreList.do">
             <input type="hidden" name="key" value="${key}"/>
+            <input type="hidden" name="prgSe" value="EDU"/>
             <div class="p-form-row">
                 <label for="searchInsttNo" class="p-form__label col-2 right">운영기관</label>
                 <div class="col-3">
                     <select id="searchInsttNo" name="searchInsttNo" class="p-input"
                             onchange="insttIdChange(this.value)">
                         <option value="">운영기관 선택</option>
-                        <c:forEach var="instt" items="${eduInsttList}">
-                            <option value="${instt.insttNo}"${instt.insttNo eq eduLctreVO.searchInsttNo ? ' selected="true"':''}>
-                                <c:out value="${instt.insttNm}"/></option>
-                        </c:forEach>
+                        <c:choose>
+                            <c:when test="${not empty insttMap}">
+                                <%-- 기관담당자 또는 강사: 권한 있는 기관만 표시 --%>
+                                <c:forEach var="item" items="${insttMap}">
+                                    <option value="${item.key}"${item.key eq eduLctreVO.searchInsttNo ? ' selected="true"':''}>
+                                        ${item.value}
+                                    </option>
+                                </c:forEach>
+                            </c:when>
+                            <c:otherwise>
+                                <%-- 최고관리자: 전체 기관 표시 --%>
+                                <c:forEach var="instt" items="${eduInsttList}">
+                                    <option value="${instt.insttNo}"${instt.insttNo eq eduLctreVO.searchInsttNo ? ' selected="true"':''}>
+                                        <c:out value="${instt.insttNm}"/>
+                                    </option>
+                                </c:forEach>
+                            </c:otherwise>
+                        </c:choose>
                     </select>
                 </div>
                 <label for="searchCtgryNo" class="p-form__label col-2 right">카테고리</label>
@@ -34,10 +49,7 @@
                     <select id="searchCtgryNo" name="searchCtgryNo" class="p-input"
                             onchange="ctgryIdChange(this.value)">
                         <option value="">카테고리 선택</option>
-                        <c:forEach var="item" items="${eduCtgryList}">
-                            <option value="${item.ctgryNo}"${eduLctreVO.searchCtgryNo eq item.ctgryNo ? ' selected="true"':''}>
-                                <c:out value="${item.ctgryNm}"/></option>
-                        </c:forEach>
+                        <%-- 기관 선택 시 카테고리 동적 로딩 --%>
                     </select>
                 </div>
                 <label for="searchOperYear" class="p-form__label col-2 right">교육년도</label>
@@ -55,10 +67,7 @@
                 <div class="col-3">
                     <select id="searchSubjectNo" name="searchSubjectNo" class="p-input">
                         <option value="">과목 선택</option>
-                        <c:forEach var="subject" items="${eduSubjectList}">
-                            <option value="${subject.subjectNo}"${eduLctreVO.searchSubjectNo eq subject.subjectNo ? ' selected="true"':''}>
-                                <c:out value="${subject.subjectNm}"/></option>
-                        </c:forEach>
+                        <%-- 카테고리 선택 시 과목 동적 로딩 --%>
                     </select>
                 </div>
 
@@ -322,11 +331,13 @@
     // 기관명 선택 이벤트 - 카테고리 동적 로딩
     function insttIdChange(val) {
         var isVal = false;
+        var selectedCtgryNo = $('#searchCtgryNo').data('preservedValue') || '';
         $('#searchCtgryNo').empty();
         $('#searchCtgryNo').append('<option value="">카테고리 선택</option>');
         <c:forEach var="result" items="${eduCategoryList}">
         if (val == "${result.insttNo}") {
-            var option = $("<option value=\"${result.ctgryNo}\"${result.ctgryNo eq eduLctreVO.searchCtgryNo ? ' selected':''}>${result.ctgryNm}</option>");
+            var isSelected = (selectedCtgryNo == "${result.ctgryNo}") ? ' selected' : '';
+            var option = $("<option value=\"${result.ctgryNo}\"" + isSelected + ">${result.ctgryNm}</option>");
             $('#searchCtgryNo').append(option);
             isVal = true;
         }
@@ -338,18 +349,27 @@
         } else {
             $('#searchCtgryNo').attr("disabled", false);
         }
-        // 카테고리 변경 시 과목도 초기화
-        ctgryIdChange($('#searchCtgryNo').val());
+        // 카테고리 변경 시 과목도 초기화 (저장된 카테고리 선택값 유지)
+        var currentCtgryNo = $('#searchCtgryNo').val();
+        if (currentCtgryNo) {
+            $('#searchSubjectNo').data('preservedValue', '<c:out value="${eduLctreVO.searchSubjectNo}"/>');
+            ctgryIdChange(currentCtgryNo);
+        } else {
+            $('#searchSubjectNo').empty();
+            $('#searchSubjectNo').append('<option value="">과목 선택</option>');
+        }
     }
 
     // 카테고리 선택 이벤트 - 과목 동적 로딩
     function ctgryIdChange(val) {
         var isVal = false;
+        var selectedSubjectNo = $('#searchSubjectNo').data('preservedValue') || '';
         $('#searchSubjectNo').empty();
         $('#searchSubjectNo').append('<option value="">과목 선택</option>');
         <c:forEach var="result" items="${eduSubjectList}">
         if (val == "${result.ctgryNo}") {
-            var option = $("<option value=\"${result.subjectNo}\"${result.subjectNo eq eduLctreVO.searchSubjectNo ? ' selected':''}>${result.subjectNm}</option>");
+            var isSelected = (selectedSubjectNo == "${result.subjectNo}") ? ' selected' : '';
+            var option = $("<option value=\"${result.subjectNo}\"" + isSelected + ">${result.subjectNm}</option>");
             $('#searchSubjectNo').append(option);
             isVal = true;
         }
@@ -361,16 +381,21 @@
         } else {
             $('#searchSubjectNo').attr("disabled", false);
         }
+        // preservedValue 초기화
+        $('#searchSubjectNo').removeData('preservedValue');
     }
 
     // 페이지 로딩 시 초기화
     $(document).ready(function () {
         // 검색 기관이 선택되어 있으면 카테고리 리스트 초기화
         <c:if test="${!empty eduLctreVO.searchInsttNo}">
+        // 기관 선택값 저장 (카테고리 필터링 후에도 유지)
+        $('#searchCtgryNo').data('preservedValue', '<c:out value="${eduLctreVO.searchCtgryNo}"/>');
         insttIdChange('<c:out value="${eduLctreVO.searchInsttNo}"/>');
         </c:if>
-        // 검색 카테고리가 선택되어 있으면 과목 리스트 초기화
-        <c:if test="${!empty eduLctreVO.searchCtgryNo}">
+        // 검색 카테고리가 선택되어 있으면 과목 리스트 초기화 (기관이 선택되지 않은 경우에만)
+        <c:if test="${!empty eduLctreVO.searchCtgryNo && empty eduLctreVO.searchInsttNo}">
+        // 기관이 선택되지 않은 경우에만 직접 호출 (기관 선택 시에는 insttIdChange에서 호출됨)
         ctgryIdChange('<c:out value="${eduLctreVO.searchCtgryNo}"/>');
         </c:if>
 
@@ -447,13 +472,13 @@
     function fn_operYn(element, lctreNo, currentOperYn) {
         var newOperYn = $(element).prop('checked') ? 'Y' : 'N';
         var confirmMsg = newOperYn === 'Y' ? '운영여부를 운영으로 변경하시겠습니까?' : '운영여부를 미운영으로 변경하시겠습니까?';
-        
+
         if (!confirm(confirmMsg)) {
             $(element).prop('checked', !$(element).prop('checked'));
             return false;
         }
-        
-        var url = './updateEduLctreOperYn.do?' + (document.location.href.split("?")[1] || '') + 
+
+        var url = './updateEduLctreOperYn.do?' + (document.location.href.split("?")[1] || '') +
                   '&lctreNoArr=' + lctreNo + '&operYn=' + newOperYn;
         window.location.href = url;
     }

@@ -53,7 +53,7 @@
                             <c:set var="reserveCount" value="${arrCalendar[i][j][4]}" />
                         </c:if>
                         <c:if test="${arrCalendar[i][j][3] == 'F'}">
-                            <c:set var="reserveCount" value="접수마감" />
+                            <c:set var="reserveCount" value="예약마감" />
                         </c:if>
 
                         <%-- 접수 중이 아니면 모든 날짜 disabled 클래스로 --%>

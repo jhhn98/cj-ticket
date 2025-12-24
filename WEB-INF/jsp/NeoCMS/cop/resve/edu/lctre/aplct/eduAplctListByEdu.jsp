@@ -108,9 +108,9 @@
 			</td>
 		</tr>
 		<tr>
-			<th scope="row">접수상태</th>
+			<th scope="row">운영상태</th>
 			<td>
-
+				<c:out value="${operSttusMap[eduLctreVO.operSttus]}"/>
 			</td>
 			<th scope="row">선발방법</th>
 			<td>
@@ -177,6 +177,7 @@
 		<div class="col-18 right">
 			<form id="searchListFrm" method="get" action="/${menuInfo.siteId}/selectEduAplctListByEdu.do">
 				<input type="hidden" name="key" value="${key}"/>
+				<input type="hidden" name="prgSe" value="EDU"/>
 				<input type="hidden" name="searchLctreNo" value="${eduLctreVO.lctreNo}"/>
 
 				<fieldset>
@@ -300,7 +301,7 @@
 					</c:if>
 				</td>
 				<td>
-					<a href="./updateEduAplctView.do?eduAplyNo=${result.eduAplyNo}&amp;<c:out value="${eduAplctVO.params}"/>" class="p-button p-button--xsmall edit">수정</a>
+					<a href="./updateEduAplctView.do?eduAplyNo=${result.eduAplyNo}&amp;insttNo=${result.insttNo}&amp;<c:out value="${eduAplctVO.params}"/>" class="p-button p-button--xsmall edit">수정</a>
 					<a href="./deleteEduAplct.do?eduAplyNo=${result.eduAplyNo}&amp;<c:out value="${eduAplctVO.params}"/>"
 					   onclick="fn_delete(this.href, '<c:out value="${result.applNm}"/>'); return false;" class="p-button p-button--xsmall delete">삭제</a>
 				</td>

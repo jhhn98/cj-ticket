@@ -44,7 +44,7 @@ LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
                         <li><a href="/logout.do" class="account"><svg><use href="/site/www/images/common/sprite-common-side.svg#icon-account-on"></use></svg><span>로그아웃</span></a></li>
                     </c:when>
                     <c:when test="@@{empty loginVO}">
-                        <li><a href="/loginView.do" class="account"><svg><use href="/site/www/images/common/sprite-common-side.svg#icon-account-off"></use></svg><span>로그인</span></a></li>
+                        <li><a href="/loginView.do?rurl=/www/index.do" class="account"><svg><use href="/site/www/images/common/sprite-common-side.svg#icon-account-off"></use></svg><span>로그인</span></a></li>
                     </c:when>
                 </c:choose>
 

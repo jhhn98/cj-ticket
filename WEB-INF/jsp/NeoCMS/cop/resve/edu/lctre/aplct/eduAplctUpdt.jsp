@@ -22,9 +22,11 @@
 
 	<form:form id="updateForm" action="./updateEduAplct.do" method="post" modelAttribute="eduAplctVO" onsubmit="return validateForm(this)">
 			<input type="hidden" name="key" value="${key}"/>
+			<input type="hidden" name="prgSe" value="EDU"/>
 			<input type="hidden" name="lctreNo" value="${eduAplctVO.lctreNo}"/>
 			<input type="hidden" name="eduAplyNo" value="${eduAplctVO.eduAplyNo}"/>
 			<input type="hidden" name="eduRsvtNo" value="${eduAplctVO.eduRsvtNo}"/>
+			<input type="hidden" name="insttNo" value="${eduAplctVO.insttNo}"/>
 			<input type="hidden" name="searchLctreNo" value="${not empty eduAplctVO.searchLctreNo ? eduAplctVO.searchLctreNo : eduAplctVO.lctreNo}"/>
 
 		<table class="p-table">
@@ -130,12 +132,18 @@
 						<c:otherwise>무료</c:otherwise>
 					</c:choose>
 				</td>
-				<c:if test="${not empty eduLctreVO.eduAmt && eduLctreVO.eduAmt > 0}">
-				<th scope="row">결제방식</th>
-				<td colspan="4">
-					<c:out value="${payMthdMap[eduAplctVO.payMthdCd]}"/>
-				</td>
-				</c:if>
+				<c:choose>
+					<c:when test="${not empty eduLctreVO.eduAmt && eduLctreVO.eduAmt > 0}">
+						<th scope="row">결제방식</th>
+						<td colspan="4">
+							<c:out value="${payMthdMap[eduAplctVO.payMthdCd]}"/>
+						</td>
+					</c:when>
+					<c:otherwise>
+						<th scope="row">결제방식</th>
+						<td colspan="4">-</td>
+					</c:otherwise>
+				</c:choose>
 			</tr>
 			<c:if test="${not empty eduLctreVO.eduAmt && eduLctreVO.eduAmt > 0}">
 			<tr>
@@ -194,7 +202,7 @@
 			<tr>
 				<th scope="row">메모</th>
 				<td colspan="6">
-					<c:out value="${eduAplctVO.memo}"/>
+					<textarea name="memo" id="memo" class="p-input p-input--auto" rows="1" style="width:40%; height:100px;" maxlength="100" placeholder="메모를 입력하세요"><c:out value="${eduAplctVO.memo}"/></textarea>
 				</td>
 			</tr>
 			</tbody>
@@ -395,7 +403,16 @@
 
 			<div class="row margin_t_15">
 				<div class="col-12">
-						<a href="./selectEduAplctListByEdu.do?eduAplyNo=${eduAplctVO.eduAplyNo}&amp;<c:out value="${eduAplctVO.params}"/>" class="p-button cancel">목록</a>
+					<c:choose>
+						<c:when test="${referer eq 'list'}">
+							<%-- eduAplctList.jsp에서 온 경우 --%>
+							<a href="./selectEduAplctList.do?<c:out value="${eduAplctSearchVO.params}"/>" class="p-button cancel">목록</a>
+						</c:when>
+						<c:otherwise>
+							<%-- eduAplctListByEdu.jsp에서 온 경우 (기본값) --%>
+							<a href="./selectEduAplctListByEdu.do?<c:out value="${eduAplctSearchVO.params}"/>" class="p-button cancel">목록</a>
+						</c:otherwise>
+					</c:choose>
 				</div>
 				<div class="col-12 right">
 					<input type="submit" class="p-button write" value="수정">

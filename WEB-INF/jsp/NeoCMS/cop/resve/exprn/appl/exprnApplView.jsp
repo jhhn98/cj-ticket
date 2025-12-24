@@ -133,8 +133,8 @@
         <tr>
             <th scope="row">개인 / 단체</th>
             <td>
-                <c:if test="${empty exprnApplVO.grpNm}">개인</c:if>
-                <c:if test="${!empty exprnApplVO.grpNm}"><c:out value="${exprnApplVO.grpNm}"/></c:if>
+                <c:if test="${exprnApplVO.nmprSeCd == 'IND'}">개인</c:if>
+                <c:if test="${exprnApplVO.nmprSeCd == 'GRP'}">단체(<c:out value="${exprnApplVO.grpNm}"/>)</c:if>
             </td>
         </tr>
         <tr>
@@ -157,6 +157,10 @@
             <td>
                 <c:out value="${exprnApplVO.email}"/>
             </td>
+        </tr>
+        <tr>
+            <th scope="row">거주지 조회</th>
+            <td><c:out value="${lgldongMap[exprnApplVO.resInqCd]}"/></td>
         </tr>
         <%--<tr>
             <th scope="row">감면혜택</th>

@@ -30,6 +30,7 @@
 	<fieldset>
 		<legend>등록정보 작성</legend>
 		<input type="hidden" name="key" value="${key}"/>
+		<input type="hidden" name="prgSe" value="EDU"/>
 		<c:forEach var="map" items="${eduSubjectVO.paramsMap}">
 		<input type="hidden" name="${map.key}" value="${map.value}"/>
 		</c:forEach>
@@ -45,7 +46,24 @@
 			<td>
 			<form:select path="insttNo" id="insttNo" onchange="insttNoChange(this.value);" class="p-input p-input--auto">
 				<form:option value="">선택하세요</form:option>
-				<form:options items="${eduInsttList}" itemValue="insttNo" itemLabel="insttNm"/>
+				<c:choose>
+					<c:when test="${not empty insttMap}">
+						<%-- 기관담당자 또는 강사: 권한 있는 기관만 표시 --%>
+						<c:forEach var="item" items="${insttMap}">
+							<option value="${item.key}"${item.key eq eduSubjectVO.insttNo ? ' selected="selected"':''}>
+								${item.value}
+							</option>
+						</c:forEach>
+					</c:when>
+					<c:otherwise>
+						<%-- 최고관리자: 전체 기관 표시 --%>
+						<c:forEach var="instt" items="${eduInsttList}">
+							<option value="${instt.insttNo}"${instt.insttNo eq eduSubjectVO.insttNo ? ' selected="selected"':''}>
+								<c:out value="${instt.insttNm}"/>
+							</option>
+						</c:forEach>
+					</c:otherwise>
+				</c:choose>
 			</form:select>
 				<span id="error_insttNo" class="form_error"></span>
 			</td>
@@ -144,7 +162,7 @@
 					<label for="chrgeSe1" class="p-form-radio__label">무료</label>
 				</span> &nbsp; 
 				<span class="p-form-radio margin_r_10">
-					<input type="radio" id="chrgeSe2" name="chrgeSe" value="U"${eduSubjectVO.chrgeSe eq 'U' ? ' checked="checked"':''} onclick="chrgeSeChange(this.value);" class="p-form-radio__input" disabled="disabled" />
+					<input type="radio" id="chrgeSe2" name="chrgeSe" value="U"${eduSubjectVO.chrgeSe eq 'U' ? ' checked="checked"':''} onclick="chrgeSeChange(this.value);" class="p-form-radio__input" />
 					<label for="chrgeSe2" class="p-form-radio__label">유료</label>
 				</span>
 				<span id="error_chrgeSe1" class="form_error"></span>

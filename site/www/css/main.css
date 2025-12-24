@@ -503,6 +503,7 @@ main::before {
   transform: translateX(-50%);
 }
 .reserveStep .map .cwg {
+  pointer-events: none;
   top: 0;
   left: 44px;
   width: 252px;
@@ -521,12 +522,14 @@ main::before {
   height: 202px;
 }
 .reserveStep .map .sdg {
+  pointer-events: none;
   top: 53px;
   left: 149px;
   width: 271px;
   height: 329px;
 }
 .reserveStep .map .area {
+  pointer-events: visiblePainted;
   fill: #fff;
   stroke: #07a59f;
   stroke-width: 1;
@@ -584,6 +587,7 @@ main::before {
   transform: translate(-50%, -50%);
 }
 .reserveStep .map .detail-map::before {
+  pointer-events: none;
   display: block;
   position: absolute;
   z-index: 2;
@@ -650,6 +654,7 @@ main::before {
   height: 142px;
 }
 .reserveStep .map .detail-map.dmCwg .cwg-ys {
+  pointer-events: none;
   top: 262px;
   left: 307px;
   width: 154px;
@@ -705,6 +710,7 @@ main::before {
   height: 139px;
 }
 .reserveStep .map .detail-map.dmSdg .sdg-yms {
+  pointer-events: none;
   top: 74px;
   left: 271px;
   width: 57px;
@@ -741,24 +747,28 @@ main::before {
   height: 12px;
 }
 .reserveStep .map .detail-map.dmSdg .sdg-ya1 {
+  pointer-events: none;
   top: 98px;
   left: 263px;
   width: 54px;
   height: 61px;
 }
 .reserveStep .map .detail-map.dmSdg .sdg-ya2 {
+  pointer-events: none;
   top: 99px;
   left: 266px;
   width: 67px;
   height: 80px;
 }
 .reserveStep .map .detail-map.dmSdg .sdg-ni {
+  pointer-events: none;
   top: 155px;
   left: 238px;
   width: 106px;
   height: 77px;
 }
 .reserveStep .map .detail-map.dmSdg .sdg-gd {
+  pointer-events: none;
   top: 128px;
   left: 276px;
   width: 115px;
@@ -804,6 +814,7 @@ main::before {
   height: 24px;
 }
 .reserveStep .map .detail-map.dmSwg .swg-mc {
+  pointer-events: none;
   top: 40px;
   left: 310px;
   width: 46px;
@@ -828,6 +839,7 @@ main::before {
   height: 80px;
 }
 .reserveStep .map .detail-map.dmSwg .swg-sn {
+  pointer-events: none;
   top: 59px;
   left: 282px;
   width: 58px;
@@ -903,6 +915,7 @@ main::before {
   height: 213px;
 }
 .reserveStep .map .detail-map.dmHdg .hdg-gn {
+  pointer-events: none;
   top: 186px;
   left: 89px;
   width: 177px;
@@ -1312,7 +1325,6 @@ main::before {
   color: #717a8b;
   font-size: 17px;
   line-height: 19px;
-  cursor: pointer;
 }
 .reservationList .category .cateDiv button svg {
   display: none;

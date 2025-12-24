@@ -1018,8 +1018,11 @@ footer .copyright {
   .aside-links .myPage .linkLayer {
     display: block;
     width: 86px;
+    margin: 32px 0 2px;
+    padding: 0;
   }
   .aside-links .myPage .linkLayer::before {
+    top: -3px;
     width: 87px;
   }
   .aside-links .myPage .linkLayer a {
@@ -1027,7 +1030,7 @@ footer .copyright {
     line-height: 16px;
   }
   .aside-links .myPage .linkLayer svg {
-    top: 22px;
+    top: -12px;
   }
   .aside-links .feature {
     position: absolute;
