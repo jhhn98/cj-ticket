@@ -289,14 +289,14 @@
                         <input type="hidden" name="resInqTxId" value="">
                         <input type="hidden" name="resInqResult" value="">
                         <div class="innerCell">
-                            <div class="email" id="juminNoInput">
+                            <div class="juminNo" id="juminNoInput">
                                 <label for="resJuminNoPre">주민번호 앞자리</label>
                                 <input type="text" id="resJuminNoPre" placeholder="주민번호 앞자리" class="customInputDefault textAlignCenter" maxlength="6" value="<c:out value="${tsu:toDateFormat(exprnApplVO.birthDe, 'yyyyMMdd', 'yyMMdd')}"/>" disabled>
                                 &nbsp;-&nbsp;
                                 <label for="resJuminNoPost">주민번호 뒷자리</label>
                                 <input type="text" id="resJuminNoPost" placeholder="주민번호 뒷자리" class="customInputDefault textAlignCenter" maxlength="7" name="resJuminNoPost">
-                                <button type="button" class="addressSearchButton" onclick="fn_ResideInsttCnfirmCheck();"><span>조회</span></button>
-                                <span id="resInqResultText"></span>
+                                <button type="button" class="customLink bgBlack bigHeight marginLeft10" onclick="fn_ResideInsttCnfirmCheck();"><span>조회</span></button>
+                                <span id="resInqResultText" class="resIngResultText"></span>
                             </div>
                         </div>
                     </td>

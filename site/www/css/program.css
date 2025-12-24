@@ -1,4 +1,4 @@
-.login h2 span, .login .login-link-index span, .login h1, .programModal .modalCloseButton span, .program .viewProgram.simpleInformation .simpleImage .controller button span, .program .email label, .program .address label, .program .phoneCode label, .programCalendar .calendar .calendarHeader .prevButton span, .programCalendar .calendar .calendarHeader .nextButton span, .dataList-program .listWrap.detail table .trFullLink span, .dataList-program .listWrap.detail table caption, .contactForm label, .addressForm label {
+.login h2 span, .login .login-link-index span, .login h1, .programModal .modalCloseButton span, .program .viewProgram.simpleInformation .simpleImage .controller button span, .program .email label, .program .address label, .program .phoneCode label, .programCalendar .calendar .calendarHeader .prevButton span, .programCalendar .calendar .calendarHeader .nextButton span, .dataList-program .listWrap.detail table .trFullLink span, .dataList-program .listWrap.detail table caption, .contactForm label, .addressForm label, .program .juminNo label {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -1730,6 +1730,19 @@
 }
 .program .email .customSelect {
   margin: 0 0 0 10px;
+}
+.program .juminNo{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.program .juminNo .customInputDefault {
+  max-width: 150px;
+}
+.program .juminNo .resIngResultText {
+  display: block;
+  flex: 0 0 100%;
+  margin: 10px 0 0;
 }
 .program .programInformation {
   padding: 20px 5px;

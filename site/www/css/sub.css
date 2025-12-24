@@ -466,6 +466,9 @@ main {
   color: #515862;
   vertical-align: middle;
 }
+.customLink.bigHeight {
+  padding:12px 15px 13px;
+}
 .customLink span {
   display: inline-block;
   padding: 2px 0 1px;
@@ -693,6 +696,9 @@ main {
 
 .marginTop40 {
   margin-top: 40px;
+}
+.marginLeft10 {
+  margin-left: 10px;
 }
 
 .scrollWrap-table {
