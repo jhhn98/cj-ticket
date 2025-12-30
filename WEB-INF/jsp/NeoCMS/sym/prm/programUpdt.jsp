@@ -130,7 +130,7 @@
                 <td>
                     <div class="form_element">
                         <span class="element_wrap">
-                            <form:input path="progrmSe" size="80" maxlength="10"/> <form:errors path="progrmSe"/>
+                            <form:input path="progrmSe" size="80" maxlength="20"/> <form:errors path="progrmSe"/>
                         </span>
                     </div>
                 </td>

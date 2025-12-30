@@ -170,7 +170,7 @@
                             - 결제상태 : 결제완료(PAY_CMPL) or 결제대기(PAY_WAIT)+전자결제(가상계좌)O
                         --%>
                         <c:if test="${!fn:contains(result.resveSttusCd, 'CNCL') && (result.paySttusCd == 'PAY_CMPL' || (result.paySttusCd == 'PAY_WAIT' && result.tossMethod == '가상계좌'))}">
-                            <button type="button" class="customLink" onclick="fn_eduAplctRfndAjax(<c:out value="${result.eduAplyNo}"/>)"><span>환불요청</span></button>
+                            <button type="button" class="customLink" data-modal-button="modal3" data-appl-no="<c:out value="${result.eduAplyNo}"/>" data-prg-se="EDU"><span>환불요청</span></button>
                         </c:if>
                     </c:if>
                 </td>
@@ -240,8 +240,9 @@
                 <td><span class="mobile-th">체험일자</span><c:out value="${tsu:toDateFormat(result.exprnDe, 'yyyyMMdd', 'yyyy-MM-dd(EE)')}"/></td>
                 <td><span class="mobile-th">체험시간</span><c:out value="${tsu:toDateFormat(result.exprnBgnHm, 'HHmm', 'HH:mm')}"/> ~ <c:out value="${tsu:toDateFormat(result.exprnEndHm, 'HHmm', 'HH:mm')}"/></td>
                 <td><span class="mobile-th">결제상태</span>
+                    <c:set var="todate" value="${result.today}${result.now}" />
                     <c:choose>
-                        <c:when test="${result.payMthdCd == 'ELCTRN' && result.rsvSttusCd == 'APPL_CMPL' && result.paySttusCd == 'PAY_WAIT' && empty result.tossMethod}">
+                        <c:when test="${result.payMthdCd == 'ELCTRN' && result.rsvSttusCd == 'APPL_CMPL' && result.paySttusCd == 'PAY_WAIT' && empty result.tossMethod && todate <= result.payDeadlineDt}">
                             <a href="./myPageViewByExprn.do?key=<c:out value="${key}"/>&amp;exprnApplNo=<c:out value="${result.exprnApplNo}"/>&amp;myPageMode=VIEW" class="customLink bgBlack"><span>결제하기</span></a>
                         </c:when>
                         <c:otherwise>
@@ -253,32 +254,48 @@
                 <td>
                     <span class="mobile-th">예약취소</span>
                     <%--
-                        취소가능일자가 지나지 않은 경우에만 취소(환불)요청 가능
+                        취소가능일자가 지나지 않고
+                        예약상태 : 사용자취소(USR_CNCL) or 관리자취소(MNG_CNCL) 아닌 상태
+                        경우에만 취소 or 환불 요청 가능
                     --%>
-                    <c:if test="${todate <= result.canclClosDt}">
+                    <c:if test="${todate <= result.canclClosDt && !fn:contains(result.rsvSttusCd, 'CNCL')}">
                         <%--
-                            아래 상태값에 해당하는 경우에만 취소 요청 버튼 활성화
-                            - 예약상태 : 사용자취소(USR_CNCL) or 관리자취소(MNG_CNCL) 아닌 상태
-                            - 결제상태 : 무료(PAY_FREE) or 결제대기(PAY_WAIT)+전자결제(가상계좌)X / 결제대기의 경우 전자결제(가상계좌)는 가상계좌 발급했기 때문에 환불요청을 해야한다.
+                            결제상태 paySttusCd, 결제방법 payMthdCd 에 따라 취소/환불 버튼 활성화
+                            무료(PAY_FREE) : 취소 가능
+                            결제대기(PAY_WAIT)
+                              - 전자결제 ELCTRN + 토스미결제 : 취소 가능
+                              - 전자결제 ELCTRN + 토스결제(가상계좌 신청만 한 상태) : 환불 가능
+                              - 무통장입금 NBKRCP, 현장결제 DIRECT : 취소 가능
+                            결제완료(PAY_CMPL)
+                              - 전자결제 ELCTRN (카드, 계좌이체, 간편결제) : 환불 가능
+                              - 전자결제 ELCTRN (가상계좌) : 환불 가능(환불계좌 정보 입력 필요)
+                              - 무통장입금 NBKRCP, 현장결제 DIRECT : 환불 가능(환불계좌 정보 입력 필요)
                         --%>
-                        <c:if test="${!fn:contains(result.rsvSttusCd, 'CNCL') && (result.paySttusCd == 'PAY_FREE' || (result.paySttusCd == 'PAY_WAIT' && result.tossMethod != '가상계좌'))}">
-                            <button type="button" class="customLink" onclick="fn_applCnclAjax(<c:out value="${result.exprnApplNo}"/>)"><span>취소</span></button>
-                        </c:if>
-                        <%--
-                            아래 상태값에 해당하는 경우에만 환불 요청 버튼 활성화
-                            - 예약상태 : 사용자취소(USR_CNCL) or 관리자취소(MNG_CNCL) 아닌 상태
-                            - 결제상태 : 결제완료(PAY_CMPL) or 결제대기(PAY_WAIT)+전자결제(가상계좌)O / 결제대기의 경우 전자결제(가상계좌)는 가상계좌 발급했기 때문에 환불요청을 해야한다.
-                        --%>
-                        <c:if test="${!fn:contains(result.rsvSttusCd, 'CNCL') && (result.paySttusCd == 'PAY_CMPL' || (result.paySttusCd == 'PAY_WAIT' && result.tossMethod == '가상계좌'))}">
-                            <c:choose>
-                                <c:when test="${result.tossMethod == '카드' || result.tossMethod == '간편결제'}">
-                                    <button type="button" class="customLink" onclick="fn_exprnApplRfndAjax(<c:out value="${result.exprnApplNo}"/>)"><span>환불요청</span></button>
-                                </c:when>
-                                <c:otherwise>
-                                    <button type="button" class="customLink" data-modal-button="modal3" data-appl-no="<c:out value="${result.exprnApplNo}"/>" data-prg-se="EXP"><span>환불요청</span></button>
-                                </c:otherwise>
-                            </c:choose>
-                        </c:if>
+                        <c:choose>
+                            <c:when test="${result.paySttusCd == 'PAY_FREE'}">
+                                <button type="button" class="customLink" onclick="fn_applCnclAjax('EXP', <c:out value="${result.exprnApplNo}"/>)"><span>취소</span></button>
+                            </c:when>
+                            <c:when test="${result.paySttusCd == 'PAY_WAIT'}">
+                                <c:choose>
+                                    <c:when test="${result.payMthdCd == 'ELCTRN' && result.tossMethod == '가상계좌'}">
+                                        <button type="button" class="customLink" onclick="fn_applRfndAjax('EXP', <c:out value="${result.exprnApplNo}"/>, null, null, null, null)"><span>환불요청</span></button>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <button type="button" class="customLink" onclick="fn_applCnclAjax('EXP', <c:out value="${result.exprnApplNo}"/>)"><span>취소</span></button>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:when>
+                            <c:when test="${result.paySttusCd == 'PAY_CMPL'}">
+                                <c:choose>
+                                    <c:when test="${result.payMthdCd == 'ELCTRN' && (result.tossMethod == '카드' || result.tossMethod == '계좌이체' || result.tossMethod == '간편결제')}">
+                                        <button type="button" class="customLink" onclick="fn_applRfndAjax('EXP', <c:out value="${result.exprnApplNo}"/>, null, null, null, null)"><span>환불요청</span></button>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <button type="button" class="customLink" data-modal-button="modal3" data-appl-no="<c:out value="${result.exprnApplNo}"/>" data-prg-se="EXP"><span>환불요청</span></button>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:when>
+                        </c:choose>
                     </c:if>
                 </td>
             </tr>
@@ -319,15 +336,11 @@
             <th scope="col">예약시간</th>
             <th scope="col">결제상태</th>
             <th scope="col">예약상태</th>
-            <%--<th scope="col">예약취소</th>--%>
+            <th scope="col">예약취소</th>
         </tr>
         </thead>
         <tbody class="textAlignCenter">
-        <c:set var="expRowCnt" value="9"/>
-        <c:if test="${empty prgSe}">
-            <c:set var="expRowCnt" value="2"/>
-        </c:if>
-        <c:forEach var="result" items="${fcltyApplList}" end="${expRowCnt}">
+        <c:forEach var="result" items="${fcltyApplList}">
             <tr>
                 <td class="first"><span class="mobile-th">예약번호</span><a href="./myPageViewByFclty.do?key=<c:out value="${key}"/>&amp;fcltyApplNo=<c:out value="${result.fcltyApplNo}"/>&amp;myPageMode=VIEW"><span><c:out value="${result.fcltyApplId}"/></span></a></td>
                 <td class="textAlignLeft"><span class="mobile-th">시설명</span><c:out value="${result.fcltyNm}"/></td>
@@ -343,9 +356,9 @@
                 <td><span class="mobile-th">예약시간</span><c:out value="${tsu:toDateFormat(result.fcltyBgnHm, 'HHmm', 'HH:mm')}"/> ~ <c:out value="${tsu:toDateFormat(result.fcltyEndHm, 'HHmm', 'HH:mm')}"/></td>
                 <td><span class="mobile-th">결제상태</span><c:out value="${expPayMap[result.paySttusCd]}"/></td>
                 <td><span class="mobile-th">예약상태</span><c:out value="${expRsvMap[result.rsvSttusCd]}"/></td>
-                <%--<td><span class="mobile-th">예약취소</span>
+                <td><span class="mobile-th">예약취소</span>
                     <button type="button" class="customLink" data-modal-button="modal3"><span>취소</span></button>
-                </td>--%>
+                </td>
             </tr>
         </c:forEach>
         <c:if test="${fn:length(fcltyApplList) == 0}">
@@ -358,7 +371,6 @@
         </c:if>
         </tbody>
     </table>
-    <%-- TODOSDB: pagnation 없음--%>
 </c:if>
 
 <script>
@@ -374,18 +386,27 @@
                 document.querySelector('#rfndApplNo').value = applNo;
             });
         });
+
+        document.querySelectorAll('.modalCloseButton, [data-modal-close]').forEach( button => {
+            button.addEventListener('click', () => {
+                document.querySelector('#prgSe').value = '';
+                document.querySelector('#rfndApplNo').value = '';
+                document.querySelector('#rfndBankNm').value = '';
+                document.querySelector('#rfndAcctNo').value = '';
+                document.querySelector('#rfndDpstrNm').value = '';
+                document.querySelector('#rfndReason').value = '';
+            });
+        });
     });
 
-    function fn_applCnclAjax(cancelApplNo) {
+    function fn_applCnclAjax(prgSe, cancelApplNo) {
         if (!confirm('취소하시겠습니까?')) {
             return false;
         }
 
-
         var ajaxUrl = '';
         var ajaxData = {};
 
-        var prgSe = $('input[name=prgSe]');
         if (prgSe != '') {
             if (prgSe == 'EXP') {
                 ajaxUrl = './updateExprnApplCnclAjax.do';
@@ -430,7 +451,7 @@
 
         var prgSe = $('input[name=prgSe]');
         var rfndApplNo = $('input[name=rfndApplNo]');
-        var rfndBankNm = $('input[name=rfndBankNm]');
+        var rfndBankNm = $('select[name=rfndBankNm]');
         var rfndAcctNo = $('input[name=rfndAcctNo]');
         var rfndDpstrNm = $('input[name=rfndDpstrNm]');
         var rfndReason = $('input[name=rfndReason]');
@@ -445,6 +466,7 @@
             rfndAcctNo.focus();
             return false;
         }
+
         if (!rfndDpstrNm.val()) {
             alert('예금주를 입력해주세요.');
             rfndDpstrNm.focus();
@@ -477,6 +499,18 @@
                     rfndDpstrNm: rfndDpstrNm,
                     rfndReason: rfndReason
                 };
+            } else if (prgSe == 'EDU') {
+                ajaxUrl = './updateEduAplctRfndAjax.do?key='+<c:out value="${key}"/>;
+                ajaxData = {
+                    eduAplyNo: rfndApplNo,
+                    rfndBankNm: rfndBankNm,
+                    rfndAcctNo: rfndAcctNo,
+                    rfndDpstrNm: rfndDpstrNm,
+                    rfndReason: rfndReason
+                };
+            } else {
+                alert("처리할 수 없는 프로그램 유형입니다.");
+                return false;
             }
 
             $.ajax({
@@ -491,13 +525,15 @@
                     } else if (res == -1) {
                         alert("신청 정보를 확인할 수 없습니다.");
                     } else if (res == -2) {
-                        alert("이미 취소된 건입니다. 다시 확인해주시기 바랍니다.");
+                        alert("취소가능일자가 지나 취소가 불가합니다.");
                     } else if (res == -3) {
-                        alert("결제가 완료된 건에 한하여 환불신청이 가능합니다. 다시 확인해주시기 바랍니다.");
+                        alert("이미 취소된 건입니다. 다시 확인해주시기 바랍니다.");
                     } else if (res == -4) {
-                        alert("환불요청 관련 입력 정보(계좌정보, 환불사유 등)를 다시 확인해주시기 바랍니다.");
+                        alert("환불 요청이 불가능한 상태입니다.");
                     } else if (res == -5) {
-                        alert("취소가능일자가 지나 환불이 불가합니다.");
+                        alert("결제대기 중입니다. 결제가 완료된 건에 한하여 환불 요청이 가능합니다.");
+                    } else if (res == -6) {
+                        alert("환불요청 관련 입력 정보(계좌정보, 환불사유 등)를 다시 확인해주시기 바랍니다.");
                     } else {
                         alert("처리된 내역이 없습니다.");
                     }
@@ -507,7 +543,7 @@
                     alert("에러가 발생하였습니다.");
                     console.log("code:", request.status);
                     console.log("message:", request.responseText);
-                    console.log("error:" + error)
+                    console.log("error:" + status)
                 }
             });
         }
@@ -520,7 +556,6 @@
         }
 
         $.ajax({
-            cache: false,
             url: './updateEduAplctCnclAjax.do?key='+${key},
             type: 'POST',
             data: {
@@ -546,61 +581,10 @@
                 alert("에러가 발생하였습니다.");
                 console.log("code:", request.status);
                 console.log("message:", request.responseText);
-                console.log("error:" + error)
+                console.log("error:" + status)
             }
         });
     }
-
-    /* 교육 환불 요청 */
-    function fn_eduAplctRfndAjax(eduAplyNo) {
-        if (!confirm('취소(환불요청)하시겠습니까?')) {
-            return false;
-        }
-
-        // 환불계좌정보 하드코딩 (추후 모달창으로 입력받도록 수정 필요)
-        var rfndBankNm = '하나은행';
-        var rfndAcctNo = '12345678901234567890';
-        var rfndDpstrNm = '테스트';
-        var rfndReason = '환불요청 테스트';
-
-        $.ajax({
-            cache: false,
-            url: './updateEduAplctRfndAjax.do?key='+${key},
-            type: 'POST',
-            data: {
-                eduAplyNo: eduAplyNo,
-                rfndBankNm: rfndBankNm,
-                rfndAcctNo: rfndAcctNo,
-                rfndDpstrNm: rfndDpstrNm,
-                rfndReason: rfndReason
-            },
-            success: function (res) {
-                if (res == 1) {
-                    alert("환불요청이 접수되었습니다.");
-                    location.reload();
-                } else if (res == -1) {
-                    alert("신청 정보를 확인할 수 없습니다.");
-                } else if (res == -2) {
-                    alert("이미 취소된 건입니다. 다시 확인해주시기 바랍니다.");
-                } else if (res == -3) {
-                    alert("결제가 완료된 건에 한하여 환불신청이 가능합니다. 다시 확인해주시기 바랍니다.");
-                } else if (res == -4) {
-                    alert("환불요청 관련 입력 정보(계좌정보, 환불사유 등)를 다시 확인해주시기 바랍니다.");
-                } else if (res == -5) {
-                    alert("취소가능일자가 지나 환불이 불가합니다.");
-                } else {
-                    alert("처리된 내역이 없습니다.");
-                }
-            },
-            error: function (request, xhr, status) {
-                alert("에러가 발생하였습니다.");
-                console.log("code:", request.status);
-                console.log("message:", request.responseText);
-                console.log("error:" + error)
-            }
-        });
-    }
-
 </script>
 </body>
 </html>

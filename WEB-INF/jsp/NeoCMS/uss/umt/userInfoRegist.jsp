@@ -123,6 +123,12 @@
                 <form:input path="email" size="40"/> <form:errors path="email"/>
             </td>
         </tr>
+		<tr>
+            <th scope="row"><form:label path="moblphon">휴대전화</form:label></th>
+            <td>
+                <form:input path="moblphon" size="40"/> <form:errors path="moblphon"/>
+            </td>
+        </tr>
     </tbody>
     </table>
 

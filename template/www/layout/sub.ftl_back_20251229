@@ -274,65 +274,34 @@ LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
             <input type="hidden" name="prgSe" id="prgSe">
             <input type="hidden" name="rfndApplNo" id="rfndApplNo">
             <tr>
-                <th scope="row"><div class="innerCell"><label for="rfndBankNm">은행명<span class="point-color-red">*</span></label></div></th>
+                <th scope="row"><div class="innerCell"><label for="bank">은행명<span class="point-color-red">*</span></label></div></th>
                 <td>
                     <div class="innerCell">
-                        <div class="customSelect inlineBlock">
-                            <select id="rfndBankNm" name="rfndBankNm">
-                                <option value="">은행 선택</option>
-                                <option value="39">경남은행</option>
-                                <option value="34">광주은행</option>
-                                <option value="12">단위농협(지역농축협)</option>
-                                <option value="32">부산은행</option>
-                                <option value="45">새마을금고</option>
-                                <option value="64">산림조합</option>
-                                <option value="88">신한은행</option>
-                                <option value="48">신협</option>
-                                <option value="27">씨티은행</option>
-                                <option value="20">우리은행</option>
-                                <option value="71">우체국예금보험</option>
-                                <option value="50">저축은행중앙회</option>
-                                <option value="37">전북은행</option>
-                                <option value="35">제주은행</option>
-                                <option value="90">카카오뱅크</option>
-                                <option value="89">케이뱅크</option>
-                                <option value="92">토스뱅크</option>
-                                <option value="81">하나은행</option>
-                                <option value="03">IBK기업은행</option>
-                                <option value="06">KB국민은행</option>
-                                <option value="31">iM뱅크(대구)</option>
-                                <option value="02">한국산업은행</option>
-                                <option value="11">NH농협은행</option>
-                                <option value="23">SC제일은행</option>
-                                <option value="07">Sh수협은행</option>
-                                <option value="30">수협중앙회</option>
-
-                            </select>
-                        </div>
+                        <input type="text" name="rfndBankNm" id="bank" class="customInputDefault">
                     </div>
                 </td>
             </tr>
             <tr>
-                <th scope="row"><div class="innerCell"><label for="rfndAcctNo">계좌번호<span class="point-color-red">*</span></label></div></th>
+                <th scope="row"><div class="innerCell"><label for="bankNum">계좌번호<span class="point-color-red">*</span></label></div></th>
                 <td>
                     <div class="innerCell">
-                        <input type="text" name="rfndAcctNo" id="rfndAcctNo" class="customInputDefault">
+                        <input type="text" name="rfndAcctNo" id="bankNum" class="customInputDefault">
                     </div>
                 </td>
             </tr>
             <tr>
-                <th scope="row"><div class="innerCell"><label for="rfndDpstrNm">예금주<span class="point-color-red">*</span></label></div></th>
+                <th scope="row"><div class="innerCell"><label for="name">예금주<span class="point-color-red">*</span></label></div></th>
                 <td>
                     <div class="innerCell">
-                        <input type="text" name="rfndDpstrNm" id="rfndDpstrNm" class="customInputDefault">
+                        <input type="text" name="rfndDpstrNm" id="name" class="customInputDefault">
                     </div>
                 </td>
             </tr>
             <tr>
-                <th scope="row"><div class="innerCell"><label for="rfndReason">취소사유<span class="point-color-red">*</span></label></div></th>
+                <th scope="row"><div class="innerCell"><label for="reason">취소사유<span class="point-color-red">*</span></label></div></th>
                 <td>
                     <div class="innerCell">
-                        <input type="text" name="rfndReason" id="rfndReason" class="customInputDefault">
+                        <input type="text" name="rfndReason" id="reason" class="customInputDefault">
                     </div>
                 </td>
             </tr>

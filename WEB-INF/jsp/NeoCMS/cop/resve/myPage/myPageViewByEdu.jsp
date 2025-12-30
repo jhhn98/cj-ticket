@@ -52,44 +52,40 @@
                     </td>
                     <th scope="row">접수기간</th>
                     <td>
-                        <c:if test="${not empty eduLctreVO.rcptBgnDt && fn:length(eduLctreVO.rcptBgnDt) >= 12}">
-                            <c:set var="rcptBgnDe" value="${fn:substring(eduLctreVO.rcptBgnDt, 0, 8)}"/>
-                            <c:set var="rcptBgnHm" value="${fn:substring(eduLctreVO.rcptBgnDt, 8, 12)}"/>
-                            ${fn:substring(rcptBgnDe, 0, 4)}.${fn:substring(rcptBgnDe, 4, 6)}.${fn:substring(rcptBgnDe, 6, 8)}
-                            ${fn:substring(rcptBgnHm, 0, 2)}시
+                        <c:if test="${not empty eduLctreVO.rcptBgnDt}">
+                            <c:out value="${tsu:toDateFormat(eduLctreVO.rcptBgnDt, 'yyyyMMddHHmm', 'yyyy.MM.dd HH')}"/>시
                         </c:if>
-                        ~
-                        <c:if test="${not empty eduLctreVO.rcptEndDt && fn:length(eduLctreVO.rcptEndDt) >= 12}">
-                            <c:set var="rcptEndDe" value="${fn:substring(eduLctreVO.rcptEndDt, 0, 8)}"/>
-                            <c:set var="rcptEndHm" value="${fn:substring(eduLctreVO.rcptEndDt, 8, 12)}"/>
-                            ${fn:substring(rcptEndDe, 0, 4)}.${fn:substring(rcptEndDe, 4, 6)}.${fn:substring(rcptEndDe, 6, 8)}
-                            ${fn:substring(rcptEndHm, 0, 2)}시
+                        <c:if test="${not empty eduLctreVO.rcptBgnDt && not empty eduLctreVO.rcptEndDt}">
+                            ~
+                        </c:if>
+                        <c:if test="${not empty eduLctreVO.rcptEndDt}">
+                            <c:out value="${tsu:toDateFormat(eduLctreVO.rcptEndDt, 'yyyyMMddHHmm', 'yyyy.MM.dd HH')}"/>시
                         </c:if>
                     </td>
                 </tr>
                 <tr>
                     <th scope="row" class="first">교육기간</th>
                     <td>
-                        <c:if test="${not empty eduLctreVO.lctBgnDt && fn:length(eduLctreVO.lctBgnDt) >= 8}">
-                            <c:set var="lctBgnDe" value="${fn:substring(eduLctreVO.lctBgnDt, 0, 8)}"/>
-                            ${fn:substring(lctBgnDe, 0, 4)}-${fn:substring(lctBgnDe, 4, 6)}-${fn:substring(lctBgnDe, 6, 8)}
+                        <c:if test="${not empty eduLctreVO.lctBgnDt}">
+                            <c:out value="${tsu:toDateFormat(eduLctreVO.lctBgnDt, 'yyyyMMddHHmm', 'yyyy-MM-dd')}"/>
                         </c:if>
-                        ~
-                        <c:if test="${not empty eduLctreVO.lctEndDt && fn:length(eduLctreVO.lctEndDt) >= 8}">
-                            <c:set var="lctEndDe" value="${fn:substring(eduLctreVO.lctEndDt, 0, 8)}"/>
-                            ${fn:substring(lctEndDe, 0, 4)}-${fn:substring(lctEndDe, 4, 6)}-${fn:substring(lctEndDe, 6, 8)}
+                        <c:if test="${not empty eduLctreVO.lctBgnDt && not empty eduLctreVO.lctEndDt}">
+                            ~
+                        </c:if>
+                        <c:if test="${not empty eduLctreVO.lctEndDt}">
+                            <c:out value="${tsu:toDateFormat(eduLctreVO.lctEndDt, 'yyyyMMddHHmm', 'yyyy-MM-dd')}"/>
                         </c:if>
                     </td>
                     <th scope="row">교육시간/요일</th>
                     <td>
-                        <c:if test="${not empty eduLctreVO.lctBgnDt && fn:length(eduLctreVO.lctBgnDt) >= 12}">
-                            <c:set var="lctBgnHm" value="${fn:substring(eduLctreVO.lctBgnDt, 8, 12)}"/>
-                            ${fn:substring(lctBgnHm, 0, 2)}:${fn:substring(lctBgnHm, 2, 4)}
+                        <c:if test="${not empty eduLctreVO.lctBgnDt}">
+                            <c:out value="${tsu:toDateFormat(eduLctreVO.lctBgnDt, 'yyyyMMddHHmm', 'HH:mm')}"/>
                         </c:if>
-                        ~
-                        <c:if test="${not empty eduLctreVO.lctEndDt && fn:length(eduLctreVO.lctEndDt) >= 12}">
-                            <c:set var="lctEndHm" value="${fn:substring(eduLctreVO.lctEndDt, 8, 12)}"/>
-                            ${fn:substring(lctEndHm, 0, 2)}:${fn:substring(lctEndHm, 2, 4)}
+                        <c:if test="${not empty eduLctreVO.lctBgnDt && not empty eduLctreVO.lctEndDt}">
+                            ~
+                        </c:if>
+                        <c:if test="${not empty eduLctreVO.lctEndDt}">
+                            <c:out value="${tsu:toDateFormat(eduLctreVO.lctEndDt, 'yyyyMMddHHmm', 'HH:mm')}"/>
                         </c:if>
                         <c:if test="${not empty eduLctreVO.lctWeekNm}">
                             / <c:out value="${eduLctreVO.lctWeekNm}"/>
@@ -100,6 +96,21 @@
                     <th scope="row" class="first">선발방식</th>
                     <td>
                         <c:out value="${slctMthdMap[eduLctreVO.slctMthdCd]}"/>
+                    </td>
+                    <th scope="row">추가접수기간</th>
+                    <td>
+                        <c:if test="${not empty eduLctreVO.addRcptBgnDt}">
+                            <c:out value="${tsu:toDateFormat(eduLctreVO.addRcptBgnDt, 'yyyyMMddHHmm', 'yyyy.MM.dd HH')}"/>시
+                        </c:if>
+                        <c:if test="${not empty eduLctreVO.addRcptBgnDt && not empty eduLctreVO.addRcptEndDt}">
+                            ~
+                        </c:if>
+                        <c:if test="${not empty eduLctreVO.addRcptEndDt}">
+                            <c:out value="${tsu:toDateFormat(eduLctreVO.addRcptEndDt, 'yyyyMMddHHmm', 'yyyy.MM.dd HH')}"/>시
+                        </c:if>
+                        <c:if test="${empty eduLctreVO.addRcptBgnDt && empty eduLctreVO.addRcptEndDt}">
+                            -
+                        </c:if>
                     </td>
                 </tr>
                 </tbody>
@@ -126,28 +137,24 @@
                     <th scope="row" class="first"><div class="innerCell">교육기간</div></th>
                     <td>
                         <div class="innerCell">
-                            <c:if test="${not empty eduAplctVO.lctBgnDt && fn:length(eduAplctVO.lctBgnDt) >= 8}">
-                                <c:set var="applLctBgnDe" value="${fn:substring(eduAplctVO.lctBgnDt, 0, 8)}"/>
-                                <c:out value="${fn:substring(applLctBgnDe, 0, 4)}-${fn:substring(applLctBgnDe, 4, 6)}-${fn:substring(applLctBgnDe, 6, 8)}"/>
+                            <c:if test="${not empty eduAplctVO.lctBgnDt}">
+                                <c:out value="${tsu:toDateFormat(eduAplctVO.lctBgnDt, 'yyyyMMddHHmm', 'yyyy-MM-dd')}"/>
                             </c:if>
                             <c:if test="${not empty eduAplctVO.lctBgnDt && not empty eduAplctVO.lctEndDt}">
                                 ~
                             </c:if>
-                            <c:if test="${not empty eduAplctVO.lctEndDt && fn:length(eduAplctVO.lctEndDt) >= 8}">
-                                <c:set var="applLctEndDe" value="${fn:substring(eduAplctVO.lctEndDt, 0, 8)}"/>
-                                <c:out value="${fn:substring(applLctEndDe, 0, 4)}-${fn:substring(applLctEndDe, 4, 6)}-${fn:substring(applLctEndDe, 6, 8)}"/>
+                            <c:if test="${not empty eduAplctVO.lctEndDt}">
+                                <c:out value="${tsu:toDateFormat(eduAplctVO.lctEndDt, 'yyyyMMddHHmm', 'yyyy-MM-dd')}"/>
                             </c:if>
                             <br/>
-                            <c:if test="${not empty eduAplctVO.lctBgnDt && fn:length(eduAplctVO.lctBgnDt) >= 12}">
-                                <c:set var="applLctBgnHm" value="${fn:substring(eduAplctVO.lctBgnDt, 8, 12)}"/>
-                                <c:out value="${fn:substring(applLctBgnHm, 0, 2)}:${fn:substring(applLctBgnHm, 2, 4)}"/>
+                            <c:if test="${not empty eduAplctVO.lctBgnDt}">
+                                <c:out value="${tsu:toDateFormat(eduAplctVO.lctBgnDt, 'yyyyMMddHHmm', 'HH:mm')}"/>
                             </c:if>
                             <c:if test="${not empty eduAplctVO.lctBgnDt && not empty eduAplctVO.lctEndDt}">
                                 ~
                             </c:if>
-                            <c:if test="${not empty eduAplctVO.lctEndDt && fn:length(eduAplctVO.lctEndDt) >= 12}">
-                                <c:set var="applLctEndHm" value="${fn:substring(eduAplctVO.lctEndDt, 8, 12)}"/>
-                                <c:out value="${fn:substring(applLctEndHm, 0, 2)}:${fn:substring(applLctEndHm, 2, 4)}"/>
+                            <c:if test="${not empty eduAplctVO.lctEndDt}">
+                                <c:out value="${tsu:toDateFormat(eduAplctVO.lctEndDt, 'yyyyMMddHHmm', 'HH:mm')}"/>
                             </c:if>
                         </div>
                     </td>
@@ -166,7 +173,7 @@
                         <div class="innerCell">
                             <c:out value="${paySttusCdMap[eduAplctVO.paySttusCd]}"/>
                             <%-- 결제대기인 경우 결제기한까지 표출--%>
-                            <c:if test="${eduAplctVO.paySttusCd == 'PAY_WAIT'}">
+                            <c:if test="${eduAplctVO.paySttusCd == 'PAY_WAIT' && eduAplctVO.payMthdCd == 'ELCTRN'}">
                                 <p class="iconText caution point-color-green">
                                     <c:if test="${todate < eduAplctVO.payDeadlineDtHm}">
                                         결제기한: <c:out value="${tsu:toDateFormat(eduAplctVO.payDeadlineDtHm, 'yyyyMMddHHmm', 'yyyy-MM-dd HH:mm')}"/> 까지
@@ -322,9 +329,9 @@
                             </c:if>
                             <c:if test="${myPageMode == 'UPDT'}">
                                 <c:set var="emailParts" value="${fn:split(eduAplctVO.email, '@')}"/>
-                                <input type="text" id="emailId" placeholder="ID" class="customInputDefault" name="email1" value="<c:out value="${emailParts[0]}"/>">
+                                <input type="text" id="emailId" class="customInputDefault" name="email1" value="<c:out value="${emailParts[0]}"/>">
                                 &nbsp;@&nbsp;
-                                <input type="text" id="emailDomain" placeholder="도메인" class="customInputDefault" name="email2" value="<c:out value="${emailParts[1]}"/>">
+                                <input type="text" id="emailDomain" class="customInputDefault" name="email2" value="<c:out value="${emailParts[1]}"/>">
                                 <div class="customSelect inlineBlock">
                                     <select id="emailDomainSelect" name="">
                                         <option value="direct">직접입력</option>
@@ -370,14 +377,22 @@
                         </div>
                     </td>
                 </tr>
+                <c:if test="${eduLctreVO.residenceUseYn == 'Y'}">
+                <tr>
+                    <th scope="row" class="first"><div class="innerCell">거주지</div></th>
+                    <td>
+                        <div class="innerCell">
+                            <c:out value="${lgldongMap[eduAplctVO.resInqCd]}"/>
+                        </div>
+                    </td>
+                </tr>
+                </c:if>
                 <tr>
                     <th scope="row" class="first"><div class="innerCell">신청일시</div></th>
                     <td>
                         <div class="innerCell">
-                            <c:if test="${not empty eduAplctVO.applDtMs && fn:length(eduAplctVO.applDtMs) >= 14}">
-                                <c:set var="dt" value="${eduAplctVO.applDtMs}" />
-                                ${fn:substring(dt, 0, 4)}-${fn:substring(dt, 4, 6)}-${fn:substring(dt, 6, 8)}
-                                ${fn:substring(dt, 8, 10)}:${fn:substring(dt, 10, 12)}:${fn:substring(dt, 12, 14)}
+                            <c:if test="${not empty eduAplctVO.applDtMs}">
+                                <c:out value="${tsu:toDateFormat(eduAplctVO.applDtMs, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss')}"/>
                             </c:if>
                         </div>
                     </td>
@@ -390,10 +405,11 @@
                 <a href="./myPageList.do?<c:out value="${myPageSearchVO.params}"/>" class="customLink lineGray"><span>목록</span></a>
             </div>
             <div class="flexRight">
-                <c:if test="${myPageMode == 'UPDT'}">
+                <c:set var="deadlineDt" value="${not empty eduAplctVO.addRcptEndDt ? eduAplctVO.addRcptEndDt : eduAplctVO.rcptEndDt}"/>
+                <c:if test="${myPageMode == 'UPDT' and not empty deadlineDt and todate <= deadlineDt}">
                     <button type="submit" class="customLink bgGreen"><span>수정</span></button>
                 </c:if>
-                <c:if test="${myPageMode == 'VIEW'}">
+                <c:if test="${myPageMode == 'VIEW' and not empty deadlineDt and todate <= deadlineDt}">
                     <a href="./myPageViewByEdu.do?eduAplyNo=${eduAplctVO.eduAplyNo}&amp;<c:out value="${myPageSearchVO.params}"/>&amp;myPageMode=UPDT" class="customLink bgGreen"><span>수정</span></a>
                 </c:if>
             </div>

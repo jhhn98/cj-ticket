@@ -41,7 +41,7 @@
             <strong><c:out value="${exprnVO.exprnNm}"/></strong>
         </div>
         <div class="linkGroup">
-            <c:if test="${exprnVO.operSttus == 'RCPT_ING'}">
+            <c:if test="${exprnVO.operSttus == 'RCPT_ING' && fn:contains(exprnVO.rcptMthdCd, 'ONLIN')}">
                 <a href="./exprnApplCalendarWebView.do?exprnNo=<c:out value="${exprnVO.exprnNo}"/>&amp;<c:out value="${exprnSearchVO.params}"/><c:out value="${exprnSearchVO.paramsWeb}"/>" class="anchorButton wide line-color-green">신청하기</a>
             </c:if>
             <a href="./myPageList.do?key=59" class="anchorButton wide line-color-green">예약확인</a>
@@ -193,7 +193,7 @@
                             <th scope="row" class="first">첨부파일</th>
                             <td>
                                 <c:forEach var="cmmnAtchFile" items="${cmmnAtchFileList}" varStatus="idx">
-                                    <a href="./downloadExprnFile.do?key=<c:out value="${param.key}"/>&amp;exprnNo=<c:out value="${exprnVO.exprnNo}"/>&amp;fileNo=<c:out value="${cmmnAtchFile.fileNo}"/>" class="link download"><span>토요공부방.hwp</span></a>
+                                    <a href="./downloadExprnFile.do?key=<c:out value="${param.key}"/>&amp;exprnNo=<c:out value="${exprnVO.exprnNo}"/>&amp;fileNo=<c:out value="${cmmnAtchFile.fileNo}"/>" class="link download"><span><c:out value="${cmmnAtchFile.fileNm}"/></span></a>
                                 </c:forEach>
                             </td>
                         </tr>
@@ -201,7 +201,7 @@
                     </table>
                 </div>
                 <div class="linkGroup marginTop30">
-                    <c:if test="${exprnVO.operSttus == 'RCPT_ING'}">
+                    <c:if test="${exprnVO.operSttus == 'RCPT_ING' && fn:contains(exprnVO.rcptMthdCd, 'ONLIN')}">
                         <a href="./exprnApplCalendarWebView.do?exprnNo=<c:out value="${exprnVO.exprnNo}"/>&amp;<c:out value="${exprnSearchVO.params}"/><c:out value="${exprnSearchVO.paramsWeb}"/>" class="anchorButton wide line-color-green">신청하기</a>
                     </c:if>
                     <a href="./myPageList.do?key=59" class="anchorButton wide line-color-green">예약확인</a>
@@ -271,7 +271,7 @@
             <span class="stateType <c:out value="${sttusType}"/>"><c:out value="${operSttusMap[exprnVO.operSttus]}"/></span>
             <strong><c:out value="${exprnVO.exprnNm}"/></strong>
             <div class="linkGroup">
-                <c:if test="${exprnVO.operSttus == 'RCPT_ING'}">
+                <c:if test="${exprnVO.operSttus == 'RCPT_ING' && fn:contains(exprnVO.rcptMthdCd, 'ONLIN')}">
                     <a href="./exprnApplCalendarWebView.do?exprnNo=<c:out value="${exprnVO.exprnNo}"/>&amp;<c:out value="${exprnSearchVO.params}"/><c:out value="${exprnSearchVO.paramsWeb}"/>" class="anchorButton wide line-color-green">신청하기</a>
                 </c:if>
                 <a href="./myPageList.do?key=59" class="anchorButton wide line-color-green">예약확인</a>

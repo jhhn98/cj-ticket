@@ -3,6 +3,7 @@
 <%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="tsu" uri="http://www.hanshinit.co.kr/jstl/tagStringUtil" %>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -236,7 +237,7 @@
 			<th scope="col">연락처</th>
 			<th scope="col">신청일</th>
 			<c:if test="${eduLctreVO.residenceUseYn eq 'Y'}"><th scope="col">거주지</th></c:if>
-			<th scope="col">결제상태</th>
+			<th scope="col">결제상태(결제수단)<br/>결제기한</th>
 			<th scope="col">예약상태</th>
 			<th scope="col">수강이력</th>
 			<th scope="col">관리</th>
@@ -279,16 +280,23 @@
 				<%-- 거주지 --%>
 				<c:if test="${eduLctreVO.residenceUseYn eq 'Y'}">
 				<td>
-
-						<c:choose>
-							<c:when test="${result.rsdncYn eq 'Y'}">거주지</c:when>
-							<c:otherwise>비거주지</c:otherwise>
-						</c:choose>
+					<c:out value="${lgldongMap[result.resInqCd]}"/>
 				</td>
 				</c:if>
 			<td>
 				<!-- 결제상태 -->
 				<c:out value="${paySttusCdMap[result.paySttusCd]}"/>
+				<%-- 결제수단 표시 --%>
+				<c:if test="${not empty result.payMthdCd}">
+					(<c:out value="${payMthdMap[result.payMthdCd]}"/>)
+				</c:if>
+				<%-- 결제기한 표시 (전자결제이고 결제대기 상태일 때만) --%>
+				<c:if test="${result.payMthdCd == 'ELCTRN' && result.paySttusCd == 'PAY_WAIT' && not empty result.payDeadlineDtHm}">
+					<c:if test="${fn:length(result.payDeadlineDtHm) >= 12}">
+						<br/><c:out value="${tsu:toDateFormat(result.payDeadlineDtHm, 'yyyyMMddHHmm', 'yyyy-MM-dd')}"/>
+						<c:out value="${tsu:toDateFormat(result.payDeadlineDtHm, 'yyyyMMddHHmm', 'HH:mm')}"/>
+					</c:if>
+				</c:if>
 			</td>
 			<td>
 				<!-- 예약상태 -->

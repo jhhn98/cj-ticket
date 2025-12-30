@@ -700,9 +700,13 @@
                 </tbody>
             </table>
 
-            <div class="row margin_t_10 right">
-                <button type="submit" class="p-button primary">등록</button>
-                <a href="./selectEduLctreList.do?<c:out value="${eduLctreVO.params}"/>" class="p-button cancel">취소</a>
+            <div class="row margin_t_15">
+                <div class="col-12">
+                    <a href="./selectEduLctreList.do?<c:out value="${eduLctreVO.params}"/>" class="p-button cancel">취소</a>
+                </div>
+                <div class="col-12 right">
+                    <button type="submit" class="p-button primary">등록</button>
+                </div>
             </div>
 
         </fieldset>
@@ -866,9 +870,9 @@
         }
 
         // 재수강 제한횟수
-        if (data.retakeCnt) {
+/*        if (data.retakeCnt) {
             $("#retakeNmtm").val(data.retakeCnt);
-        }
+        }*/
 
         // 출석률 미달 시 패널티
         if (data.attRate) {

@@ -161,9 +161,11 @@
 		</td>
 	</tr>
 	<tr>
-		<th scope="row"><label for="telNo">연락처</label> </th>
+		<th scope="row"><label for="telNo">연락처</label> <span class="p-form__required--icon">필수</span> </th>
 		<td>
-			<form:input path="telNo" id="telNo" cssClass="p-input w10p" maxlength="14" />
+			<form:input path="telNo" id="telNo" cssClass="p-input w10p" maxlength="11" /><br/>
+			<svg width="20" height="25" fill="#202e70" focusable="false"><use xlink:href="/common/images/program/p-icon.svg#info-circle"></use></svg>
+			<em class="em_black">로그인 시 해당 번호로 인증번호가 발송됩니다.</em><br/>
 			<form:errors path="telNo" cssClass="form_error" />
 		</td>
 	</tr>
@@ -282,13 +284,18 @@ function checkSubmit(frm) {
 			return false;
 		}
 	}
-	
 
+	// 연락처 필수 체크
+	if(!frm.telNo.value) {
+		alert("연락처를 입력해주세요.");
+		frm.telNo.focus();
+		return false;
+	}
 
-	// 연락처 형식 검증 (숫자, 하이픈만 허용)
+	// 연락처 형식 검증 (숫자)
 	var telNo = frm.telNo.value;
 	if(/[^0-9-]/g.test(telNo)) {
-		alert("연락처는 숫자와 하이픈(-)만 입력 가능합니다.");
+		alert("연락처는 숫자만 입력 가능합니다.");
 		frm.telNo.focus();
 		return false;
 	}

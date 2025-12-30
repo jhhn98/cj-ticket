@@ -73,8 +73,8 @@
     </tr>
     <c:if test="${exprnApplVO.exprnAmt > 0}">
     <tr>
-        <th scope="row" class="first">결제방식<c:if test="${exprnApplVO.payMthdCd == 'ELCTRN'}">(결제기한)</c:if></th>
-        <td colspan="3"><c:out value="${payMthdMap[exprnApplVO.payMthdCd]}"/><c:if test="${exprnApplVO.payMthdCd == 'ELCTRN'}"> ( <c:out value="${tsu:toDateFormat(exprnApplVO.payDeadlineDt, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss')}"/> 까지 )</c:if></td>
+        <th scope="row" class="first">결제방식<c:if test="${exprnApplVO.rsvSttusCd == 'APPL_CMPL' && exprnApplVO.payMthdCd == 'ELCTRN'}">(결제기한)</c:if></th>
+        <td colspan="3"><c:out value="${payMthdMap[exprnApplVO.payMthdCd]}"/><c:if test="${exprnApplVO.rsvSttusCd == 'APPL_CMPL' && exprnApplVO.payMthdCd == 'ELCTRN'}"> ( <c:out value="${tsu:toDateFormat(exprnApplVO.payDeadlineDt, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss')}"/> 까지 )</c:if></td>
     </tr>
     </c:if>
     </tbody>

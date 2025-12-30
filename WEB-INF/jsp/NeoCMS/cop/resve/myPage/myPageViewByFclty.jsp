@@ -5,6 +5,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="tsu" uri="http://www.hanshinit.co.kr/jstl/tagStringUtil"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html>
 <html>
@@ -65,14 +66,23 @@
                     <th scope="row" class="first">선발방식</th>
                     <td><c:out value="${slctMthdMap[fcltyVO.slctMthdCd]}"/></td>
                     <th scope="row">이용요금</th>
-                    <td>무료</td>
+                    <td>
+                        <c:choose>
+                            <c:when test="${fcltyVO.fcltyAmt > 0}">
+                                <fmt:formatNumber value="${tsu:xssNumberFilter(fcltyVO.fcltyAmt)}" pattern="#,###"/> 원
+                            </c:when>
+                            <c:otherwise>
+                                무료
+                            </c:otherwise>
+                        </c:choose>
+                    </td>
                 </tr>
                 <tr>
                     <th scope="row" class="first">시설장소</th>
                     <td colspan="3">
                         <c:set var="placeNo" value="place${fcltyVO.placeNo}"/>
-                        <c:out value="${expPlaceMap[placeNo]}"/>
-                        <c:forEach var="result" items="${expPlaceList}">
+                        <c:out value="${fctPlaceMap[placeNo]}"/>
+                        <c:forEach var="result" items="${fctPlaceList}">
                             <c:if test="${result.placeNo == fcltyVO.placeNo}">
                                 ( <c:out value="${result.addr}"/> <c:out value="${result.detailAddr}"/> )
                             </c:if>
@@ -99,7 +109,7 @@
                     <td><div class="innerCell"><strong><c:out value="${fcltyApplVO.fcltyApplId}"/></strong></div></td>
                 </tr>
                 <tr>
-                    <th scope="row" class="first"><div class="innerCell">시설일자</div></th>
+                    <th scope="row" class="first"><div class="innerCell">시설사용일자</div></th>
                     <td>
                         <div class="innerCell">
                             <c:out value="${tsu:toDateFormat(fcltyApplVO.fcltyDe, 'yyyyMMdd', 'yyyy-MM-dd')}"/>
@@ -166,6 +176,18 @@
                             </div>
                         </td>
                     </tr>
+
+                    <c:if test="${fcltyApplVO.payMthdCd == 'NBKRCP'}">
+                        <tr>
+                            <th scope="row" class="first"><div class="innerCell">입금계좌</div></th>
+                            <td>
+                                <div class="innerCell">
+                                    [<c:out value="${fcltyVO.bankNm}"/>] <c:out value="${fcltyVO.acctNo}"/> - <c:out value="${fcltyVO.dpstrNm}"/>
+                                </div>
+                            </td>
+                        </tr>
+                    </c:if>
+
                     <tr>
                         <th scope="row" class="first"><div class="innerCell">결제일시</div></th>
                         <td><%--<div class="innerCell"><c:out value="${fcltyApplVO.applNm}"/></div>--%></td>
@@ -301,11 +323,13 @@
                 <a href="./myPageList.do?<c:out value="${myPageSearchVO.params}"/>" class="customLink lineGray"><span>목록</span></a>
             </div>
             <div class="flexRight">
-                <c:if test="${myPageMode == 'UPDT'}">
-                    <button type="submit" class="customLink bgGreen" onclick="return formCheck(this);"><span>수정</span></button>
-                </c:if>
-                <c:if test="${myPageMode == 'VIEW'}">
-                    <a href="./myPageViewByFclty.do?fcltyApplNo=<c:out value="${fcltyApplVO.fcltyApplNo}"/>&amp;<c:out value="${myPageSearchVO.params}"/>&amp;myPageMode=UPDT" class="customLink bgGreen"><span>수정</span></a>
+                <c:if test="${(tsu:getNowDateTime('yyyyMMdd')+0) lt (fcltyApplVO.fcltyDe+0)}">
+                    <c:if test="${myPageMode == 'UPDT'}">
+                        <button type="submit" class="customLink bgGreen" onclick="return formCheck(this);"><span>수정</span></button>
+                    </c:if>
+                    <c:if test="${myPageMode == 'VIEW'}">
+                        <a href="./myPageViewByFclty.do?fcltyApplNo=<c:out value="${fcltyApplVO.fcltyApplNo}"/>&amp;<c:out value="${myPageSearchVO.params}"/>&amp;myPageMode=UPDT" class="customLink bgGreen"><span>수정</span></a>
+                    </c:if>
                 </c:if>
             </div>
         </div>

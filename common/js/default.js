@@ -94,3 +94,55 @@ function fn_isEmpty( frm, fieldNm ) {
 }
 
 
+/* 숫자만 입력 가능하도록 제어 함수 */
+function fn_numChk( obj ) {
+	if ( /[^0-9]/gi.test(obj.value) ) {
+		alert('숫자만 입력 가능합니다.');
+		obj.value = '';
+		obj.focus();
+		return false;
+	}
+}
+
+/* 확장자 체크 함수
+* obj = 파일 아이디
+* ext = 확장자. 쉼표로 구분
+* */
+function checkFileExt(objId, ext) {
+	let check = false;
+	const extName = $(objId).val().substring($(objId).val().lastIndexOf(".")+1).toLowerCase();
+	const str = ext.split(",");
+	for (let i=0; i<str.length; i++) {
+		if ( extName == $.trim(str[i]) ) {
+			check = true; break;
+		} else check = false;
+	}
+
+	if(!check){ alert("현재 파일 확장자는 " + extName + "입니다.\n" + ext + " 파일만 업로드 가능합니다.\n다시 확인 후 첨부해주세요."); }
+	return check;
+}
+
+/* 파일 용량 체크 함수
+* fileSize = 파일 사이즈
+* maxSize = 최대 용량 사이즈 Mbyte 기준
+*/
+function checkFileSize ( fileSize, maxSize ) {
+	let check = false;
+	const maxSizeByte = maxSize * 1024 * 1024;
+	const fileSizeMbyte = Math.floor(fileSize / 1024 / 1024);
+
+	if ( fileSize < maxSizeByte ) {
+		check = true;
+	} else check = false;
+
+	if(!check){ alert("현재 파일의 크기는 " + fileSizeMbyte + "M 입니다.\n파일은 최대 " + maxSize + "M 까지만 업로드 가능합니다.\n다시 확인 후 첨부해주세요."); }
+	return check;
+}
+
+/* 숫자에 콤마 찍기 */
+function num2comma( num ) {
+	let numb = Trim(num);
+	if (numb == 'undefined' || numb == '' || !isNumeric(numb)) return '0';
+
+	return numb.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+}

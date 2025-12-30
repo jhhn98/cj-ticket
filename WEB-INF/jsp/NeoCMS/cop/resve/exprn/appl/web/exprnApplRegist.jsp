@@ -240,10 +240,10 @@
                     <div class="innerCell">
                         <div class="email">
                             <label for="emailId">E-mail ID</label>
-                            <input type="text" id="emailId" placeholder="이메일주소" class="customInputDefault textAlignCenter" name="email1" value="<c:out value="${exprnApplVO.email1}"/>">
+                            <input type="text" id="emailId" class="customInputDefault textAlignCenter" name="email1" value="<c:out value="${exprnApplVO.email1}"/>">
                             &nbsp;@&nbsp;
                             <label for="emailDomain">E-mail Domain name</label>
-                            <input type="text" id="emailDomain" placeholder="도메인" class="customInputDefault textAlignCenter" name="email2" value="<c:out value="${exprnApplVO.email2}"/>">
+                            <input type="text" id="emailDomain" class="customInputDefault textAlignCenter" name="email2" value="<c:out value="${exprnApplVO.email2}"/>">
                             <label for="emailDomainSelect">E-mail Domain Select</label>
                             <div class="customSelect inlineBlock">
                                 <select id="emailDomainSelect" name="">
@@ -466,19 +466,19 @@
         }).open();
     }
 
-    function fn_juminNoCheck(juminNo) {
+    function fn_juminNoCheck(juminNoPost) {
 
-        if(juminNo == "") {
+        if(juminNoPost == "") {
             alert("주민등록번호를 입력해주세요.");
             return false;
         }
 
-        if(juminNo.length != 7) {
+        if(juminNoPost.length != 7) {
             alert("주민등록번호 뒷자리는 숫자 7자리로 입력해주세요.");
             return false;
         }
 
-        if(!$.isNumeric(juminNo)) {
+        if(!$.isNumeric(juminNoPost)) {
             alert("주민등록번호는 숫자만 입력해주세요.");
             return false;
         }
@@ -490,8 +490,8 @@
 
         $('#ResideInsttCnfirm').text('');
 
-        var juminNo = $('#resJuminNoPost').val();
-        if(!fn_juminNoCheck(juminNo)) {
+        var juminNoPost = $('#resJuminNoPost').val();
+        if(!fn_juminNoCheck(juminNoPost)) {
             $('#resJuminNoPost').focus();
             return false;
         }
@@ -505,7 +505,7 @@
             type: 'POST',
             data: {
                 prgSe: 'EXP',
-                juminNo: juminNo,
+                juminNoPost: juminNoPost,
                 prgNo: prgNo,
                 insttNo: insttNo,
             },

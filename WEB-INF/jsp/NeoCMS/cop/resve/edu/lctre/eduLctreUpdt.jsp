@@ -566,7 +566,7 @@
                 </tr>
                 <!-- 강사명 -->
                 <tr>
-                    <th scope="row"><label for="userId">강사명</label> <span class="p-form__required--icon">필수</span></th>
+                    <th scope="row"><label for="userId">강사명</label> <%--<span class="p-form__required--icon">필수</span>--%></th>
                     <td>
                         <select id="userId" name="userId" class="p-input p-input--auto">
                             <option value="">선택하세요</option>
@@ -912,10 +912,15 @@
                 </tr>
                 </tbody>
             </table>
-
+            <div class="row margin_t_15">
+                <div class="col-12">
+                    <a href="./selectEduLctreList.do?<c:out value="${eduLctreSearchVO.params}"/>" class="p-button cancel">취소</a>
+                </div>
+                <div class="col-12 right">
+                    <button type="submit" class="p-button primary">수정</button>
+                </div>
+            </div>
             <div class="row margin_t_10 center">
-                <button type="submit" class="p-button primary">수정</button>
-                <a href="${prgListUrl}?<c:out value="${eduLctreVO.params}"/>" class="p-button cancel">취소</a>
             </div>
 
         </fieldset>
@@ -1107,9 +1112,9 @@
         }
 
         // 재수강 제한횟수
-        if (data.retakeCnt) {
+/*        if (data.retakeCnt) {
             $("#retakeNmtm").val(data.retakeCnt);
-        }
+        }*/
 
         // 출석률 미달 시 패널티
         if (data.attRate) {
@@ -1520,11 +1525,11 @@
         }
 
         // 강사명
-        if (!frm.userId.value) {
+        /*if (!frm.userId.value) {
             alert("강사명을 선택해주세요.");
             frm.userId.focus();
             return false;
-        }
+        }*/
 
         // 수강료 구분
         var chrgeSeVal = $("input[name='chrgeSe']:checked").val();

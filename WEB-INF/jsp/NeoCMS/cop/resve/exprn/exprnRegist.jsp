@@ -827,10 +827,34 @@
             return false;
         }
 
-        if (form.nmprMinCnt.value > form.nmprMaxCnt.value) {
-            alert("인원 제약 조건에서 최소인원이 최대인원보다 클 수 없습니다.");
+        if (form.nmprMinCnt.value < 0 || form.nmprMaxCnt.value < 0) {
+            alert("최소인원/최대인원을 확인해주세요.");
             form.nmprMinCnt.focus();
             return false;
+        }
+
+        if (form.nmprMinCnt.value > 0 && form.nmprMaxCnt.value > 0) {
+            if (form.nmprMinCnt.value > form.nmprMaxCnt.value) {
+                alert("인원 제약 조건에서 최소인원이 최대인원보다 클 수 없습니다.");
+                form.nmprMinCnt.focus();
+                return false;
+            }
+        }
+
+        if (form.nmprMinCnt.value > 0) {
+            if (form.nmprMinCnt.value > form.rcritCnt.value) {
+                alert("인원 제약 조건에서 최소인원이 모집인원보다 클 수 없습니다.");
+                form.nmprMinCnt.focus();
+                return false;
+            }
+        }
+
+        if (form.nmprMaxCnt.value > 0) {
+            if (form.nmprMaxCnt.value > form.rcritCnt.value) {
+                alert("인원 제약 조건에서 최대인원이 모집인원보다 클 수 없습니다.");
+                form.nmprMaxCnt.focus();
+                return false;
+            }
         }
 
         if (!form.dscntUseYn.value) {

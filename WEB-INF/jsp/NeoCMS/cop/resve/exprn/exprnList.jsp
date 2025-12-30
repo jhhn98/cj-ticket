@@ -20,8 +20,6 @@
 </head>
 <body>
 
-${insttAuthMap}
-
 <div class="p-wrap">
 
     <div class="card">
@@ -31,7 +29,7 @@ ${insttAuthMap}
                 <label for="" class="p-form__label col-4 right">운영기관</label>
                 <div class="col-3">
                     <form:select path="searchInsttNo" class="p-input">
-                        <form:option value="0" label="운영기관 선택"/>
+                        <c:if test="${fn:length(expInsttList) > 1}"><form:option value="0" label="운영기관 선택"/></c:if>
                         <form:options items="${expInsttList}" itemValue="insttNo" itemLabel="insttNm"/>
                     </form:select>
                 </div>

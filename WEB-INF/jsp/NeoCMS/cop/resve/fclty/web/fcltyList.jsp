@@ -234,6 +234,7 @@
                 <th scope="col">접수기간</th>
                 <th scope="col">대상</th>
                 <th scope="col">이용요금</th>
+                <th scope="col">접수방식</th>
                 <th scope="col" class="last">운영상태</th>
             </tr>
             </thead>
@@ -241,7 +242,7 @@
             <!-- 게시물 없을때 -->
             <c:if test="${fn:length(fcltyList) == 0}">
                 <tr>
-                    <td colspan="6">
+                    <td colspan="7">
                         <div class="noData">
                             <div class="noData-innerWrap">
                                 <span class="noDataTitle">검색하신 내용을 찾을 수 없습니다.</span>
@@ -255,11 +256,11 @@
             <c:set var="currentPageStartNo" value="${paginationInfo.currentPageStartNo}" />
             <c:forEach var="result" items="${fcltyList}">
                 <tr>
-                    <td class="first"><span class="mobile-th">No</span>
+                    <td class="first">
                         <a href="./selectFcltyWebView.do?fcltyNo=<c:out value="${result.fcltyNo}"/>&<c:out value="${fcltySearchVO.params}"/><c:out value="${fcltySearchVO.paramsWeb}"/>" class="trFullLink" title="<c:out value="${result.fcltyNm}"/> 상세보기"><span>"<c:out value="${result.fcltyNm}"/>" 상세보기</span></a>
                         <c:out value="${currentPageStartNo}"/>
                     </td>
-                    <td class="textAlignLeft"><span class="mobile-th">시설명</span>
+                    <td class="textAlignLeft">
                         <div class="titleArea">
                             <span class="tableProgramTitle"><c:out value="${result.fcltyNm}"/></span>
                             <div class="programDetailInformation">
@@ -275,14 +276,14 @@
                             </div>
                         </div>
                     </td>
-                    <td><span class="mobile-th">접수기간</span><c:out value="${result.rcptBgnDe}"/> ~ <c:out value="${result.rcptEndDe}"/></td>
-                    <td><span class="mobile-th">대상</span>
+                    <td><c:out value="${result.rcptBgnDe}"/> ~ <c:out value="${result.rcptEndDe}"/></td>
+                    <td>
                         <c:forEach var="targetCd" items="${result.targetCdArr}" varStatus="status">
                             <c:out value="${targetMap[targetCd]}"/>
                             <c:if test="${!status.last}">|</c:if>
                         </c:forEach>
                     </td>
-                    <td><span class="mobile-th">이용요금</span>
+                    <td>
                         <c:choose>
                             <c:when test="${result.fcltyAmt > 0}">
                                 <span class="pay">유료</span>
@@ -291,6 +292,9 @@
                                 <span class="pay free">무료</span>
                             </c:otherwise>
                         </c:choose>
+                    </td>
+                    <td>
+                        <c:out value="${slctMthdMap[result.slctMthdCd]}"/>
                     </td>
                     <c:set var="operSttus" value="${result.operSttus}"/>
                     <c:set var="sttusType" value=""/>
@@ -309,7 +313,7 @@
                     <c:if test="${operSttus == 'OPER_END'}">
                         <c:set var="sttusType" value="type3"/>
                     </c:if>
-                    <td class="last"><span class="mobile-th">운영상태</span><span class="stateType <c:out value="${sttusType}"/>"><c:out value="${operSttusMap[result.operSttus]}"/></span></td>
+                    <td class="last"><span class="stateType <c:out value="${sttusType}"/>"><c:out value="${operSttusMap[result.operSttus]}"/></span></td>
                 </tr>
                 <c:set var="currentPageStartNo" value="${currentPageStartNo-1}" />
             </c:forEach>

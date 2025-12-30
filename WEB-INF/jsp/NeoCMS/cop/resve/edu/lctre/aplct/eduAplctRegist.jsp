@@ -267,9 +267,9 @@
                         <th scope="row"><label for="emailId">이메일 <span class="p-form__required--icon">필수</span></label></th>
                         <td>
                             <c:set var="emailParts" value="${fn:split(eduAplctVO.email, '@')}"/>
-                            <input type="text" id="emailId" name="email1" value="${emailParts[0]}" class="p-input w15p" placeholder="이메일주소"/>
+                            <input type="text" id="emailId" name="email1" value="${emailParts[0]}" class="p-input w15p" />
                             @
-                            <input type="text" id="emailDomain" name="email2" value="${emailParts[1]}" class="p-input w15p" placeholder="도메인"/>
+                            <input type="text" id="emailDomain" name="email2" value="${emailParts[1]}" class="p-input w15p" />
                             <select id="emailDomainSelect" class="p-input p-input--auto" title="이메일 도메인 선택">
                                 <option value="direct">직접입력</option>
                                 <option value="naver.com">naver.com</option>
@@ -283,20 +283,9 @@
                     </tr>
 					<c:if test="${eduLctreVO.residenceUseYn eq 'Y'}">
                     <tr>
-                        <th scope="row"><label for="rsdncYn1">거주지</label></th>
+                        <th scope="row">거주지</th>
                         <td>
-               				<span class="p-form-radio">
-								<input type="radio" id="rsdncYn1" name="rsdncYn"
-                                       value="Y"${eduAplctVO.rsdncYn eq 'Y' || empty eduAplctVO.rsdncYn ? ' checked="true"':''}
-                                       class="p-form-radio__input"/>
-								<label for="rsdncYn1" class="p-form-radio__label">거주지</label>
-							</span> &nbsp;
-                            <span class="p-form-radio">
-								<input type="radio" id="rsdncYn2" name="rsdncYn"
-                                       value="N"${eduAplctVO.rsdncYn eq 'N' ? ' checked="true"':''}
-                                       class="p-form-radio__input"/>
-								<label for="rsdncYn2" class="p-form-radio__label">비거주지</label>
-							</span>
+                            <c:out value="${lgldongMap[eduAplctVO.resInqCd]}"/>
                         </td>
                     </tr>
 					</c:if>

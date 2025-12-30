@@ -108,7 +108,10 @@
             <th scope="row">인원구분</th>
             <td>
                 <%-- 인원구분 공통코드 - IND : 개인 / GRP : 단체 --%>
-                <c:out value="${nmprSeMap[fcltyVO.nmprSeCd]}"/>
+                <c:forEach var="result" items="${fcltyVO.nmprSeCd}" varStatus="status">
+                    <c:out value="${nmprSeMap[result]}"/>
+                    <c:if test="${!status.last}">, </c:if>
+                </c:forEach>
             </td>
         </tr>
         <tr>
@@ -224,6 +227,16 @@
                 <c:if test="${fcltyVO.detailNmprUseYn == 'N'}">
                     사용안함
                 </c:if>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">일일 이용 제한시간</th>
+            <td>
+                <c:out value="${fcltyVO.mtLmttDayTime}"/> 시간
+                <span class="p-table__content padding_l_10">
+                    <svg width="20" height="25" fill="#202e70" focusable="false"><use xlink:href="/common/images/program/p-icon.svg#info-circle"></use></svg>
+                    <em class="em_black">'0'인 경우 제한없음</em>
+                </span>
             </td>
         </tr>
         <tr>

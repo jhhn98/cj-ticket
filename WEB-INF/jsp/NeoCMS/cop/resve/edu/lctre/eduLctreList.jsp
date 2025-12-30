@@ -24,24 +24,10 @@
                     <select id="searchInsttNo" name="searchInsttNo" class="p-input"
                             onchange="insttIdChange(this.value)">
                         <option value="">운영기관 선택</option>
-                        <c:choose>
-                            <c:when test="${not empty insttMap}">
-                                <%-- 기관담당자 또는 강사: 권한 있는 기관만 표시 --%>
-                                <c:forEach var="item" items="${insttMap}">
-                                    <option value="${item.key}"${item.key eq eduLctreVO.searchInsttNo ? ' selected="true"':''}>
-                                        ${item.value}
-                                    </option>
-                                </c:forEach>
-                            </c:when>
-                            <c:otherwise>
-                                <%-- 최고관리자: 전체 기관 표시 --%>
-                                <c:forEach var="instt" items="${eduInsttList}">
-                                    <option value="${instt.insttNo}"${instt.insttNo eq eduLctreVO.searchInsttNo ? ' selected="true"':''}>
-                                        <c:out value="${instt.insttNm}"/>
-                                    </option>
-                                </c:forEach>
-                            </c:otherwise>
-                        </c:choose>
+                        <c:forEach var="instt" items="${eduInsttList}">
+                            <option value="${instt.insttNo}"${instt.insttNo eq eduLctreVO.searchInsttNo ? ' selected="true"':''}>
+                                <c:out value="${instt.insttNm}"/></option>
+                        </c:forEach>
                     </select>
                 </div>
                 <label for="searchCtgryNo" class="p-form__label col-2 right">카테고리</label>

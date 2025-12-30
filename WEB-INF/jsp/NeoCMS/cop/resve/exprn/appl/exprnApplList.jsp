@@ -29,7 +29,7 @@
                 <label for="" class="p-form__label col-4 right">운영기관</label>
                 <div class="col-3">
                     <form:select path="searchInsttNo" class="p-input">
-                        <form:option value="0" label="운영기관 선택"/>
+                        <c:if test="${fn:length(expInsttList) > 1}"><form:option value="0" label="운영기관 선택"/></c:if>
                         <form:options items="${expInsttList}" itemValue="insttNo" itemLabel="insttNm"/>
                     </form:select>
                 </div>
@@ -115,13 +115,14 @@
         <caption>체험 신청 목록 - 번호, 예약번호, 신청자, 생년월일, 성별, 연락처, 신청일시, 개인/단체 여부, 인원, 체험일자, 결제상태, 예약상태 등 제공</caption>
         <colgroup>
             <col style="width:30px">
-            <col style="width:100px">
-            <col />
-            <col style="width:180px">
-            <col style="width:100px">
-            <col style="width:100px">
-            <col style="width:50px">
+            <col style="width:80px">
             <col style="width:120px">
+            <col />
+            <col style="width:120px">
+            <col style="width:80px">
+            <col style="width:90px">
+            <col style="width:50px">
+            <col style="width:110px">
             <col style="width:100px">
             <col style="width:100px">
             <col style="width:50px">
@@ -135,6 +136,7 @@
         <tr>
             <th scope="col"></th>
             <th scope="col">번호</th>
+            <th scope="col">운영기관</th>
             <th scope="col">체험명</th>
             <th scope="col">예약번호</th>
             <th scope="col">신청자</th>
@@ -162,6 +164,10 @@
                     </span>
                 </td>
                 <td>${currentPageStartNo}</td>
+                <td>
+                    <c:set var="insttNo" value="instt${result.insttNo}"/>
+                    <c:out value="${expInsttMap[insttNo]}"/>
+                </td>
                 <td class="text_left"><c:out value="${result.exprnNm}"/></td>
                 <td>
                     <a href="./selectExprnApplView.do?exprnApplNo=<c:out value="${result.exprnApplNo}"/>&amp;<c:out value="${exprnApplSearchVO.params}"/><c:out value="${exprnApplSearchVO.paramsMng}"/><c:out value="${exprnSearchVO.exprnParamsMng}"/>">
@@ -182,8 +188,8 @@
                     <c:out value="${tsu:toDateFormat(result.applDtMs, 'yyyyMMddHHmmssSS', 'HH:mm:ss:SS')}"/>
                 </td>
                 <td>
-                    <c:if test="${exprnApplVO.nmprSeCd == 'IND'}">개인</c:if>
-                    <c:if test="${exprnApplVO.nmprSeCd == 'GRP'}">단체(<c:out value="${exprnApplVO.grpNm}"/>)</c:if>
+                    <c:if test="${result.nmprSeCd == 'IND'}">개인</c:if>
+                    <c:if test="${result.nmprSeCd == 'GRP'}">단체(<c:out value="${result.grpNm}"/>)</c:if>
                 </td>
                 <td><c:out value="${result.totalCnt}"/></td>
                 <td>
@@ -240,8 +246,8 @@
         </div>
         <div class="col-7 right">
             <%--TODOSDB: 엑셀다운로드 로직 추가--%>
-            <%--<a href="./downloadExprnApplXls.do" class="p-button p-button--combine excel" onclick="fn_downloadExprnApplXls(this.href); return false;">엑셀다운로드</a>
-            <a href="./addExprnApplView.do?<c:out value="${exprnSearchApplVO.params}"/><c:out value="${exprnApplSearchVO.paramsMng}"/>" class="p-button write">등록</a>--%>
+            <a href="./downloadExprnApplXls.do" class="p-button p-button--combine excel" onclick="fn_downloadExprnApplXls(this.href); return false;">엑셀다운로드</a>
+            <%--<a href="./addExprnApplView.do?<c:out value="${exprnSearchApplVO.params}"/><c:out value="${exprnApplSearchVO.paramsMng}"/>" class="p-button write">등록</a>--%>
         </div>
     </div>
 </div>

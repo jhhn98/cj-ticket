@@ -36,8 +36,8 @@
                     <form:hidden path="pageUnit"/>
                     <form:hidden path="pageIndex"/>
                     <form:select path="searchInsttNo" cssClass="p-input p-input--auto" title="기관">
-                        <form:option value="0" label="기관 선택"/>
-                        <c:forEach var="result" items="${expInsttList}">
+                        <c:if test="${fn:length(insttList) > 1}"><form:option value="0" label="기관 선택"/></c:if>
+                        <c:forEach var="result" items="${insttList}">
                             <form:option value="${result.insttNo}" label="${result.insttNm}"/>
                         </c:forEach>
                     </form:select>
@@ -82,7 +82,7 @@
                 <td>${currentPageStartNo}</td>
                 <td>
                     <c:set var="insttNo" value="instt${result.insttNo}"/>
-                    <c:out value="${expInsttMap[insttNo]}"/>
+                    <c:out value="${insttMap[insttNo]}"/>
                 </td>
                 <td><a href="./selectDscntView.do?dscntNo=<c:out value="${result.dscntNo}"/>&amp;<c:out value="${dscntSearchVO.params}"/>"><c:out value="${dscntSeMap[result.dscntCd]}"/></a></td>
                 <td><c:out value="${result.dscntCnd}"/></td>

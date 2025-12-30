@@ -160,13 +160,43 @@
                     <td>
                         <%-- 인원구분 공통코드 - IND : 개인 / GRP : 단체 --%>
                         <c:forEach var="result" items="${nmprSeList}" varStatus="status">
-                            <span class="p-form-radio">
-                                <input type="radio" name="nmprSeCd" id="nmprSeCd<c:out value="${status.count}"/>" class="p-form-radio__input" value="<c:out value="${result.code}"/>"<c:if test="${status.first}"> checked</c:if>>
-                                <label for="nmprSeCd<c:out value="${status.count}"/>" class="p-form-radio__label"><c:out value="${result.codeNm}"/></label>
+                            <span class="p-form-checkbox">
+                                <input type="checkbox" name="nmprSeCd" id="nmprSeCd<c:out value="${status.count}"/>" class="p-form-checkbox__input" value="<c:out value="${result.code}"/>"<c:if test="${fn:indexOf(fcltyVO.nmprSeCd, result.code) > -1}"> checked</c:if>>
+                                <label for="nmprSeCd<c:out value="${status.count}"/>" class="p-form-checkbox__label"><c:out value="${result.codeNm}"/></label>
                             </span>
+<%--                            <span class="p-form-radio">--%>
+<%--                                <input type="radio" name="nmprSeCd" id="nmprSeCd<c:out value="${status.count}"/>" class="p-form-radio__input" value="<c:out value="${result.code}"/>"<c:if test="${fn:indexOf(fcltyVO.nmprSeCd, result.code) > -1}"> checked</c:if>>--%>
+<%--                                <label for="nmprSeCd<c:out value="${status.count}"/>" class="p-form-radio__label"><c:out value="${result.codeNm}"/></label>--%>
+<%--                            </span>--%>
                         </c:forEach>
+
+                        <span class="p-table__content padding_l_10">
+                            <svg width="20" height="25" fill="#202e70" focusable="false"><use xlink:href="/common/images/program/p-icon.svg#info-circle"></use></svg>
+                            <em class="em_black">'개인'인 경우 시설 사용 인원은 1명으로 고정됩니다.</em>
+                        </span>
                     </td>
                 </tr>
+
+                <tr>
+                    <th scope="row"><form:label path="nmprMinCnt">시설 사용 인원 제약 조건</form:label></th>
+                    <td>
+                        <form:hidden path="rcritCnt" />
+                        <div class="p-form-group col-2">
+                            <span class="p-form__split">최소 : </span>
+                            <form:input path="nmprMinCnt" style="width:50px;" class="p-input p-input--auto text_center"/>
+                            <span class="p-form__split">명, </span>
+                            <span class="p-form__split"></span>
+                            <span class="p-form__split">최대 : </span>
+                            <form:input path="nmprMaxCnt" style="width:50px;" class="p-input p-input--auto text_center"/>
+                            <span class="p-form__split">명</span>
+                            <span class="p-table__content padding_l_10">
+                                <svg width="20" height="25" fill="#202e70" focusable="false"><use xlink:href="/common/images/program/p-icon.svg#info-circle"></use></svg>
+                                <em class="em_black">'0'인 경우 제한없음</em>
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+
                 <tr>
                     <th scope="row"><form:label path="rcptBgnDt">접수기간</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>
                     <td>
@@ -365,37 +395,40 @@
                         </span>
                     </td>
                 </tr>
+
                 <tr>
-                    <th scope="row"><form:label path="nmprMinCnt">인원 제약 조건</form:label></th>
+                    <th scope="row"><form:label path="mtLmttDayTime">일일 이용 제한시간</form:label></th>
                     <td>
-                        <form:hidden path="rcritCnt" />
-                        <div class="p-form-group col-2">
-                            <span class="p-form__split">최소 : </span>
-                            <form:input path="nmprMinCnt" style="width:50px;" class="p-input p-input--auto text_center"/>
-                            <span class="p-form__split">명, </span>
-                            <span class="p-form__split"></span>
-                            <span class="p-form__split">최대 : </span>
-                            <form:input path="nmprMaxCnt" style="width:50px;" class="p-input p-input--auto text_center"/>
-                            <span class="p-form__split">명</span>
-                            <span class="p-table__content padding_l_10">
-                                <svg width="20" height="25" fill="#202e70" focusable="false"><use xlink:href="/common/images/program/p-icon.svg#info-circle"></use></svg>
-                                <em class="em_black">'0'인 경우 제한없음</em>
-                            </span>
+                        <div class="p-form-group col-1">
+                            일일 <form:select path="mtLmttDayTime" class="p-input p-input--auto text_center">
+                                <c:forEach var="i" begin="0" end="23">
+                                    <form:option value="${i}" label="${i}"/>
+                                </c:forEach>
+                            </form:select>
+                            <span class="p-form__split">시간 까지 예약 가능</span>
                         </div>
+                        <span class="p-table__content padding_l_10">
+                            <svg width="20" height="25" fill="#202e70" focusable="false"><use xlink:href="/common/images/program/p-icon.svg#info-circle"></use></svg>
+                            <em class="em_black">'0'인 경우 제한없음</em>
+                        </span>
                     </td>
                 </tr>
+
                 <tr>
                     <th scope="row"><form:label path="mtLmttTime">월 이용 제한시간</form:label></th>
                     <td>
                         <div class="p-form-group col-1">
-                            <form:select path="mtLmttTime" class="p-input p-input--auto text_center">
-                                <form:option value="0" label="선택"/>
-                                <c:forEach var="i" begin="1" end="20">
+                            월 <form:select path="mtLmttTime" class="p-input p-input--auto text_center">
+                                <c:forEach var="i" begin="0" end="20">
                                     <form:option value="${i}" label="${i}"/>
                                 </c:forEach>
                             </form:select>
-                            <span class="p-form__split">시간</span>
+                            <span class="p-form__split">시간 까지 예약 가능</span>
                         </div>
+                        <span class="p-table__content padding_l_10">
+                            <svg width="20" height="25" fill="#202e70" focusable="false"><use xlink:href="/common/images/program/p-icon.svg#info-circle"></use></svg>
+                            <em class="em_black">'0'인 경우 제한없음</em>
+                        </span>
                     </td>
                 </tr>
                 <tr>
@@ -668,9 +701,9 @@
             return false;
         }
 
-        if (!form.nmprSeCd.value) {
+        if ($('input[name=nmprSeCd]:checked').length < 1) {
             alert("인원구분을 선택해주세요.");
-            form.nmprSeCd.focus();
+            $('#nmprSeCd1').focus();
             return false;
         }
 
@@ -803,6 +836,15 @@
             alert("취소마감일수를 선택해주세요.");
             form.canclClosCnt.focus();
             return false;
+        }
+
+        // 취소마감일수 < 신청마감일수
+        if ($('#canclClosCnt').val() > 0) {
+            if($('#reqstClosCnt').val() < $('#canclClosCnt').val()) {
+                alert('취소마감일수가 신청마감일수보다 클 수 없습니다.');
+                $('#canclClosCnt').focus();
+                return false;
+            }
         }
 
         if (form.nmprMinCnt.value > form.nmprMaxCnt.value) {

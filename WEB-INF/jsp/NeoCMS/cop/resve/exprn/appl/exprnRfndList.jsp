@@ -29,7 +29,7 @@
                 <label for="" class="p-form__label col-6 right">운영기관</label>
                 <div class="col-3">
                     <form:select path="searchInsttNo" class="p-input">
-                        <form:option value="0" label="운영기관 선택"/>
+                        <c:if test="${fn:length(expInsttList) > 1}"><form:option value="0" label="운영기관 선택"/></c:if>
                         <form:options items="${expInsttList}" itemValue="insttNo" itemLabel="insttNm"/>
                     </form:select>
                 </div>
@@ -175,7 +175,12 @@
                 <td>
                     <c:out value="${paySttusMap[result.paySttusCd]}"/>
                     <c:if test="${result.paySttusCd == 'RFND_REQ'}">
-                        <a href="" class="p-button p-button--small restore" onclick="fn_exprnApplRfnd('<c:out value="${result.exprnApplNo}"/>', <c:out value="${result.insttNo}"/>, '<c:out value="${result.tossPaymentKey}"/>'); return false;">환불처리</a>
+                        <c:if test="${result.payMthdCd == 'ELCTRN' && !empty result.tossMethod}">
+                            <a href="" class="p-button p-button--small restore" onclick="fn_exprnApplRfndToss('<c:out value="${result.exprnApplNo}"/>', <c:out value="${result.insttNo}"/>, '<c:out value="${result.tossPaymentKey}"/>'); return false;">환불처리</a>
+                        </c:if>
+                        <c:if test="${result.payMthdCd == 'NBKRCP' || result.payMthdCd == 'DIRECT'}">
+                            <a href="" class="p-button p-button--small restore" onclick="fn_exprnApplRfnd('<c:out value="${result.exprnApplNo}"/>', <c:out value="${result.insttNo}"/>); return false;">환불처리</a>
+                        </c:if>
                     </c:if>
                 </td>
             </tr>
@@ -201,15 +206,14 @@
         </div>
         <div class="col-6 right">
             <%--TODOSDB: 엑셀다운로드 로직 추가--%>
-            <%--<a href="./downloadExprnApplXls.do" class="p-button p-button--combine excel" onclick="fn_downloadExprnApplXls(this.href); return false;">엑셀다운로드</a>--%>
-            <a href="./addExprnView.do?<c:out value="${exprnSearchVO.params}"/><c:out value="${exprnSearchVO.paramsMng}"/>" class="p-button write">등록</a>
+            <a href="./downloadExprnRfndXls.do" class="p-button p-button--combine excel" onclick="fn_downloadExprnApplXls(this.href); return false;">엑셀다운로드</a>
         </div>
     </div>
 </div>
 
 <script>
 
-    function fn_exprnApplRfnd(exprnApplNo, insttNo, tossPaymentKey) {
+    function fn_exprnApplRfndToss(exprnApplNo, insttNo, tossPaymentKey) {
 
         if (!confirm("환불처리하시겠습니까?")) {
             return false;
@@ -229,7 +233,7 @@
                 if (res == 1) {
                     alert("환불처리가 완료되었습니다.");
                 } else if (res == 0) {
-                    alert("토스페이먼츠 환불처리는 되었으니 상태값 변경 처리 중 오류가 발생했습니다.");
+                    alert("토스페이먼츠 환불처리는 되었으나 상태값 변경 처리 중 오류가 발생했습니다.");
                 } else if (res == -1) {
                     alert("프로그램구분 정보를 확인할 수 없습니다.");
                 } else if (res == -2) {
@@ -251,6 +255,107 @@
                 console.log("error:"+error)
             }
         });
+    }
+
+    function fn_exprnApplRfnd(exprnApplNo, insttNo) {
+
+        if (!confirm("환불처리하시겠습니까?")) {
+            return false;
+        }
+
+        $.ajax({
+            cache: false,
+            url: './updateExprnApplRfndInfoAjax.do',
+            type: 'POST',
+            data: {
+                exprnApplNo: exprnApplNo,
+                insttNo: insttNo,
+                paySttusCd: 'RFND_CMPL'
+            },
+            success: function (res) {
+                if (res == 1) {
+                    alert("환불처리가 완료되었습니다.");
+                } else {
+                    alert("처리된 내역이 없습니다.");
+                }
+                location.reload();
+            }, // success
+            error: function (request,xhr, status) {
+                //alert(request.responseText);
+                alert("에러가 발생하였습니다.");
+                console.log("code:",request.status);
+                console.log("message:",request.responseText);
+                console.log("error:"+error)
+            }
+        });
+    }
+
+    function fn_searchExprnApplCheck(form) {
+
+        if(form.searchBgnDeFmt.value &&form.searchEndDeFmt.value ) {
+
+            var regexDate = RegExp(/^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/);
+
+            if (!form.searchBgnDeFmt.value || !form.searchEndDeFmt.value) {
+
+                alert("기간을 조회하시는 경우 시작일자와 종료일자를 확인해주세요.");
+
+                if (!form.searchBgnDeFmt.value) {
+                    form.searchBgnDeFmt.focus();
+                    return false;
+                }
+
+                if (!form.searchEndDeFmt.value) {
+                    form.searchEndDeFmt.focus();
+                    return false;
+                }
+            } else {
+
+                if (!regexDate.test(form.searchBgnDeFmt.value)) {
+                    alert("날짜는 yyyy-MM-dd 형식으로 입력해주세요.");
+                    form.searchBgnDeFmt.focus();
+                    return false;
+                }
+
+                if (!regexDate.test(form.searchEndDeFmt.value)) {
+                    alert("날짜는 yyyy-MM-dd 형식으로 입력해주세요.");
+                    form.searchEndDeFmt.focus();
+                    return false;
+                }
+
+                var searchBgnDe = form.searchBgnDeFmt.value;
+                var searchEndDe = form.searchEndDeFmt.value;
+
+                if (searchBgnDe > searchEndDe) {
+                    alert('시작일자가 종료일자보다 클 수 없습니다.');
+                    form.searchBgnDeFmt.focus();
+                    return false;
+                }
+
+                const s = new Date(
+                    searchBgnDe.substring(0,4),
+                    searchBgnDe.substring(5,7) - 1,
+                    searchBgnDe.substring(8,10)
+                );
+
+                const e = new Date(
+                    searchEndDe.substring(0,4),
+                    searchEndDe.substring(5,7) - 1,
+                    searchEndDe.substring(8,10)
+                );
+
+                // 시작일 + 1년
+                const sPlus1Year = new Date(s);
+                sPlus1Year.setFullYear(s.getFullYear() + 1);
+
+                if (sPlus1Year.getTime() < e.getTime()) {
+                    alert('기간 조회는 최대 1년까지 가능합니다.');
+                    form.searchBgnDeFmt.focus();
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     function fn_downloadExprnApplXls(url) {

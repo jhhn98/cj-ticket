@@ -180,7 +180,7 @@
             <tr>
                 <td class="p-table__checkbox">
                     <span class="p-form-checkbox p-form-checkbox--single">
-                        <input type="checkbox" name="exprnApplNoArr" id="exprnApplNo<c:out value="${result.exprnApplNo}"/>" class="p-form-checkbox__input" value="<c:out value="${result.exprnApplNo}"/>">
+                        <input type="checkbox" name="exprnApplNoArr" id="exprnApplNo<c:out value="${result.exprnApplNo}"/>" class="p-form-checkbox__input" value="<c:out value="${result.exprnApplNo}"/>" data-receiver-no="<c:out value="${result.mobileNo}"/>">
                         <label for="exprnApplNo<c:out value="${result.exprnApplNo}"/>" class="p-form-checkbox__label">체험 신청 <c:out value="${result.exprnApplNo}"/>번 </label>
                     </span>
                 </td>
@@ -204,8 +204,8 @@
                     <c:out value="${tsu:toDateFormat(result.applDtMs, 'yyyyMMddHHmmssSS', 'HH:mm:ss:SS')}"/>
                 </td>
                 <td>
-                    <c:if test="${exprnApplVO.nmprSeCd == 'IND'}">개인</c:if>
-                    <c:if test="${exprnApplVO.nmprSeCd == 'GRP'}">단체(<c:out value="${exprnApplVO.grpNm}"/>)</c:if>
+                    <c:if test="${result.nmprSeCd == 'IND'}">개인</c:if>
+                    <c:if test="${result.nmprSeCd == 'GRP'}">단체(<c:out value="${result.grpNm}"/>)</c:if>
                 </td>
                 <td><c:out value="${result.totalCnt}"/></td>
                 <td>
@@ -246,8 +246,8 @@
             </div>
         </div>
         <div class="col-6 right">
-            <%--TODOSDB: 엑셀다운로드 로직 추가--%>
-            <%--<a href="./downloadExprnApplXls.do" class="p-button p-button--combine excel" onclick="fn_downloadExprnApplXls(this.href); return false;">엑셀다운로드</a>--%>
+            <button type="button" class="p-button primary" id="sms-modal-button">선택SMS발송</button>
+            <a href="./downloadExprnApplXls.do" class="p-button p-button--combine excel" onclick="fn_downloadExprnApplXls(this.href); return false;">엑셀다운로드</a>
             <a href="./addExprnApplView.do?<c:out value="${exprnApplSearchVO.params}"/><c:out value="${exprnApplSearchVO.paramsMng}"/>" class="p-button write">등록</a>
         </div>
     </div>
@@ -268,6 +268,46 @@
                 </c:forEach>
             </select>
             <button type="button" class="p-button edit" onclick="fn_exprnApplRsvSttusChange()">변경</button>
+        </div>
+    </div>
+
+    <div class="modal" id="send-sms-modal" tabindex="0" role="dialog">
+        <div class="modal__body">
+            <div class="modal__header">
+                <div class="modal__title">선택 SMS 발송</div>
+            </div>
+            <div class="modal__content">
+                <table class="p-table">
+                    <caption>SMS 입력</caption>
+                    <colgroup>
+                        <col class="w20p">
+                        <col />
+                    </colgroup>
+                    <tbody class="p-table--th-left">
+                    <tr>
+                        <th scope="row" style="text-align: center;">발신자<br/>번호</th>
+                        <td>
+                            <input type="text" name="senderNo" id="senderNo" class="p-input" placeholder="'-' 제외한 번호로 입력바랍니다.">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row" style="text-align: center;">문자<br/>내용</th>
+                        <td>
+                            <textarea name="smsContents" id="smsContents" class="p-input"></textarea>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal__footer">
+                <button type="button" class="p-button default" data-close="modal">닫기</button>
+                <button type="button" class="p-button secondary primary" id="send-sms-button">발송</button>
+            </div>
+            <div class="modal__close">
+                <button type="button" data-close="modal" class="modal__close-button">
+                    <span>닫기</span>
+                </button>
+            </div>
         </div>
     </div>
 </div>
@@ -398,6 +438,94 @@
         $form.submit();
         $form.attr("action",originUrl);
     }
+
+    var receiverNoParam = [];
+    $("#sms-modal-button").on("click", function () {
+
+        var chkAt = $('input[name=exprnApplNoArr]').is(":checked");
+
+        if (!chkAt) {
+            alert('문자 전송할 대상자를 선택하세요.')
+            return false;
+        }
+        receiverNoParam = [];
+        $('#senderNo').val('');
+        $('#smsContents').val('');
+        $('input[name=exprnApplNoArr]:checked').each(function () {
+            var receiverNo = $(this).data("receiverNo");
+            receiverNoParam.push(receiverNo);
+        });
+        console.log("receiverNoParam", receiverNoParam);
+        $(this).modalPop({
+            target : "#send-sms-modal",
+            width  : "500",
+            height : "350"
+        });
+    });
+
+    $("#send-sms-button").on("click", function () {
+
+        var senderNo = $('#senderNo');
+        var regexTel1 = RegExp(/^02\d{3,4}\d{4}$/);
+        var regexTel2 = RegExp(/^0\d{2}\d{3,4}\d{4}$/);
+
+        if (!senderNo.val()) {
+            alert("발신자번호를 입력해주세요.");
+            senderNo.focus();
+            return false;
+        } else {
+            if(!regexTel1.test(senderNo.val()) && !regexTel2.test(senderNo.val())) {
+                alert("발신자번호는 일반전화 형식으로 입력해주세요. 휴대폰번호는 문자 발송이 제한될 수 있습니다.");
+                senderNo.focus();
+                return false;
+            }
+        }
+
+        var smsContents = $('#smsContents');
+        if (!smsContents.val()) {
+            alert("문자 내용을 입력해주세요.");
+            smsContents.focus();
+            return false;
+        }
+
+        if (confirm('발송하시겠습니까?')) {
+
+            $.ajax({
+                cache: false,
+                url: './sendSmsMultiAjax.do',
+                type: 'POST',
+                data: {
+                    senderNo: senderNo.val(),
+                    receiverNoArr: receiverNoParam,
+                    smsContents: smsContents.val()
+                },
+                success: function (res) {
+                    if (res > 0) {
+                        alert("문자 전송이 완료되었습니다.");
+                    } else if (res == 0) {
+                        alert("전송된 내역이 없습니다.");
+                    } else if (res == -1) {
+                        alert("수신번호를 확인할 수 없습니다.");
+                    } else if (res == -1) {
+                        alert("발신자번호를 확인할 수 없습니다.");
+                    } else if (res == -1) {
+                        alert("보내실 메세지 내용을 확인할 수 없습니다.");
+                    } else {
+                        alert("문자 전송 중 오류가 발생하였습니다.");
+                    }
+                    location.reload();
+                }, // success
+                error: function (request, xhr, status) {
+                    //alert(request.responseText);
+                    alert("에러가 발생하였습니다.");
+                    console.log("code:", request.status);
+                    console.log("message:", request.responseText);
+                    console.log("error:" + error)
+                }
+            });
+        }
+    });
+
 </script>
 
 </body>

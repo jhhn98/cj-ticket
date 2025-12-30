@@ -302,19 +302,12 @@
 					</td>
 				</tr>
 					<c:if test="${eduLctreVO.residenceUseYn eq 'Y'}">
-				<tr>
-					<th scope="row"><label for="rsdncYn1">거주지</label></th>
-					<td>
-               <span class="p-form-radio">
-								<input type="radio" id="rsdncYn1" name="rsdncYn" value="Y"${eduAplctVO.rsdncYn eq 'Y' || empty eduAplctVO.rsdncYn ? ' checked="true"':''} class="p-form-radio__input" />
-								<label for="rsdncYn1" class="p-form-radio__label">거주지</label>
-							</span> &nbsp;
-						<span class="p-form-radio">
-								<input type="radio" id="rsdncYn2" name="rsdncYn" value="N"${eduAplctVO.rsdncYn eq 'N' ? ' checked="true"':''} class="p-form-radio__input" />
-								<label for="rsdncYn2" class="p-form-radio__label">비거주지</label>
-				</span>
-					</td>
-				</tr>
+						<tr>
+							<th scope="row">거주지</th>
+							<td>
+								<c:out value="${lgldongMap[eduAplctVO.resInqCd]}"/>
+							</td>
+						</tr>
 					</c:if>
 				<tr>
 					<th scope="row"><label for="dscntUseSe1">감면신청</label></th>

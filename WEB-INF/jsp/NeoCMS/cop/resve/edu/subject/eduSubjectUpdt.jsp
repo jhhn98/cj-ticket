@@ -178,14 +178,14 @@
 				<span id="error_eduAmt" class="form_error"></span>
 			</td>
 		</tr>
-		<tr>
+		<%--<tr>
 			<th scope="row"><label for="retakeCnt">재수강제한횟수</label></th>
 			<td>
 				<input type="text" id="retakeCnt" name="retakeCnt" value="${eduSubjectVO.retakeCnt}" class="p-input w5p numberonly" maxlength="3" /> 회
 				<span class="text_red margin_l_20">※ "0"을 입력하시면 횟수제한 없습니다.</span>
 				<span id="error_retakeCnt" class="form_error"></span>
 			</td>
-		</tr>
+		</tr>--%>
 		<tr>
 			<th scope="row"><label for="attRate">출석률 기준 미달시<br/>페널티 적용</label></th>
 			<td>
@@ -438,9 +438,9 @@ function checkSubmit(frm) {
 		}
 	}
 	
-	if(frm.retakeCnt.value && isNaN(frm.retakeCnt.value) ) {
+	/*if(frm.retakeCnt.value && isNaN(frm.retakeCnt.value) ) {
 		alert("재수강제한횟수는 숫자만 입력하세요.");frm.retakeCnt.focus();return false;
-	}
+	}*/
 	if(frm.cardinalcnt.value && isNaN(frm.cardinalcnt.value) ) {
 		alert("기수별제한횟수는 숫자만 입력하세요.");frm.cardinalcnt.focus();return false;
 	}

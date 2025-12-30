@@ -43,10 +43,10 @@
                         <input type="radio" name="schdMthdRadio" id="schdMthd1" class="p-form-radio__input" value="PD"<c:if test="${fcltySchdVO.schdMthd == 'PD'}"> checked</c:if>>
                         <label for="schdMthd1" class="p-form-radio__label">시설기간(규칙 접수)</label>
                     </span>
-                    <span class="p-form-radio">
-                        <input type="radio" name="schdMthdRadio" id="schdMthd2" class="p-form-radio__input" value="DE"<c:if test="${fcltySchdVO.schdMthd == 'DE'}"> checked</c:if>>
-                        <label for="schdMthd2" class="p-form-radio__label">일자별 선택(불규칙 접수)</label>
-                    </span>
+<%--                    <span class="p-form-radio">--%>
+<%--                        <input type="radio" name="schdMthdRadio" id="schdMthd2" class="p-form-radio__input" value="DE"<c:if test="${fcltySchdVO.schdMthd == 'DE'}"> checked</c:if>>--%>
+<%--                        <label for="schdMthd2" class="p-form-radio__label">일자별 선택(불규칙 접수)</label>--%>
+<%--                    </span>--%>
                 </div>
             </td>
         </tr>

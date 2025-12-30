@@ -172,11 +172,14 @@
                                     <c:if test="${exprnApplVO.payMthdCd == 'ELCTRN' && !empty exprnApplVO.tossMethod}">
                                         (<c:out value="${exprnApplVO.tossMethod}"/>)
                                     </c:if>
+                                    <c:if test="${exprnApplVO.payMthdCd == 'ELCTRN' && exprnApplVO.rsvSttusCd == 'APPL_CMPL' && exprnApplVO.paySttusCd == 'PAY_WAIT'}">
+                                        (결제기한 : <c:out value="${tsu:toDateFormat(exprnApplVO.payDeadlineDt, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss')}"/>)
+                                    </c:if>
                                     <c:if test="${exprnApplVO.payMthdCd == 'NBKRCP'}">
                                         (<c:out value="${exprnVO.bankNm}"/> <c:out value="${exprnVO.acctNo}"/> (예금주:<c:out value="${exprnVO.dpstrNm}"/>))
                                     </c:if>
                                 </p>
-                                <c:if test="${exprnApplVO.payMthdCd == 'ELCTRN' && result.rsvSttusCd == 'APPL_CMPL' && exprnApplVO.paySttusCd == 'PAY_WAIT'}">
+                                <c:if test="${exprnApplVO.payMthdCd == 'ELCTRN' && exprnApplVO.rsvSttusCd == 'APPL_CMPL' && exprnApplVO.paySttusCd == 'PAY_WAIT'}">
                                     <c:if test="${todate < exprnApplVO.payDeadlineDt}">
                                         <c:import url="/tosspaymentsView.do">
                                             <c:param name="insttNo" value="${exprnApplVO.insttNo}" />
@@ -310,10 +313,12 @@
                         </div>
                     </td>
                 </tr>
-                <tr>
-                    <th scope="row" class="first"><div class="innerCell">거주지 조회</div></th>
-                    <td><div class="innerCell"><c:out value="${lgldongMap[exprnApplVO.resInqCd]}"/></div></td>
-                </tr>
+                <c:if test="${exprnVO.resInqUseYn == 'Y'}">
+                    <tr>
+                        <th scope="row" class="first"><div class="innerCell">거주지 조회</div></th>
+                        <td><div class="innerCell"><c:out value="${lgldongMap[exprnApplVO.resInqCd]}"/></div></td>
+                    </tr>
+                </c:if>
                 <!-- 유료 옵션 -->
                 <%--<tr> TODOSDB: 감면신청 여부
                     <th scope="row" class="first"><div class="innerCell">감면신청</div></th>

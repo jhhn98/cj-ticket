@@ -109,10 +109,12 @@
                         <strong>이용요금</strong>
                         <span><fmt:formatNumber value="${eduAplctVO.payAmt}" pattern="#,###"/> 원</span>
                     </li>
-                    <li>
-                        <strong>할인(국가유공자감면)</strong>
-                        <span>0원</span>
-                    </li>
+                    <c:if test="${eduLctreVO.dscntUseYn eq 'Y'}">
+                        <li>
+                            <strong>할인(국가유공자감면)</strong>
+                            <span>0원</span>
+                        </li>
+                    </c:if>
                 </ul>
                 <p class="sumAmount">
                     <strong>총 결제금액</strong>

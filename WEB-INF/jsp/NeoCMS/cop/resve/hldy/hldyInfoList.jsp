@@ -42,14 +42,15 @@
 					<span class="p-form-checkbox">
 						<input type="checkbox" name="eveyrAt" id="eveyrAt" class="p-form-checkbox__input" value="Y"><label for="eveyrAt" class="p-form-checkbox__label">매년적용</label>
 					</span> &nbsp; 
-			<c:if test="${loginVO.userSe eq 'ADMIN'}">
+					
 					<select name="insttNo" id="insttNo" class="p-input p-input--auto">
+				<c:if test="${loginVO.userSe eq 'ADMIN'}">
 						<option value="0">기관 선택(공통)</option>
+				</c:if>
 				<c:forEach var="item" items="${insttList}">
 						<option value="<c:out value="${item.insttNo}"/>"><c:out value="${item.insttNm}"/></option>
 				</c:forEach>
 					</select> &nbsp; 
-			</c:if>
 					<form:input path="bgnde" style="width:100px;" class="p-input p-input--auto" placeholder="yyyy-MM-dd" readonly="true"/>
 					<span class="p-input__addon">
 						<button type="button" class="p-input__item" title="시작일 선택" onclick="getCalendar(document.hldyInfo.bgnde);">
@@ -86,13 +87,12 @@
                     <form:hidden path="key"/>
                     <form:hidden path="pageUnit"/>
                     <form:hidden path="pageIndex"/>
-			<c:if test="${loginVO.userSe eq 'ADMIN'}">
                     <form:select path="searchInstt" cssClass="p-input p-input--auto" title="기관 선택">
                         <form:option value="" label="기관 선택"/>
 						<form:option value="0" label="공통 공휴일"/>
                         <form:options items="${insttList}" itemValue="insttNo" itemLabel="insttNm"/>
                     </form:select>
-			</c:if>
+
                     <form:input path="searchKrwd" class="p-input p-input--auto" placeholder="공휴일명 입력"/>
                     <input value="검색" type="submit" class="p-button p-button--small primary">
                 </fieldset>
@@ -141,13 +141,27 @@
 				</c:choose>
 				</td>
 				<td>
+			<c:choose>
+				<c:when test="${item.insttNo eq '0' && loginVO.userSe ne 'ADMIN'}">
+					<c:choose>
+						<c:when test="${item.useYn eq 'Y'}">사용함</c:when>
+						<c:otherwise>사용안함</c:otherwise>
+					</c:choose>
+				</c:when>
+				<c:otherwise>
 					<span class="p-switcher p-switcher--single">
                         <input id="useYn_<c:out value="${item.hldyNo}"/>" type="checkbox" class="p-switcher__input"<c:if test="${item.useYn eq 'Y'}"> checked</c:if> value="Y" onchange="fn_useYnCheck(<c:out value="${item.hldyNo}"/>)">
                         <label for="useYn_<c:out value="${item.hldyNo}"/>" class="p-switcher__label"><em class="p-switcher__text blind">사용</em></label>
                     </span>
+				</c:otherwise>
+			</c:choose>
 				</td>
 				<td><c:out value="${item.frstRegisterPnttmYMD}"/></td>
-                <td><a href="./deleteHldyInfo.do?<c:out value="${hldyInfoSearchVO.params}"/>&amp;hldyNo=<c:out value="${item.hldyNo}"/>" class="p-button p-button--xsmall delete" onclick="return fn_deleteHldy(this.href);">삭제</a></td>
+                <td>
+				<c:if test="${(item.insttNo eq '0' && loginVO.userSe eq 'ADMIN') || item.insttNo ne '0'}">
+					<a href="./deleteHldyInfo.do?<c:out value="${hldyInfoSearchVO.params}"/>&amp;hldyNo=<c:out value="${item.hldyNo}"/>" class="p-button p-button--xsmall delete" onclick="return fn_deleteHldy(this.href);">삭제</a>
+				</c:if>
+				</td>
             </tr>
 			<c:set var="currentPageStartNo" value="${currentPageStartNo-1}" />
         </c:forEach>

@@ -99,6 +99,7 @@
         <c:forEach var="result" items="${exprnApplSearchVO.paramsMapMng}">
             <input type="hidden" name="<c:out value="${result.key}"/>" value="<c:out value="${result.value}"/>"/>
         </c:forEach>
+        <form:hidden path="insttNo"/>
         <form:hidden path="exprnApplNo"/>
 
         <h3 class="col-12">신청자 정보</h3>

@@ -8,6 +8,7 @@
 <html>
 <head>
     <meta name="decorator" content="${menuInfo.siteId}" />
+    <script src="/common/js/default.js"></script>
 </head>
 <body>
 
@@ -65,6 +66,8 @@
             <input type="hidden" name="key" value="<c:out value="${key}"/>" />
             <input type="hidden" name="fcltyNo" value="<c:out value="${fcltySchdWebVO.fcltyNo}"/>" />
             <input type="hidden" name="fcltySchdNo" value="<c:out value="${fcltySchdWebVO.fcltySchdNo}"/>" />
+            <input type="hidden" name="totalCnt" value="<c:out value="${fcltyApplVO.totalCnt}"/>" />
+
             <tr>
                 <th scope="row" class="first">
                     <div class="innerCell">이름</div>
@@ -95,13 +98,13 @@
                         <div class="innerCell">
                             <div class="phoneCode">
                                 <label for="codePrefix">휴대전화 앞자리</label>
-                                <input type="number" id="codePrefix" placeholder="010" maxlength="3" class="customInputDefault" name="mobileNo1" min="0">
+                                <input type="number" id="codePrefix" placeholder="010" maxlength="3" class="customInputDefault" name="mobileNo1" min="0" oninput="fn_numChk(this)" autocomplete="off" required="required">
                                 -
                                 <label for="codeExchange">휴대전화 중간자리</label>
-                                <input type="number" id="codeExchange" placeholder="0000" maxlength="4" class="customInputDefault" name="mobileNo2" min="0">
+                                <input type="number" id="codeExchange" placeholder="0000" maxlength="4" class="customInputDefault" name="mobileNo2" min="0" oninput="fn_numChk(this)" autocomplete="off" required="required">
                                 -
                                 <label for="codeLine">휴대전화 마지막자리</label>
-                                <input type="number" id="codeLine" placeholder="0000" maxlength="4" class="customInputDefault" name="mobileNo3" min="0">
+                                <input type="number" id="codeLine" placeholder="0000" maxlength="4" class="customInputDefault" name="mobileNo3" min="0" oninput="fn_numChk(this)" autocomplete="off" required="required">
                             </div>
                         </div>
                     </td>
@@ -155,13 +158,49 @@
                             <input type="text" id="addressSearch" placeholder="주소(도로명/지번/건물명)를 입력해주세요." class="customInputDefault addressSearch" name="addr" value="<c:out value="${fcltyApplVO.addr}"/>" readonly>
                             <button type="button" class="addressSearchButton" onclick="openDaumZipAddress();"><span>주소검색</span></button>
                             <label for="addressDetail">상세주소</label>
-                            <input type="text" id="addressDetail" placeholder="상세주소를 입력해주세요." class="customInputDefault addressDetail" name="detailAddr" value="<c:out value="${fcltyApplVO.detailAddr}"/>">
+                            <input type="text" id="addressDetail" placeholder="상세주소를 입력해주세요." class="customInputDefault addressDetail" name="detailAddr" value="<c:out value="${fcltyApplVO.detailAddr}"/>" autocomplete="off" maxlength="50" required="required">
                         </div>
                     </div>
                 </td>
             </tr>
-            <c:if test="${fcltyVO.nmprSeCd == 'GRP'}">
+
+            <c:if test="${fcltyVO.nmprSeCd eq 'IND,GRP'}">
                 <tr>
+                    <th scope="row" class="first">
+                        <div class="innerCell">
+                            <label for="nmprSeCd" title="필수 입력 항목입니다.">
+                                인원구분
+                                <span class="point-color-red">*</span>
+                            </label>
+                        </div>
+                    </th>
+                    <td>
+                        <div class="innerCell">
+                            <div class="customSelect inlineBlock">
+                                    <%-- 인원구분 - IND : 개인 / GRP : 단체 --%>
+                                <select id="nmprSeCd" name="nmprSeCd" onchange="fn_nmprSeCdChk(this.value);" required="required">
+                                    <option value="">선택해주세요.</option>
+                                    <c:forEach var="result" items="${nmprSeList}" varStatus="status">
+                                        <option value="<c:out value="${result.code}"/>"<c:if test="${result.code == fcltyApplVO.payMthdCd}"> selected</c:if>><c:out value="${result.codeNm}"/></option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </c:if>
+
+            <c:if test="${fcltyVO.nmprSeCd eq 'IND'}">
+                <input type="hidden" name="useCnt" value="<c:out value="${fcltyApplVO.useCnt}"/>">
+                <input type="hidden" name="nmprSeCd" value="IND" />
+            </c:if>
+
+            <c:if test="${fcltyVO.nmprSeCd eq 'GRP'}">
+                <input type="hidden" name="nmprSeCd" value="GRP" />
+            </c:if>
+
+            <c:if test="${fcltyVO.nmprSeCd ne 'IND'}">
+                <tr id="grpNmTr" style="display: none;">
                     <th scope="row" class="first">
                         <div class="innerCell">
                             <label for="grpNm" title="필수 입력 항목입니다.">
@@ -172,24 +211,39 @@
                     </th>
                     <td>
                         <div class="innerCell">
-                            <input type="text" id="grpNm" placeholder="단체명을 입력해주세요." class="customInputDefault" name="grpNm" value="<c:out value="${fcltyApplVO.grpNm}"/>">
+                            <input type="text" id="grpNm" placeholder="단체명을 입력해주세요." class="customInputDefault" name="grpNm" value="<c:out value="${fcltyApplVO.grpNm}"/>" autocomplete="off" maxlength="30">
+                        </div>
+                    </td>
+                </tr>
+
+                <tr id="useCntTr" style="display: none;">
+                    <th scope="row" class="first">
+                        <div class="innerCell">
+                            <label for="useCnt" title="필수 입력 항목입니다.">
+                                신청인원
+                                <span class="point-color-red">*</span>
+                            </label>
+                        </div>
+                    </th>
+                    <td>
+                        <div class="innerCell">
+                            <input type="text" id="useCnt" class="customInputDefault" placeholder="숫자만 입력 가능합니다." name="useCnt" value="<c:out value="${fcltyApplVO.useCnt}"/>" oninput="fn_numChk(this)" autocomplete="off" maxlength="4"> 명
+
+                            <c:if test="${fcltyVO.nmprMinCnt > 0 || fcltyVO.nmprMaxCnt > 0}">
+                                <p class="iconText caution">
+                                    <c:if test="${fcltyVO.nmprMinCnt > 0}">
+                                        최소 신청인원 : <c:out value="${fcltyVO.nmprMinCnt}"/> 명
+                                    </c:if>
+                                    <c:if test="${fcltyVO.nmprMinCnt > 0 && nmprMaxCnt > 0}"> / </c:if>
+                                    <c:if test="${fcltyVO.nmprMaxCnt > 0}">
+                                        최대 신청인원 : <c:out value="${fcltyVO.nmprMaxCnt}"/> 명
+                                    </c:if>
+                                </p>
+                            </c:if>
                         </div>
                     </td>
                 </tr>
             </c:if>
-
-            <input type="hidden" name="totalCnt" value="<c:out value="${fcltyApplVO.totalCnt}"/>" />
-<%--                    <c:if test="${fcltyVO.nmprMinCnt > 0 || fcltyVO.nmprMaxCnt > 0}">--%>
-<%--                        <p class="iconText caution">--%>
-<%--                            <c:if test="${fcltyVO.nmprMinCnt > 0}">--%>
-<%--                                최소 신청인원 : <c:out value="${fcltyVO.nmprMinCnt}"/> 명--%>
-<%--                            </c:if>--%>
-<%--                            <c:if test="${fcltyVO.nmprMinCnt > 0 && nmprMaxCnt > 0}"> / </c:if>--%>
-<%--                            <c:if test="${fcltyVO.nmprMaxCnt > 0}">--%>
-<%--                                최대 신청인원 : <c:out value="${fcltyVO.nmprMaxCnt}"/> 명--%>
-<%--                            </c:if>--%>
-<%--                        </p>--%>
-<%--                    </c:if>--%>
 
             <tr>
                 <th scope="row" class="first"><div class="innerCell">이메일</div></th>
@@ -197,10 +251,10 @@
                     <div class="innerCell">
                         <div class="email">
                             <label for="emailId">E-mail ID</label>
-                            <input type="text" id="emailId" placeholder="ID" class="customInputDefault textAlignCenter" name="email1" value="<c:out value="${fcltyApplVO.email1}"/>">
+                            <input type="text" id="emailId" class="customInputDefault textAlignCenter" name="email1" value="<c:out value="${fcltyApplVO.email1}"/>" autocomplete="off" maxlength="20">
                             &nbsp;@&nbsp;
                             <label for="emailDomain">E-mail Domain name</label>
-                            <input type="text" id="emailDomain" placeholder="도메인" class="customInputDefault textAlignCenter" name="email2" value="<c:out value="${fcltyApplVO.email2}"/>">
+                            <input type="text" id="emailDomain" class="customInputDefault textAlignCenter" name="email2" value="<c:out value="${fcltyApplVO.email2}"/>" autocomplete="off" maxlength="20">
                             <label for="emailDomainSelect">E-mail Domain Select</label>
                             <div class="customSelect inlineBlock">
                                 <select id="emailDomainSelect" name="">
@@ -220,7 +274,7 @@
                     <th scope="row" class="first">
                         <div class="innerCell"><label for="aditIem1"><c:out value="${fcltyVO.aditIem1}"/></label></div>
                     </th>
-                    <td><div class="innerCell"><input type="text" id="aditIem1" name="aditIem1" placeholder="" class="customInputDefault w100per" value="<c:out value="${fcltyApplVO.aditIem1}"/>"></div></td>
+                    <td><div class="innerCell"><input type="text" id="aditIem1" name="aditIem1" placeholder="<c:out value="${fcltyVO.aditIem1}"/> 입력" class="customInputDefault w100per" value="<c:out value="${fcltyApplVO.aditIem1}"/>" autocomplete="off" maxlength="30"></div></td>
                 </tr>
             </c:if>
             <c:if test="${!empty fcltyVO.aditIem2}">
@@ -228,7 +282,7 @@
                     <th scope="row" class="first">
                         <div class="innerCell"><label for="aditIem2"><c:out value="${fcltyVO.aditIem2}"/></label></div>
                     </th>
-                    <td><div class="innerCell"><input type="text" id="aditIem2" name="aditIem2" placeholder="" class="customInputDefault w100per" value="<c:out value="${fcltyApplVO.aditIem2}"/>"></div></td>
+                    <td><div class="innerCell"><input type="text" id="aditIem2" name="aditIem2" placeholder="<c:out value="${fcltyVO.aditIem2}"/> 입력" class="customInputDefault w100per" value="<c:out value="${fcltyApplVO.aditIem2}"/>" autocomplete="off" maxlength="30"></div></td>
                 </tr>
             </c:if>
             <c:if test="${fcltyVO.resInqUseYn == 'Y'}">
@@ -391,7 +445,10 @@
 <script>
 
     $(document).ready(function () {
-
+        <c:if test="${fcltyVO.nmprSeCd eq 'GRP'}">
+            $('#grpNmTr').show();
+            $('#useCntTr').show();
+        </c:if>
         $('#emailDomainSelect').change(function () {
             if ($('#emailDomainSelect').val() == 'direct') {
                 $('input[name=email2]').prop('readonly', false);
@@ -402,6 +459,16 @@
             }
         });
     });
+
+    function fn_nmprSeCdChk(obj) {
+        if (obj === 'IND') {
+            $('#grpNmTr').hide();
+            $('#useCntTr').hide();
+        } else if (obj === 'GRP') {
+            $('#grpNmTr').show();
+            $('#useCntTr').show();
+        }
+    }
 
     function openDaumZipAddress() {
         new daum.Postcode({
@@ -418,25 +485,25 @@
         var regPhone = /^01[016789]-?\d{3,4}-?\d{4}$/;
         var regEmail = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 
-        <c:if test="${empty loginVO.mbtlnum}">
-        if (!form.mobileNo1.value || !form.mobileNo2.value || !form.mobileNo3.value) {
-            alert("연락처를 입력해주세요.");
-            if (!form.mobileNo1.value) {
-                form.mobileNo1.focus();
-            } else if (!form.mobileNo2.value) {
-                form.mobileNo2.focus();
-            } else {
-                form.mobileNo3.focus();
-            }
-            return false;
-        } else {
-            var mobileNo = form.mobileNo1.value + '-' + form.mobileNo2.value + '-' + form.mobileNo3.value;
-            if (!regPhone.test(mobileNo)) {
-                alert("연락처는 010-0000-0000 형식으로 입력해주세요.");
-                form.mobileNo1.focus();
+        <c:if test="${empty fcltyApplVO.mobileNo}">
+            if (!form.mobileNo1.value || !form.mobileNo2.value || !form.mobileNo3.value) {
+                alert("연락처를 입력해주세요.");
+                if (!form.mobileNo1.value) {
+                    form.mobileNo1.focus();
+                } else if (!form.mobileNo2.value) {
+                    form.mobileNo2.focus();
+                } else {
+                    form.mobileNo3.focus();
+                }
                 return false;
+            } else {
+                var mobileNo = form.mobileNo1.value + '-' + form.mobileNo2.value + '-' + form.mobileNo3.value;
+                if (!regPhone.test(mobileNo)) {
+                    alert("연락처는 010-0000-0000 형식으로 입력해주세요.");
+                    form.mobileNo1.focus();
+                    return false;
+                }
             }
-        }
         </c:if>
 
         if (!form.zip.value || !form.addr.value) {
@@ -451,13 +518,38 @@
             return false;
         }
 
-        <c:if test="${fcltyVO.nmprSeCd == 'GRP'}">
-        if (!form.grpNm.value) {
-            alert("단체명을 입력해주세요.");
-            form.grpNm.focus();
-            return false;
+        if(form.nmprSeCd.value === 'GRP') {
+
+            if (!form.grpNm.value) {
+                alert("단체명을 입력해주세요.");
+                form.grpNm.focus();
+                return false;
+            }
+
+            if (!form.useCnt.value || form.useCnt.value == '0') {
+                alert("신청인원을 입력해주세요.");
+                form.useCnt.focus();
+                return false;
+            }
+
+            <c:if test="${fcltyVO.nmprMinCnt > 0}">
+                const minCnt = '<c:out value="${fcltyVO.nmprMinCnt}"/>';
+                if (Number(form.useCnt.value) < Number(minCnt)) {
+                    alert("최소 신청인원은 "+minCnt+"명 입니다.");
+                    form.useCnt.focus();
+                    return false;
+                }
+            </c:if>
+            <c:if test="${fcltyVO.nmprMaxCnt > 0}">
+                const maxCnt = '<c:out value="${fcltyVO.nmprMaxCnt}"/>';
+                if (Number(form.useCnt.value) > Number(maxCnt)) {
+                    alert("최대 신청인원은 "+maxCnt+"명 입니다.");
+                    form.useCnt.focus();
+                    return false;
+                }
+            </c:if>
+
         }
-        </c:if>
 
         if ((form.email1.value && !form.email2.value) || (!form.email1.value && form.email2.value)) {
             alert("올바른 형식의 이메일을 입력해주세요.");
@@ -472,68 +564,19 @@
             }
         }
 
-        if (!form.totalCnt.value) {
-            alert("신청인원을 입력해주세요.");
-            form.totalCnt.focus();
-            return false;
-        }
-
-        if (form.totalCnt.value <= 0) {
-            alert("신청인원을 확인해주세요.");
-            form.totalCnt.focus();
-            return false;
-        }
-
-        var minCnt = <c:out value="${fcltyVO.nmprMinCnt}"/>
-        var maxCnt = <c:out value="${fcltyVO.nmprMaxCnt}"/>
-
-        if (minCnt > 0) {
-            if (form.totalCnt.value < minCnt) {
-                alert("최소 신청인원을 확인해주세요.");
-                form.totalCnt.focus();
-                return false;
-            }
-        }
-
-        if (maxCnt > 0) {
-            if (form.totalCnt.value > maxCnt) {
-                alert("최대 신청인원을 확인해주세요.");
-                form.totalCnt.focus();
-                return false;
-            }
-        }
-
-        <c:if test="${fcltyVO.detailNmprUseYn == 'Y'}">
-        // 총 인원
-        let totalCnt = parseInt($("#totalCnt").val() || 0);
-
-        // 세부 인원
-        let adltCnt   = parseInt($("#adltCnt").val() || 0);
-        let teenCnt   = parseInt($("#teenCnt").val() || 0);
-        let elmntCnt  = parseInt($("#elmntCnt").val() || 0);
-        let childCnt  = parseInt($("#childCnt").val() || 0);
-        let infantCnt = parseInt($("#infantCnt").val() || 0);
-
-        let detailSum = adltCnt + teenCnt + elmntCnt + childCnt + infantCnt;
-        if (totalCnt !== detailSum) {
-            form.adltCnt.focus();
-            alert("세부 인원이 총 신청인원과 일치하지 않습니다. 다시 확인해주세요.");
-            return false;
-        }
-        </c:if>
-
         <c:if test="${fcltyVO.fcltyAmt > 0}">
-        if (!form.payMthdCd.value) {
-            alert("결제방식을 선택해주세요.");
-            form.payMthdCd.focus();
-            return false;
-        }
+            if (!form.payMthdCd.value) {
+                alert("결제방식을 선택해주세요.");
+                form.payMthdCd.focus();
+                return false;
+            }
         </c:if>
 
         if( !confirm("신청하시겠습니까?") ) {
             return false;
+        } else {
+            return true;
         }
-        return true;
     }
 
 </script>

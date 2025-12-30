@@ -35,9 +35,11 @@
             <strong><c:out value="${eduLctreVO.lctreNm}"/></strong>
         </div>
         <div class="linkGroup">
-            <c:if test="${eduLctreVO.operSttus eq 'RCPT_ING'
+            <c:if test="${(eduLctreVO.operSttus eq 'RCPT_ING'
                             or eduLctreVO.operSttus eq 'RCPT_ADD'
-                            or eduLctreVO.operSttus eq 'WAIT_ING'}">
+                            or eduLctreVO.operSttus eq 'WAIT_ING')
+                            and fn:contains(eduLctreVO.rcptMthdCd, 'ONLIN')
+                            }">
                 <a href="./eduAplctAgreWebView.do?lctreNo=${eduLctreVO.lctreNo}&amp;<c:out value="${eduLctreVO.params}"/>" class="anchorButton wide line-color-green" onclick="return fn_goApply();">신청하기</a>
             </c:if>
             <a href="./myPageList.do?key=59" class="anchorButton wide line-color-green">예약확인</a>
@@ -65,8 +67,8 @@
                         </c:forEach>
                     </c:when>
                     <c:otherwise>
-                        <div class="slideItem no-image">
-                            <img src="/site/www/images/program/no-image-grey.png" alt="대체텍스트">
+                        <div class="slideItem">
+                            <img src="/site/www/images/program/no-image-grey.png" alt="<c:out value="${eduLctreVO.lctreNm}"/> 이미지 없음">
                         </div>
                     </c:otherwise>
                 </c:choose>
@@ -172,6 +174,26 @@
                                 </c:if>
                             </td>
                         </tr>
+                        <c:if test="${!empty eduLctreVO.addRcptBgnDt}">
+                            <tr>
+                                <th scope="row" class="first">추가모집기간</th>
+                                <td>
+                                    <c:if test="${not empty eduLctreVO.addRcptBgnDt && fn:length(eduLctreVO.addRcptBgnDt) >= 12}">
+                                        <c:set var="rcptBgnDe" value="${fn:substring(eduLctreVO.addRcptBgnDt, 0, 8)}"/>
+                                        <c:set var="rcptBgnHm" value="${fn:substring(eduLctreVO.addRcptBgnDt, 8, 12)}"/>
+                                        ${fn:substring(rcptBgnDe, 0, 4)}.${fn:substring(rcptBgnDe, 4, 6)}.${fn:substring(rcptBgnDe, 6, 8)}
+                                        ${fn:substring(rcptBgnHm, 0, 2)}시
+                                    </c:if>
+                                    ~
+                                    <c:if test="${not empty eduLctreVO.addRcptEndDt && fn:length(eduLctreVO.addRcptEndDt) >= 12}">
+                                        <c:set var="rcptEndDe" value="${fn:substring(eduLctreVO.addRcptEndDt, 0, 8)}"/>
+                                        <c:set var="rcptEndHm" value="${fn:substring(eduLctreVO.addRcptEndDt, 8, 12)}"/>
+                                        ${fn:substring(rcptEndDe, 0, 4)}.${fn:substring(rcptEndDe, 4, 6)}.${fn:substring(rcptEndDe, 6, 8)}
+                                        ${fn:substring(rcptEndHm, 0, 2)}시
+                                    </c:if>
+                                </td>
+                            </tr>
+                        </c:if>
                         <tr>
                             <th scope="row" class="first">운영기간</th>
                             <td>
@@ -266,7 +288,7 @@
                             <th scope="row" class="first">강의계획서</th>
                             <td>
                                 <c:forEach var="cmmnAtchFile" items="${cmmnAtchFileList}" varStatus="idx">
-                                    <a href="./downloadLctreFile.do?key=<c:out value="${param.key}"/>&amp;lctreNo=<c:out value="${eduLctreVO.lctreNo}"/>&amp;fileNo=<c:out value="${cmmnAtchFile.fileNo}"/>" class="link download">
+                                    <a href="./downloadLctreFileWeb.do?key=<c:out value="${param.key}"/>&amp;lctreNo=<c:out value="${eduLctreVO.lctreNo}"/>&amp;fileNo=<c:out value="${cmmnAtchFile.fileNo}"/>" class="link download">
                                         <span><c:out value="${cmmnAtchFile.fileNm}"/></span>
                                     </a>
                                 </c:forEach>
@@ -276,7 +298,13 @@
                     </table>
                 </div>
                 <div class="linkGroup marginTop30">
-                    <a href="./eduAplctAgreWebView.do?lctreNo=${eduLctreVO.lctreNo}&amp;<c:out value="${eduLctreVO.params}"/>" class="anchorButton wide line-color-green" onclick="return fn_goApply();">신청하기</a>
+                    <c:if test="${(eduLctreVO.operSttus eq 'RCPT_ING'
+                                or eduLctreVO.operSttus eq 'RCPT_ADD'
+                                or eduLctreVO.operSttus eq 'WAIT_ING')
+                                and fn:contains(eduLctreVO.rcptMthdCd, 'ONLIN')
+                                }">
+                        <a href="./eduAplctAgreWebView.do?lctreNo=${eduLctreVO.lctreNo}&amp;<c:out value="${eduLctreVO.params}"/>" class="anchorButton wide line-color-green" onclick="return fn_goApply();">신청하기</a>
+                    </c:if>
                     <a href="./myPageList.do?key=59" class="anchorButton wide line-color-green">예약확인</a>
                     <a href="./selectEduLctreWebList.do?<c:out value="${eduLctreVO.params}"/>" class="anchorButton">목록</a>
                     <a href="./selectBbsNttList.do?bbsNo=1&key=70" class="anchorButton">공지사항</a>
@@ -374,9 +402,11 @@
             <span class="stateType type1"><c:out value="${operSttusMap[eduLctreVO.operSttus]}"/></span>
             <strong><c:out value="${eduLctreVO.lctreNm}"/></strong>
             <div class="linkGroup">
-                <c:if test="${eduLctreVO.operSttus eq 'RCPT_ING'
+                <c:if test="${(eduLctreVO.operSttus eq 'RCPT_ING'
                             or eduLctreVO.operSttus eq 'RCPT_ADD'
-                            or eduLctreVO.operSttus eq 'WAIT_ING'}">
+                            or eduLctreVO.operSttus eq 'WAIT_ING')
+                            and fn:contains(eduLctreVO.rcptMthdCd, 'ONLIN')
+                            }">
                     <a href="./eduAplctAgreWebView.do?lctreNo=${eduLctreVO.lctreNo}&amp;<c:out value="${eduLctreVO.params}"/>" class="anchorButton wide line-color-green" onclick="return fn_goApply();">신청하기</a>
                 </c:if>
 

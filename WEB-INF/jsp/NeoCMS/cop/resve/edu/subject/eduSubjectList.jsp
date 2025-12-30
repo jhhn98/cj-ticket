@@ -43,7 +43,7 @@
     </div>
 
     <table class="p-table p-table--bordered">
-        <caption><c:out value="${menuInfo.cntntsNm}"/> 목록 - 번호, 기관명, 카테고리명, 과목명, 재수강제한횟수, 사용여부, 관리</caption>
+        <caption><c:out value="${menuInfo.cntntsNm}"/> 목록 - 번호, 기관명, 카테고리명, 과목명, 사용여부, 관리</caption>
         <colgroup>
             <col class="w60"/>
             <col />
@@ -62,7 +62,7 @@
             <th scope="col">카테고리명</th>
             <th scope="col">과목명</th>
             <th scope="col">수강료</th>
-            <th scope="col">재수강<br/>제한횟수</th>
+            <%--<th scope="col">재수강<br/>제한횟수</th>--%>
             <th scope="col">사용여부</th>
             <th scope="col">관리</th>
         </tr>
@@ -81,7 +81,7 @@
                         <c:otherwise><fmt:formatNumber value="${result.eduAmt}" pattern="#,###"/></c:otherwise>
                     </c:choose>
                 </td>
-                <td><b><c:out value="${result.retakeCnt}"/></b>회</td>
+                <%--<td><b><c:out value="${result.retakeCnt}"/></b>회</td>--%>
                 <td>
                     <span class="p-switcher p-switcher--single">
                         <input type="checkbox" class="p-switcher__input" id="useYn${result.subjectNo}"<c:if test="${result.useYn eq 'Y'}"> checked</c:if> value="${result.subjectNo}" onchange="fn_useYn(this, '${result.subjectNo}', '${result.useYn}')">

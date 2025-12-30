@@ -43,8 +43,8 @@
                         <th scope="row"><form:label path="insttNo">운영기관</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>
                         <td>
                             <form:select path="insttNo" class="p-input p-input--auto">
-                                <form:option value="" label="구분 선택"/>
-                                <form:options items="${expInsttList}" itemValue="insttNo" itemLabel="insttNm"/>
+                                <c:if test="${fn:length(insttList) > 1}"><form:option value="" label="구분 선택"/></c:if>
+                                <form:options items="${insttList}" itemValue="insttNo" itemLabel="insttNm"/>
                             </form:select>
                         </td>
                     </tr>

@@ -26,24 +26,10 @@
                     <select id="searchInsttNo" name="searchInsttNo" class="p-input"
                             onchange="insttIdChange(this.value)">
                         <option value="">운영기관 선택</option>
-                        <c:choose>
-                            <c:when test="${not empty insttMap}">
-                                <%-- 기관담당자 또는 강사: 권한 있는 기관만 표시 --%>
-                                <c:forEach var="item" items="${insttMap}">
-                                    <option value="${item.key}"${item.key eq eduLctreVO.searchInsttNo ? ' selected="true"':''}>
-                                            ${item.value}
-                                    </option>
-                                </c:forEach>
-                            </c:when>
-                            <c:otherwise>
-                                <%-- 최고관리자: 전체 기관 표시 --%>
-                                <c:forEach var="instt" items="${eduInsttList}">
-                                    <option value="${instt.insttNo}"${instt.insttNo eq eduLctreVO.searchInsttNo ? ' selected="true"':''}>
-                                        <c:out value="${instt.insttNm}"/>
-                                    </option>
-                                </c:forEach>
-                            </c:otherwise>
-                        </c:choose>
+                        <c:forEach var="instt" items="${eduInsttList}">
+                            <option value="${instt.insttNo}"${instt.insttNo eq eduAplctVO.searchInsttNo ? ' selected="true"':''}>
+                                <c:out value="${instt.insttNm}"/></option>
+                        </c:forEach>
                     </select>
                 </div>
                 <label for="searchCtgryNo" class="p-form__label col-2 right">카테고리</label>
@@ -195,7 +181,7 @@
             <th scope="col">생년월일</th>
             <th scope="col">연락처</th>
             <th scope="col">예약상태</th>
-            <th scope="col">결제상태</th>
+            <th scope="col">결제상태 (결제수단)<br/>결제기한</th>
             <th scope="col">신청일시</th>
             <th scope="col">수료여부</th>
             <th scope="col">관리</th>
@@ -275,6 +261,15 @@
                 </td>
                 <td>
                     <c:out value="${paySttusCdMap[result.paySttusCd]}"/>
+                    <%-- 결제수단 표시 --%>
+                    <c:if test="${not empty result.payMthdCd}">
+                        (<c:out value="${payMthdMap[result.payMthdCd]}"/>)
+                    </c:if>
+                    <%-- 결제기한 표시 (전자결제이고 결제대기 상태일 때만) --%>
+                    <c:if test="${result.payMthdCd == 'ELCTRN' && result.paySttusCd == 'PAY_WAIT' && not empty result.payDeadlineDtHm}">
+                        <br/><c:out value="${tsu:toDateFormat(result.payDeadlineDtHm, 'yyyyMMddHHmm', 'yyyy-MM-dd')}"/>
+                        <c:out value="${tsu:toDateFormat(result.payDeadlineDtHm, 'yyyyMMddHHmm', 'HH:mm')}"/>
+                    </c:if>
                 </td>
                 <td>
                     <c:if test="${not empty result.applDtMs && fn:length(result.applDtMs) >= 14}">

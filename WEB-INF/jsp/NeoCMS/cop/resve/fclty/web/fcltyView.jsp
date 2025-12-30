@@ -194,7 +194,8 @@
                                 <th scope="row" class="first">첨부파일</th>
                                 <td>
                                     <c:forEach var="cmmnAtchFile" items="${cmmnAtchFileList}" varStatus="idx">
-                                        <a href="./downloadFcltyFile.do?key=<c:out value="${param.key}"/>&amp;fcltyNo=<c:out value="${fcltyVO.fcltyNo}"/>&amp;fileNo=<c:out value="${cmmnAtchFile.fileNo}"/>" class="link download"><span>토요공부방.hwp</span></a>
+                                        <a href="./downloadFcltyFileU.do?key=<c:out value="${param.key}"/>&amp;fcltyNo=<c:out value="${fcltyVO.fcltyNo}"/>&amp;fileNo=<c:out value="${cmmnAtchFile.fileNo}"/>" class="link download"><span><c:out value="${cmmnAtchFile.fileNm}"/></span></a>
+                                        <c:if test="${!idx.last}"><br></c:if>
                                     </c:forEach>
                                 </td>
                             </tr>
@@ -309,7 +310,7 @@
 
 </script>
 <%-- 로컬 appkey : 5d520cb928ac962ed6acc665ac464c83 --%>
-<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=21afdca76805d74b4e167d981b8fe3e3&libraries=services"></script>
+<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=<spring:eval expression="@prop['daum.map.app.key']"/>&libraries=services"></script>
 <script>
     if (document.getElementById('map')) {
         kakao.maps.load(function () {

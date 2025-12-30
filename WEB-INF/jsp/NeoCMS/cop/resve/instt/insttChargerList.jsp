@@ -75,7 +75,7 @@
         <caption>운영기관 목록 - 번호, 구분, 운영기관명, 사용여부 등 제공</caption>
         <colgroup>
             <col style="width:100px">
-            <col style="width:200px">
+            <col style="width:300px">
             <col>
             <col style="width:120px">
             <col style="width:100px">
@@ -93,7 +93,7 @@
         <c:forEach var="result" items="${chargerList}" varStatus="idx">
             <tr>
                 <td><c:out value="${idx.index+1}"/></td>
-                <td><c:out value="${result.chargerNm}"/></td>
+                <td><c:out value="${result.chargerNm}"/> ( <c:out value="${result.chargerId}"/> )</td>
                 <td><c:out value="${result.dept}"/></td>
                 <td><c:out value="${result.frstRegisterPnttmYMD}"/></td>
                 <td><a href="./deleteInsttCharger.do?key=<c:out value="${insttChargerSearchVO.key}"/>&amp;chargerNo=<c:out value="${result.chargerNo}"/>&amp;insttNo=<c:out value="${result.insttNo}"/>" class="p-button p-button--xsmall delete" onclick="return fn_delete();">삭제</a></td>

@@ -14,6 +14,9 @@
 <meta name="keywords" content="NeoCMS 관리자 로그인" />
 <meta name="description" content="NeoCMS 관리자 로그인 페이지 입니다." />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <link href="/neo/css/default.css" type="text/css" rel="stylesheet"/>
 <link href="/neo/css/fontawesome.css" type="text/css" rel="stylesheet"/>
 <link href="/neo/css/login.css" type="text/css" rel="stylesheet"/>
@@ -22,10 +25,10 @@
     <div class="loginWrap">
         <h1>NeoCMS 관리자 로그인</h1>
         <div class="login_form_wrap">
-            <form name="loginForm" id="loginForm" method="post" action="/neo/neoLogin.do" onsubmit="fn_neoLoginSubmit(this)">
+            <form name="loginForm" id="loginForm" method="post" action="/neo/neoLogin.do" onsubmit="return fn_neoLoginSubmit(this)">
                 <input type="hidden" name="rurl" id="rurl" value="/neo/index.do"/>
-                <div class="login-input id"><input type="text" name="userId" id="userId" maxlength="15" placeholder="아이디 입력" title="아이디"/></div>
-                <div class="login-input password"><input type="password" name="userPasswd" id="userPasswd" maxlength="32" placeholder="비밀번호 입력" title="비밀번호"/></div>
+                <div class="login-input id"><input type="text" name="userId" id="userId" maxlength="15" placeholder="아이디 입력" title="아이디" autocomplete="off"/></div>
+                <div class="login-input password"><input type="password" name="userPasswd" id="userPasswd" maxlength="32" placeholder="비밀번호 입력" title="비밀번호" autocomplete="off" /></div>
                 <div class="login-input submit"><button type="submit"><span>LOGIN</span></button></div>
             </form>
             <div class="login_information">
@@ -35,13 +38,34 @@
         </div>
     </div>
     <footer>ⓒ HANSHINIT Corp.</footer>
-</body>
 <script src="/neo/js/jquery-3.6.0.min.js"></script>
 <script nonce="NEOCMSSCRIPT">
-
-    $(document).ready(function() {
-        $('input[name="id"]').focus();
-    });
-
+	$(window).on('pageshow', function(event) {
+		if (event.originalEvent.persisted) {
+			$('input[name="userId"]').val('');
+			$('input[name="userPasswd"]').val('');
+		}
+	});
+	
+	function fn_neoLoginSubmit(obj) {
+		if( !obj.userId.value ) {
+			alert("아이디를 입력해 주세요");
+			return false;
+		}
+		
+		if( !obj.userPasswd.value ) {
+			alert("비밀번호를 입려해 주세요");
+			return false;
+		}
+		
+		return true;
+	}
 </script>
+</body>
+<script nonce="NEOCMSSCRIPT">
+    $(document).ready(function() {
+        $('input[name="userId"]').focus();
+    });
+</script>
+
 </html>
