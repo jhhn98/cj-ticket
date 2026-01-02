@@ -297,8 +297,9 @@
                         <c:out value="${currentPageStartNo}"/>
                     </td>
                     <td class="textAlignLeft">
-                        <span class="mobile-th">체험프로그램 정보</span>
+
                         <div class="titleArea">
+                            <span class="mobile-th">체험프로그램 정보</span>
                             <span class="tableProgramTitle"><c:out value="${result.exprnNm}"/></span>
                             <div class="programDetailInformation">
                                 <span class="date">
@@ -317,7 +318,9 @@
                             </div>
                         </div>
                     </td>
-                    <td><span class="mobile-th">접수기간</span><c:out value="${tsu:toDateFormat(result.rcptBgnDt, 'yyyyMMddHHmm', 'yyyy-MM-dd HH:mm')}"/> ~ <c:out value="${tsu:toDateFormat(result.rcptEndDt, 'yyyyMMddHHmm', 'yyyy-MM-dd HH:mm')}"/></td>
+                    <td class="mobile-date">
+                        <span class="mobile-th">접수기간</span>
+                        <span class="mobile-td"><c:out value="${tsu:toDateFormat(result.rcptBgnDt, 'yyyyMMddHHmm', 'yyyy-MM-dd HH:mm')}"/> ~ <c:out value="${tsu:toDateFormat(result.rcptEndDt, 'yyyyMMddHHmm', 'yyyy-MM-dd HH:mm')}"/></span></td>
                     <td><span class="mobile-th">대상</span>
                         <c:choose>
                             <c:when test="${fn:length(targetList) == fn:length(result.targetCdArr)}">

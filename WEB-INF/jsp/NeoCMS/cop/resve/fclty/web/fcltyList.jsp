@@ -257,11 +257,13 @@
             <c:forEach var="result" items="${fcltyList}">
                 <tr>
                     <td class="first">
+                        <span class="mobile-th">No</span>
                         <a href="./selectFcltyWebView.do?fcltyNo=<c:out value="${result.fcltyNo}"/>&<c:out value="${fcltySearchVO.params}"/><c:out value="${fcltySearchVO.paramsWeb}"/>" class="trFullLink" title="<c:out value="${result.fcltyNm}"/> 상세보기"><span>"<c:out value="${result.fcltyNm}"/>" 상세보기</span></a>
                         <c:out value="${currentPageStartNo}"/>
                     </td>
                     <td class="textAlignLeft">
                         <div class="titleArea">
+                            <span class="mobile-th">시설명</span>
                             <span class="tableProgramTitle"><c:out value="${result.fcltyNm}"/></span>
                             <div class="programDetailInformation">
                                 <span class="date">
@@ -276,14 +278,16 @@
                             </div>
                         </div>
                     </td>
-                    <td><c:out value="${result.rcptBgnDe}"/> ~ <c:out value="${result.rcptEndDe}"/></td>
-                    <td>
+                    <td class="mobile-date">
+                        <span class="mobile-th">접수기간</span>
+                        <span class="mobile-td"><c:out value="${result.rcptBgnDe}"/> ~ <c:out value="${result.rcptEndDe}"/></span></td>
+                    <td><span class="mobile-th">대상</span>
                         <c:forEach var="targetCd" items="${result.targetCdArr}" varStatus="status">
                             <c:out value="${targetMap[targetCd]}"/>
                             <c:if test="${!status.last}">|</c:if>
                         </c:forEach>
                     </td>
-                    <td>
+                    <td><span class="mobile-th">이용요금</span>
                         <c:choose>
                             <c:when test="${result.fcltyAmt > 0}">
                                 <span class="pay">유료</span>
@@ -293,7 +297,7 @@
                             </c:otherwise>
                         </c:choose>
                     </td>
-                    <td>
+                    <td><span class="mobile-th">접수방식</span>
                         <c:out value="${slctMthdMap[result.slctMthdCd]}"/>
                     </td>
                     <c:set var="operSttus" value="${result.operSttus}"/>
@@ -313,7 +317,7 @@
                     <c:if test="${operSttus == 'OPER_END'}">
                         <c:set var="sttusType" value="type3"/>
                     </c:if>
-                    <td class="last"><span class="stateType <c:out value="${sttusType}"/>"><c:out value="${operSttusMap[result.operSttus]}"/></span></td>
+                    <td class="last"><span class="mobile-th">운영상태</span><span class="stateType <c:out value="${sttusType}"/>"><c:out value="${operSttusMap[result.operSttus]}"/></span></td>
                 </tr>
                 <c:set var="currentPageStartNo" value="${currentPageStartNo-1}" />
             </c:forEach>

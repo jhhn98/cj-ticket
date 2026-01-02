@@ -334,8 +334,9 @@
                                 <c:out value="${currentPageStartNo}"/>
                             </td>
                             <td class="textAlignLeft">
-                                <span class="mobile-th">강좌명/교육정보</span>
+
                                 <div class="titleArea">
+                                    <span class="mobile-th">강좌명/교육정보</span>
                                     <span class="tableProgramTitle"><c:out value="${result.lctreNm}"/></span>
                                     <div class="programDetailInformation">
                                             <%-- 교육기간 --%>
@@ -368,8 +369,9 @@
                                 </div>
                             </td>
                                 <%-- 접수기간 --%>
-                            <td>
+                            <td class="mobile-date">
                                 <span class="mobile-th">접수기간</span>
+                                <span class="mobile-td">
                                 <c:if test="${not empty result.rcptBgnDt && fn:length(result.rcptBgnDt) >= 12}">
                                     <c:out value="${tsu:toDateFormat(result.rcptBgnDt, 'yyyyMMddHHmm', 'yyyy.MM.dd')}"/>
 <%--                                    ${fn:substring(rcptBgnHm, 0, 2)}시--%>
@@ -379,6 +381,7 @@
                                     <c:out value="${tsu:toDateFormat(result.rcptEndDt, 'yyyyMMddHHmm', 'yyyy.MM.dd')}"/>
 <%--                                    ${fn:substring(rcptEndHm, 0, 2)}시--%>
                                 </c:if>
+                                </span>
                             </td>
                             <td>
                                 <span class="mobile-th">대상</span>
