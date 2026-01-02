@@ -20,7 +20,7 @@
   width: 100%;
 }
 
-.customSelect, .customInputDefault, .customInputDefault[type=text] {
+.customSelect, .customInputDefault, .customInputDefault[type=text], .customInputDefault[type=password]{
   height: 49px;
   background: #fff;
   border: 1px solid #d5d7dd;
@@ -3567,7 +3567,7 @@
     align-items: flex-start;
     width: 100%;
     margin: 10px 0 0;
-    padding: 5px 10px;
+    padding: 5px 20px;
     text-align: left;
     white-space: wrap;
   }
@@ -3580,6 +3580,18 @@
   .dataList-program .listWrap.detail table .titleArea::before {
     display: none;
   }
+  .dataList-program .listWrap.detail table .titleArea {
+    display: flex;
+    flex-wrap: wrap;
+    padding:0;
+  }
+  .dataList-program .listWrap.detail table .titleArea .mobile-th {
+    flex:0 0 120px;
+    display:block;
+    margin:0 20px 5px 0;
+    font-weight:700;
+    text-align: right;
+  }
   .dataList-program .listWrap.detail table tbody td .mobile-th {
     flex: 0 0 120px;
     display: block;
@@ -3588,13 +3600,19 @@
     text-align: right;
   }
   .dataList-program .listWrap.detail table .tableProgramTitle {
+    flex:0 0 calc(100% - 140px);
+    margin:0;
+    padding:0 0 0 0;
     font-size: 15px;
     line-height: 19px;
   }
   .dataList-program .listWrap.detail table .programDetailInformation {
-    margin: 5px 0 0;
+    flex:0 0 100%;
+    margin: 0;
+    padding: 0 0 0 140px;
     font-size: 14px;
     line-height: 16px;
+    align-items: center;
     flex-wrap: wrap;
   }
   .dataList-program .listWrap.detail table .programDetailInformation span {
@@ -3952,6 +3970,10 @@
   .programSearch .customIconOption {
     flex: 0 0 calc(25% - 8px);
   }
+  .program .viewProgram.detailInformation .infoTab .itemWrap + .linkGroup .anchorButton.wide, .program .viewProgram.detailInformation .infoTab .itemWrap + .linkGroup .anchorButton {
+    margin:10px 5px 0 0;
+    padding:6px 5px 8px;
+  }
 }
 @media all and (max-width: 640px) {
   .program .viewProgram.detailInformation {
@@ -4247,7 +4269,7 @@
     flex-wrap: wrap;
     align-items: center;
   }
-  .dataList-program .listWrap.detail table tbody td .mobile-th {
+  .dataList-program .listWrap.detail table tbody td .mobile-th,.dataList-program .listWrap.detail table .titleArea .mobile-th {
     flex: 0 0 auto;
     position:relative;
     margin:0 20px 3px 0;
@@ -4267,6 +4289,18 @@
   .dataList-program .listWrap.detail table .tableProgramTitle {
     color: #666;
   }
+  .dataList-program .listWrap.detail table tbody td.mobile-date {
+    align-items: flex-start;
+
+  }
+  .dataList-program .listWrap.detail table tbody td.mobile-date .mobile-th {
+    flex:0 0 52px;
+  }
+  .dataList-program .listWrap.detail table tbody td.mobile-date .mobile-td {
+    flex:0 0 calc(100% - 100px);
+  }
+  .dataList-program .listWrap.detail table .programDetailInformation{margin:10px 0 0;padding:0 0 0 0;}
+  .dataList-program .listWrap.detail table .programDetailInformation span{white-space:normal;}
 }
 
 /*# sourceMappingURL=program.css.map */

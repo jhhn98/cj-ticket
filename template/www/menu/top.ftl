@@ -4,6 +4,21 @@
 <nav id="global-navigation" class="navigation">
     <div class="mobile-navigation-head">
         <a href="./index.do" class="mobileHeaderLogo"><span class="cj-logo"><i>청주시 CHEONGJU CITY</i></span><span class="site-name"><i>통합예약</i></span></a>
+        <c:choose>
+            <c:when test="@@{!empty loginVO}">
+                <div class="navi_myPage">
+                    <svg><use href="/site/www/images/common/sprite-common-side.svg#icon-user"></use></svg>
+                    <div class="navi_linkLayer">
+                        <svg><use href="/site/www/images/common/sprite-common-side.svg#icon-arrTop"></use></svg>
+                        <a href="./myPageList.do?key=59"><span>마이페이지</span></a>
+                    </div>
+                </div>
+                <a href="/logout.do" class="navi_account"><svg><use href="/site/www/images/common/sprite-common-side.svg#icon-account-on"></use></svg><span>로그아웃</span></a>
+            </c:when>
+            <c:when test="@@{empty loginVO}">
+               <a href="/loginView.do?rurl=/www/index.do" class="navi_account"><svg><use href="/site/www/images/common/sprite-common-side.svg#icon-account-off"></use></svg><span>로그인</span></a>
+            </c:when>
+        </c:choose>
         <form method="post" action="">
             <fieldset>
                 <legend>통합예약 검색</legend>

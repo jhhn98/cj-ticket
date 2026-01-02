@@ -700,7 +700,9 @@ main {
 .marginLeft10 {
   margin-left: 10px;
 }
-
+.marginRight10 {
+  margin-right: 10px;
+}
 .scrollWrap-table {
   flex: 0 0 100%;
   overflow: hidden;
@@ -1017,6 +1019,7 @@ main {
     padding: 3px 10px;
     border: none;
     text-align: left;
+    align-items: center;
   }
   .table.boardList .mobile-th{
     display: flex;
