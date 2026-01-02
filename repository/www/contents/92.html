@@ -1,0 +1,186 @@
+<h3 class="programPageTitle">마이페이지-목록</h3>
+<ul class="tabButtons">
+    <li><a href="" class="current">전체(20)</a></li>
+    <li><a href="">탭1(20)</a></li>
+    <li><a href="">탭2(20)</a></li>
+    <li><a href="">탭3(20)</a></li>
+</ul>
+<form method="post" action="./sub3.do">
+    <fieldset>
+        <legend>신청 정보 및 수정-예약번호, 신청상태, 결제상태, 결제방법, 성명, 생년월일, 성별, 연락처, 이메일, 주소, 감면신청, 신청일시</legend>
+        <h4>교육/강좌</h4>
+        <h5>프로그램 정보</h5>
+        <div class="scrollWrap-table">
+            <table class="table default" data-table-response>
+                <caption>프로그램 정보-강좌명, 운영기관, 운영기간, 교육시간/요일, 기수, 선발방식, 교육장소, 교육장주소, 모집상태, 이용요금</caption>
+                <colgroup>
+                    <col style="width:15%">
+                    <col style="width:35%">
+                    <col style="width:15%">
+                    <col style="width:35%">
+                </colgroup>
+                <tbody class="textAlignLeft">
+                <!-- 목록 데이터 없을때 공통으로 사용해주세요. td에 colspan 속성 thead의 th갯수에 맞춰주세요 -->
+                <tr>
+                    <th scope="row" class="first">강좌명</th>
+                    <td><strong>엑셀기초</strong></td>
+                    <th scope="row">운영기관</th>
+                    <td><strong>주민센터</strong></td>
+                </tr>
+                <tr>
+                    <th scope="row" class="first">운영기간</th>
+                    <td>2025-07-17~2025-07-17</td>
+                    <th scope="row">교육시간/요일</th>
+                    <td>10:00~12:00/목</td>
+                </tr>
+                <tr>
+                    <th scope="row" class="first">기수</th>
+                    <td>상반기 1기 2025년</td>
+                    <th scope="row">선발방식</th>
+                    <td>선착순</td>
+                </tr>
+                <tr>
+                    <th scope="row" class="first">교육장소</th>
+                    <td>주민센터</td>
+                    <th scope="row">교육장장소</th>
+                    <td>충북 청주시 흥덕구 단재로 12</td>
+                </tr>
+                <tr>
+                    <th scope="row" class="first">모집상태</th>
+                    <td>접수중</td>
+                    <th scope="row">이용요금</th>
+                    <td>무료</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <h4>신청 정보 입력</h4>
+        <p class="iconText comment"><span class="point-color-red">*</span>표시는 필수 입력 항목입니다.</p>
+        <div class="scrollWrap-table">
+            <table class="table program formTable" data-table-response>
+                <caption>신청 정보 입력-예약번호, 신청상태, 결제상태, 결제방법, 성명, 생년월일, 성별, 연락처, 이메일, 주소, 강연신청, 신청일시</caption>
+                <colgroup>
+                    <col style="width:15%">
+                    <col>
+                </colgroup>
+                <tbody>
+                <!-- 목록 데이터 없을때 공통으로 사용해주세요. td에 colspan 속성 thead의 th갯수에 맞춰주세요 -->
+                <tr>
+                    <th scope="row" class="first"><div class="innerCell">예약번호</div></th>
+                    <td><div class="innerCell"><strong>EDU-070725-70726</strong></div></td>
+                </tr>
+                <tr>
+                    <th scope="row" class="first"><div class="innerCell">신청상태</div></th>
+                    <td>
+                        <div class="innerCell">
+                            사용자 취소(취소일: 2025-07-07 14:10)
+                            <p class="iconText caution point-color-green">취소사유: 사용자 취소</p>
+                        </div>
+                    </td>
+                </tr>
+                <!-- 유료 옵션 -->
+                <tr>
+                    <th scope="row" class="first"><div class="innerCell">결제상태</div></th>
+                    <td>
+                        <div class="innerCell">
+                            결제대기
+                            <p class="iconText caution point-color-green">결제기한: 2025-07-11 00시 00분 00초</p>
+                        </div>
+                    </td>
+                </tr>
+                <!-- 유료 옵션 -->
+                <tr>
+                    <th scope="row" class="first"><div class="innerCell">결제방법</div></th>
+                    <td>
+                        <div class="innerCell">
+                            <p>전자결제</p>
+                            <div class="editFormPayWrap">
+                                <label for="payType1" class="customRadioButton">
+                                    <input type="radio" id="payType1" name="payType">
+                                    <span class="customStyle">
+                                    <i class="radioButton"></i>
+                                    <span>신용카드</span>
+                                </span>
+                                </label>
+                                <label for="payType2" class="customRadioButton">
+                                    <input type="radio" id="payType2" name="payType">
+                                    <span class="customStyle">
+                                    <i class="radioButton"></i>
+                                    <span>가상계좌</span>
+                                </span>
+                                </label>
+                                <a href="" class="payButton"><span>전자결제(신용카드,가상계좌)</span></a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row" class="first"><div class="innerCell">성명</div></th>
+                    <td><div class="innerCell">홍길동</div></td>
+                </tr>
+                <tr>
+                    <th scope="row" class="first"><div class="innerCell">생년월일</div></th>
+                    <td><div class="innerCell">1984. 01. 01</div></td>
+                </tr>
+                <tr>
+                    <th scope="row" class="first"><div class="innerCell">성별</div></th>
+                    <td><div class="innerCell">남자</div></td>
+                </tr>
+                <tr>
+                    <th scope="row" class="first"><div class="innerCell">연락처</div></th>
+                    <td>
+                        <div class="innerCell">
+                            <div class="contactForm">
+                                <label for="contactFirst">연락처 첫번호</label>
+                                <input type="number" maxlength="4" id="contactFirst" class="customInputDefault simple" placeholder="010">
+                                <span>-</span>
+                                <label for="contactMiddle">연락처 가운데번호</label>
+                                <input type="number" maxlength="4" id="contactMiddle" class="customInputDefault simple" placeholder="0000">
+                                <span>-</span>
+                                <label for="contactLast">연락처 끝번호</label>
+                                <input type="number" maxlength="4" id="contactLast" class="customInputDefault simple" placeholder="0000">
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row" class="first"><div class="innerCell"><label for="email">이메일</label></div></th>
+                    <td><div class="innerCell"><input type="text" id="email" class="customInputDefault simple" placeholder="user@email.com"></div></td>
+                </tr>
+                <tr>
+                    <th scope="row" class="first"><div class="innerCell">주소</div></th>
+                    <td>
+                        <div class="innerCell">
+                            <div class="addressForm">
+                                <label for="addressInput1">검색 주소 입력</label>
+                                <input type="text" id="addressInput1" class="customInputDefault inputAddress simple" placeholder="도로명 또는 건물명을 입력해주세요">
+                                <a href="" class="searchAddress"><span>우편번호</span></a>
+                                <!--<button type="button" class="searchAddress"><span>우편번호</span></button> 버튼으로 쓰셔도 되고 A태그로 쓰셔도 되요 -->
+                                <label for="addressInput2">상세 주소 입력</label>
+                                <input type="text" id="addressInput2" class="customInputDefault inputAddress detail" placeholder="상세주소 입력해주세요">
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <!-- 유료 옵션 -->
+                <tr>
+                    <th scope="row" class="first"><div class="innerCell">감면신청</div></th>
+                    <td><div class="innerCell">신청(국가유공자: 할인율 50%) / 아니오</div></td>
+                </tr>
+                <tr>
+                    <th scope="row" class="first"><div class="innerCell">신청일시</div></th>
+                    <td><div class="innerCell">2025-07-07 13:51</div></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="flexWrap marginTop40">
+            <div class="flexLeft">
+                <a href="" class="customLink lineGray"><span>목록</span></a>
+            </div>
+            <div class="flexRight">
+                <button type="submit" class="customLink bgGreen"><span>수정</span></button>
+            </div>
+        </div>
+    </fieldset>
+</form>

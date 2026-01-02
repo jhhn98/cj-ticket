@@ -11,7 +11,6 @@
           <excludedPaths>
             <excludedPath path="/DATA" />
             <excludedPath path="/neo" />
-            <excludedPath path="/repository" />
             <excludedPath path="/sn3hcv" />
             <excludedPath path="/WEB-INF/classes" />
             <excludedPath path="/WEB-INF/config" />
@@ -50,6 +49,23 @@
             <excludedPath local="true" path="$PROJECT_DIR$/README.md" />
             <excludedPath local="true" path="$PROJECT_DIR$/site/www/css_bak" />
             <excludedPath local="true" path="$PROJECT_DIR$/common/css/css_bak" />
+            <excludedPath path="/repository/bbs" />
+            <excludedPath path="/repository/common" />
+            <excludedPath path="/repository/neo" />
+            <excludedPath path="/repository/staff" />
+            <excludedPath path="/repository/www/eval" />
+            <excludedPath path="/repository/www/link" />
+            <excludedPath path="/repository/www/menu" />
+            <excludedPath path="/repository/www/menuInfo" />
+            <excludedPath path="/repository/www/tabMenu" />
+            <excludedPath path="/repository/www/hist.json" />
+            <excludedPath path="/repository/www/main.jsp" />
+            <excludedPath path="/repository/www/siteInfo.json" />
+            <excludedPath path="/repository/www/sub.jsp" />
+            <excludedPath path="/repository/blank.jsp" />
+            <excludedPath path="/repository/empty.jsp" />
+            <excludedPath path="/repository/propgram_auth_test.jsp" />
+            <excludedPath path="/repository/smsTest.jsp" />
           </excludedPaths>
         </serverdata>
       </paths>

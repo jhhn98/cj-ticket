@@ -556,20 +556,21 @@
                     </td>
                 </tr>
                 <!-- 감면사용 여부 -->
-                <tr>
+                <input type="hidden" name="dscntUseYn" value="N"/>
+                <%--<tr>
                     <th scope="row"><label for="dscntUseYn1">감면사용 여부</label></th>
                     <td>
-			<span class="p-form-radio">
-				<form:radiobutton path="dscntUseYn" id="dscntUseYn1" value="Y" cssClass="p-form-radio__input"/>
-				<label for="dscntUseYn1" class="p-form-radio__label">사용</label>
-			</span>
                         <span class="p-form-radio">
-				<form:radiobutton path="dscntUseYn" id="dscntUseYn2" value="N" cssClass="p-form-radio__input"
-                                  checked="checked"/>
-				<label for="dscntUseYn2" class="p-form-radio__label">미사용</label>
-			</span>
+                            <form:radiobutton path="dscntUseYn" id="dscntUseYn1" value="Y" cssClass="p-form-radio__input"/>
+                            <label for="dscntUseYn1" class="p-form-radio__label">사용</label>
+                        </span>
+                        <span class="p-form-radio">
+                        <form:radiobutton path="dscntUseYn" id="dscntUseYn2" value="N" cssClass="p-form-radio__input"
+                                          checked="checked"/>
+                        <label for="dscntUseYn2" class="p-form-radio__label">미사용</label>
+			            </span>
                     </td>
-                </tr>
+                </tr>--%>
                 <!-- 거주지사용 여부 -->
                 <tr>
                     <th scope="row"><label for="residenceUseYn1">거주지사용 여부</label></th>

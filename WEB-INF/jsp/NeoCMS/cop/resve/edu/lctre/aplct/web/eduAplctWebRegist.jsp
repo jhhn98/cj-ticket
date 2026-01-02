@@ -263,7 +263,7 @@
                                 <input type="text" id="resJuminNoPre" placeholder="주민번호 앞자리" class="customInputDefault textAlignCenter" maxlength="6" value="<c:out value="${tsu:toDateFormat(loginVO.birthday, 'yyyyMMdd', 'yyMMdd')}"/>" disabled>
                                 &nbsp;-&nbsp;
                                 <label for="resJuminNoPost">주민번호 뒷자리</label>
-                                <input type="text" id="resJuminNoPost" placeholder="주민번호 뒷자리" class="customInputDefault textAlignCenter" maxlength="7" name="resJuminNoPost">
+                                <input type="password" id="resJuminNoPost" placeholder="주민번호 뒷자리" class="customInputDefault textAlignCenter" maxlength="7" name="resJuminNoPost" autocomplete="off">
                                 <button type="button" class="customLink bgBlack bigHeight marginLeft10 " onclick="fn_ResideInsttCnfirmCheck();"><span>조회</span></button>
                                 <span id="resInqResultText" class="resIngResultText"></span>
                             </div>

@@ -139,13 +139,13 @@
                         <div class="innerCell">
                             <div class="phoneCode">
                                 <label for="codePrefix">휴대전화 앞자리</label>
-                                <input type="text" id="codePrefix" placeholder="010" maxlength="3" class="customInputDefault" name="mobileNo1" value="<c:out value="${exprnApplVO.mobileNo1}"/>">
+                                <input type="text" id="codePrefix" placeholder="010" maxlength="3" class="customInputDefault onlyNumber" name="mobileNo1" value="<c:out value="${exprnApplVO.mobileNo1}"/>" autocomplete="off">
                                 -
                                 <label for="codeExchange">휴대전화 중간자리</label>
-                                <input type="text" id="codeExchange" placeholder="0000" maxlength="4" class="customInputDefault" name="mobileNo2" value="<c:out value="${exprnApplVO.mobileNo2}"/>">
+                                <input type="text" id="codeExchange" placeholder="0000" maxlength="4" class="customInputDefault onlyNumber" name="mobileNo2" value="<c:out value="${exprnApplVO.mobileNo2}"/>" autocomplete="off">
                                 -
                                 <label for="codeLine">휴대전화 마지막자리</label>
-                                <input type="text" id="codeLine" placeholder="0000" maxlength="4" class="customInputDefault" name="mobileNo3" value="<c:out value="${exprnApplVO.mobileNo3}"/>">
+                                <input type="text" id="codeLine" placeholder="0000" maxlength="4" class="customInputDefault onlyNumber" name="mobileNo3" value="<c:out value="${exprnApplVO.mobileNo3}"/>" autocomplete="off">
                             </div>
                         </div>
                     </td>
@@ -195,11 +195,11 @@
                     <div class="innerCell">
                         <div class="address">
                             <label for="addressSearch">주소 검색</label>
-                            <input type="hidden" name="zip" id="zip" value="<c:out value="${exprnApplVO.zip}"/>" readonly />
-                            <input type="text" id="addressSearch" placeholder="주소(도로명/지번/건물명)를 입력해주세요." class="customInputDefault addressSearch" name="addr" value="<c:out value="${exprnApplVO.addr}"/>" readonly>
+                            <input type="hidden" name="zip" id="zip" value="<c:out value="${exprnApplVO.zip}"/>" readonly autocomplete="off" />
+                            <input type="text" id="addressSearch" placeholder="주소(도로명/지번/건물명)를 입력해주세요." class="customInputDefault addressSearch" name="addr" value="<c:out value="${exprnApplVO.addr}"/>" readonly autocomplete="off">
                             <button type="button" class="addressSearchButton" onclick="openDaumZipAddress();"><span>주소검색</span></button>
                             <label for="addressDetail">상세주소</label>
-                            <input type="text" id="addressDetail" placeholder="상세주소를 입력해주세요." class="customInputDefault addressDetail" name="detailAddr" value="<c:out value="${exprnApplVO.detailAddr}"/>">
+                            <input type="text" id="addressDetail" placeholder="상세주소를 입력해주세요." class="customInputDefault addressDetail" name="detailAddr" value="<c:out value="${exprnApplVO.detailAddr}"/>" autocomplete="off">
                         </div>
                     </div>
                 </td>
@@ -285,7 +285,7 @@
                             <c:if test="${exprnVO.nmprMinCnt > 0}">
                                 최소 신청인원 : <c:out value="${exprnVO.nmprMinCnt}"/> 명
                             </c:if>
-                            <c:if test="${exprnVO.nmprMinCnt > 0 && nmprMaxCnt > 0}"> / </c:if>
+                            <c:if test="${exprnVO.nmprMinCnt > 0 && exprnVO.nmprMaxCnt > 0}"> / </c:if>
                             <c:if test="${exprnVO.nmprMaxCnt > 0}">
                                 최대 신청인원 : <c:out value="${exprnVO.nmprMaxCnt}"/> 명
                             </c:if>
@@ -299,10 +299,10 @@
                     <div class="innerCell">
                         <div class="email">
                             <label for="emailId">E-mail ID</label>
-                            <input type="text" id="emailId" class="customInputDefault textAlignCenter" name="email1" value="<c:out value="${exprnApplVO.email1}"/>">
+                            <input type="text" id="emailId" class="customInputDefault textAlignCenter" name="email1" value="<c:out value="${exprnApplVO.email1}"/>" autocomplete="off">
                             &nbsp;@&nbsp;
                             <label for="emailDomain">E-mail Domain name</label>
-                            <input type="text" id="emailDomain" class="customInputDefault textAlignCenter" name="email2" value="<c:out value="${exprnApplVO.email2}"/>">
+                            <input type="text" id="emailDomain" class="customInputDefault textAlignCenter" name="email2" value="<c:out value="${exprnApplVO.email2}"/>" autocomplete="off">
                             <label for="emailDomainSelect">E-mail Domain Select</label>
                             <div class="customSelect inlineBlock">
                                 <select id="emailDomainSelect" name="">
@@ -323,7 +323,7 @@
                     <th scope="row" class="first">
                         <div class="innerCell"><label for="aditIem1"><c:out value="${exprnVO.aditIem1}"/></label></div>
                     </th>
-                    <td><div class="innerCell"><input type="text" id="aditIem1" name="aditIem1" placeholder="" class="customInputDefault w100per" value="<c:out value="${exprnApplVO.aditIem1}"/>"></div></td>
+                    <td><div class="innerCell"><input type="text" id="aditIem1" name="aditIem1" placeholder="" class="customInputDefault w100per" value="<c:out value="${exprnApplVO.aditIem1}"/>" autocomplete="off"></div></td>
                 </tr>
             </c:if>
             <c:if test="${!empty exprnVO.aditIem2}">
@@ -331,7 +331,7 @@
                     <th scope="row" class="first">
                         <div class="innerCell"><label for="aditIem2"><c:out value="${exprnVO.aditIem2}"/></label></div>
                     </th>
-                    <td><div class="innerCell"><input type="text" id="aditIem2" name="aditIem2" placeholder="" class="customInputDefault w100per" value="<c:out value="${exprnApplVO.aditIem2}"/>"></div></td>
+                    <td><div class="innerCell"><input type="text" id="aditIem2" name="aditIem2" placeholder="" class="customInputDefault w100per" value="<c:out value="${exprnApplVO.aditIem2}"/>" autocomplete="off"></div></td>
                 </tr>
             </c:if>
             <c:if test="${exprnVO.resInqUseYn == 'Y'}">
@@ -350,10 +350,10 @@
                         <div class="innerCell">
                             <div class="juminNo" id="juminNoInput">
                                 <label for="resJuminNoPre">주민번호 앞자리</label>
-                                <input type="text" id="resJuminNoPre" placeholder="주민번호 앞자리" class="customInputDefault textAlignCenter" maxlength="6" value="<c:out value="${tsu:toDateFormat(exprnApplVO.birthDe, 'yyyyMMdd', 'yyMMdd')}"/>" disabled>
+                                <input type="text" id="resJuminNoPre" placeholder="주민번호 앞자리" class="customInputDefault textAlignCenter onlyNumber" maxlength="6" value="<c:out value="${tsu:toDateFormat(exprnApplVO.birthDe, 'yyyyMMdd', 'yyMMdd')}"/>" autocomplete="off" disabled>
                                 &nbsp;-&nbsp;
                                 <label for="resJuminNoPost">주민번호 뒷자리</label>
-                                <input type="text" id="resJuminNoPost" placeholder="주민번호 뒷자리" class="customInputDefault textAlignCenter" maxlength="7" name="resJuminNoPost">
+                                <input type="password" id="resJuminNoPost" placeholder="주민번호 뒷자리" class="customInputDefault textAlignCenter onlyNumber" maxlength="7" name="resJuminNoPost" autocomplete="off">
                                 <button type="button" class="customLink bgBlack bigHeight marginLeft10" onclick="fn_ResideInsttCnfirmCheck();"><span>조회</span></button>
                                 <span id="resInqResultText" class="resIngResultText"></span>
                             </div>
@@ -503,6 +503,10 @@
             }
         });
     </c:if>
+
+        $('.onlyNumber').on('input',function() {
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
 
         $('#emailDomainSelect').change(function () {
             if ($('#emailDomainSelect').val() == 'direct') {

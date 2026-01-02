@@ -281,14 +281,14 @@
                             <span id="error_email" class="form_error"></span>
                         </td>
                     </tr>
-					<c:if test="${eduLctreVO.residenceUseYn eq 'Y'}">
+					<%--<c:if test="${eduLctreVO.residenceUseYn eq 'Y'}">
                     <tr>
                         <th scope="row">거주지</th>
                         <td>
                             <c:out value="${lgldongMap[eduAplctVO.resInqCd]}"/>
                         </td>
                     </tr>
-					</c:if>
+					</c:if>--%>
 
                     <tr>
                         <th scope="row"><label for="dscntUseSe1">감면신청</label></th>

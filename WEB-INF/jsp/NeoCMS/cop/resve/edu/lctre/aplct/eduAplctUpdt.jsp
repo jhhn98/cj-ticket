@@ -301,7 +301,7 @@
 						<span id="error_email" class="form_error"></span>
 					</td>
 				</tr>
-					<c:if test="${eduLctreVO.residenceUseYn eq 'Y'}">
+					<c:if test="${eduLctreVO.residenceUseYn eq 'Y' and !empty eduAplctVO.resInqCd}">
 						<tr>
 							<th scope="row">거주지</th>
 							<td>

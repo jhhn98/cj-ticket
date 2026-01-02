@@ -1,0 +1,677 @@
+<h3>교육 목록</h3>
+<div class="programSearch">
+    <form method="post">
+        <fieldset>
+            <legend>검색</legend>
+            <div class="searchFormWrap default">
+                <div class="defaultFormWrap">
+                    <div class="formElement">
+                        <label for="select1">운영상태</label>
+                        <div class="customSelect">
+                            <select name="select1" id="select1">
+                                <option value="option1">전체</option>
+                                <option value="option2">모집중</option>
+                                <option value="option3">모집마감</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="formElement widthWide">
+                        <label for="input1">강좌명</label>
+                        <input type="text" name="input1" id="input1" placeholder="강좌명을 입력해주세요" class="customInputDefault">
+                    </div>
+                </div>
+            </div>
+            <div class="searchFormWrap detail srcEdu">
+                <div class="selectElementGroup eduGroup">
+                    <div class="formElement">
+                        <label for="select2-1">서비스 유형</label>
+                        <div class="customSelect">
+                            <select name="select2-1" id="select2-1" class="customSelect">
+                                <option value="option1">전체</option>
+                                <option value="option2">기관1</option>
+                                <option value="option3">기관2</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="formElement elementCount2">
+                        <span class="formElement-label">지역명</span>
+                        <div class="customSelect">
+                            <select name="select2-2" title="지역 구 선택" class="customSelect">
+                                <option value="option1">전체</option>
+                                <option value="option2">청원구</option>
+                                <option value="option3">흥덕구</option>
+                            </select>
+                        </div>
+                        <div class="customSelect">
+                            <select name="select2-3" title="지역 읍/면/동 선택" class="customSelect">
+                                <option value="option1">전체</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="formElement">
+                        <label for="select2-4">이용요금</label>
+                        <div class="customSelect">
+                            <select name="select2-4" id="select2-4" class="customSelect">
+                                <option value="option1">전체</option>
+                                <option value="option2">요금1</option>
+                                <option value="option3">요금2</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="formElement">
+                        <label for="select2-5">운영기관</label>
+                        <div class="customSelect">
+                            <select name="select2-5" id="select2-5" class="customSelect">
+                                <option value="option1">전체</option>
+                                <option value="option2">요금1</option>
+                                <option value="option3">요금2</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="formElement w100per marginTop12">
+                    <span class="formElement-label">생애주기</span>
+                    <div class="formElement-selectGroup">
+                        <label for="checkbox2-1" class="customIconOption">
+                            <input type="checkbox" id="checkbox2-1"/>
+                            <span class="optionWrap">
+                                <i class="optionIcon TARGET01"></i>
+                                <em>영유아</em>
+                            </span>
+                        </label>
+                        <label for="checkbox2-2" class="customIconOption">
+                            <input type="checkbox" id="checkbox2-2"/>
+                            <span class="optionWrap">
+                                <i class="optionIcon TARGET02"></i>
+                                <em>아동</em>
+                            </span>
+                        </label>
+                        <label for="checkbox2-3" class="customIconOption">
+                            <input type="checkbox" id="checkbox2-3"/>
+                            <span class="optionWrap">
+                                <i class="optionIcon TARGET03"></i>
+                                <em>초등학생</em>
+                            </span>
+                        </label>
+                        <label for="checkbox2-4" class="customIconOption">
+                            <input type="checkbox" id="checkbox2-4"/>
+                            <span class="optionWrap">
+                                <i class="optionIcon TARGET04"></i>
+                                <em>청소년</em>
+                            </span>
+                        </label>
+                        <label for="checkbox2-5" class="customIconOption">
+                            <input type="checkbox" id="checkbox2-5"/>
+                            <span class="optionWrap">
+                                <i class="optionIcon TARGET05"></i>
+                                <em>성인</em>
+                            </span>
+                        </label>
+                        <label for="checkbox2-6" class="customIconOption">
+                            <input type="checkbox" id="checkbox2-6"/>
+                            <span class="optionWrap">
+                                <i class="optionIcon TARGET06"></i>
+                                <em>어르신</em>
+                            </span>
+                        </label>
+                        <label for="checkbox2-7" class="customIconOption">
+                            <input type="checkbox" id="checkbox2-7"/>
+                            <span class="optionWrap">
+                                <i class="optionIcon TARGET07"></i>
+                                <em>장애인</em>
+                            </span>
+                        </label>
+                        <label for="checkbox2-8" class="customIconOption">
+                            <input type="checkbox" id="checkbox2-8"/>
+                            <span class="optionWrap">
+                                <i class="optionIcon TARGET08"></i>
+                                <em>기타</em>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+                <div class="formElement w100per marginTop12">
+                    <span class="formElement-label">생애주기</span>
+                    <div class="formElement-selectGroup">
+                        <label for="radioButton2-1" class="customIconOption">
+                            <input type="radio" id="radioButton2-1" name="serviceType2"/>
+                            <span class="optionWrap">
+                                <i class="optionIcon TARGET01"></i>
+                                <em>영유아</em>
+                            </span>
+                        </label>
+                        <label for="radioButton2-2" class="customIconOption">
+                            <input type="radio" id="radioButton2-2" name="serviceType2"/>
+                            <span class="optionWrap">
+                                <i class="optionIcon TARGET02"></i>
+                                <em>아동</em>
+                            </span>
+                        </label>
+                        <label for="radioButton2-3" class="customIconOption">
+                            <input type="radio" id="radioButton2-3" name="serviceType2"/>
+                            <span class="optionWrap">
+                                <i class="optionIcon TARGET03"></i>
+                                <em>초등학생</em>
+                            </span>
+                        </label>
+                        <label for="radioButton2-4" class="customIconOption">
+                            <input type="radio" id="radioButton2-4" name="serviceType2"/>
+                            <span class="optionWrap">
+                                <i class="optionIcon TARGET04"></i>
+                                <em>청소년</em>
+                            </span>
+                        </label>
+                        <label for="radioButton2-5" class="customIconOption">
+                            <input type="radio" id="radioButton2-5" name="serviceType2"/>
+                            <span class="optionWrap">
+                                <i class="optionIcon TARGET05"></i>
+                                <em>성인</em>
+                            </span>
+                        </label>
+                        <label for="radioButton2-6" class="customIconOption">
+                            <input type="radio" id="radioButton2-6" name="serviceType2"/>
+                            <span class="optionWrap">
+                                <i class="optionIcon TARGET06"></i>
+                                <em>어르신</em>
+                            </span>
+                        </label>
+                        <label for="radioButton2-7" class="customIconOption">
+                            <input type="radio" id="radioButton2-7" name="serviceType2"/>
+                            <span class="optionWrap">
+                                <i class="optionIcon TARGET07"></i>
+                                <em>장애인</em>
+                            </span>
+                        </label>
+                        <label for="radioButton2-8" class="customIconOption">
+                            <input type="radio" id="radioButton2-8" name="serviceType2"/>
+                            <span class="optionWrap">
+                                <i class="optionIcon TARGET08"></i>
+                                <em>기타</em>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="formButton">
+                <button type="submit" class="button submit">검색</button>
+                <button type="reset" class="button reset">초기화</button>
+            </div>
+        </fieldset>
+    </form>
+    <button type="button" class="detailCloseButton"><span>상세검색 <em class="openText">열기</em><em class="closeText">닫기</em></span></button>
+</div>
+<div class="dataList-program">
+    <div class="asideInformation">
+        <button type="button" class="viewType thumb active" data-list-view="thumbnail">썸네일 보기</button>
+        <button type="button" class="viewType detail" data-list-view="detail">리스트 보기</button>
+    </div>
+    <div class="listWrap thumbnail show">
+        <div class="dataCount">총 : <em>254</em>건 / 페이지 1/2</div>
+        <ul>
+            <!-- 검색결과, 데이터 없을때 -->
+            <li class="noDataList">
+                <div class="noData">
+                    <div class="noData-innerWrap">
+                        <span class="noDataTitle">검색하신 내용을 찾을 수 없습니다.</span>
+                        <p>조건을 바꾸어 다른 검색어를 입력하시거나<span>철자와 띄어쓰기를 확인해보세요.</span></p>
+                    </div>
+                </div>
+            </li>
+            <!-- //검색결과, 데이터 없을때 -->
+            <li>
+                <a href="./">
+                    <span class="image"><img src="/site/www/images/search/testImage.png" alt="대체텍스트"></span>
+                    <div class="option">
+                        <span class="stateType type1">접수대기</span>
+                        <span class="organ">기관명기관명기관명</span>
+                        <span class="pay free">무료</span>
+                    </div>
+                    <span class="title">공통 부모교육 지금 자녀와 얼마나 소통하고 있나요?</span>
+                    <ul class="prgInformation">
+                        <li><span>장소</span>정보화교육장</li>
+                        <li><span>대상</span>19세이상청주시시민</li>
+                        <li><span>접수</span>2024-09-14 ~ 2024-10-05</li>
+                        <li><span>운영</span>2024-10-11 ~ 2024-10-28</li>
+                    </ul>
+                </a>
+            </li>
+            <li>
+                <a href="./">
+                    <span class="image"><img src="/site/www/images/search/testImage.png" alt="대체텍스트"></span>
+                    <div class="option">
+                        <span class="stateType type2">접수중</span>
+                        <span class="organ">기관명기관명기관명</span>
+                        <span class="pay">유료</span>
+                    </div>
+                    <span class="title">공통 부모교육 지금 자녀와 얼마나 소통하고 있나요?</span>
+                    <ul class="prgInformation">
+                        <li><span>장소</span>정보화교육장</li>
+                        <li><span>대상</span>19세이상청주시시민</li>
+                        <li><span>접수</span>2024-09-14 ~ 2024-10-05</li>
+                        <li><span>운영</span>2024-10-11 ~ 2024-10-28</li>
+                    </ul>
+                </a>
+            </li>
+            <li>
+                <a href="./">
+                    <span class="image noImage"><img src="/site/www/images/program/no-image.png" alt="이미지 없음"></span>
+                    <div class="option">
+                        <span class="stateType type3">접수마감</span>
+                        <span class="organ">기관명기관명기관명</span>
+                        <span class="pay free">무료</span>
+                    </div>
+                    <span class="title">공통 부모교육 지금 자녀와 얼마나 소통하고 있나요?</span>
+                    <ul class="prgInformation">
+                        <li><span>장소</span>정보화교육장</li>
+                        <li><span>대상</span>19세이상청주시시민</li>
+                        <li><span>접수</span>2024-09-14 ~ 2024-10-05</li>
+                        <li><span>운영</span>2024-10-11 ~ 2024-10-28</li>
+                    </ul>
+                </a>
+            </li>
+            <li>
+                <a href="./">
+                    <span class="image noImage"><img src="/site/www/images/program/no-image.png" alt="이미지 없음"></span>
+                    <div class="option">
+                        <span class="stateType type3">접수마감</span>
+                        <span class="organ">기관명기관명기관명</span>
+                        <span class="pay free">무료</span>
+                    </div>
+                    <span class="title">공통 부모교육 지금 자녀와 얼마나 소통하고 있나요?</span>
+                    <ul class="prgInformation">
+                        <li><span>장소</span>정보화교육장</li>
+                        <li><span>대상</span>19세이상청주시시민</li>
+                        <li><span>접수</span>2024-09-14 ~ 2024-10-05</li>
+                        <li><span>운영</span>2024-10-11 ~ 2024-10-28</li>
+                    </ul>
+                </a>
+            </li>
+            <li>
+                <a href="./">
+                    <span class="image"><img src="/site/www/images/search/testImage.png" alt="대체텍스트"></span>
+                    <div class="option">
+                        <span class="stateType type1">접수대기</span>
+                        <span class="organ">기관명기관명기관명</span>
+                        <span class="pay free">무료</span>
+                    </div>
+                    <span class="title">공통 부모교육 지금 자녀와 얼마나 소통하고 있나요?</span>
+                    <ul class="prgInformation">
+                        <li><span>장소</span>정보화교육장</li>
+                        <li><span>대상</span>19세이상청주시시민</li>
+                        <li><span>접수</span>2024-09-14 ~ 2024-10-05</li>
+                        <li><span>운영</span>2024-10-11 ~ 2024-10-28</li>
+                    </ul>
+                </a>
+            </li>
+            <li>
+                <a href="./">
+                    <span class="image"><img src="/site/www/images/search/testImage.png" alt="대체텍스트"></span>
+                    <div class="option">
+                        <span class="stateType type2">접수중</span>
+                        <span class="organ">기관명기관명기관명</span>
+                        <span class="pay free">무료</span>
+                    </div>
+                    <span class="title">공통 부모교육 지금 자녀와 얼마나 소통하고 있나요?</span>
+                    <ul class="prgInformation">
+                        <li><span>장소</span>정보화교육장</li>
+                        <li><span>대상</span>19세이상청주시시민</li>
+                        <li><span>접수</span>2024-09-14 ~ 2024-10-05</li>
+                        <li><span>운영</span>2024-10-11 ~ 2024-10-28</li>
+                    </ul>
+                </a>
+            </li>
+            <li>
+                <a href="./">
+                    <span class="image noImage"><img src="/site/www/images/program/no-image.png" alt="이미지 없음"></span>
+                    <div class="option">
+                        <span class="stateType type3">접수마감</span>
+                        <span class="organ">기관명기관명기관명</span>
+                        <span class="pay free">무료</span>
+                    </div>
+                    <span class="title">공통 부모교육 지금 자녀와 얼마나 소통하고 있나요?</span>
+                    <ul class="prgInformation">
+                        <li><span>장소</span>정보화교육장</li>
+                        <li><span>대상</span>19세이상청주시시민</li>
+                        <li><span>접수</span>2024-09-14 ~ 2024-10-05</li>
+                        <li><span>운영</span>2024-10-11 ~ 2024-10-28</li>
+                    </ul>
+                </a>
+            </li>
+            <li>
+                <a href="./">
+                    <span class="image noImage"><img src="/site/www/images/program/no-image.png" alt="이미지 없음"></span>
+                    <div class="option">
+                        <span class="stateType type3">접수마감</span>
+                        <span class="organ">기관명기관명기관명</span>
+                        <span class="pay free">무료</span>
+                    </div>
+                    <span class="title">공통 부모교육 지금 자녀와 얼마나 소통하고 있나요?</span>
+                    <ul class="prgInformation">
+                        <li><span>장소</span>정보화교육장</li>
+                        <li><span>대상</span>19세이상청주시시민</li>
+                        <li><span>접수</span>2024-09-14 ~ 2024-10-05</li>
+                        <li><span>운영</span>2024-10-11 ~ 2024-10-28</li>
+                    </ul>
+                </a>
+            </li>
+            <li>
+                <a href="./">
+                    <span class="image noImage"><img src="/site/www/images/program/no-image.png" alt="이미지 없음"></span>
+                    <div class="option">
+                        <span class="stateType type3">접수마감</span>
+                        <span class="organ">기관명기관명기관명</span>
+                        <span class="pay free">무료</span>
+                    </div>
+                    <span class="title">공통 부모교육 지금 자녀와 얼마나 소통하고 있나요?</span>
+                    <ul class="prgInformation">
+                        <li><span>장소</span>정보화교육장</li>
+                        <li><span>대상</span>19세이상청주시시민</li>
+                        <li><span>접수</span>2024-09-14 ~ 2024-10-05</li>
+                        <li><span>운영</span>2024-10-11 ~ 2024-10-28</li>
+                    </ul>
+                </a>
+            </li>
+            <li>
+                <a href="./">
+                    <span class="image noImage"><img src="/site/www/images/program/no-image.png" alt="이미지 없음"></span>
+                    <div class="option">
+                        <span class="stateType type3">접수마감</span>
+                        <span class="organ">기관명기관명기관명</span>
+                        <span class="pay free">무료</span>
+                    </div>
+                    <span class="title">공통 부모교육 지금 자녀와 얼마나 소통하고 있나요?</span>
+                    <ul class="prgInformation">
+                        <li><span>장소</span>정보화교육장</li>
+                        <li><span>대상</span>19세이상청주시시민</li>
+                        <li><span>접수</span>2024-09-14 ~ 2024-10-05</li>
+                        <li><span>운영</span>2024-10-11 ~ 2024-10-28</li>
+                    </ul>
+                </a>
+            </li>
+            <li>
+                <a href="./">
+                    <span class="image noImage"><img src="/site/www/images/program/no-image.png" alt="이미지 없음"></span>
+                    <div class="option">
+                        <span class="stateType type3">접수마감</span>
+                        <span class="organ">기관명기관명기관명</span>
+                        <span class="pay free">무료</span>
+                    </div>
+                    <span class="title">공통 부모교육 지금 자녀와 얼마나 소통하고 있나요?</span>
+                    <ul class="prgInformation">
+                        <li><span>장소</span>정보화교육장</li>
+                        <li><span>대상</span>19세이상청주시시민</li>
+                        <li><span>접수</span>2024-09-14 ~ 2024-10-05</li>
+                        <li><span>운영</span>2024-10-11 ~ 2024-10-28</li>
+                    </ul>
+                </a>
+            </li>
+            <li>
+                <a href="./">
+                    <span class="image noImage"><img src="/site/www/images/program/no-image.png" alt="이미지 없음"></span>
+                    <div class="option">
+                        <span class="stateType type3">접수마감</span>
+                        <span class="organ">기관명기관명기관명</span>
+                        <span class="pay free">무료</span>
+                    </div>
+                    <span class="title">공통 부모교육 지금 자녀와 얼마나 소통하고 있나요?</span>
+                    <ul class="prgInformation">
+                        <li><span>장소</span>정보화교육장</li>
+                        <li><span>대상</span>19세이상청주시시민</li>
+                        <li><span>접수</span>2024-09-14 ~ 2024-10-05</li>
+                        <li><span>운영</span>2024-10-11 ~ 2024-10-28</li>
+                    </ul>
+                </a>
+            </li>
+        </ul>
+        <div class="pagination-default">
+            <a href="" class="movePage first"><span>첫 페이지로 이동</span></a>
+            <a href="" class="movePage prev"><span>이전 페이지로 이동</span></a>
+            <a href=""><em>1</em></a>
+            <a href=""><em>2</em></a>
+            <a href=""><em>3</em></a>
+            <a href=""><em>4</em></a>
+            <a href="" class="current"><em>5</em></a>
+            <a href=""><em>6</em></a>
+            <a href=""><em>7</em></a>
+            <a href=""><em>8</em></a>
+            <a href=""><em>9</em></a>
+            <a href=""><em>10</em></a>
+            <a href="" class="movePage next"><span>다음 페이지로 이동</span></a>
+            <a href="" class="movePage last"><span>마지막 페이지로 이동</span></a>
+        </div>
+    </div>
+    <div class="listWrap detail">
+        <div class="dataCount">총 : <em>254</em>건 / 페이지 1/2</div>
+        <div class="scrollWrap-table">
+            <table>
+                <caption>강좌목록-No, 강좌명/교육정보, 접수기간, 대상, 이용요금, 신청/정원(대기), 운영상태</caption>
+                <colgroup>
+                    <col style="width:80px">
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                </colgroup>
+                <thead>
+                <tr>
+                    <th scope="col" class="first">No</th>
+                    <th scope="col">강좌명/교육정보</th>
+                    <th scope="col">접수기간</th>
+                    <th scope="col">대상</th>
+                    <th scope="col">이용요금</th>
+                    <th scope="col">신청/정원(대기)</th>
+                    <th scope="col" class="last">운영상태</th>
+                </tr>
+                </thead>
+                <tbody class="textAlignCenter">
+                <!-- 게시물 없을때 -->
+                <tr>
+                    <td colspan="7">
+                        <div class="noData">
+                            <div class="noData-innerWrap">
+                                <span class="noDataTitle">검색하신 내용을 찾을 수 없습니다.</span>
+                                <p>조건을 바꾸어 다른 검색어를 입력하시거나<span>철자와 띄어쓰기를 확인해보세요.</span></p>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <!-- //게시물 없을때 -->
+                <tr>
+                    <td class="first">
+                        <a href="./" class="trFullLink" title="게시물 제목 상세보기"><span>"게시물제목" 상세보기</span></a>
+                        8
+                    </td>
+                    <td class="textAlignLeft">
+                        <div class="titleArea">
+                            <span class="tableProgramTitle">엑셀 2016 기초/활용</span>
+                            <div class="programDetailInformation">
+                                <span class="date">2023.10.11~2024.10.30</span>
+                                <span class="day">화, 수, 목</span>
+                                <span class="time">15:30~17:30</span>
+                                <span class="place">도시정보센터</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td>2024.09.14 09시 ~ 2024.10.05 18시</td>
+                    <td>초중고생</td>
+                    <td><span class="pay">유료</span></td>
+                    <td><strong>10</strong>/20<span class="block">(10/15)</span></td>
+                    <td class="last"><span class="stateType type1">접수대기</span></td>
+                </tr>
+                <tr>
+                    <td class="first">
+                        <a href="./" class="trFullLink" title="게시물 제목 상세보기"><span>"게시물제목" 상세보기</span></a>
+                        7
+                    </td>
+                    <td class="textAlignLeft">
+                        <div class="titleArea">
+                            <span class="tableProgramTitle">엑셀 2016 기초/활용</span>
+                            <div class="programDetailInformation">
+                                <span class="date">2023.10.11~2024.10.30</span>
+                                <span class="day">화, 수, 목</span>
+                                <span class="time">15:30~17:30</span>
+                                <span class="place">도시정보센터</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td>2024.09.14 09시 ~ 2024.10.05 18시</td>
+                    <td>초중고생</td>
+                    <td><span class="pay free">무료</span></td>
+                    <td><strong>10</strong>/20<span class="block">(10/15)</span></td>
+                    <td class="last"><span class="stateType type2">접수중</span></td>
+                </tr>
+                <tr>
+                    <td class="first">
+                        <a href="./" class="trFullLink" title="게시물 제목 상세보기"><span>"게시물제목" 상세보기</span></a>
+                        6
+                    </td>
+                    <td class="textAlignLeft">
+                        <div class="titleArea">
+                            <span class="tableProgramTitle">엑셀 2016 기초/활용</span>
+                            <div class="programDetailInformation">
+                                <span class="date">2023.10.11~2024.10.30</span>
+                                <span class="day">화, 수, 목</span>
+                                <span class="time">15:30~17:30</span>
+                                <span class="place">도시정보센터</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td>2024.09.14 09시 ~ 2024.10.05 18시</td>
+                    <td>초중고생</td>
+                    <td><span class="pay">유료</span></td>
+                    <td><strong>10</strong>/20<span class="block">(10/15)</span></td>
+                    <td class="last"><span class="stateType type3">접수마감</span></td>
+                </tr>
+                <tr>
+                    <td class="first">
+                        <a href="./" class="trFullLink" title="게시물 제목 상세보기"><span>"게시물제목" 상세보기</span></a>
+                        5
+                    </td>
+                    <td class="textAlignLeft">
+                        <div class="titleArea">
+                            <span class="tableProgramTitle">엑셀 2016 기초/활용</span>
+                            <div class="programDetailInformation">
+                                <span class="date">2023.10.11~2024.10.30</span>
+                                <span class="day">화, 수, 목</span>
+                                <span class="time">15:30~17:30</span>
+                                <span class="place">도시정보센터</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td>2024.09.14 09시 ~ 2024.10.05 18시</td>
+                    <td>초중고생</td>
+                    <td><span class="pay free">무료</span></td>
+                    <td><strong>10</strong>/20<span class="block">(10/15)</span></td>
+                    <td class="last"><span class="stateType type1">접수대기</span></td>
+                </tr>
+                <tr>
+                    <td class="first">
+                        <a href="./" class="trFullLink" title="게시물 제목 상세보기"><span>"게시물제목" 상세보기</span></a>
+                        4
+                    </td>
+                    <td class="textAlignLeft">
+                        <div class="titleArea">
+                            <span class="tableProgramTitle">엑셀 2016 기초/활용</span>
+                            <div class="programDetailInformation">
+                                <span class="date">2023.10.11~2024.10.30</span>
+                                <span class="day">화, 수, 목</span>
+                                <span class="time">15:30~17:30</span>
+                                <span class="place">도시정보센터</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td>2024.09.14 09시 ~ 2024.10.05 18시</td>
+                    <td>초중고생</td>
+                    <td><span class="pay free">무료</span></td>
+                    <td><strong>10</strong>/20<span class="block">(10/15)</span></td>
+                    <td class="last"><span class="stateType type2">접수중</span></td>
+                </tr>
+                <tr>
+                    <td class="first">
+                        <a href="./" class="trFullLink" title="게시물 제목 상세보기"><span>"게시물제목" 상세보기</span></a>
+                        3
+                    </td>
+                    <td class="textAlignLeft">
+                        <div class="titleArea">
+                            <span class="tableProgramTitle">엑셀 2016 기초/활용</span>
+                            <div class="programDetailInformation">
+                                <span class="date">2023.10.11~2024.10.30</span>
+                                <span class="day">화, 수, 목</span>
+                                <span class="time">15:30~17:30</span>
+                                <span class="place">도시정보센터</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td>2024.09.14 09시 ~ 2024.10.05 18시</td>
+                    <td>초중고생</td>
+                    <td><span class="pay">유료</span></td>
+                    <td><strong>10</strong>/20<span class="block">(10/15)</span></td>
+                    <td class="last"><span class="stateType type3">접수마감</span></td>
+                </tr>
+                <tr>
+                    <td class="first">
+                        <a href="./" class="trFullLink" title="게시물 제목 상세보기"><span>"게시물제목" 상세보기</span></a>
+                        2
+                    </td>
+                    <td class="textAlignLeft">
+                        <div class="titleArea">
+                            <span class="tableProgramTitle">엑셀 2016 기초/활용</span>
+                            <div class="programDetailInformation">
+                                <span class="date">2023.10.11~2024.10.30</span>
+                                <span class="day">화, 수, 목</span>
+                                <span class="time">15:30~17:30</span>
+                                <span class="place">도시정보센터</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td>2024.09.14 09시 ~ 2024.10.05 18시</td>
+                    <td>초중고생</td>
+                    <td><span class="pay free">무료</span></td>
+                    <td><strong>10</strong>/20<span class="block">(10/15)</span></td>
+                    <td class="last"><span class="stateType type2">접수중</span></td>
+                </tr>
+                <tr>
+                    <td class="first">
+                        <a href="./" class="trFullLink" title="게시물 제목 상세보기"><span>"게시물제목" 상세보기</span></a>
+                        1
+                    </td>
+                    <td class="textAlignLeft">
+                        <div class="titleArea">
+                            <span class="tableProgramTitle">엑셀 2016 기초/활용</span>
+                            <div class="programDetailInformation">
+                                <span class="date">2023.10.11~2024.10.30</span>
+                                <span class="day">화, 수, 목</span>
+                                <span class="time">15:30~17:30</span>
+                                <span class="place">도시정보센터</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td>2024.09.14 09시 ~ 2024.10.05 18시</td>
+                    <td>초중고생</td>
+                    <td><span class="pay">유료</span></td>
+                    <td><strong>10</strong>/20<span class="block">(10/15)</span></td>
+                    <td class="last"><span class="stateType type3">접수마감</span></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="pagination-default">
+            <a href="" class="movePage first"><span>첫 페이지로 이동</span></a>
+            <a href="" class="movePage prev"><span>이전 페이지로 이동</span></a>
+            <a href=""><em>1</em></a>
+            <a href=""><em>2</em></a>
+            <a href=""><em>3</em></a>
+            <a href=""><em>4</em></a>
+            <a href="" class="current"><em>5</em></a>
+            <a href=""><em>6</em></a>
+            <a href=""><em>7</em></a>
+            <a href=""><em>8</em></a>
+            <a href=""><em>9</em></a>
+            <a href=""><em>10</em></a>
+            <a href="" class="movePage next"><span>다음 페이지로 이동</span></a>
+            <a href="" class="movePage last"><span>마지막 페이지로 이동</span></a>
+        </div>
+    </div>
+</div>

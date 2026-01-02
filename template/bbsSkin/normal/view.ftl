@@ -257,7 +257,7 @@
 				</c:if>
 				</c:if>
 			</c:forEach>
-				@@{tsu:xssClearNttCn(bbsNtt.htmlUseAt,bbsNtt.nttCn)}
+				@@{bbsNtt.nttCn}
 			</td>
 	<#elseif bbsFieldInputShow.fieldCode = 'BGNDE'>
 			<td><c:out value="@@{bbsNtt.bgndeYMDHMS}"/></td>

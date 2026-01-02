@@ -190,7 +190,13 @@
                     </span>
                 </td>
                 <td><a href="./selectFcltyApplListByFclty.do?fcltyNo=<c:out value="${result.fcltyNo}"/>&amp;key=<c:out value="${fcltySearchVO.key}"/>&amp;<c:out value="${fcltySearchVO.fcltyParamsMng}"/>" class="p-button p-button--small info">접수관리</a></td>
-                <td><a href="./updateFcltySchdView.do?fcltyNo=<c:out value="${result.fcltyNo}"/>&amp;<c:out value="${fcltySearchVO.params}"/><c:out value="${fcltySearchVO.paramsMng}"/>" class="p-button p-button--small config">일정관리</a></td>
+                <td>
+                    <a href="./updateFcltySchdView.do?fcltyNo=<c:out value="${result.fcltyNo}"/>&amp;<c:out value="${fcltySearchVO.params}"/><c:out value="${fcltySearchVO.paramsMng}"/>" class="p-button p-button--small config">일정관리</a>
+
+                    <c:if test="${!empty result.fcltyAmt and result.fcltyAmt gt 0}">
+                        <br><a href="./updateFcltyAmtView.do?fcltyNo=<c:out value="${result.fcltyNo}"/>&amp;<c:out value="${fcltySearchVO.params}"/><c:out value="${fcltySearchVO.paramsMng}"/>" class="p-button p-button--small">사용료관리</a>
+                    </c:if>
+                </td>
                 <td><a href="./updateFcltyView.do?fcltyNo=<c:out value="${result.fcltyNo}"/>&amp;<c:out value="${fcltySearchVO.params}"/><c:out value="${fcltySearchVO.paramsMng}"/>" class="p-button p-button--small edit">수정</a></td>
                 <td><a href="./deleteFclty.do?fcltyNo=<c:out value="${result.fcltyNo}"/>&amp;<c:out value="${fcltySearchVO.params}"/><c:out value="${fcltySearchVO.paramsMng}"/>" class="p-button p-button--small delete" onclick="return fn_delete();">삭제</a></td>
             </tr>

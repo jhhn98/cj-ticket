@@ -83,6 +83,8 @@
 			<th scope="row"><label for="subjectNm">과목명</label> <span class="p-form__required--icon">필수</span></th>
 			<td>
 				<input type="text" id="subjectNm" name="subjectNm" value="${eduSubjectVO.subjectNm}" class="p-input w50p" maxlength="50" />
+				<button type="button" class="p-button p-button--small" onclick="fn_checkDplctSubjectNm();">중복체크</button>
+				<br/><span id="msg_subjectNm_chk" class="margin_l_10"></span>
 				<span id="error_subjectNm" class="form_error"></span>
 			</td>
 		</tr>
@@ -357,6 +359,55 @@ function validateSpecialDis() {
 	return flag;
 }
 
+// 과목명 중복 체크 버튼 클릭 시
+function fn_checkDplctSubjectNm() {
+	var frm = document.eduSubjectVO;
+	var subjectNo = frm.subjectNo.value;
+	var insttNo = frm.insttNo.value;
+	var subjectNm = frm.subjectNm.value;
+
+	// 초기화
+	$('#msg_subjectNm_chk').text('').removeClass('text_red text_blue');
+
+	if (!insttNo) {
+		alert("기관을 먼저 선택해주세요.");
+		frm.insttNo.focus();
+		return false;
+	}
+
+	if (!subjectNm || !subjectNm.trim()) {
+		alert("과목명을 입력해주세요.");
+		frm.subjectNm.focus();
+		return false;
+	}
+
+	$.ajax({
+		url: './ajaxCheckDplctSubjectNm.do?key=${key}',
+		type: 'POST',
+		data: {
+			'subjectNo': subjectNo,  // 수정 시에는 자기 자신 제외
+			'insttNo': insttNo,
+			'subjectNm': subjectNm
+		},
+		success: function(res) {
+			if (res == 1) {
+				$('#msg_subjectNm_chk').text('※ 이미 사용 중인 과목명입니다.').addClass('text_red');
+			} else if (res == 0) {
+				$('#msg_subjectNm_chk').text('✓ 사용 가능한 과목명입니다.').addClass('text_blue');
+			} else if (res == -1) {
+				alert("기관을 먼저 선택해주세요.");
+			} else if (res == -2) {
+				alert("과목명을 입력해주세요.");
+			} else {
+				alert("중복 체크 중 오류가 발생했습니다.");
+			}
+		},
+		error: function() {
+			alert("중복 체크 중 오류가 발생했습니다.");
+		}
+	});
+}
+
 //폼 검사
 function checkSubmit(frm) {
 	// 시간값 HHMM 형식으로 합쳐 hidden 필드에 설정 (가장 먼저 수행)
@@ -379,9 +430,38 @@ function checkSubmit(frm) {
 	if( !frm.subjectNm.value ) {
 		alert("과목명을 입력하세요.");frm.subjectNm.focus();return false;
 	}
+
+	// 과목명 중복 체크 (동기 방식, 수정 시에는 자기 자신 제외)
+	var isDuplicate = false;
+	$.ajax({
+		url: './ajaxCheckDplctSubjectNm.do?key=${key}',
+		type: 'POST',
+		async: false,  // 동기 방식으로 처리
+		data: {
+			'subjectNo': frm.subjectNo.value,  // 수정 시에는 자기 자신 제외를 위해 필요
+			'insttNo': frm.insttNo.value,
+			'subjectNm': frm.subjectNm.value
+		},
+		success: function(res) {
+			if (res == 1) {
+				alert("해당 기관에 동일한 과목명이 이미 존재합니다.");
+				frm.subjectNm.focus();
+				isDuplicate = true;
+			} else if (res != 0) {
+				alert("중복 체크 중 오류가 발생했습니다.");
+				isDuplicate = true;
+			}
+		},
+		error: function() {
+			alert("중복 체크 중 오류가 발생했습니다.");
+			isDuplicate = true;
+		}
+	});
+	if (isDuplicate) return false;
+
 	//if( !$('input[name="target"]').is(":checked") ) {alert("수강대상을 선택하세요.");frm.target1.focus();return false;}
 	//if( !frm.svcTyCd.value ) {alert("서비스유형을 선택하세요.");frm.svcTyCd.focus();return false;}
-	
+
 	if( !$('input[type="radio"][name="chrgeSe"]').is(':checked') ) {
 		alert("수강료 구분을 선택해주세요.");$("#chrgeSe1").focus();return false;
 	}

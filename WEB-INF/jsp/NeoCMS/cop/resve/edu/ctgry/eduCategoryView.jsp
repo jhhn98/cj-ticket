@@ -230,6 +230,33 @@
             $('#ctgryNm').focus();
             return false;
         }
+
+        // 중복 체크
+        $.ajax({
+            url: './ajaxCheckDplctCtgryNm.do?key=${key}',
+            type: 'POST',
+            cache: false,
+            data: {'insttNo': insttNo, 'ctgryNm': ctgryNm},
+            success: function (res) {
+                if (res == 1) {
+                    alert("해당 기관에 동일한 카테고리명이 이미 존재합니다.");
+                    $('#ctgryNm').focus();
+                    return false;
+                } else if (res == 0) {
+                    // 중복이 없으면 등록 진행
+                    fn_registCategoryProc(insttNo, ctgryNm);
+                } else {
+                    alert("중복 체크 중 오류가 발생했습니다.");
+                }
+            },
+            error: function (request, xhr, status) {
+                alert("에러가 발생하였습니다.");
+            }
+        });
+    }
+
+    // 카테고리 등록 처리
+    function fn_registCategoryProc(insttNo, ctgryNm) {
         $.ajax({
             url: './ajaxRegistEduCategory.do?key=${key}',
             type: 'POST',
@@ -285,6 +312,33 @@
             $('#ctgryNmUp').focus();
             return false;
         }
+
+        // 중복 체크 (수정 시에는 자기 자신 제외)
+        $.ajax({
+            url: './ajaxCheckDplctCtgryNm.do?key=${key}',
+            type: 'POST',
+            cache: false,
+            data: {'ctgryNo': ctgryNo, 'insttNo': insttNo, 'ctgryNm': ctgryNm},
+            success: function (res) {
+                if (res == 1) {
+                    alert("해당 기관에 동일한 카테고리명이 이미 존재합니다.");
+                    $('#ctgryNmUp').focus();
+                    return false;
+                } else if (res == 0) {
+                    // 중복이 없으면 수정 진행
+                    fn_updateCategoryProc(ctgryNo, insttNo, ctgryNm);
+                } else {
+                    alert("중복 체크 중 오류가 발생했습니다.");
+                }
+            },
+            error: function (request, xhr, status) {
+                alert("에러가 발생하였습니다.");
+            }
+        });
+    }
+
+    // 카테고리 수정 처리
+    function fn_updateCategoryProc(ctgryNo, insttNo, ctgryNm) {
         $.ajax({
             url: './ajaxUpdateEduCategory.do?key=${key}',
             type: 'POST',

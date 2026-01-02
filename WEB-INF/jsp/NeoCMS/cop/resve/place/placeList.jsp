@@ -104,7 +104,7 @@
         </c:forEach>
         <c:if test="${fn:length(placeList) eq 0}">
             <tr>
-                <td colspan="7">검색된 내용이 없습니다.</td>
+                <td colspan="8">검색된 내용이 없습니다.</td>
             </tr>
         </c:if>
         </tbody>

@@ -310,13 +310,35 @@
                                 <tr>
                                     <td><c:out value="${status.count}"/>회차</td>
                                     <td>
-                                        <input type="hidden" name="<c:out value="${fcltyBgnHh}"/>" value="<c:out value="${result.fcltyBgnHh}"/>" />
-                                        <input type="hidden" name="<c:out value="${fcltyBgnMm}"/>" value="<c:out value="${result.fcltyBgnMm}"/>" />
-                                        <input type="hidden" name="<c:out value="${fcltyEndHh}"/>" value="<c:out value="${result.fcltyEndHh}"/>" />
-                                        <input type="hidden" name="<c:out value="${fcltyEndMm}"/>" value="<c:out value="${result.fcltyEndMm}"/>" />
-                                        <c:set var="fcltyBgnHm" value="${tsu:toDateFormat(result.fcltyBgnHm, 'HHmm', 'HH:mm')}"/>
-                                        <c:set var="fcltyEndHm" value="${tsu:toDateFormat(result.fcltyEndHm, 'HHmm', 'HH:mm')}"/>
-                                        <c:out value="${fcltyBgnHm}"/> ~ <c:out value="${fcltyEndHm}"/>
+                                        <div class="p-form-group">
+                                            <select name="<c:out value="${fcltyBgnHh}"/>" id="<c:out value="${fcltyBgnHh}"/>" class="p-input p-input--auto fcltyTm fcltyBgnHh" disabled>
+                                                <c:forEach var="i" begin="0" end="23">
+                                                    <c:set var="hh" value="${tsu:zerofill(i, 2, '0')}"/>
+                                                    <option value="<c:out value="${hh}"/>" label="<c:out value="${hh}"/>"<c:if test="${result.fcltyBgnHh == hh}"> selected</c:if> />
+                                                </c:forEach>
+                                            </select>
+                                            <span class="p-form__split">:</span>
+                                            <select name="<c:out value="${fcltyBgnMm}"/>" id="<c:out value="${fcltyBgnMm}"/>" class="p-input p-input--auto fcltyTm fcltyBgnMm" disabled>
+                                                <c:forEach var="i" begin="0" end="59" step="5">
+                                                    <c:set var="mm" value="${tsu:zerofill(i, 2, '0')}"/>
+                                                    <option value="<c:out value="${mm}"/>" label="<c:out value="${mm}"/>"<c:if test="${result.fcltyBgnMm == mm}"> selected</c:if>/>
+                                                </c:forEach>
+                                            </select>
+                                            <span class="p-form__split">~</span>
+                                            <select name="<c:out value="${fcltyEndHh}"/>" id="<c:out value="${fcltyEndHh}"/>" class="p-input p-input--auto fcltyTm fcltyEndHh" disabled>
+                                                <c:forEach var="i" begin="0" end="23">
+                                                    <c:set var="hh" value="${tsu:zerofill(i, 2, '0')}"/>
+                                                    <option value="<c:out value="${hh}"/>" label="<c:out value="${hh}"/>"<c:if test="${result.fcltyEndHh == hh}"> selected</c:if>/>
+                                                </c:forEach>
+                                            </select>
+                                            <span class="p-form__split">:</span>
+                                            <select name="<c:out value="${fcltyEndMm}"/>" id="<c:out value="${fcltyEndMm}"/>" class="p-input p-input--auto fcltyTm fcltyEndMm" disabled>
+                                                <c:forEach var="i" begin="0" end="59" step="5">
+                                                    <c:set var="mm" value="${tsu:zerofill(i, 2, '0')}"/>
+                                                    <option value="<c:out value="${mm}"/>" label="<c:out value="${mm}"/>"<c:if test="${result.fcltyEndMm == mm}"> selected</c:if>/>
+                                                </c:forEach>
+                                            </select>
+                                        </div>
                                     </td>
                                     <td>
                                         <span class="p-form-checkbox p-form-checkbox--single">
@@ -827,14 +849,28 @@
         for (var i=0; i<fcltyTmList.length; i++) {
             var row = fcltyTmList[i];
             var name = 'fcltyTmList['+i+']';
-            var fcltyBgnHm = row.fcltyBgnHh + ':' + row.fcltyBgnMm;
-            var fcltyEndHm = row.fcltyEndHh + ':' + row.fcltyEndMm;
+            // var fcltyBgnHm = row.fcltyBgnHh + ':' + row.fcltyBgnMm;
+            // var fcltyEndHm = row.fcltyEndHh + ':' + row.fcltyEndMm;
+
+            // html += '<tr class="fcltyTmList">';
+            // html += '<td>'+ (i+1) +'회차</td>';
+            // html += '<td>'+  fcltyBgnHm + ' ~ ' + fcltyEndHm + '</td>';
+            // html += '<input type="hidden" name="'+ name +'.fcltyBgnHm" id="'+ name +'.fcltyBgnHm" value="'+ row.fcltyBgnHm +'">';
+            // html += '<input type="hidden" name="'+ name +'.fcltyEndHm" id="'+ name +'.fcltyBgnHm" value="'+ row.fcltyEndHm +'">';
 
             html += '<tr class="fcltyTmList">';
             html += '<td>'+ (i+1) +'회차</td>';
-            html += '<td>'+  fcltyBgnHm + ' ~ ' + fcltyEndHm + '</td>';
-            html += '<input type="hidden" name="'+ name +'.fcltyBgnHm" id="'+ name +'.fcltyBgnHm" value="'+ row.fcltyBgnHm +'">';
-            html += '<input type="hidden" name="'+ name +'.fcltyEndHm" id="'+ name +'.fcltyBgnHm" value="'+ row.fcltyEndHm +'">';
+            html += '<td>';
+            html += '<div class="p-form-group">';
+            html += createHhSelect(row.fcltyBgnHh, name + '.fcltyBgnHh', name + '.fcltyBgnHh');
+            html += '<span class="p-form__split">:</span>'
+            html += createMmSelect(row.fcltyBgnMm, name + '.fcltyBgnMm', name + '.fcltyBgnMm');
+            html += '<span class="p-form__split">~</span>'
+            html += createHhSelect(row.fcltyEndHh, name + '.fcltyEndHh', name + '.fcltyEndHh');
+            html += '<span class="p-form__split">:</span>'
+            html += createMmSelect(row.fcltyEndMm, name + '.fcltyEndMm', name + '.fcltyEndMm');
+            html += '</div>';
+            html += '</td>';
 
             html += tdTimeList(name, row.monYn, '2');
             html += tdTimeList(name, row.tueYn, '3');
@@ -862,6 +898,43 @@
         }
 
     }
+
+    // PD 불러온 회차 목록으로 회차별 시간(시) select box 생성
+    function createHhSelect(hhVal, selectId, selectNm) {
+        var html = "";
+
+        // ----- 시(select) 생성 -----
+        html += '<select name="' + selectNm + '" id="' + selectId + '" class="p-input p-input--auto">';
+        html += '<option value="">시</option>';
+
+        for (let h = 0; h < 24; h++) {
+            const val = h.toString().padStart(2, '0');
+            const selected = (hhVal === val) ? ' selected' : '';
+            html += '<option value="' + val + '"' + selected + '>' + val + '</option>';
+        }
+        html += '</select>';
+
+        return html;
+    }
+
+    // PD 불러온 회차 목록으로 회차별 시간(분) select box 생성
+    function createMmSelect(mmVal, selectId, selectNm) {
+        var html = "";
+
+        // ----- 분(select) 생성 -----
+        html += '<select name="' + selectNm + '" id="' + selectId + '" class="p-input p-input--auto">';
+        html += '<option value="">분</option>';
+
+        for (let m = 0; m < 60; m += 5) {
+            const val = m.toString().padStart(2, '0');
+            const selected = (mmVal === val) ? ' selected' : '';
+            html += '<option value="' + val + '"' + selected + '>' + val + '</option>';
+        }
+        html += '</select>';
+
+        return html;
+    }
+
 
     <%-- PD 불러온 회차 목록으로 timeTable 생성 --%>
     function tdTimeList(name, useYn, weekday) {

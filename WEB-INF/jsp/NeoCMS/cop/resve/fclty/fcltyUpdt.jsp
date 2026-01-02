@@ -72,28 +72,30 @@
                             <div class="p-form-group w20p">
                                 <%-- 선발방식 공통코드 - FIRST : 선착순 / CONFM : 승인 / DRWLT : 추첨 --%>
                                 <c:forEach var="result" items="${slctMthdList}" varStatus="status">
-                                <span class="p-form-radio">
-                                    <input type="radio" name="slctMthdCd" id="slctMthdCd<c:out value="${status.count}"/>" class="p-form-radio__input" value="<c:out value="${result.code}"/>"<c:if test="${fcltyVO.slctMthdCd == result.code}"> checked</c:if>>
-                                    <label for="slctMthdCd<c:out value="${status.count}"/>" class="p-form-radio__label"><c:out value="${result.codeNm}"/></label>
-                                </span>
+                                    <c:if test="${result.code != 'DRWLT'}">
+                                        <span class="p-form-radio">
+                                            <input type="radio" name="slctMthdCd" id="slctMthdCd<c:out value="${status.count}"/>" class="p-form-radio__input" value="<c:out value="${result.code}"/>"<c:if test="${fcltyVO.slctMthdCd == result.code}"> checked</c:if>>
+                                            <label for="slctMthdCd<c:out value="${status.count}"/>" class="p-form-radio__label"><c:out value="${result.codeNm}"/></label>
+                                        </span>
+                                    </c:if>
                                 </c:forEach>
-                                <span class="p-form__split">: 추첨일자</span>
-                                <input type="text" name="drwtDe" id="drwtDe" value="<c:out value="${fcltyVO.drwtDe}"/>" style="width:100px;" class="p-input p-input--auto" placeholder="yyyy-MM-dd"<c:if test="${fcltyVO.slctMthdCd != 'DRWLT'}"> disabled</c:if>/>
-                                <span class="p-input__addon">
-                                    <button type="button" class="p-input__item" id="drwtDeBtn" title="추첨일 선택" onclick="getCalendar(document.fcltyVO.drwtDe);" disabled> <!--getCalendar(document.bbsNttForm.start_date);-->
-                                        <svg width="14" height="16" fill="#888" focusable="false">
-                                            <use xlink:href="/common/images/program/p-icon.svg#calendar-alt"></use>
-                                        </svg>
-                                    </button>
-                                </span>
-                                <span class="p-form__split"></span>
-                                <select name="drwtHm" id="drwtHm" class="p-input p-input--auto text_center" value="<c:out value="${fcltyVO.drwtHm}"/>"<c:if test="${fcltyVO.slctMthdCd != 'DRWLT'}"> disabled</c:if>>
-                                    <c:forEach var="i" begin="0" end="23">
-                                        <fmt:formatNumber var="hh" value="${i}" pattern="00"/>
-                                        <c:set var="hm" value="${hh}00"/>
-                                        <option value="${hm}" label="${i}시"<c:if test="${fcltyVO.drwtHm == hm}"> selected</c:if>/>
-                                    </c:forEach>
-                                </select>
+<%--                                <span class="p-form__split">: 추첨일자</span>--%>
+<%--                                <input type="text" name="drwtDe" id="drwtDe" value="<c:out value="${fcltyVO.drwtDe}"/>" style="width:100px;" class="p-input p-input--auto" placeholder="yyyy-MM-dd"<c:if test="${fcltyVO.slctMthdCd != 'DRWLT'}"> disabled</c:if>/>--%>
+<%--                                <span class="p-input__addon">--%>
+<%--                                    <button type="button" class="p-input__item" id="drwtDeBtn" title="추첨일 선택" onclick="getCalendar(document.fcltyVO.drwtDe);" disabled> <!--getCalendar(document.bbsNttForm.start_date);-->--%>
+<%--                                        <svg width="14" height="16" fill="#888" focusable="false">--%>
+<%--                                            <use xlink:href="/common/images/program/p-icon.svg#calendar-alt"></use>--%>
+<%--                                        </svg>--%>
+<%--                                    </button>--%>
+<%--                                </span>--%>
+<%--                                <span class="p-form__split"></span>--%>
+<%--                                <select name="drwtHm" id="drwtHm" class="p-input p-input--auto text_center" value="<c:out value="${fcltyVO.drwtHm}"/>"<c:if test="${fcltyVO.slctMthdCd != 'DRWLT'}"> disabled</c:if>>--%>
+<%--                                    <c:forEach var="i" begin="0" end="23">--%>
+<%--                                        <fmt:formatNumber var="hh" value="${i}" pattern="00"/>--%>
+<%--                                        <c:set var="hm" value="${hh}00"/>--%>
+<%--                                        <option value="${hm}" label="${i}시"<c:if test="${fcltyVO.drwtHm == hm}"> selected</c:if>/>--%>
+<%--                                    </c:forEach>--%>
+<%--                                </select>--%>
                             </div>
                         </td>
                     </tr>

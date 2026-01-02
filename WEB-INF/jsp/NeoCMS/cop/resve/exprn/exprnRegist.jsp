@@ -146,6 +146,10 @@
                 <tr>
                     <th scope="row"><form:label path="targetCdArr">대상</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>
                     <td>
+                        <span class="p-form-checkbox">
+                            <input type="checkbox" name="" id="targetCdAll" class="p-form-checkbox__input" value=""<c:if test="${fn:length(exprnVO.targetCdArr) == fn:length(targetList)}"> checked</c:if>>
+                            <label for="targetCdAll" class="p-form-checkbox__label">전체</label>
+                        </span>
                         <%-- 대상 공통코드 - TARGET01 : 영유아 / TARGET02 : 아동 / TARGET03 : 초등학생 / TARGET04 : 청소년 / TARGET05 : 성인 / TARGET06 : 어르신 / TARGET07 : 장애인 / TARGET08 : 기타 --%>
                         <c:forEach var="result" items="${targetList}" varStatus="status">
                             <span class="p-form-checkbox">
@@ -490,12 +494,13 @@
                 <tr>
                     <th scope="row"><form:label path="dscntUseYn">감면 사용여부</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>
                     <td>
+                        <%--TODOSDB: 감면 개발 진행 중으로 사용 못하도록 비활성화 처리--%>
                         <span class="p-form-radio">
-                            <input type="radio" name="dscntUseYn" id="dscntUseY" class="p-form-radio__input" value="Y">
+                            <input type="radio" name="dscntUseYn" id="dscntUseY" class="p-form-radio__input" value="Y" disabled>
                             <label for="dscntUseY" class="p-form-radio__label">사용</label>
                         </span>
                         <span class="p-form-radio">
-                            <input type="radio" name="dscntUseYn" id="dscntUseN" class="p-form-radio__input" value="N" checked>
+                            <input type="radio" name="dscntUseYn" id="dscntUseN" class="p-form-radio__input" value="N" checked disabled>
                             <label for="dscntUseN" class="p-form-radio__label">미사용</label>
                         </span>
                     </td>
@@ -540,6 +545,14 @@
 <script>
 
     $(document).ready(function(){
+
+        $('#targetCdAll').on("change",function() {
+            if ($(this).is(":checked")) {
+                $('input[type=checkbox][name=targetCdArr]').prop('checked', true);
+            } else {
+                $('input[type=checkbox][name=targetCdArr]').prop('checked', false);
+            }
+        });
 
         var areaGu = $('select[name=areaGuCd]').val();
         if(areaGu != '') {

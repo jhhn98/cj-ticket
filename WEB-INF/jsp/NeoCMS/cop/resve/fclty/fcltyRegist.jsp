@@ -75,27 +75,29 @@
                         <div class="p-form-group w20p">
                             <%-- 선발방식 공통코드 - FIRST : 선착순 / CONFM : 승인 / DRWLT : 추첨 --%>
                             <c:forEach var="result" items="${slctMthdList}" varStatus="status">
-                            <span class="p-form-radio">
-                                <input type="radio" name="slctMthdCd" id="slctMthdCd<c:out value="${status.count}"/>" class="p-form-radio__input" value="<c:out value="${result.code}"/>"<c:if test="${status.first}"> checked</c:if>>
-                                <label for="slctMthdCd<c:out value="${status.count}"/>" class="p-form-radio__label"><c:out value="${result.codeNm}"/></label>
-                            </span>
+                                <c:if test="${result.code != 'DRWLT'}">
+                                    <span class="p-form-radio">
+                                        <input type="radio" name="slctMthdCd" id="slctMthdCd<c:out value="${status.count}"/>" class="p-form-radio__input" value="<c:out value="${result.code}"/>"<c:if test="${status.first}"> checked</c:if>>
+                                        <label for="slctMthdCd<c:out value="${status.count}"/>" class="p-form-radio__label"><c:out value="${result.codeNm}"/></label>
+                                    </span>
+                                </c:if>
                             </c:forEach>
-                            <span class="p-form__split">: 추첨일자</span>
-                            <form:input path="drwtDe" style="width:100px;" class="p-input p-input--auto" placeholder="yyyy-MM-dd" disabled="true"/>
-                            <span class="p-input__addon">
-                                <button type="button" class="p-input__item" id="drwtDeBtn" title="추첨일 선택" onclick="getCalendar(document.fcltyVO.drwtDe);" disabled> <!--getCalendar(document.bbsNttForm.start_date);-->
-                                    <svg width="14" height="16" fill="#888" focusable="false">
-                                        <use xlink:href="/common/images/program/p-icon.svg#calendar-alt"></use>
-                                    </svg>
-                                </button>
-                            </span>
-                            <span class="p-form__split"></span>
-                            <form:select path="drwtHm" class="p-input p-input--auto text_center" disabled="true">
-                                <c:forEach var="i" begin="0" end="23">
-                                    <fmt:formatNumber var="hh" value="${i}" pattern="00"/>
-                                    <form:option value="${hh}00" label="${i}시"/>
-                                </c:forEach>
-                            </form:select>
+<%--                            <span class="p-form__split">: 추첨일자</span>--%>
+<%--                            <form:input path="drwtDe" style="width:100px;" class="p-input p-input--auto" placeholder="yyyy-MM-dd" disabled="true"/>--%>
+<%--                            <span class="p-input__addon">--%>
+<%--                                <button type="button" class="p-input__item" id="drwtDeBtn" title="추첨일 선택" onclick="getCalendar(document.fcltyVO.drwtDe);" disabled> <!--getCalendar(document.bbsNttForm.start_date);-->--%>
+<%--                                    <svg width="14" height="16" fill="#888" focusable="false">--%>
+<%--                                        <use xlink:href="/common/images/program/p-icon.svg#calendar-alt"></use>--%>
+<%--                                    </svg>--%>
+<%--                                </button>--%>
+<%--                            </span>--%>
+<%--                            <span class="p-form__split"></span>--%>
+<%--                            <form:select path="drwtHm" class="p-input p-input--auto text_center" disabled="true">--%>
+<%--                                <c:forEach var="i" begin="0" end="23">--%>
+<%--                                    <fmt:formatNumber var="hh" value="${i}" pattern="00"/>--%>
+<%--                                    <form:option value="${hh}00" label="${i}시"/>--%>
+<%--                                </c:forEach>--%>
+<%--                            </form:select>--%>
                         </div>
                     </td>
                 </tr>

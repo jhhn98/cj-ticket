@@ -126,13 +126,13 @@
                     <th scope="row">기준시간 <span class="p-form__required--icon margin_l_5">필수</span></th>
                     <td>
                         <div class="p-form-group w15p">
-                            <form:select path="unitHour" class="p-input p-input--auto fcltyTmPdInfo" disabled="true">
+                            <form:select path="unitHour" class="p-input p-input--auto fcltyTmPdInfo">
                                 <c:forEach var="i" begin="1" end="12">
                                     <form:option value="${i}"/>
                                 </c:forEach>
                             </form:select>
                             <span class="p-form__split">시간 </span>
-                            <form:select path="unitMin" class="p-input p-input--auto fcltyTmPdInfo" disabled="true">
+                            <form:select path="unitMin" class="p-input p-input--auto fcltyTmPdInfo">
                                 <c:forEach var="i" begin="0" end="59" step="30">
                                     <fmt:formatNumber var="mm" value="${i}" pattern="00"/>
                                     <form:option value="${i}" label="${mm}"/>
@@ -553,7 +553,7 @@
         <%-- PD disabled false --%>
         $('#fcltySchdPdVO').show();
         $('#fcltySchdPdVO').find('input, select').prop('disabled', false);
-        $('#fcltySchdPdVO').find('.fcltyTmPdInfo').prop('disabled', true);
+        // $('#fcltySchdPdVO').find('.fcltyTmPdInfo').prop('disabled', true);
 
         <%-- PD dayAll checkbox --%>
         <c:if test="${fn:length(fcltyTmListByPd) > 0}">
@@ -792,14 +792,28 @@
         for (var i=0; i<fcltyTmList.length; i++) {
             var row = fcltyTmList[i];
             var name = 'fcltyTmList['+i+']';
-            var fcltyBgnHm = row.fcltyBgnHh + ':' + row.fcltyBgnMm;
-            var fcltyEndHm = row.fcltyEndHh + ':' + row.fcltyEndMm;
+            // var fcltyBgnHm = row.fcltyBgnHh + ':' + row.fcltyBgnMm;
+            // var fcltyEndHm = row.fcltyEndHh + ':' + row.fcltyEndMm;
+
+            // html += '<tr class="fcltyTmList">';
+            // html += '<td>'+ (i+1) +'회차</td>';
+            // html += '<td>'+  fcltyBgnHm + ' ~ ' + fcltyEndHm + '</td>';
+            // html += '<input type="hidden" name="'+ name +'.fcltyBgnHm" id="'+ name +'.fcltyBgnHm" value="'+ row.fcltyBgnHm +'">';
+            // html += '<input type="hidden" name="'+ name +'.fcltyEndHm" id="'+ name +'.fcltyBgnHm" value="'+ row.fcltyEndHm +'">';
 
             html += '<tr class="fcltyTmList">';
             html += '<td>'+ (i+1) +'회차</td>';
-            html += '<td>'+  fcltyBgnHm + ' ~ ' + fcltyEndHm + '</td>';
-            html += '<input type="hidden" name="'+ name +'.fcltyBgnHm" id="'+ name +'.fcltyBgnHm" value="'+ row.fcltyBgnHm +'">';
-            html += '<input type="hidden" name="'+ name +'.fcltyEndHm" id="'+ name +'.fcltyBgnHm" value="'+ row.fcltyEndHm +'">';
+            html += '<td>';
+            html += '<div class="p-form-group">';
+            html += createHhSelect(row.fcltyBgnHh, name + '.fcltyBgnHh', name + '.fcltyBgnHh');
+            html += '<span class="p-form__split">:</span>'
+            html += createMmSelect(row.fcltyBgnMm, name + '.fcltyBgnMm', name + '.fcltyBgnMm');
+            html += '<span class="p-form__split">~</span>'
+            html += createHhSelect(row.fcltyEndHh, name + '.fcltyEndHh', name + '.fcltyEndHh');
+            html += '<span class="p-form__split">:</span>'
+            html += createMmSelect(row.fcltyBgnMm, name + '.fcltyBgnMm', name + '.fcltyBgnMm');
+            html += '</div>';
+            html += '</td>';
 
             html += tdTimeList(name, row, '2');
             html += tdTimeList(name, row, '3');
@@ -815,6 +829,42 @@
         $('#fcltySchdPdVO .dayAll').prop('checked', true);
         $tbody.find("tr:not(:first)").remove();
         $tbody.append(html);
+    }
+
+    // PD 불러온 회차 목록으로 회차별 시간(시) select box 생성
+    function createHhSelect(hhVal, selectId, selectNm) {
+        var html = "";
+
+        // ----- 시(select) 생성 -----
+        html += '<select name="' + selectNm + '" id="' + selectId + '" class="p-input p-input--auto">';
+        html += '<option value="">시</option>';
+
+        for (let h = 0; h < 24; h++) {
+            const val = h.toString().padStart(2, '0');
+            const selected = (hhVal === val) ? ' selected' : '';
+            html += '<option value="' + val + '"' + selected + '>' + val + '</option>';
+        }
+        html += '</select>';
+
+        return html;
+    }
+
+    // PD 불러온 회차 목록으로 회차별 시간(분) select box 생성
+    function createMmSelect(mmVal, selectId, selectNm) {
+        var html = "";
+
+        // ----- 분(select) 생성 -----
+        html += '<select name="' + selectNm + '" id="' + selectId + '" class="p-input p-input--auto">';
+        html += '<option value="">분</option>';
+
+        for (let m = 0; m < 60; m += 5) {
+            const val = m.toString().padStart(2, '0');
+            const selected = (mmVal === val) ? ' selected' : '';
+            html += '<option value="' + val + '"' + selected + '>' + val + '</option>';
+        }
+        html += '</select>';
+
+        return html;
     }
 
     <%-- PD 불러온 회차 목록으로 timeTable 생성 --%>
