@@ -127,7 +127,7 @@
                     <td>
                         <div class="p-form-group w15p">
                             <form:select path="unitHour" class="p-input p-input--auto exprnTmPdInfo">
-                                <c:forEach var="i" begin="1" end="12">
+                                <c:forEach var="i" begin="0" end="12">
                                     <form:option value="${i}"/>
                                 </c:forEach>
                             </form:select>
@@ -999,8 +999,8 @@
                 return false;
             }
         } else {
-            if (parseInt(form.unitHour.value) * 60 + parseInt(form.unitMin.value) < 60) {
-                alert("기준시간은 1시간 이상이어야합니다.");
+            if (parseInt(form.unitHour.value) * 60 + parseInt(form.unitMin.value) < 30) {
+                alert("기준시간은 30분 이상이어야합니다.");
                 form.unitHour.focus();
                 return false;
             }

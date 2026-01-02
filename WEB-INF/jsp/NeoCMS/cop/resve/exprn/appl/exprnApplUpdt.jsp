@@ -336,7 +336,7 @@
                         <select name="cancelHh" id="cancelHh" class="p-input p-input--auto">
                             <c:forEach var="result" begin="0" end="23">
                                 <fmt:formatNumber var="hh" value="${result}" pattern="00"/>
-                                <option value="${hh}" label="${hh}"<c:if test="${cancelHh == ss}"> selected</c:if>/>
+                                <option value="${hh}" label="${hh}"<c:if test="${cancelHh == hh}"> selected</c:if>/>
                             </c:forEach>
                         </select>
                         <span class="p-form__split">:</span>
@@ -344,7 +344,7 @@
                         <select name="cancelMm" id="cancelMm" class="p-input p-input--auto">
                             <c:forEach var="result" begin="0" end="59">
                                 <fmt:formatNumber var="mm" value="${result}" pattern="00"/>
-                                <option value="${mm}" label="${mm}"<c:if test="${cancelMm == ss}"> selected</c:if>/>
+                                <option value="${mm}" label="${mm}"<c:if test="${cancelMm == mm}"> selected</c:if>/>
                             </c:forEach>
                         </select>
                         <span class="p-form__split">:</span>
@@ -391,7 +391,7 @@
                         <select name="payDeadlineHh" id="payDeadlineHh" class="p-input p-input--auto">
                             <c:forEach var="result" begin="0" end="23">
                                 <fmt:formatNumber var="hh" value="${result}" pattern="00"/>
-                                <option value="${hh}" label="${hh}"<c:if test="${payDeadlineHh == ss}"> selected</c:if>/>
+                                <option value="${hh}" label="${hh}"<c:if test="${payDeadlineHh == hh}"> selected</c:if>/>
                             </c:forEach>
                         </select>
                         <span class="p-form__split">:</span>
@@ -399,7 +399,7 @@
                         <select name="payDeadlineMm" id="payDeadlineMm" class="p-input p-input--auto">
                             <c:forEach var="result" begin="0" end="59">
                                 <fmt:formatNumber var="mm" value="${result}" pattern="00"/>
-                                <option value="${mm}" label="${mm}"<c:if test="${payDeadlineMm == ss}"> selected</c:if>/>
+                                <option value="${mm}" label="${mm}"<c:if test="${payDeadlineMm == mm}"> selected</c:if>/>
                             </c:forEach>
                         </select>
                         <span class="p-form__split">:</span>
@@ -468,7 +468,7 @@
                         <select name="payHh" id="payHh" class="p-input p-input--auto">
                             <c:forEach var="result" begin="0" end="23">
                                 <fmt:formatNumber var="hh" value="${result}" pattern="00"/>
-                                <option value="${hh}" label="${hh}"<c:if test="${payHh == ss}"> selected</c:if>/>
+                                <option value="${hh}" label="${hh}"<c:if test="${payHh == hh}"> selected</c:if>/>
                             </c:forEach>
                         </select>
                         <span class="p-form__split">:</span>
@@ -476,7 +476,7 @@
                         <select name="payMm" id="payMm" class="p-input p-input--auto">
                             <c:forEach var="result" begin="0" end="59">
                                 <fmt:formatNumber var="mm" value="${result}" pattern="00"/>
-                                <option value="${mm}" label="${mm}"<c:if test="${payMm == ss}"> selected</c:if>/>
+                                <option value="${mm}" label="${mm}"<c:if test="${payMm == mm}"> selected</c:if>/>
                             </c:forEach>
                         </select>
                         <span class="p-form__split">:</span>
@@ -493,7 +493,10 @@
             <tr>
                 <th scope="row">환불계좌</th>
                 <td colspan="3">
-                    <form:input path="rfndBankNm" style="width:300px" class="p-input" placeholder="은행명"/>
+                    <form:select path="rfndBankNm" class="p-input p-input--auto">
+                        <form:option value="" label="은행 선택"/>
+                        <form:options items="${bankList}" itemValue="code" itemLabel="codeNm"/>
+                    </form:select>
                     <form:input path="rfndAcctNo" style="width:300px" class="p-input" placeholder="계좌번호"/>
                     <form:input path="rfndDpstrNm" style="width:300px" class="p-input" placeholder="예금주"/>
                     <pre><c:out value="${exprnApplVO.rfndAcctNo}"/></pre>

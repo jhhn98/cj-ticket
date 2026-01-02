@@ -288,6 +288,7 @@
                 </tr>
             </c:if>
             <!-- //게시물 있을때 -->
+            <c:set var="currentPageStartNo" value="${paginationInfo.currentPageStartNo}" />
             <c:forEach var="result" items="${exprnList}">
                 <tr>
                     <td class="first">
@@ -318,10 +319,17 @@
                     </td>
                     <td><span class="mobile-th">접수기간</span><c:out value="${tsu:toDateFormat(result.rcptBgnDt, 'yyyyMMddHHmm', 'yyyy-MM-dd HH:mm')}"/> ~ <c:out value="${tsu:toDateFormat(result.rcptEndDt, 'yyyyMMddHHmm', 'yyyy-MM-dd HH:mm')}"/></td>
                     <td><span class="mobile-th">대상</span>
-                        <c:forEach var="targetCd" items="${result.targetCdArr}" varStatus="status">
-                            <c:out value="${targetMap[targetCd]}"/>
-                            <c:if test="${!status.last}">|</c:if>
-                        </c:forEach>
+                        <c:choose>
+                            <c:when test="${fn:length(targetList) == fn:length(result.targetCdArr)}">
+                                제한없음
+                            </c:when>
+                            <c:otherwise>
+                                <c:forEach var="targetCd" items="${result.targetCdArr}" varStatus="status">
+                                    <c:out value="${targetMap[targetCd]}"/>
+                                    <c:if test="${!status.last}">|</c:if>
+                                </c:forEach>
+                            </c:otherwise>
+                        </c:choose>
                     </td>
                     <td><span class="mobile-th">이용요금</span>
                         <c:choose>
@@ -353,6 +361,7 @@
                     </c:if>
                     <td class="last"><span class="mobile-th">운영상태</span><span class="stateType <c:out value="${sttusType}"/>"><c:out value="${operSttusMap[result.operSttus]}"/></span></td>
                 </tr>
+                <c:set var="currentPageStartNo" value="${currentPageStartNo-1}" />
             </c:forEach>
             </tbody>
         </table>

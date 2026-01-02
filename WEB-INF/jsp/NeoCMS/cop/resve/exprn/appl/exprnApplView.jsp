@@ -185,12 +185,6 @@
         </colgroup>
         <tbody class="p-table--th-left">
         <tr>
-            <th scope="row">체험명</th>
-            <td colspan="7">
-                <c:out value="${exprnApplVO.exprnNm}"/>
-            </td>
-        </tr>
-        <tr>
             <th scope="row">예약번호</th>
             <td colspan="7">
                 <c:out value="${exprnApplVO.exprnApplId}"/>
@@ -273,7 +267,7 @@
         <tr>
             <th scope="row">환불계좌</th>
             <td colspan="3">
-                <c:out value="${exprnApplVO.rfndBankNm}"/> <c:out value="${exprnApplVO.rfndAcctNo}"/> (예금주:<c:out value="${exprnApplVO.rfndDpstrNm}"/>)
+                <c:out value="${bankMap[exprnApplVO.rfndBankNm]}"/> <c:out value="${exprnApplVO.rfndAcctNo}"/> (예금주:<c:out value="${exprnApplVO.rfndDpstrNm}"/>)
             </td>
             <th scope="row" rowspan="3">메모</th>
             <td colspan="3" rowspan="3">

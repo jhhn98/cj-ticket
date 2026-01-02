@@ -228,7 +228,7 @@
         </c:forEach>
         <c:if test="${fn:length(exprnApplList) eq 0}">
             <tr>
-                <td colspan="14">등록된 내용이 없습니다.</td>
+                <td colspan="15">등록된 내용이 없습니다.</td>
             </tr>
         </c:if>
         </tbody>
@@ -248,7 +248,9 @@
         <div class="col-6 right">
             <button type="button" class="p-button primary" id="sms-modal-button">선택SMS발송</button>
             <a href="./downloadExprnApplXls.do" class="p-button p-button--combine excel" onclick="fn_downloadExprnApplXls(this.href); return false;">엑셀다운로드</a>
-            <a href="./addExprnApplView.do?<c:out value="${exprnApplSearchVO.params}"/><c:out value="${exprnApplSearchVO.paramsMng}"/>" class="p-button write">등록</a>
+            <c:if test="${fn:contains(exprnVO.rcptMthdCd, 'TLPHN') || fn:contains(exprnVO.rcptMthdCd, 'VISIT')}">
+                <a href="./addExprnApplView.do?exprnNo=<c:out value="${exprnVO.exprnNo}"/>&amp;<c:out value="${exprnApplSearchVO.params}"/><c:out value="${exprnApplSearchVO.paramsMng}"/>" class="p-button write">등록</a>
+            </c:if>
         </div>
     </div>
     <div class="row">
@@ -506,9 +508,9 @@
                         alert("전송된 내역이 없습니다.");
                     } else if (res == -1) {
                         alert("수신번호를 확인할 수 없습니다.");
-                    } else if (res == -1) {
+                    } else if (res == -2) {
                         alert("발신자번호를 확인할 수 없습니다.");
-                    } else if (res == -1) {
+                    } else if (res == -3) {
                         alert("보내실 메세지 내용을 확인할 수 없습니다.");
                     } else {
                         alert("문자 전송 중 오류가 발생하였습니다.");

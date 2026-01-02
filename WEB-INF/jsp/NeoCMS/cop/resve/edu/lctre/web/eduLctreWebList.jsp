@@ -203,7 +203,19 @@
                                         RCPT_ADD 추가모집 | RCPT_END 접수마감 | RCPT_ING 접수중
                                         RCPT_WAIT 접수예정 | WAIT_ING 대기자접수
                                     --%>
-                                    <span class="stateType type1"><c:out value="${operSttusMap[result.operSttus]}"/></span>
+                                    <c:set var="statusTypeClass" value="type1"/>
+                                    <c:if test="${result.operSttus eq 'RCPT_ING'
+                                                    or result.operSttus eq 'RCPT_ADD'
+                                                    or result.operSttus eq 'WAIT_ING'}">
+                                        <c:set var="statusTypeClass" value="type2"/>
+                                    </c:if>
+                                    <c:if test="${result.operSttus eq 'OPER_CNCL'
+                                                    or result.operSttus eq 'OPER_END'
+                                                    or result.operSttus eq 'RCPT_END'
+                                                    or result.operSttus eq 'OPER_ING'}">
+                                        <c:set var="statusTypeClass" value="type3"/>
+                                    </c:if>
+                                    <span class="stateType ${statusTypeClass}"><c:out value="${operSttusMap[result.operSttus]}"/></span>
                                     <span class="organ"><c:out value="${result.insttNm}"/></span>
                                     <c:choose>
                                         <c:when test="${!empty result.eduAmt and result.eduAmt > 0}">
@@ -242,28 +254,20 @@
                                     </li>
                                     <li><span>접수</span>
                                         <c:if test="${not empty result.rcptBgnDt && fn:length(result.rcptBgnDt) >= 12}">
-                                            <c:set var="rcptBgnDe" value="${fn:substring(result.rcptBgnDt, 0, 8)}"/>
-                                            <c:set var="rcptBgnHm" value="${fn:substring(result.rcptBgnDt, 8, 12)}"/>
-                                            ${fn:substring(rcptBgnDe, 0, 4)}.${fn:substring(rcptBgnDe, 4, 6)}.${fn:substring(rcptBgnDe, 6, 8)}
-                                            ${fn:substring(rcptBgnHm, 0, 2)}시
+                                            <c:out value="${tsu:toDateFormat(result.rcptBgnDt, 'yyyyMMddHHmm', 'yyyy.MM.dd HH')}"/>시
                                         </c:if>
                                         ~
                                         <c:if test="${not empty result.rcptEndDt && fn:length(result.rcptEndDt) >= 12}">
-                                            <c:set var="rcptEndDe" value="${fn:substring(result.rcptEndDt, 0, 8)}"/>
-                                            <c:set var="rcptEndHm" value="${fn:substring(result.rcptEndDt, 8, 12)}"/>
-                                            ${fn:substring(rcptEndDe, 0, 4)}.${fn:substring(rcptEndDe, 4, 6)}.${fn:substring(rcptEndDe, 6, 8)}
-                                            ${fn:substring(rcptEndHm, 0, 2)}시
+                                            <c:out value="${tsu:toDateFormat(result.rcptEndDt, 'yyyyMMddHHmm', 'yyyy.MM.dd HH')}"/>시
                                         </c:if>
                                     </li>
                                     <li><span>운영</span>
                                         <c:if test="${not empty result.lctBgnDt && fn:length(result.lctBgnDt) >= 8}">
-                                            <c:set var="lctBgnDe" value="${fn:substring(result.lctBgnDt, 0, 8)}"/>
-                                            ${fn:substring(lctBgnDe, 0, 4)}-${fn:substring(lctBgnDe, 4, 6)}-${fn:substring(lctBgnDe, 6, 8)}
+                                            <c:out value="${tsu:toDateFormat(result.lctBgnDt, 'yyyyMMddHHmm', 'yyyy-MM-dd')}"/>
                                         </c:if>
                                         ~
                                         <c:if test="${not empty result.lctEndDt && fn:length(result.lctEndDt) >= 8}">
-                                            <c:set var="lctEndDe" value="${fn:substring(result.lctEndDt, 0, 8)}"/>
-                                            ${fn:substring(lctEndDe, 0, 4)}-${fn:substring(lctEndDe, 4, 6)}-${fn:substring(lctEndDe, 6, 8)}
+                                            <c:out value="${tsu:toDateFormat(result.lctEndDt, 'yyyyMMddHHmm', 'yyyy-MM-dd')}"/>
                                         </c:if>
                                     </li>
                                 </ul>
@@ -337,13 +341,11 @@
                                             <%-- 교육기간 --%>
                                         <span class="date">
                                 <c:if test="${not empty result.lctBgnDt && fn:length(result.lctBgnDt) >= 8}">
-                                    <c:set var="lctBgnDe" value="${fn:substring(result.lctBgnDt, 0, 8)}"/>
-                                    ${fn:substring(lctBgnDe, 0, 4)}-${fn:substring(lctBgnDe, 4, 6)}-${fn:substring(lctBgnDe, 6, 8)}
+                                    <c:out value="${tsu:toDateFormat(result.lctBgnDt, 'yyyyMMddHHmm', 'yyyy-MM-dd')}"/>
                                 </c:if>
                                         ~
                                 <c:if test="${not empty result.lctEndDt && fn:length(result.lctEndDt) >= 8}">
-                                    <c:set var="lctEndDe" value="${fn:substring(result.lctEndDt, 0, 8)}"/>
-                                    ${fn:substring(lctEndDe, 0, 4)}-${fn:substring(lctEndDe, 4, 6)}-${fn:substring(lctEndDe, 6, 8)}
+                                    <c:out value="${tsu:toDateFormat(result.lctEndDt, 'yyyyMMddHHmm', 'yyyy-MM-dd')}"/>
                                 </c:if>
                             </span>
                                         <span class="day"><c:out value="${result.lctWeekNm}"/></span>
@@ -369,16 +371,12 @@
                             <td>
                                 <span class="mobile-th">접수기간</span>
                                 <c:if test="${not empty result.rcptBgnDt && fn:length(result.rcptBgnDt) >= 12}">
-                                    <c:set var="rcptBgnDe" value="${fn:substring(result.rcptBgnDt, 0, 8)}"/>
-                                    <c:set var="rcptBgnHm" value="${fn:substring(result.rcptBgnDt, 8, 12)}"/>
-                                    ${fn:substring(rcptBgnDe, 0, 4)}.${fn:substring(rcptBgnDe, 4, 6)}.${fn:substring(rcptBgnDe, 6, 8)}
+                                    <c:out value="${tsu:toDateFormat(result.rcptBgnDt, 'yyyyMMddHHmm', 'yyyy.MM.dd')}"/>
 <%--                                    ${fn:substring(rcptBgnHm, 0, 2)}시--%>
                                 </c:if>
                                 ~
                                 <c:if test="${not empty result.rcptEndDt && fn:length(result.rcptEndDt) >= 12}">
-                                    <c:set var="rcptEndDe" value="${fn:substring(result.rcptEndDt, 0, 8)}"/>
-                                    <c:set var="rcptEndHm" value="${fn:substring(result.rcptEndDt, 8, 12)}"/>
-                                    ${fn:substring(rcptEndDe, 0, 4)}.${fn:substring(rcptEndDe, 4, 6)}.${fn:substring(rcptEndDe, 6, 8)}
+                                    <c:out value="${tsu:toDateFormat(result.rcptEndDt, 'yyyyMMddHHmm', 'yyyy.MM.dd')}"/>
 <%--                                    ${fn:substring(rcptEndHm, 0, 2)}시--%>
                                 </c:if>
                             </td>
@@ -423,7 +421,21 @@
                                     </span>
                                 </c:if>
                             </td>
-                            <td class="last"><span class="mobile-th">운영상태</span><span class="stateType type1"><c:out value="${operSttusMap[result.operSttus]}"/></span></td>
+                            <td class="last">
+                                <span class="mobile-th">운영상태</span>
+                                <c:set var="statusTypeClass" value="type1"/>
+                                <c:if test="${result.operSttus eq 'RCPT_ING'
+                                                or result.operSttus eq 'RCPT_ADD'
+                                                or result.operSttus eq 'WAIT_ING'}">
+                                    <c:set var="statusTypeClass" value="type2"/>
+                                </c:if>
+                                <c:if test="${result.operSttus eq 'OPER_CNCL'
+                                                or result.operSttus eq 'OPER_END'
+                                                or result.operSttus eq 'RCPT_END'}">
+                                    <c:set var="statusTypeClass" value="type3"/>
+                                </c:if>
+                                <span class="stateType ${statusTypeClass}"><c:out value="${operSttusMap[result.operSttus]}"/></span>
+                            </td>
                         </tr>
                         <c:set var="currentPageStartNo" value="${currentPageStartNo-1}"/>
                     </c:forEach>

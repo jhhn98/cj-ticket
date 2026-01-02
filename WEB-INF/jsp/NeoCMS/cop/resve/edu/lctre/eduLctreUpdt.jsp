@@ -129,15 +129,18 @@
                     </th>
                     <td>
                         <c:forEach var="result" items="${slctMthdList}" varStatus="status">
-				<span class="p-form-radio">
-					<form:radiobutton path="slctMthdCd"
-                                      id="slctMthdCd${status.count}"
-                                      cssClass="p-form-radio__input"
-                                      value="${result.code}"/>
-					<label for="slctMthdCd${status.count}" class="p-form-radio__label">
-						<c:out value="${result.codeNm}"/>
-					</label>
-				</span>
+                            <%-- 추첨은 우선 숨김처리 --%>
+                            <c:if test="${result.code ne 'DRWLT'}">
+                            <span class="p-form-radio">
+                                <form:radiobutton path="slctMthdCd"
+                                                  id="slctMthdCd${status.count}"
+                                                  cssClass="p-form-radio__input"
+                                                  value="${result.code}"/>
+                                <label for="slctMthdCd${status.count}" class="p-form-radio__label">
+                                    <c:out value="${result.codeNm}"/>
+                                </label>
+                            </span>
+                            </c:if>
                         </c:forEach>
                     </td>
                 </tr>
@@ -1651,6 +1654,20 @@
             var addRcptEndDe = $("#addRcptEndDe").val().replace(/-/g, '');
             var addRcptEndHm = $("#addRcptEndHour").val() + $("#addRcptEndMin").val();
             $("#addRcptEndDt").val(addRcptEndDe + addRcptEndHm);
+        }
+
+        // 추가접수기간 체크박스가 체크된 경우 시작일/종료일 필수 체크
+        if ($("#useAddRcptPeriod").is(":checked")) {
+            if ($("#addRcptBgnDt").val() && !$("#addRcptEndDt").val()) {
+                alert("추가접수종료일을 입력해주세요.");
+                $("#addRcptEndDe").focus();
+                return false;
+            }
+            if (!$("#addRcptBgnDt").val() && $("#addRcptEndDt").val()) {
+                alert("추가접수시작일을 입력해주세요.");
+                $("#addRcptBgnDe").focus();
+                return false;
+            }
         }
 
         // 추가접수기간 시작/종료 (날짜+시간) 순서 체크

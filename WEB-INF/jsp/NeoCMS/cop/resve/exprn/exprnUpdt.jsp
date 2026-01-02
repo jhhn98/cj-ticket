@@ -842,16 +842,44 @@
             return false;
         }
 
-        if (!form.rcritCnt.value || form.rcritCnt.value <= 0) {
+        var rcritCnt = parseInt(form.rcritCnt.value);
+        var nmprMinCnt = parseInt(form.nmprMinCnt.value);
+        var nmprMaxCnt = parseInt(form.nmprMaxCnt.value);
+
+        if (!form.rcritCnt.value || rcritCnt <= 0) {
             alert("모집인원을 입력해주세요.");
             form.rcritCnt.focus();
             return false;
         }
 
-        if (form.nmprMinCnt.value > form.nmprMaxCnt.value) {
-            alert("인원 제약 조건에서 최소인원이 최대인원보다 클 수 없습니다.");
+        if (nmprMinCnt < 0 || nmprMaxCnt < 0) {
+            alert("최소인원/최대인원을 확인해주세요.");
             form.nmprMinCnt.focus();
             return false;
+        }
+
+        if (nmprMinCnt > 0 && nmprMaxCnt > 0) {
+            if (nmprMinCnt > nmprMaxCnt) {
+                alert("인원 제약 조건에서 최소인원이 최대인원보다 클 수 없습니다.");
+                form.nmprMinCnt.focus();
+                return false;
+            }
+        }
+
+        if (nmprMinCnt > 0) {
+            if (nmprMinCnt > rcritCnt) {
+                alert("인원 제약 조건에서 최소인원이 모집인원보다 클 수 없습니다.");
+                form.nmprMinCnt.focus();
+                return false;
+            }
+        }
+
+        if (nmprMaxCnt > 0) {
+            if (nmprMaxCnt > rcritCnt) {
+                alert("인원 제약 조건에서 최대인원이 모집인원보다 클 수 없습니다.");
+                form.nmprMaxCnt.focus();
+                return false;
+            }
         }
 
         if (!form.dscntUseYn.value) {

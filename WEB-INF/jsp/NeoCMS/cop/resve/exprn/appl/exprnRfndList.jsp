@@ -163,7 +163,7 @@
                     <c:out value="${tsu:toDateFormat(result.rfndReqDt, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss')}"/>
                     <c:if test="${!(result.payMthdCd == 'ELCTRN' && result.tossMethod != '가상계좌')}">
                         <br/>
-                        <c:out value="${result.rfndBankNm}"/> <c:out value="${result.rfndAcctNo}"/><br>
+                        <c:out value="${bankMap[result.rfndBankNm]}"/> <c:out value="${result.rfndAcctNo}"/><br>
                         (예금주 : <c:out value="${result.rfndDpstrNm}"/>)
                     </c:if>
                 </td>

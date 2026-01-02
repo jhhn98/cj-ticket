@@ -128,7 +128,7 @@
                 <td>
                     <span class="mobile-th">결제상태</span>
                     <c:choose>
-                        <c:when test="${result.payMthdCd == 'ELCTRN' && result.paySttusCd == 'PAY_WAIT' && empty result.tossMethod}">
+                        <c:when test="${!fn:contains(result.resveSttusCd, 'CNCL') && result.payMthdCd == 'ELCTRN' && result.paySttusCd == 'PAY_WAIT' && empty result.tossMethod}">
                             <a href="./myPageViewByEdu.do?key=<c:out value="${key}"/>&amp;eduAplyNo=<c:out value="${result.eduAplyNo}"/>&amp;myPageMode=VIEW" class="customLink bgBlack"><span>결제하기</span></a>
                         </c:when>
                         <c:otherwise>
@@ -225,7 +225,7 @@
         <c:forEach var="result" items="${exprnApplList}" end="${expRowCnt}">
             <c:set var="todate" value="${result.today}${result.now}" />
             <tr>
-                <td class="first"><span class="mobile-th">예약번호</span><a href="./myPageViewByExprn.do?key=<c:out value="${key}"/>&amp;exprnApplNo=<c:out value="${result.exprnApplNo}"/>&amp;myPageMode=VIEW"><span><c:out value="${result.exprnApplId}"/></span></a></td>
+                <td class="first"><span class="mobile-th">예약번호</span><a href="./myPageViewByExprn.do?exprnApplNo=<c:out value="${result.exprnApplNo}"/>&amp;<c:out value="${myPageSearchVO.params}"/>&amp;myPageMode=VIEW"><span><c:out value="${result.exprnApplId}"/></span></a></td>
                 <td class="textAlignLeft"><span class="mobile-th">프로그램명</span><c:out value="${result.exprnNm}"/></td>
                 <td>
                     <span class="mobile-th">운영기관</span>
@@ -254,11 +254,12 @@
                 <td>
                     <span class="mobile-th">예약취소</span>
                     <%--
-                        취소가능일자가 지나지 않고
+                        취소가능일자 또는 체험일자가 지나지 않고
                         예약상태 : 사용자취소(USR_CNCL) or 관리자취소(MNG_CNCL) 아닌 상태
                         경우에만 취소 or 환불 요청 가능
                     --%>
-                    <c:if test="${todate <= result.canclClosDt && !fn:contains(result.rsvSttusCd, 'CNCL')}">
+                    <c:set var="exprnDt" value="${result.exprnDe}${result.exprnBgnHm}" />
+                    <c:if test="${(todate <= result.canclClosDt || todate < exprnDt) && !fn:contains(result.rsvSttusCd, 'CNCL')}">
                         <%--
                             결제상태 paySttusCd, 결제방법 payMthdCd 에 따라 취소/환불 버튼 활성화
                             무료(PAY_FREE) : 취소 가능
@@ -310,7 +311,13 @@
         </c:if>
         </tbody>
     </table>
-    <%-- TODOSDB: pagnation 없음--%>
+</c:if>
+<c:if test="${prgSe == 'EXP'}">
+    <div class="p-pagination">
+        <div class="p-page">
+            <ui:pagination paginationInfo="${expPaginationInfo}" type="board" jsFunction="./myPageList.do?${myPageSearchVO.paramsExclPi}&amp;pageIndex=" />
+        </div>
+    </div>
 </c:if>
 
 <c:if test="${empty prgSe || prgSe == 'FCT'}">

@@ -151,20 +151,21 @@
 
     <table class="p-table p-table--bordered">
         <colgroup>
-            <col class="w10">
-            <col class="w10">
-            <col class="w60">
-            <col class="w100">
-            <col class="w150">
-            <col class="w150">
-            <col class="w120">
-            <col class="w100">
-            <col class="w100">
-            <col class="w120">
-            <col class="w120">
-            <col class="w120">
-            <col class="w100">
-            <col class="w140">
+            <col style="width: 10px">
+            <col style="width: 50px">
+            <col style="width: 100px">
+            <col style="width: 120px">
+            <col style="width: 180px">
+            <col style="width: 160px">
+            <col style="width: 160px">
+            <col style="width: 80px">
+            <col style="width: 80px">
+            <col style="width: 130px">
+            <col style="width: 100px">
+            <col style="width: 100px">
+            <col style="width: 150px">
+            <col style="width: 100px">
+            <col style="width: 100px">
         </colgroup>
         <thead>
         <tr>
@@ -173,16 +174,16 @@
             </th>
             <th scope="col">번호</th>
             <th scope="col">예약번호</th>
+            <th scope="col">운영기관</th>
             <th scope="col">강좌명</th>
             <th scope="col">접수기간</th>
             <th scope="col">교육기간</th>
-            <th scope="col">운영기관</th>
             <th scope="col">신청자명</th>
             <th scope="col">생년월일</th>
             <th scope="col">연락처</th>
             <th scope="col">예약상태</th>
-            <th scope="col">결제상태 (결제수단)<br/>결제기한</th>
             <th scope="col">신청일시</th>
+            <th scope="col">결제상태 (결제수단)<br/>결제기한</th>
             <th scope="col">수료여부</th>
             <th scope="col">관리</th>
         </tr>
@@ -196,6 +197,7 @@
                 </td>
                 <td><c:out value="${pageNo}"/></td>
                 <td><c:out value="${result.eduRsvtNo}"/></td>
+                <td><c:out value="${result.insttNm}"/></td>
                 <td class="text_left"><c:out value="${result.lctreNm}"/></td>
                 <td>
                     <%-- 접수기간 --%>
@@ -239,7 +241,6 @@
                         <c:out value="${tsu:toDateFormat(lctEndHm, 'HHmm', 'HH:mm')}"/>
                     </c:if>
                 </td>
-                <td><c:out value="${result.insttNm}"/></td>
                 <td><c:out value="${result.applNm}"/></td>
                 <td>
                     <%-- 생년월일 포맷 (YYYY.MM.DD) --%>
@@ -260,6 +261,15 @@
                     <c:out value="${resveSttusCdMap[result.resveSttusCd]}"/>
                 </td>
                 <td>
+                    <c:if test="${not empty result.applDtMs && fn:length(result.applDtMs) >= 14}">
+                        <c:set var="applDe" value="${fn:substring(result.applDtMs, 0, 8)}"/>
+                        <c:set var="applHm" value="${fn:substring(result.applDtMs, 8, 12)}"/>
+                        <c:set var="applSs" value="${fn:substring(result.applDtMs, 12, 14)}"/>
+                        ${fn:substring(applDe, 0, 4)}-${fn:substring(applDe, 4, 6)}-${fn:substring(applDe, 6, 8)}<br/>
+                        ${fn:substring(applHm, 0, 2)}:${fn:substring(applHm, 2, 4)}.${applSs}
+                    </c:if>
+                </td>
+                <td>
                     <c:out value="${paySttusCdMap[result.paySttusCd]}"/>
                     <%-- 결제수단 표시 --%>
                     <c:if test="${not empty result.payMthdCd}">
@@ -269,15 +279,6 @@
                     <c:if test="${result.payMthdCd == 'ELCTRN' && result.paySttusCd == 'PAY_WAIT' && not empty result.payDeadlineDtHm}">
                         <br/><c:out value="${tsu:toDateFormat(result.payDeadlineDtHm, 'yyyyMMddHHmm', 'yyyy-MM-dd')}"/>
                         <c:out value="${tsu:toDateFormat(result.payDeadlineDtHm, 'yyyyMMddHHmm', 'HH:mm')}"/>
-                    </c:if>
-                </td>
-                <td>
-                    <c:if test="${not empty result.applDtMs && fn:length(result.applDtMs) >= 14}">
-                        <c:set var="applDe" value="${fn:substring(result.applDtMs, 0, 8)}"/>
-                        <c:set var="applHm" value="${fn:substring(result.applDtMs, 8, 12)}"/>
-                        <c:set var="applSs" value="${fn:substring(result.applDtMs, 12, 14)}"/>
-                        ${fn:substring(applDe, 0, 4)}-${fn:substring(applDe, 4, 6)}-${fn:substring(applDe, 6, 8)}<br/>
-                        ${fn:substring(applHm, 0, 2)}:${fn:substring(applHm, 2, 4)}.${applSs}
                     </c:if>
                 </td>
                 <td>
@@ -291,8 +292,8 @@
                 <td>
                     <a href="./updateEduAplctView.do?eduAplyNo=${result.eduAplyNo}&amp;insttNo=${result.insttNo}&amp;referer=list&amp;<c:out value="${eduAplctVO.params}"/>"
                        class="p-button p-button--xsmall edit">수정</a>
-                    <a href="./deleteEduAplct.do?eduAplyNo=${result.eduAplyNo}&amp;referer=list&amp;<c:out value="${eduAplctVO.params}"/>"
-                       onclick="fn_delete(this.href); return false;" class="p-button p-button--xsmall delete">삭제</a>
+                    <%--<a href="./deleteEduAplct.do?eduAplyNo=${result.eduAplyNo}&amp;referer=list&amp;<c:out value="${eduAplctVO.params}"/>"
+                       onclick="fn_delete(this.href); return false;" class="p-button p-button--xsmall delete">삭제</a>--%>
                 </td>
             </tr>
             <c:set var="pageNo" value="${pageNo-1}"/>

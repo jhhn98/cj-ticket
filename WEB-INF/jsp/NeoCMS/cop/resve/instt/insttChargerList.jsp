@@ -106,7 +106,12 @@
         </c:if>
         </tbody>
     </table>
-    
+
+    <div class="row margin_t_20">
+        <div class="col-24 right">
+            <a href="./selectInsttList.do?<c:out value="${insttChargerSearchVO.params}"/>" class="p-button cancel">목록 </a>
+        </div>
+    </div>
 </div>
 
 <script>

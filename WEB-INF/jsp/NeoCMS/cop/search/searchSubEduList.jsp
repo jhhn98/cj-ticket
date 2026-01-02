@@ -29,6 +29,7 @@
                         </tr>
                         </thead>
                         <tbody>
+				<c:set var="currentPageStartNo" value="${paginationInfo.currentPageStartNo}" />
 				<c:forEach var="item" items="${eduInfoList}" varStatus="idx">
 					<c:set var="targetNm" value="" />
 					<c:forEach var="map" items="${targetCdMap}">
@@ -40,7 +41,7 @@
 						</c:if>
 					</c:forEach>
                         <tr>
-                            <td class="first textAlignCenter"><span class="mobile-th">번호</span><c:out value="${idx.index + 1}"/></td>
+                            <td class="first textAlignCenter"><span class="mobile-th">번호</span><c:out value="${currentPageStartNo}"/></td>
                             <td class="textAlignCenter"><span class="mobile-th">년도</span><c:out value="${item.operYear}"/></td>
 							<td><span class="mobile-th">강좌명</span><a href="./selectEduLctreWebView.do?key=19&amp;lctreNo=<c:out value="${item.resveNo}"/>" target="_blank" title="새창"><c:out value="${item.resveNm}"/></a></td>
 							<td class="textAlignCenter"><span class="mobile-th">접수기간</span><c:out value="${tsu:toDateFormat(item.rceptBgn,'yyyyMMddHHmm','yyyy.MM.dd')}"/> ~ <c:out value="${tsu:toDateFormat(item.rceptEnd,'yyyyMMddHHmm','yyyy.MM.dd')}"/></td>
@@ -50,6 +51,7 @@
 							<td class="textAlignCenter"><span class="mobile-th">신청/정원</span><c:out value="${item.rceptNmpr}"/>/<c:out value="${item.rcritNmpr}"/></td>
                             <td class="textAlignCenter"><span class="mobile-th">운영상태</span><!--<span class="lectureState state1"></span>--></td>
                         </tr>
+						<c:set var="currentPageStartNo" value="${currentPageStartNo-1}" />
 				</c:forEach>
 				<c:if test="${empty eduInfoList}">
 						<tr>

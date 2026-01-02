@@ -305,7 +305,7 @@ LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
 						</c:if>
                         </div>
                     </div>
-                    <div class="tab-element">
+                    <%-- <div class="tab-element">
                         <button type="button" class="tab-button">
                             <svg class="svgBg">
                                 <use href="/site/www/images/main/sprite-main.svg#icon-comment2" fill="url(/site/www/images/main/sprite-main.svg#comment-bg)"></use>
@@ -333,7 +333,7 @@ LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
                             </ul>
 						</c:if>
                         </div>
-                    </div>
+                    </div> --%>
                 </div>
             </section>
             <section class="facilitiesGroup">

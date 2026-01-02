@@ -116,7 +116,7 @@
 				</td>
 				<th scope="row">취소사유</th>
 				<td colspan="4">
-<%--					<c:out value="${eduAplctVO.applCancelResn}"/>--%>
+					<c:out value="${eduAplctVO.cancelReason}"/>
 				</td>
 			</tr>
 			<tr>
@@ -309,7 +309,7 @@
 							</td>
 						</tr>
 					</c:if>
-				<tr>
+				<%--<tr>
 					<th scope="row"><label for="dscntUseSe1">감면신청</label></th>
 					<td>
 						<span class="p-form-radio">
@@ -323,9 +323,9 @@
 						<span class="p-form-radio">
 								<input type="radio" id="dscntUseSe3" name="dscntUseSe" value="M"${eduAplctVO.dscntUseSe eq 'M' ? ' checked="true"':''} class="p-form-radio__input" onclick="toggleDscntCd(true);" />
 								<label for="dscntUseSe3" class="p-form-radio__label">관리자 승인</label>
-				</span>
+						</span>
 					</td>
-				</tr>
+				</tr>--%>
 
 				<tr id="dscntCdRow" style="${eduAplctVO.dscntUseSe eq 'Y' || eduAplctVO.dscntUseSe eq 'M' ? '' : 'display:none;'}">
 					<th scope="row"><label for="dscntCd">감면선택</label></th>

@@ -22,7 +22,19 @@
         RCPT_ADD 추가모집 | RCPT_END 접수마감 | RCPT_ING 접수중
         RCPT_WAIT 접수예정 | WAIT_ING 대기자접수
     --%>
-    <span class="stateType type2"><c:out value="${operSttusMap[eduLctreVO.operSttus]}"/></span>
+        <c:set var="stateTypeClass" value="type1"/>
+        <c:if test="${eduLctreVO.operSttus eq 'RCPT_ING'
+                                                    or eduLctreVO.operSttus eq 'RCPT_ADD'
+                                                    or eduLctreVO.operSttus eq 'WAIT_ING'}">
+            <c:set var="stateTypeClass" value="type2"/>
+        </c:if>
+        <c:if test="${eduLctreVO.operSttus eq 'OPER_CNCL'
+                                                    or eduLctreVO.operSttus eq 'OPER_END'
+                                                    or eduLctreVO.operSttus eq 'RCPT_END'
+                                                    or eduLctreVO.operSttus eq 'OPER_ING'}">
+            <c:set var="stateTypeClass" value="type3"/>
+        </c:if>
+        <span class="stateType ${stateTypeClass}"><c:out value="${operSttusMap[eduLctreVO.operSttus]}"/></span>
     <strong><c:out value="${eduLctreVO.lctreNm}"/></strong>
 </div>
 <h4>예약정보 확인</h4>

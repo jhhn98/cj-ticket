@@ -147,7 +147,7 @@
                             <%-- 취소인 경우 환불처리일시 + 환불금액 + 환불계좌 필요한 경우 환불계좌 정보 표출--%>
                             <c:if test="${fn:indexOf(exprnApplVO.paySttusCd, 'RFND') > -1}">
                                 <p class="iconText caution point-color-green">
-                                    환불처리일시 : <c:out value="${tsu:toDateFormat(exprnApplVO.rfndCmplDt, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss')}"/> / 환불금액 : <fmt:formatNumber value="${exprnApplVO.rfndAmt}" pattern="#,##0"/>원 / 환불계좌정보 : <c:out value="${exprnApplVO.rfndBankNm}"/> <c:out value="${exprnApplVO.rfndAcctNo}"/> (예금주:<c:out value="${exprnApplVO.rfndDpstrNm}"/>)
+                                    환불처리일시 : <c:out value="${tsu:toDateFormat(exprnApplVO.rfndCmplDt, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss')}"/> / 환불금액 : <fmt:formatNumber value="${exprnApplVO.rfndAmt}" pattern="#,##0"/>원 / 환불계좌정보 : <c:out value="${bankMap[exprnApplVO.rfndBankNm]}"/> <c:out value="${exprnApplVO.rfndAcctNo}"/> (예금주:<c:out value="${exprnApplVO.rfndDpstrNm}"/>)
                                 </p>
                             </c:if>
                         </div>
@@ -202,7 +202,11 @@
                     </tr>
                 </c:if>
                 <tr>
-                    <th scope="row" class="first"><div class="innerCell">성명</div></th>
+                    <th scope="row" class="first"><div class="innerCell">인원구분</div></th>
+                    <td><div class="innerCell"><c:out value="${nmprSeMap[exprnApplVO.nmprSeCd]}"/><c:if test="${exprnApplVO.nmprSeCd == 'GRP'}">(<c:out value="${exprnApplVO.grpNm}"/>)</c:if></div></td>
+                </tr>
+                <tr>
+                    <th scope="row" class="first"><div class="innerCell">신청자명</div></th>
                     <td><div class="innerCell"><c:out value="${exprnApplVO.applNm}"/></div></td>
                 </tr>
                 <tr>
@@ -264,17 +268,21 @@
                                 <c:out value="${exprnApplVO.email}"/>
                             </c:if>
                             <c:if test="${myPageMode == 'UPDT'}">
-                                <input type="text" id="emailId" placeholder="ID" class="customInputDefault" name="email1" value="<c:out value="${exprnApplVO.email1}"/>">
-                                &nbsp;@&nbsp;
-                                <input type="text" id="emailDomain" placeholder="도메인" class="customInputDefault" name="email2" value="<c:out value="${exprnApplVO.email2}"/>">
-                                <div class="customSelect inlineBlock">
-                                    <select id="emailDomainSelect" name="">
-                                        <option value="direct">직접입력</option>
-                                        <option value="naver.com">naver.com</option>
-                                        <option value="gmail.com">gmail.com</option>
-                                        <option value="nate.com">nate.com</option>
-                                        <option value="kakao.com">kakao.com</option>
-                                    </select>
+                                <div class="email">
+                                    <label for="emailId">E-mail ID</label>
+                                    <input type="text" id="emailId" class="customInputDefault textAlignCenter" name="email1" value="<c:out value="${exprnApplVO.email1}"/>">
+                                    &nbsp;@&nbsp;
+                                    <input type="text" id="emailDomain" class="customInputDefault textAlignCenter" name="email2" value="<c:out value="${exprnApplVO.email2}"/>">
+                                    <div class="customSelect inlineBlock">
+                                        <select id="emailDomainSelect" name="">
+                                            <option value="direct">직접입력</option>
+                                            <option value="naver.com">naver.com</option>
+                                            <option value="gmail.com">gmail.com</option>
+                                            <option value="nate.com">nate.com</option>
+                                            <option value="kakao.com">kakao.com</option>
+                                            <option value="daum.net">daum.net</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </c:if>
                         </div>
@@ -309,6 +317,25 @@
                                     <label for="addressInput2">상세 주소 입력</label>
                                     <input type="text" name="detailAddr" id="addressInput2" class="customInputDefault inputAddress detail" placeholder="상세주소 입력해주세요" value="<c:out value="${exprnApplVO.detailAddr}"/>">
                                 </div>
+                            </c:if>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row" class="first">
+                        <div class="innerCell">
+                            신청인원
+                        </div>
+                    </th>
+                    <td>
+                        <div class="innerCell">
+                            총 <c:out value="${exprnApplVO.totalCnt}"/>명
+                            <c:if test="${exprnVO.detailNmprUseYn == 'Y'}">
+                                (성인 <c:out value="${exprnApplVO.adltCnt}"/>명,
+                                청소년 <c:out value="${exprnApplVO.teenCnt}"/>명,
+                                초등학생 <c:out value="${exprnApplVO.elmntCnt}"/>명,
+                                아동 <c:out value="${exprnApplVO.childCnt}"/>명,
+                                영유아 <c:out value="${exprnApplVO.infantCnt}"/>명)
                             </c:if>
                         </div>
                     </td>
