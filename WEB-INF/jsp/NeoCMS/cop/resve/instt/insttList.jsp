@@ -95,14 +95,14 @@
 
     <div class="p-pagination">
         <div class="p-page">
-            <ui:pagination paginationInfo="${paginationInfo}" type="board" jsFunction="./selectInsttList.do?${insttSearchVO.paramsExclPi}&amp;searchPrgSe=${insttSearchVO.searchPrgSe}&amp;pageIndex=" />
+            <ui:pagination paginationInfo="${paginationInfo}" type="board" jsFunction="./selectInsttList.do?${insttSearchVO.paramsExclPi}&amp;pageIndex=" />
         </div>
     </div>
     <div class="text_right">
-        <a href="./addInsttView.do?<c:out value="${insttSearchVO.params}"/><c:if test="${!empty insttSearchVO.searchPrgSe}">&amp;searchPrgSe=<c:out value="${insttSearchVO.searchPrgSe}"/></c:if>" class="p-button p-button--combine write">등록</a>
+        <a href="./addInsttView.do?<c:out value="${insttSearchVO.params}"/>" class="p-button p-button--combine write">등록</a>
     </div>
-    
-</div>
+
+    </div>
 
 <script>
 

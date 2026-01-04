@@ -139,7 +139,6 @@
                 <td><span class="mobile-th">예약상태</span><c:out value="${eduRsvMap[result.resveSttusCd]}"/></td>
                 <td>
                     <span class="mobile-th">예약취소</span>
-                    <span class="marginRight10"><c:out value="${eduRsvMap[result.resveSttusCd]}"/></span>
                         <%--
                             취소/환불 가능 조건:
                             - 폐강이 아니고 (closeYn != 'Y')

@@ -496,11 +496,11 @@
                     <td>
                         <%--TODOSDB: 감면 개발 진행 중으로 사용 못하도록 비활성화 처리--%>
                         <span class="p-form-radio">
-                            <input type="radio" name="dscntUseYn" id="dscntUseY" class="p-form-radio__input" value="Y" disabled>
+                            <input type="radio" name="dscntUseYn" id="dscntUseY" class="p-form-radio__input" value="Y" readonly>
                             <label for="dscntUseY" class="p-form-radio__label">사용</label>
                         </span>
                         <span class="p-form-radio">
-                            <input type="radio" name="dscntUseYn" id="dscntUseN" class="p-form-radio__input" value="N" checked disabled>
+                            <input type="radio" name="dscntUseYn" id="dscntUseN" class="p-form-radio__input" value="N" checked readonly>
                             <label for="dscntUseN" class="p-form-radio__label">미사용</label>
                         </span>
                     </td>
@@ -874,11 +874,13 @@
             }
         }
 
+/*
         if (!form.dscntUseYn.value) {
             alert("감면사용여부를 확인해주세요.");
             $('#dscntUseY').focus();
             return false;
         }
+*/
 
         if (!form.telNoFmt.value) {
             alert("문의전화를 입력해주세요.");
