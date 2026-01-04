@@ -263,6 +263,7 @@
                                     <option value="gmail.com">gmail.com</option>
                                     <option value="nate.com">nate.com</option>
                                     <option value="kakao.com">kakao.com</option>
+                                    <option value="daum.net">daum.net</option>
                                 </select>
                             </div>
                         </div>
@@ -288,39 +289,28 @@
             <c:if test="${fcltyVO.resInqUseYn == 'Y'}">
                 <tr>
                     <th scope="row" class="first">
-                        <div class="innerCell"><label for="selectedElement">거주지 조회</label></div>
-                    </th>
-                    <td>
                         <div class="innerCell">
-                            <div class="customSelect inlineBlock">
-                                <select id="selectedElement" name="">
-                                    <option>선택해주세요.</option>
-                                    <option value="1">선택옵션1</option>
-                                    <option value="2">선택옵션2</option>
-                                </select>
+                            <label for="resJuminNoPre" title="필수 입력 항목입니다.">
+                                거주지 조회
+                                <span class="point-color-red">*</span>
+                            </label>
+                        </div>
+                    </th>
+
+                    <td>
+                        <input type="hidden" name="resInqTxId" value="">
+                        <input type="hidden" name="resInqResult" value="">
+                        <div class="innerCell">
+                            <div class="juminNo" id="juminNoInput">
+                                <label for="resJuminNoPre">주민번호 앞자리</label>
+                                <input type="text" id="resJuminNoPre" placeholder="주민번호 앞자리" class="customInputDefault textAlignCenter onlyNumber" maxlength="6" value="<c:out value="${tsu:toDateFormat(fcltyApplVO.birthDe, 'yyyyMMdd', 'yyMMdd')}"/>" autocomplete="off" readonly>
+                                &nbsp;-&nbsp;
+                                <label for="resJuminNoPost">주민번호 뒷자리</label>
+                                <input type="password" id="resJuminNoPost" placeholder="주민번호 뒷자리" class="customInputDefault textAlignCenter onlyNumber" maxlength="7" name="resJuminNoPost" autocomplete="off" oninput="fn_numChk(this)">
+
+                                <button type="button" class="customLink bgBlack bigHeight marginLeft10" onclick="fn_ResideInsttCnfirmCheck();"><span>조회</span></button>
+                                <span id="resInqResultText" class="resIngResultText"></span>
                             </div>
-                            <table class="table default">
-                                <caption>테이블 제목-th 항목</caption>
-                                <thead>
-                                <tr>
-                                    <th scope="col" class="first">thth</th>
-                                    <th scope="col">thth</th>
-                                    <th scope="col">thth</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td class="first">td</td>
-                                    <td>tdtd</td>
-                                    <td>tdtdtd</td>
-                                </tr>
-                                <tr>
-                                    <td class="first">td</td>
-                                    <td>tdtdtdtd</td>
-                                    <td>tdtdtd</td>
-                                </tr>
-                                </tbody>
-                            </table>
                         </div>
                     </td>
                 </tr>
@@ -329,37 +319,52 @@
                 <c:if test="${fcltyVO.dscntUseYn == 'Y'}">
                     <tr>
                         <th scope="row" class="first">
-                            <div class="innerCell"><label for="selectedElement">감면혜택</label></div>
+                            <div class="innerCell"><label for="dscntCd">감면혜택</label></div>
                         </th>
                         <td>
                             <div class="innerCell">
                                 <div class="customSelect inlineBlock">
-                                    <select id="selectedElement" name="">
-                                        <option>선택해주세요.</option>
-                                        <option value="1">선택옵션1</option>
-                                        <option value="2">선택옵션2</option>
+                                    <select id="dscntCd" name="dscntCd">
+                                        <option value="DSCNT_NONE">감면없음</option>
+                                        <c:forEach var="result" items="${dscntList}">
+                                            <c:if test="${result.piscYn == 'Y'}">
+                                                <option value="PISC_${result.dscntCd}" data-confirm-mthd="pisc"><c:out value="${dscntSeMap[result.dscntCd]}"/>(비대면)</option>
+                                            </c:if>
+                                            <c:if test="${result.directYn == 'Y'}">
+                                                <option value="DIRECT_${result.dscntCd}" data-confirm-mthd="direct"><c:out value="${dscntSeMap[result.dscntCd]}"/>(서류직접제출)</option>
+                                            </c:if>
+                                        </c:forEach>
                                     </select>
                                 </div>
                                 <table class="table default">
-                                    <caption>테이블 제목-th 항목</caption>
+                                    <caption>감면항목</caption>
                                     <thead>
                                     <tr>
-                                        <th scope="col" class="first">thth</th>
-                                        <th scope="col">thth</th>
-                                        <th scope="col">thth</th>
+                                        <th scope="col" class="first">감면항목</th>
+                                        <th scope="col">감면혜택조건</th>
+                                        <th scope="col">자격확인방법</th>
+                                        <th scope="col">감면율</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td class="first">td</td>
-                                        <td>tdtd</td>
-                                        <td>tdtdtd</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="first">td</td>
-                                        <td>tdtdtdtd</td>
-                                        <td>tdtdtd</td>
-                                    </tr>
+                                    <c:forEach var="result" items="${dscntList}">
+                                        <tr>
+                                            <td class="first"><c:out value="${dscntSeMap[result.dscntCd]}"/></td>
+                                            <td><c:out value="${result.dscntCnd}"/></td>
+                                            <td>
+                                                <c:if test="${result.piscYn == 'Y'}">
+                                                    비대면
+                                                </c:if>
+                                                <c:if test="${result.piscYn == 'Y' && result.directYn == 'Y'}">
+                                                    ,
+                                                </c:if>
+                                                <c:if test="${result.directYn == 'Y'}">
+                                                    서류직접제출
+                                                </c:if>
+                                            </td>
+                                            <td><c:out value="${result.dscntRate}"/>%</td>
+                                        </tr>
+                                    </c:forEach>
                                     </tbody>
                                 </table>
                             </div>
@@ -478,6 +483,110 @@
                 $("input[name=detailAddr]").focus();
             }
         }).open();
+    }
+
+    function fn_juminNoCheck(juminNoPost) {
+
+        if(juminNoPost == "") {
+            alert("주민등록번호를 입력해주세요.");
+            return false;
+        }
+
+        if(juminNoPost.length != 7) {
+            alert("주민등록번호 뒷자리는 숫자 7자리로 입력해주세요.");
+            return false;
+        }
+
+        if(!$.isNumeric(juminNoPost)) {
+            alert("주민등록번호는 숫자만 입력해주세요.");
+            return false;
+        }
+
+        return true;
+    }
+
+    function fn_ResideInsttCnfirmCheck() {
+
+        $('#ResideInsttCnfirm').text('');
+
+        var juminNoPost = $('#resJuminNoPost').val();
+        if(!fn_juminNoCheck(juminNoPost)) {
+            $('#resJuminNoPost').focus();
+            return false;
+        }
+
+        var insttNo = $('input[name=insttNo]').val();
+        var prgNo = $('input[name=exprnNo]').val();
+
+        $.ajax({
+            cache: false,
+            url: '/piscResInqAjax.do',
+            type: 'POST',
+            data: {
+                prgSe: 'EXP',
+                juminNoPost: juminNoPost,
+                prgNo: prgNo,
+                insttNo: insttNo,
+            },
+            success: function (res) {
+                var resInqTxId = res['resInqTxId'];
+                var resInqResult = '';
+                var resInqResultText = '';
+                var RESULT = res['RESULT'];
+
+                if (RESULT == 'JUMIN_NO_FAILR') {
+                    alert("주민번호 뒷자리를 확인해주세요.");
+                    $('#resJuminNoPost').focus();
+                    return false;
+                }
+
+                if (RESULT == 'Y') {
+                    alert("거주지 조회가 완료되었습니다.");
+
+                    var hangkikCd = res['hangkikCd'];
+                    resInqResult = hangkikCd;
+
+                    var admDong = res['admDong'];
+                    resInqResultText += '청주시민(' + admDong + ')';
+                } else {
+                    var msg = '거주지 조회 오류입니다. 관리자에게 문의해주세요.';
+
+                    if(RESULT == 'PISC_FAIL_02') {
+                        msg = '주민등록번호 오류입니다. 입력하신 주민등록번호를 다시 확인해주세요.';
+                        resInqResult = 2;
+                    } else if(RESULT == 'PISC_FAIL_03') {
+                        msg = '성명 오류입니다. 입력하신 성명을 다시 확인해주세요.';
+                        resInqResult = 3;
+                    } else if(RESULT == 'PISC_FAIL_04') {
+                        msg = '청주시 거주자가 아닙니다.';
+                        resInqResult = 4;
+                    } else if(RESULT == 'PISC_FAIL_09') {
+                        msg = '시스템 오류입니다. 관리자에게 문의해주세요.';
+                        resInqResult = 9;
+                    } else if(RESULT == 'PISC_FAIL_99') {
+                        msg = '등록된 이용기관이 아닙니다. 관리자에게 문의해주세요.';
+                        resInqResult = 99;
+                    } else if(RESULT == 'PISC_FAIL_ELSE') {
+                        msg = '잘못된 접근입니다.';
+                        resInqResult = 999;
+                    }
+
+                    alert(msg);
+                    resInqResultText += msg;
+                }
+
+                $('input[name=resInqTxId]').val(resInqTxId);
+                $('input[name=resInqResult]').val(resInqResult);
+                $('#resInqResultText').text(resInqResultText);
+            }, // success
+            error: function (request,xhr, status) {
+                //alert(request.responseText);
+                alert("에러가 발생하였습니다.");
+                console.log("code:",request.status);
+                console.log("message:",request.responseText);
+                console.log("error:"+error)
+            }
+        });
     }
 
     function formCheck(form) {

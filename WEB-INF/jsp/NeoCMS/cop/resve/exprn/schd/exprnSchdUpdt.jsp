@@ -455,13 +455,14 @@
                         <div id="exprnTmList">
                             <c:forEach var="result" items="${exprnTmListByDe}" varStatus="status">
                                 <c:set var="exprnTmList" value="exprnTmList[${status.index}]"/>
+                                <c:set var="useYn"      value="${exprnTmList}.useYn"/>
                                 <c:set var="exprnBgnHh" value="${exprnTmList}.exprnBgnHh"/>
                                 <c:set var="exprnBgnMm" value="${exprnTmList}.exprnBgnMm"/>
                                 <c:set var="exprnEndHh" value="${exprnTmList}.exprnEndHh"/>
                                 <c:set var="exprnEndMm" value="${exprnTmList}.exprnEndMm"/>
                                 <div class="p-form-group w15p" id="exprnTm${status.index+1}">
                                     <span class="p-form-checkbox">
-                                        <input type="checkbox" id="useYn<c:out value="${status.index+1}"/>" class="p-form-checkbox__input useYn" value="Y" checked data-time-no="exprnTm<c:out value="${status.index+1}"/>">
+                                        <input type="checkbox" name="<c:out value="${useYn}"/>" id="useYn<c:out value="${status.index+1}"/>" class="p-form-checkbox__input useYn" value="Y" checked data-time-no="exprnTm<c:out value="${status.index+1}"/>">
                                         <label for="useYn<c:out value="${status.index+1}"/>" class="p-form-checkbox__label"><c:out value="${status.index+1}"/>회차</label>
                                     </span>
                                     <span class="p-form__split"></span>
@@ -505,7 +506,7 @@
                                 <c:set var="exprnEndMm" value="${exprnTmList}.exprnEndMm"/>
                                 <div class="p-form-group w15p" id="exprnTmNew<c:out value="${i}"/>">
                                     <span class="p-form-checkbox">
-                                        <input type="checkbox" id="useYn<c:out value="${i}"/>" class="p-form-checkbox__input useYn" value="Y" data-time-no="exprnTmNew<c:out value="${i}"/>">
+                                        <input type="checkbox" name="<c:out value="${useYn}"/>" id="useYn<c:out value="${i}"/>" class="p-form-checkbox__input useYn" value="Y" data-time-no="exprnTmNew<c:out value="${i}"/>">
                                         <label for="useYn<c:out value="${i}"/>" class="p-form-checkbox__label"><c:out value="${i}"/>회차</label>
                                     </span>
                                     <span class="p-form__split"></span>

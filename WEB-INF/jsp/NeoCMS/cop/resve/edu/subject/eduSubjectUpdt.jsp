@@ -83,8 +83,8 @@
 			<th scope="row"><label for="subjectNm">과목명</label> <span class="p-form__required--icon">필수</span></th>
 			<td>
 				<input type="text" id="subjectNm" name="subjectNm" value="${eduSubjectVO.subjectNm}" class="p-input w50p" maxlength="50" />
-				<button type="button" class="p-button p-button--small" onclick="fn_checkDplctSubjectNm();">중복체크</button>
-				<br/><span id="msg_subjectNm_chk" class="margin_l_10"></span>
+				<button type="button" class="p-button write" onclick="fn_checkDplctSubjectNm();">중복체크</button>
+				<br/><span id="msg_subjectNm_chk"></span>
 				<span id="error_subjectNm" class="form_error"></span>
 			</td>
 		</tr>
@@ -390,17 +390,28 @@ function fn_checkDplctSubjectNm() {
 			'subjectNm': subjectNm
 		},
 		success: function(res) {
+			var text = "";
+
 			if (res == 1) {
-				$('#msg_subjectNm_chk').text('※ 이미 사용 중인 과목명입니다.').addClass('text_red');
+				text = "이미 사용 중인 과목명입니다.";
+				$('#msg_subjectNm_chk').text(text).addClass('em_b_red');
+
 			} else if (res == 0) {
-				$('#msg_subjectNm_chk').text('✓ 사용 가능한 과목명입니다.').addClass('text_blue');
+				text = "사용 가능한 과목명입니다.";
+				$('#msg_subjectNm_chk').text(text).addClass('em_b_blue');
+
 			} else if (res == -1) {
-				alert("기관을 먼저 선택해주세요.");
+				text = "기관을 먼저 선택해주세요.";
+
 			} else if (res == -2) {
-				alert("과목명을 입력해주세요.");
+				text = "과목명을 입력해주세요.";
+
 			} else {
-				alert("중복 체크 중 오류가 발생했습니다.");
+				text = "중복 체크 중 오류가 발생했습니다.";
+
 			}
+
+			alert(text);
 		},
 		error: function() {
 			alert("중복 체크 중 오류가 발생했습니다.");

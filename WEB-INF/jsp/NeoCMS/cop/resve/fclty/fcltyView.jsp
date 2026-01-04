@@ -164,7 +164,9 @@
             <td>
                 <c:choose>
                     <c:when test="${fcltyVO.fcltyAmt > 0}">
-                        예약일/추첨일/승인일로부터  <em class="em_black"><c:out value="${fcltyVO.payTmlmtCnt}"/></em>일 이내 <em class="em_black"><c:out value="${fcltyVO.payTmlmtCnt}"/></em>시 까지<br/>
+<%--                        예약일/추첨일/승인일로부터  --%>
+                        예약일로부터
+                        <em class="em_black"><c:out value="${fcltyVO.payTmlmtCnt}"/></em>일 이내 <em class="em_black"><c:out value="${fcltyVO.payTmlmtCnt}"/></em>시 까지<br/>
                         <span class="p-table__content padding_l_10">
                             <svg width="20" height="25" fill="#202e70" focusable="false"><use xlink:href="/common/images/program/p-icon.svg#info-circle"></use></svg>
                             <em class="em_black">신청자가 예약완료 후 설정된 시간(분)이내에 결제하지 않으면 예약이 자동으로 취소됩니다.</em>
@@ -217,18 +219,18 @@
                 </c:forEach>
             </td>
         </tr>
-        <tr>
-            <th scope="row">모집인원</th>
-            <td>
-                <c:out value="${fcltyVO.rcritCnt}"/> 명 / 세부인원(성인, 청소년, 초등학생, 아동, 영유아)
-                <c:if test="${fcltyVO.detailNmprUseYn == 'Y'}">
-                    사용함
-                </c:if>
-                <c:if test="${fcltyVO.detailNmprUseYn == 'N'}">
-                    사용안함
-                </c:if>
-            </td>
-        </tr>
+<%--        <tr>--%>
+<%--            <th scope="row">모집인원</th>--%>
+<%--            <td>--%>
+<%--                <c:out value="${fcltyVO.rcritCnt}"/> 명 / 세부인원(성인, 청소년, 초등학생, 아동, 영유아)--%>
+<%--                <c:if test="${fcltyVO.detailNmprUseYn == 'Y'}">--%>
+<%--                    사용함--%>
+<%--                </c:if>--%>
+<%--                <c:if test="${fcltyVO.detailNmprUseYn == 'N'}">--%>
+<%--                    사용안함--%>
+<%--                </c:if>--%>
+<%--            </td>--%>
+<%--        </tr>--%>
         <tr>
             <th scope="row">일일 이용 제한시간</th>
             <td>
@@ -319,17 +321,17 @@
                 </c:if>
             </td>
         </tr>
-        <tr>
-            <th scope="row">감면 사용여부</th>
-            <td>
-                <c:if test="${fcltyVO.dscntUseYn == 'Y'}">
-                    감면 사용
-                </c:if>
-                <c:if test="${fcltyVO.dscntUseYn == 'N'}">
-                    감면 사용안함
-                </c:if>
-            </td>
-        </tr>
+<%--        <tr>--%>
+<%--            <th scope="row">감면 사용여부</th>--%>
+<%--            <td>--%>
+<%--                <c:if test="${fcltyVO.dscntUseYn == 'Y'}">--%>
+<%--                    감면 사용--%>
+<%--                </c:if>--%>
+<%--                <c:if test="${fcltyVO.dscntUseYn == 'N'}">--%>
+<%--                    감면 사용안함--%>
+<%--                </c:if>--%>
+<%--            </td>--%>
+<%--        </tr>--%>
         <tr>
             <th scope="row">문의전화</th>
             <td>

@@ -273,6 +273,19 @@
                         </div>
                     </td>
                 </tr>
+
+                <c:if test="${!empty fcltyApplVO.grpNm}">
+                    <tr>
+                        <th scope="row" class="first"><div class="innerCell">단체명</div></th>
+                        <td><div class="innerCell"><c:out value="${fcltyApplVO.grpNm}"/></div></td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row" class="first"><div class="innerCell">신청인원</div></th>
+                        <td><div class="innerCell"><fmt:formatNumber value="${tsu:xssNumberFilter(fcltyApplVO.useCnt)}" pattern="#,###"/> 명</div></td>
+                    </tr>
+                </c:if>
+
                 <tr>
                     <th scope="row" class="first">
                         <div class="innerCell">

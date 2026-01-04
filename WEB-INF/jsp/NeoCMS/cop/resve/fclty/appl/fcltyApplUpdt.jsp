@@ -59,8 +59,8 @@
                             <form:select path="operYear" class="p-input p-input--auto">
                                 <form:option value="" label="연도 선택"/>
                                 <c:set var="year" value="${fn:substring(fcltyVO.today,0,4)}"/>
-                                <c:forEach var="i" begin="0" end="2">
-                                    <form:option value="${year + i}" label="${year + i}"/>
+                                <c:forEach var="i" begin="2025" end="${year + 2}">
+                                    <form:option value="${i}" label="${i}"/>
                                 </c:forEach>
                             </form:select>
                         </td>
@@ -275,7 +275,8 @@
                         <th scope="row"><form:label path="payTmlmtCnt">결제기한</form:label></th>
                         <td>
                             <div class="p-form-group w20p">
-                                <span class="p-form__split">예약일/추첨일/승인일로부터 </span>
+<%--                                <span class="p-form__split">예약일/추첨일/승인일로부터 </span>--%>
+                                <span class="p-form__split">예약일로부터 </span>
                                 <select name="payTmlmtCnt" id="payTmlmtCnt" class="p-input p-input--auto text_center"<c:if test="${fcltyVO.fcltyAmt == 0}"> disabled</c:if>>
                                     <c:forEach var="i" begin="1" end="30">
                                         <option value="${i}"<c:if test="${fcltyVO.payTmlmtCnt == i}"> selected</c:if>><c:out value="${i}"/></option>
@@ -337,7 +338,7 @@
                                 <label for="fdrmCloseDay2" class="p-form-checkbox__label">월</label>
                             </span>
                             <span class="p-form-checkbox">
-                                <input type="checkbox" name="fdrmCloseDayArr" id="fdrmCloseDay3" class="p-form-checkbox__input" value="3"><c:if test="${fn:indexOf(fcltyVO.fdrmCloseDay, '3') > -1}"> checked</c:if>
+                                <input type="checkbox" name="fdrmCloseDayArr" id="fdrmCloseDay3" class="p-form-checkbox__input" value="3"<c:if test="${fn:indexOf(fcltyVO.fdrmCloseDay, '3') > -1}"> checked</c:if>>
                                 <label for="fdrmCloseDay3" class="p-form-checkbox__label">화</label>
                             </span>
                             <span class="p-form-checkbox">

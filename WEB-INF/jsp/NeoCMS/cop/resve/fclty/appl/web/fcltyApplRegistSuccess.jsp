@@ -82,6 +82,21 @@
         <td colspan="3"><c:out value="${fcltyApplVO.mobileNo1}"/> - <c:out value="${fcltyApplVO.mobileNo2}"/> - <c:out value="${fcltyApplVO.mobileNo3}"/></td>
     </tr>
 
+    <c:if test="${!empty fcltyApplVO.grpNm}">
+        <tr>
+            <th scope="row" class="first">단체명</th>
+            <td colspan="3">
+                <c:out value="${fcltyApplVO.grpNm}"/>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row" class="first">신청인원</th>
+            <td colspan="3">
+                <fmt:formatNumber value="${tsu:xssNumberFilter(fcltyApplVO.useCnt)}" pattern="#,###"/> 명
+            </td>
+        </tr>
+    </c:if>
+
     <c:if test="${fcltyApplVO.fcltyAmt > 0}">
     <tr>
         <th scope="row" class="first">결제방식<c:if test="${fcltyApplVO.payMthdCd == 'ELCTRN'}">(결제기한)</c:if></th>

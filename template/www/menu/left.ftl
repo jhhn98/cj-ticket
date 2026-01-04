@@ -40,18 +40,8 @@
 <aside class="asideLinks">
     <ul>
         <li>
-            <button type="button" class="contentShare"><svg class="active-icon"><use href="/site/www/images/sub/sprite-sub-icon.svg#icon-share"></use></svg><svg class="inactive-icon"><use href="/site/www/images/sub/sprite-sub-icon.svg#icon-dismiss"></use></svg><span>컨텐츠 공유 열기</span></button>
-            <div class="shareList">
-                <span>공유하기</span>
-                <ul>
-                    <li><button type="button" class="facebook"><span>FaceBook</span></button></li>
-                    <li><button type="button" class="instagram"><span>Instagram</span></button></li>
-                    <li><button type="button" class="meta"><span>Meta</span></button></li>
-                    <li><button type="button" class="naver-blog"><span>NaverBlog</span></button></li>
-                    <li><button type="button" class="link"><span>link</span></button></li>
-                </ul>
-            </div>
+            <jsp:include page="/repository/sns_share.jsp"/>
         </li>
-        <li><button type="button" class="contentPrint"><svg><use href="/site/www/images/sub/sprite-sub-icon.svg#icon-print"></use></svg><span>컨텐츠 출력</span></button></li>
+        <li><button type="button" class="contentPrint" onclick="window.print();"><svg><use href="/site/www/images/sub/sprite-sub-icon.svg#icon-print"></use></svg><span>컨텐츠 출력</span></button></li>
     </ul>
 </aside>

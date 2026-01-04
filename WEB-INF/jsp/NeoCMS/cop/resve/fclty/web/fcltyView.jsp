@@ -55,17 +55,22 @@
         <div class="imageSlide">
             <div class="slideList">
                 <c:choose>
-                    <c:when test="${fn:length(cmmnAtchImgList) == 0}">
-                        <div class="slideItem">
-                            <img src="/site/www/images/program/no-image-grey.png" alt="<c:out value="${fcltyVO.fcltyNm}"/> 이미지 없음">
-                        </div>
-                    </c:when>
-                    <c:otherwise>
+                    <c:when test="${fn:length(cmmnAtchImgList) gt 0}">
                         <c:forEach var="result" items="${cmmnAtchImgList}">
-                            <div class="slideItem">
+                            <div class="slideItem aaa">
                                 <img src="/<c:out value="${result.storePath}"/>/thumb/p_<c:out value="${result.storeFileNm}"/>" alt="<c:out value="${fcltyVO.fcltyNm}"/> 이미지">
                             </div>
                         </c:forEach>
+                    </c:when>
+                    <c:when test="${fn:length(cmmnAtchImgList) eq 0 and not empty fcltyVO.svcTyCd}">
+                        <div class="slideItem bbb">
+                            <img src="/DATA/fct/no_img/<c:out value="${fcltyVO.svcTyCd}"/>.jpg" alt="<c:out value="${svcTyMap[fcltyVO.svcTyCd]}"/><c:out value="${fn:contains(svcTyMap[fcltyVO.svcTyCd],'장')?'':'장'}"/> 이미지">
+                        </div>
+                    </c:when>
+                    <c:otherwise>
+                        <div class="slideItem ccc">
+                            <img src="/site/www/images/program/no-image-grey.png" alt="<c:out value="${fcltyVO.fcltyNm}"/> 이미지 없음">
+                        </div>
                     </c:otherwise>
                 </c:choose>
             </div>
@@ -105,10 +110,17 @@
                         <tr>
                             <th scope="row" class="first">대상</th>
                             <td>
-                                <c:forEach var="result" items="${fcltyVO.targetCdArr}" varStatus="status">
-                                    <c:out value="${targetMap[result]}"/>
-                                    <c:if test="${!status.last}">, </c:if>
-                                </c:forEach>
+                                <c:choose>
+                                    <c:when test="${fn:length(targetList) == fn:length(fcltyVO.targetCdArr)}">
+                                        제한없음
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:forEach var="result" items="${fcltyVO.targetCdArr}" varStatus="status">
+                                            <c:out value="${targetMap[result]}"/>
+                                            <c:if test="${!status.last}">, </c:if>
+                                        </c:forEach>
+                                    </c:otherwise>
+                                </c:choose>
                             </td>
                         </tr>
                         <tr>

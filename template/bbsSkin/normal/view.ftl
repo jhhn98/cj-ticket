@@ -140,11 +140,11 @@
 						<span class="p-icon p-icon__<c:out value="@@{bbsAtchmnfl.fileExtsn}"/>"><c:out value="@@{bbsAtchmnfl.fileExtsn}"/> 문서</span>
 						<span><c:out value="@@{bbsAtchmnfl.fileNm}"/></span>
 						</a>
-						<c:if test="@@{bbsAtchmnfl.previewUse eq true}">
+						<!--<c:if test="@@{bbsAtchmnfl.previewUse eq true}">
 							<a href="./previewBbsFile.do?atchmnflNo=<c:out value="@@{bbsAtchmnfl.atchmnflNo}"/>" target="_blank" class="p-attach__preview p-button">
 							<i class="p-icon p-icon__search"></i> 미리보기
 							</a>
-						</c:if>
+						</c:if>-->
 					</li>
 			</c:forEach>
 				</ul>
@@ -483,7 +483,7 @@
 											<span><c:out value="@@{bbsAtchmnfl.fileNm}"/></span>
 											<i class="p-icon p-icon__arrow-circle-down"></i>
 										</a>
-										<a href="./previewBbsFile.do?atchmnflNo=<c:out value="@@{bbsAtchmnfl.atchmnflNo}"/>" target="_blank" class="p-attach__preview p-button"><i class="p-icon p-icon__search"></i> 미리보기</a>
+										<!--<a href="./previewBbsFile.do?atchmnflNo=<c:out value="@@{bbsAtchmnfl.atchmnflNo}"/>" target="_blank" class="p-attach__preview p-button"><i class="p-icon p-icon__search"></i> 미리보기</a>-->
 						</li>
 		</c:forEach>
 		</ul>

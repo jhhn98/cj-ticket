@@ -49,9 +49,16 @@
             <tr>
                 <th scope="row">모집상태</th>
                 <td><c:out value="${operSttusMap[exprnVO.operSttus]}"/></td>
-                <th scope="row">신청/모집정원</th>
+                <th scope="row">신청/모집</th>
                 <td colspan="3">
-                    <c:out value="${exprnVO.totResveCnt}/${exprnVO.totRcritCnt}"/>
+                    <c:choose>
+                        <c:when test="${exprnVO.slctMthdCd == 'CONFM'}">
+                            <c:out value="${exprnVO.totResveCmplCnt}/${exprnVO.totRcritCnt}"/>
+                        </c:when>
+                        <c:otherwise>
+                            <c:out value="${exprnVO.totResveCnt}/${exprnVO.totRcritCnt}"/>
+                        </c:otherwise>
+                    </c:choose>
                 </td>
             </tr>
             <tr>

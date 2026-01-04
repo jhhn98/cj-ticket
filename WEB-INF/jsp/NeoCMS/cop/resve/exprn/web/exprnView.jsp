@@ -52,20 +52,18 @@
     <div class="simpleImage">
         <div class="imageSlide">
             <div class="slideList">
-                <c:choose>
-                    <c:when test="${fn:length(cmmnAtchImgList) == 0}">
-                        <div class="slideItem no-image">
-                            <img src="/site/www/images/program/no-image.png" alt="<c:out value="${exprnVO.exprnNm}"/> 이미지 없음">
-                        </div>
-                    </c:when>
-                    <c:otherwise>
-                        <c:forEach var="result" items="${cmmnAtchImgList}">
-                            <div class="slideItem">
+                <div class="slideItem">
+                    <c:choose>
+                        <c:when test="${fn:length(cmmnAtchImgList) == 0}">
+                            <img src="/DATA/exprn/img/no_img_<c:out value="${exprnVO.svcTyCd}"/>.jpg" alt="<c:out value="${exprnVO.exprnNm}"/> 이미지 없음">
+                       </c:when>
+                        <c:otherwise>
+                            <c:forEach var="result" items="${cmmnAtchImgList}">
                                 <img src="/<c:out value="${result.storePath}"/>/thumb/p_<c:out value="${result.storeFileNm}"/>" alt="<c:out value="${exprnVO.exprnNm}"/> 이미지">
-                            </div>
-                        </c:forEach>
-                    </c:otherwise>
-                </c:choose>
+                             </c:forEach>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
             </div>
             <div class="controller">
                 <div class="count">
@@ -91,7 +89,7 @@
                 <h4 class="noLine">체험정보</h4>
                 <div class="itemWrap">
                     <table class="table default">
-                        <caption>체험정보 - 운영기관, 대상, 장소, 주소, 접수기간, 체험기간, 모집인원, 체험요금, 선별방법, 예약방법, 문의전화, 첨부파일</caption>
+                        <caption>체험정보 - 운영기관, 대상, 장소, 주소, 접수기간, 체험기간, 모집수, 체험요금, 선별방법, 예약방법, 문의전화, 첨부파일</caption>
                         <tbody>
                         <tr>
                             <th scope="row" class="first">운영기관</th>
@@ -148,9 +146,9 @@
                             </td>
                         </tr>
                         <tr>
-                            <th scope="row" class="first">모집인원</th>
+                            <th scope="row" class="first">모집수</th>
                             <td>
-                                <c:out value="${exprnVO.rcritCnt}"/> 명</td>
+                                <c:out value="${exprnVO.rcritCnt}"/> <c:out value="${exprnVO.rcritUnit}"/></td>
                         </tr>
                         <tr>
                             <th scope="row" class="first">체험요금</th>

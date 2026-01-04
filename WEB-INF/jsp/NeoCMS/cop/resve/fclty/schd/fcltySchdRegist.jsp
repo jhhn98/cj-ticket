@@ -127,7 +127,7 @@
                     <td>
                         <div class="p-form-group w15p">
                             <form:select path="unitHour" class="p-input p-input--auto fcltyTmPdInfo">
-                                <c:forEach var="i" begin="1" end="12">
+                                <c:forEach var="i" begin="0" end="12">
                                     <form:option value="${i}"/>
                                 </c:forEach>
                             </form:select>
@@ -310,13 +310,35 @@
                                 <tr>
                                     <td><c:out value="${status.count}"/>회차</td>
                                     <td>
-                                        <input type="hidden" name="<c:out value="${fcltyBgnHh}"/>" value="<c:out value="${result.fcltyBgnHh}"/>" />
-                                        <input type="hidden" name="<c:out value="${fcltyBgnMm}"/>" value="<c:out value="${result.fcltyBgnMm}"/>" />
-                                        <input type="hidden" name="<c:out value="${fcltyEndHh}"/>" value="<c:out value="${result.fcltyEndHh}"/>" />
-                                        <input type="hidden" name="<c:out value="${fcltyEndMm}"/>" value="<c:out value="${result.fcltyEndMm}"/>" />
-                                        <c:set var="fcltyBgnHm" value="${tsu:toDateFormat(result.fcltyBgnHm, 'HHmm', 'HH:mm')}"/>
-                                        <c:set var="fcltyEndHm" value="${tsu:toDateFormat(result.fcltyEndHm, 'HHmm', 'HH:mm')}"/>
-                                        <c:out value="${fcltyBgnHm}"/> ~ <c:out value="${fcltyEndHm}"/>
+                                        <div class="p-form-group">
+                                            <select name="<c:out value="${fcltyBgnHh}"/>" id="<c:out value="${fcltyBgnHh}"/>" class="p-input p-input--auto fcltyTm fcltyBgnHh" disabled>
+                                                <c:forEach var="i" begin="0" end="23">
+                                                    <c:set var="hh" value="${tsu:zerofill(i, 2, '0')}"/>
+                                                    <option value="<c:out value="${hh}"/>" label="<c:out value="${hh}"/>"<c:if test="${result.fcltyBgnHh == hh}"> selected</c:if> />
+                                                </c:forEach>
+                                            </select>
+                                            <span class="p-form__split">:</span>
+                                            <select name="<c:out value="${fcltyBgnMm}"/>" id="<c:out value="${fcltyBgnMm}"/>" class="p-input p-input--auto fcltyTm fcltyBgnMm" disabled>
+                                                <c:forEach var="i" begin="0" end="59" step="5">
+                                                    <c:set var="mm" value="${tsu:zerofill(i, 2, '0')}"/>
+                                                    <option value="<c:out value="${mm}"/>" label="<c:out value="${mm}"/>"<c:if test="${result.fcltyBgnMm == mm}"> selected</c:if>/>
+                                                </c:forEach>
+                                            </select>
+                                            <span class="p-form__split">~</span>
+                                            <select name="<c:out value="${fcltyEndHh}"/>" id="<c:out value="${fcltyEndHh}"/>" class="p-input p-input--auto fcltyTm fcltyEndHh" disabled>
+                                                <c:forEach var="i" begin="0" end="23">
+                                                    <c:set var="hh" value="${tsu:zerofill(i, 2, '0')}"/>
+                                                    <option value="<c:out value="${hh}"/>" label="<c:out value="${hh}"/>"<c:if test="${result.fcltyEndHh == hh}"> selected</c:if>/>
+                                                </c:forEach>
+                                            </select>
+                                            <span class="p-form__split">:</span>
+                                            <select name="<c:out value="${fcltyEndMm}"/>" id="<c:out value="${fcltyEndMm}"/>" class="p-input p-input--auto fcltyTm fcltyEndMm" disabled>
+                                                <c:forEach var="i" begin="0" end="59" step="5">
+                                                    <c:set var="mm" value="${tsu:zerofill(i, 2, '0')}"/>
+                                                    <option value="<c:out value="${mm}"/>" label="<c:out value="${mm}"/>"<c:if test="${result.fcltyEndMm == mm}"> selected</c:if>/>
+                                                </c:forEach>
+                                            </select>
+                                        </div>
                                     </td>
                                     <td>
                                         <span class="p-form-checkbox p-form-checkbox--single">
@@ -811,7 +833,7 @@
             html += '<span class="p-form__split">~</span>'
             html += createHhSelect(row.fcltyEndHh, name + '.fcltyEndHh', name + '.fcltyEndHh');
             html += '<span class="p-form__split">:</span>'
-            html += createMmSelect(row.fcltyBgnMm, name + '.fcltyBgnMm', name + '.fcltyBgnMm');
+            html += createMmSelect(row.fcltyEndMm, name + '.fcltyEndMm', name + '.fcltyEndMm');
             html += '</div>';
             html += '</td>';
 
@@ -1132,7 +1154,7 @@
         }
 
         $('#fcltySchdPdVO').find('.fcltyTmPdInfo').prop('disabled', false);
-        !fn_fcltySchdPdTimeCheck(form);
+        !fn_fcltySchdTimeDuplCheck(form);
 
         return false;
     }
@@ -1240,13 +1262,13 @@
         return h+':'+m;
     }
 
-    <%-- PD 기준시간/기본시간/점심시간에 따른 회차항목 일치 여부 체크 후 form 전송 --%>
-    function fn_fcltySchdPdTimeCheck(form) {
+    <%-- 시간대 중복 여부 체크 후 form 전송 --%>
+    function fn_fcltySchdTimeDuplCheck(form) {
 
         $.ajax({
             cache    : false,
             type     : "POST",
-            url      : "./fcltySchdPdTimeCheckAjax.do",
+            url      : "./fcltySchdTimeDuplCheck.do",
             dataType : 'json',
             data     : $(form).serialize(),
             error    : function( request, status, error ) {

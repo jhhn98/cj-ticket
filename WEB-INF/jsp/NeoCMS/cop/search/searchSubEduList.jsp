@@ -49,7 +49,15 @@
 							<td class="textAlignCenter"><span class="mobile-th">대상</span><c:out value="${targetNm}"/></td>
 							<td class="textAlignCenter"><span class="mobile-th">이용요금</span><c:choose><c:when test="${!empty item.chrge && item.chrge ne 0}"><fmt:formatNumber value="${item.chrge}" type="number" /></c:when><c:otherwise>무료</c:otherwise></c:choose></td>
 							<td class="textAlignCenter"><span class="mobile-th">신청/정원</span><c:out value="${item.rceptNmpr}"/>/<c:out value="${item.rcritNmpr}"/></td>
-                            <td class="textAlignCenter"><span class="mobile-th">운영상태</span><!--<span class="lectureState state1"></span>--></td>
+                            <td class="textAlignCenter">
+								<span class="mobile-th">운영상태</span>
+							<c:choose>
+								<c:when test="${item.rceptSttus eq 'RCPT_WAIT'}"><span class="lectureState state1"></c:when>
+								<c:when test="${item.rceptSttus eq 'RCPT_END' || item.rceptSttus eq 'RCPT_END'}"><span class="lectureState state3"></c:when>
+								<c:otherwise><span class="lectureState state2"></c:otherwise>
+							</c:choose>
+								<c:out value="${eduSttusMap[item.rceptSttus]}"/></span>
+							</td>
                         </tr>
 						<c:set var="currentPageStartNo" value="${currentPageStartNo-1}" />
 				</c:forEach>

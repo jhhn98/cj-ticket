@@ -27,32 +27,6 @@
         <span class="p-form__required--icon margin_l_5">필수</span> 표시는 필수 항목 입니다.
     </div>
 
-    <table class="p-table">
-        <caption>시설 일정 등록방법 선택</caption>
-        <colgroup>
-            <col class="w15p">
-            <col />
-        </colgroup>
-        <tbody class="p-table--th-left">
-        <tr>
-            <th scope="row">시설시간 등록방법 <span class="p-form__required--icon margin_l_5">필수</span></th>
-            <td>
-                <div class="p-form-group w20p">
-                    <%-- 시설 일정 등록방법 - PD:시설기간(규칙) / DE:일자별 선택(불규칙) --%>
-                    <span class="p-form-radio">
-                        <input type="radio" name="schdMthdRadio" id="schdMthd1" class="p-form-radio__input" value="PD"<c:if test="${fcltySchdVO.schdMthd == 'PD'}"> checked</c:if>>
-                        <label for="schdMthd1" class="p-form-radio__label">시설기간(규칙 접수)</label>
-                    </span>
-<%--                    <span class="p-form-radio">--%>
-<%--                        <input type="radio" name="schdMthdRadio" id="schdMthd2" class="p-form-radio__input" value="DE"<c:if test="${fcltySchdVO.schdMthd == 'DE'}"> checked</c:if>>--%>
-<%--                        <label for="schdMthd2" class="p-form-radio__label">일자별 선택(불규칙 접수)</label>--%>
-<%--                    </span>--%>
-                </div>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-
     <form:form modelAttribute="fcltySchdVO" id="fcltySchdPdVO" name="fcltySchdPdVO" method="post" action="updateFcltySchdPd.do" onsubmit="return fn_updateFcltySchdPdCheck(this)" style="display:none;">
         <fieldset>
             <legend>시설 일정 수정</legend>
@@ -127,7 +101,7 @@
                     <td>
                         <div class="p-form-group w15p">
                             <form:select path="unitHour" class="p-input p-input--auto fcltyTmPdInfo" disabled="true">
-                                <c:forEach var="i" begin="1" end="12">
+                                <c:forEach var="i" begin="0" end="12">
                                     <form:option value="${i}"/>
                                 </c:forEach>
                             </form:select>
@@ -398,7 +372,13 @@
                     <a href="./selectFcltyList.do?<c:out value="${fcltySearchVO.params}"/><c:out value="${fcltySearchVO.paramsMng}"/>" class="p-button cancel">목록 </a>
                 </div>
                 <div class="col-12 right">
-                    <input type="submit" class="p-button edit" value="수정">
+                    <c:choose>
+                        <c:when test="${applCnt gt 0}">
+                            <svg width="20" height="25" fill="#202e70" focusable="false"><use xlink:href="/common/images/program/p-icon.svg#exclamation-circle"></use></svg>
+                            신청자가 있는 경우 일정 수정이 불가합니다.
+                        </c:when>
+                        <c:otherwise><input type="submit" class="p-button edit" value="수정"></c:otherwise>
+                    </c:choose>
                 </div>
             </div>
         </fieldset>
@@ -576,6 +556,10 @@
         $('#fcltySchdPdVO').show();
         $('#fcltySchdPdVO').find('input, select').prop('disabled', false);
         $('#fcltySchdPdVO').find('.fcltyTmPdInfo').prop('disabled', true);
+
+        <c:if test="${fn:length(fcltyDeListByPd) eq 0 }">
+            $('#fcltySchdPdVO').find('input, select').prop('disabled', false);
+        </c:if>
 
         <%-- PD dayAll checkbox --%>
         <c:if test="${fn:length(fcltyTmListByPd) > 0}">
@@ -1206,7 +1190,7 @@
         }
 
         $('#fcltySchdPdVO').find('.fcltyTmPdInfo').prop('disabled', false);
-        !fn_fcltySchdPdTimeCheck(form);
+        !fn_fcltySchdTimeDuplCheck(form);
 
         return false;
     }
@@ -1314,13 +1298,13 @@
         return h+':'+m;
     }
 
-    <%-- PD 기준시간/기본시간/점심시간에 따른 회차항목 일치 여부 체크 후 form 전송 --%>
-    function fn_fcltySchdPdTimeCheck(form) {
+    <%-- 시간대 중복 여부 체크 후 form 전송 --%>
+    function fn_fcltySchdTimeDuplCheck(form) {
 
         $.ajax({
             cache    : false,
             type     : "POST",
-            url      : "./fcltySchdPdTimeCheckAjax.do",
+            url      : "./fcltySchdTimeDuplCheck.do",
             dataType : 'json',
             data     : $(form).serialize(),
             error    : function( request, status, error ) {
@@ -1337,7 +1321,7 @@
             success  : function (result) {
                 var status = result['status'];
                 if(status == 'LIST_TRUE') {
-                    if(confirm("수정하시겠습니까?")) {
+                    if(confirm("등록하시겠습니까?")) {
                         form.submit();
                     }
                 } else if(status == 'LIST_FALSE') {

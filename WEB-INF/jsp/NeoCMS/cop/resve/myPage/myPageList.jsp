@@ -177,7 +177,7 @@
         </c:forEach>
         <c:if test="${fn:length(eduAplctList) == 0}">
             <tr>
-                <td class="first" colspan="8">
+                <td class="first" colspan="9">
                     <div>
                         <img src="/site/www/images/search/img-noImage.png" alt="데이터가 없습니다">
                         <p class="textAlignCenter marginTop20">예약한 프로그램이 없습니다</p>

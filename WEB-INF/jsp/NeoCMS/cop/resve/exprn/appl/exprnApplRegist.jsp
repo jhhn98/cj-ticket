@@ -49,7 +49,7 @@
             <tr>
                 <th scope="row">모집상태</th>
                 <td><c:out value="${operSttusMap[exprnVO.operSttus]}"/></td>
-                <th scope="row">신청/모집정원</th>
+                <th scope="row">신청/모집</th>
                     <c:out value="${exprnVO.totResveCnt}/${exprnVO.totRcritCnt}"/>
                 <td colspan="3">
                 </td>

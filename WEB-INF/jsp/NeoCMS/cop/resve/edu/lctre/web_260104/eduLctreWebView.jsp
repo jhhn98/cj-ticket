@@ -70,23 +70,20 @@
                     <img src="/site/www/images/program/no-image-grey.png" alt="대체텍스트">
                 </div>
                 --%>
-                <div class="slideItem">
-                    <c:choose>
-                        <c:when test="${not empty cmmnAtchImgList}">
-                            <c:forEach var="cmmnAtchmnfl" items="${cmmnAtchImgList}" varStatus="idx">
+                <c:choose>
+                    <c:when test="${not empty cmmnAtchImgList}">
+                        <c:forEach var="cmmnAtchmnfl" items="${cmmnAtchImgList}" varStatus="idx">
+                            <div class="slideItem">
                                 <img src="/<c:out value="${cmmnAtchmnfl.storePath}"/>/thumb/p_<c:out value="${cmmnAtchmnfl.storeFileNm}"/>" alt="<c:out value="${eduLctreVO.lctreNm}"/> 이미지">
-                            </c:forEach>
-                        </c:when>
-                        <c:otherwise>
-                                <c:if test="${empty eduLctreVO.svcTyCd}">
-                                    <img src="/site/www/images/program/no-image.png" alt="<c:out value="${eduLctreVO.lctreNm}"/> 이미지 없음">
-                                </c:if>
-                                <c:if test="${!empty eduLctreVO.svcTyCd}">
-                                    <img src="/DATA/edu/no_img/<c:out value="${eduLctreVO.svcTyCd}"/>.jpg" alt="<c:out value="${eduLctreVO.lctreNm}"/> 이미지 없음">
-                                </c:if>
-                        </c:otherwise>
-                    </c:choose>
-                </div>
+                            </div>
+                        </c:forEach>
+                    </c:when>
+                    <c:otherwise>
+                        <div class="slideItem">
+                            <img src="/site/www/images/program/no-image-grey.png" alt="<c:out value="${eduLctreVO.lctreNm}"/> 이미지 없음">
+                        </div>
+                    </c:otherwise>
+                </c:choose>
 
             </div>
             <div class="controller">

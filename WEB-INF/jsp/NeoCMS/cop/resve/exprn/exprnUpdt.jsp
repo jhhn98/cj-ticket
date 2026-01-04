@@ -71,11 +71,14 @@
                         <div class="p-form-group w20p">
                             <%-- 선발방식 공통코드 - FIRST : 선착순 / CONFM : 승인 / DRWLT : 추첨 --%>
                             <c:forEach var="result" items="${slctMthdList}" varStatus="status">
-                            <span class="p-form-radio">
-                                <input type="radio" name="slctMthdCd" id="slctMthdCd<c:out value="${status.count}"/>" class="p-form-radio__input" value="<c:out value="${result.code}"/>"<c:if test="${exprnVO.slctMthdCd == result.code}"> checked</c:if>>
-                                <label for="slctMthdCd<c:out value="${status.count}"/>" class="p-form-radio__label"><c:out value="${result.codeNm}"/></label>
-                            </span>
+                                <c:if test="${result.code != 'DRWLT'}">
+                                    <span class="p-form-radio">
+                                        <input type="radio" name="slctMthdCd" id="slctMthdCd<c:out value="${status.count}"/>" class="p-form-radio__input" value="<c:out value="${result.code}"/>"<c:if test="${exprnVO.slctMthdCd == result.code}"> checked</c:if>>
+                                        <label for="slctMthdCd<c:out value="${status.count}"/>" class="p-form-radio__label"><c:out value="${result.codeNm}"/></label>
+                                    </span>
+                                </c:if>
                             </c:forEach>
+<%--
                             <span class="p-form__split">: 추첨일자</span>
                             <input type="text" name="drwtDe" id="drwtDe" value="<c:out value="${exprnVO.drwtDe}"/>" style="width:100px;" class="p-input p-input--auto" placeholder="yyyy-MM-dd"<c:if test="${exprnVO.slctMthdCd != 'DRWLT'}"> disabled</c:if>/>
                             <span class="p-input__addon">
@@ -93,6 +96,7 @@
                                     <option value="${hm}" label="${i}시"<c:if test="${exprnVO.drwtHm == hm}"> selected</c:if>/>
                                 </c:forEach>
                             </select>
+--%>
                         </div>
                     </td>
                 </tr>
@@ -310,7 +314,7 @@
                     <td>
                         <div class="p-form-group w30p">
                             <span class="p-form__split">이용일 </span>
-                            <form:input path="reqstClosCnt" style="width:40px;" class="p-input p-input--auto text_center"/>
+                            <form:input path="reqstClosCnt" style="width:40px;" class="p-input p-input--auto text_center onlyNumber"/>
                             <span class="p-form__split">일 전까지 신청가능</span>
                             <span class="p-table__content padding_l_10">
                                 <svg width="20" height="25" fill="#202e70" focusable="false"><use xlink:href="/common/images/program/p-icon.svg#info-circle"></use></svg>
@@ -324,7 +328,7 @@
                     <td>
                         <div class="p-form-group w30p">
                             <span class="p-form__split">이용일 </span>
-                            <form:input path="canclClosCnt" style="width:40px;" class="p-input p-input--auto text_center"/>
+                            <form:input path="canclClosCnt" style="width:40px;" class="p-input p-input--auto text_center onlyNumber"/>
                             <span class="p-form__split">일 전까지 취소가능</span>
                             <span class="p-table__content padding_l_10">
                                 <svg width="20" height="25" fill="#202e70" focusable="false"><use xlink:href="/common/images/program/p-icon.svg#info-circle"></use></svg>
@@ -341,7 +345,7 @@
                             <label for="fdrmCloseDay2" class="p-form-checkbox__label">월</label>
                         </span>
                         <span class="p-form-checkbox">
-                            <input type="checkbox" name="fdrmCloseDayArr" id="fdrmCloseDay3" class="p-form-checkbox__input" value="3"><c:if test="${fn:indexOf(exprnVO.fdrmCloseDay, '3') > -1}"> checked</c:if>
+                            <input type="checkbox" name="fdrmCloseDayArr" id="fdrmCloseDay3" class="p-form-checkbox__input" value="3"<c:if test="${fn:indexOf(exprnVO.fdrmCloseDay, '3') > -1}"> checked</c:if>>
                             <label for="fdrmCloseDay3" class="p-form-checkbox__label">화</label>
                         </span>
                         <span class="p-form-checkbox">
@@ -367,11 +371,16 @@
                     </td>
                 </tr>
                 <tr>
-                    <th scope="row"><form:label path="rcritCnt">모집인원</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>
+                    <th scope="row"><form:label path="rcritCnt">모집수</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>
                     <td>
                         <div class="p-form-group w30p">
-                            <form:input path="rcritCnt" style="width:50px;" class="p-input p-input--auto text_center"/>
-                            <span class="p-form__split">명</span>
+                            <form:input path="rcritCnt" style="width:50px;" class="p-input p-input--auto text_center onlyNumber"/>
+                            <span class="p-form__split"></span>
+                            <form:select path="rcritUnit" class="p-input p-input--auto">
+                                <form:option value="명"/>
+                                <form:option value="대"/>
+                                <form:option value="건"/>
+                            </form:select>
                             <span class="p-form__split"></span>
                             <span class="p-form-checkbox">
                                 <input type="checkbox" name="detailNmprUseYn" id="detailNmprUseYn" class="p-form-checkbox__input" value="Y"<c:if test="${exprnVO.detailNmprUseYn == 'Y'}"> checked</c:if>>
@@ -381,16 +390,16 @@
                     </td>
                 </tr>
                 <tr>
-                    <th scope="row"><form:label path="nmprMinCnt">인원 제약 조건</form:label></th>
+                    <th scope="row"><form:label path="nmprMinCnt">모집수 제약 조건</form:label></th>
                     <td>
                         <div class="p-form-group col-2">
                             <span class="p-form__split">최소 : </span>
-                            <form:input path="nmprMinCnt" style="width:50px;" class="p-input p-input--auto text_center"/>
-                            <span class="p-form__split">명, </span>
+                            <form:input path="nmprMinCnt" style="width:50px;" class="p-input p-input--auto text_center onlyNumber"/>
+                            <span class="p-form__split">, </span>
                             <span class="p-form__split"></span>
                             <span class="p-form__split">최대 : </span>
-                            <form:input path="nmprMaxCnt" style="width:50px;" class="p-input p-input--auto text_center"/>
-                            <span class="p-form__split">명</span>
+                            <form:input path="nmprMaxCnt" style="width:50px;" class="p-input p-input--auto text_center onlyNumber"/>
+                            <span class="p-form__split"></span>
                             <span class="p-table__content padding_l_10">
                                 <svg width="20" height="25" fill="#202e70" focusable="false"><use xlink:href="/common/images/program/p-icon.svg#info-circle"></use></svg>
                                 <em class="em_black">'0'인 경우 제한없음</em>
@@ -497,19 +506,19 @@
                 <tr>
                     <th scope="row"><form:label path="aditIem1">신청자 추가 입력 항목</form:label></th>
                     <td>
-                        <form:input path="aditIem1" class="p-input p-input--auto"/><br/>
-                        <form:input path="aditIem2" class="p-input p-input--auto"/>
+                        <form:input path="aditIem1" class="p-input"/><br/>
+                        <form:input path="aditIem2" class="p-input"/>
                     </td>
                 </tr>
                 <tr>
                     <th scope="row"><form:label path="resInqUseYn">거주지 조회 사용여부</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>
                     <td>
                         <span class="p-form-radio">
-                            <input type="radio" name="resInqUseYn" id="resInqUseY" class="p-form-radio__input" value="Y">
+                            <input type="radio" name="resInqUseYn" id="resInqUseY" class="p-form-radio__input" value="Y"<c:if test="${exprnVO.resInqUseYn == 'Y'}"> checked</c:if>>
                             <label for="resInqUseY" class="p-form-radio__label">사용</label>
                         </span>
                         <span class="p-form-radio">
-                            <input type="radio" name="resInqUseYn" id="resInqUseN" class="p-form-radio__input" value="N" checked>
+                            <input type="radio" name="resInqUseYn" id="resInqUseN" class="p-form-radio__input" value="N"<c:if test="${exprnVO.resInqUseYn == 'N'}"> checked</c:if>>
                             <label for="resInqUseN" class="p-form-radio__label">미사용</label>
                         </span>
                     </td>
@@ -519,30 +528,34 @@
                     <td>
                         <%--TODOSDB: 감면 개발 진행 중으로 사용 못하도록 비활성화 처리--%>
                         <span class="p-form-radio">
-                            <input type="radio" name="dscntUseYn" id="dscntUseY" class="p-form-radio__input" value="Y"<c:if test="${exprnVO.dscntUseYn == 'Y'}"> checked</c:if> readonly>
+                            <input type="radio" name="dscntUseYn" id="dscntUseY" class="p-form-radio__input" value="Y"<c:if test="${exprnVO.dscntUseYn == 'Y'}"> checked</c:if> disabled>
                             <label for="dscntUseY" class="p-form-radio__label">사용</label>
                         </span>
                         <span class="p-form-radio">
-                            <input type="radio" name="dscntUseYn" id="dscntUseN" class="p-form-radio__input" value="N"<c:if test="${exprnVO.dscntUseYn == 'N'}"> checked</c:if> readonly>
+                            <input type="radio" name="dscntUseYn" id="dscntUseN" class="p-form-radio__input" value="N"<c:if test="${exprnVO.dscntUseYn == 'N'}"> checked</c:if> disabled>
                             <label for="dscntUseN" class="p-form-radio__label">미사용</label>
                         </span>
+                        <input type="hidden" name="dscntUseYn" value="N" />
                     </td>
                 </tr>
                 <tr>
-                    <th scope="row"><form:label path="telNoFmt">문의전화</form:label></th>
+                    <th scope="row"><form:label path="telNoFmt">문의전화</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>
                     <td>
-                        <form:input path="telNoFmt" class="p-input p-input--auto"/>
+                        <form:input path="telNoFmt" class="p-input p-input--auto onlyTelNo" placeholder="043-123-1234"/><br/>
+                        <svg width="20" height="25" fill="#202e70" focusable="false"><use xlink:href="/common/images/program/p-icon.svg#info-circle"></use></svg>
+                        <em class="em_black">알림 문자는 시스템 정책에 의해 발신자가 ‘문의전화(대표번호)’로 표기됩니다.</em>
+                        <em class="em_black">휴대폰번호 입력시 추후 문자 발송<em class="em_b_red">(발신자 번호로 사용)</em>이 제한될 수 있습니다.</em>
                     </td>
                 </tr>
                 <tr>
                     <th scope="row"><form:label path="useYn">운영여부</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>
                     <td>
                         <span class="p-form-radio">
-                            <input type="radio" name="useYn" id="useY" class="p-form-radio__input" value="Y" checked>
+                            <input type="radio" name="useYn" id="useY" class="p-form-radio__input" value="Y"<c:if test="${exprnVO.useYn == 'Y'}"> checked</c:if>>
                             <label for="useY" class="p-form-radio__label">운영</label>
                         </span>
                             <span class="p-form-radio">
-                            <input type="radio" name="useYn" id="useN" class="p-form-radio__input" value="N">
+                            <input type="radio" name="useYn" id="useN" class="p-form-radio__input" value="N"<c:if test="${exprnVO.useYn == 'N'}"> checked</c:if>>
                             <label for="useN" class="p-form-radio__label">미운영</label>
                         </span>
                     </td>
@@ -565,6 +578,17 @@
 <script>
 
     $(document).ready(function(){
+
+        $('.onlyNumber').on('input',function() {
+            this.value = this.value
+                .replace(/[^0-9]/g, '');
+        });
+
+        $('.onlyTelNo').on('input',function() {
+            this.value = this.value
+                .replace(/[^0-9-]/g, '')
+                .replace(/-{2,}/g, '-');
+        });
 
         $('#targetCdAll').on("change",function() {
             if ($(this).is(":checked")) {
@@ -640,8 +664,7 @@
 
         var regexDate = RegExp(/^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/);
         var regexTel1 = RegExp(/^02-\d{3,4}-\d{4}$/);
-        var regexTel2 = RegExp(/^0\d{2}-\d{3,4}-\d{4}$/);
-        var regexPhone = RegExp(/^01[016789]-\d{3,4}-\d{4}$/);
+        var regexTel2 = RegExp(/^0[3-6]\d-\d{3}-\d{4}$/);
 
         if (!form.insttNo.value) {
             alert("운영기관을 선택해주세요.");
@@ -860,20 +883,20 @@
         var nmprMaxCnt = parseInt(form.nmprMaxCnt.value);
 
         if (!form.rcritCnt.value || rcritCnt <= 0) {
-            alert("모집인원을 입력해주세요.");
+            alert("모집수를 입력해주세요.");
             form.rcritCnt.focus();
             return false;
         }
 
         if (nmprMinCnt < 0 || nmprMaxCnt < 0) {
-            alert("최소인원/최대인원을 확인해주세요.");
+            alert("최소/최대값을 확인해주세요.");
             form.nmprMinCnt.focus();
             return false;
         }
 
         if (nmprMinCnt > 0 && nmprMaxCnt > 0) {
             if (nmprMinCnt > nmprMaxCnt) {
-                alert("인원 제약 조건에서 최소인원이 최대인원보다 클 수 없습니다.");
+                alert("모집수 제약 조건에서 최소값이 최대값보다 클 수 없습니다.");
                 form.nmprMinCnt.focus();
                 return false;
             }
@@ -881,7 +904,7 @@
 
         if (nmprMinCnt > 0) {
             if (nmprMinCnt > rcritCnt) {
-                alert("인원 제약 조건에서 최소인원이 모집인원보다 클 수 없습니다.");
+                alert("모집수 제약 조건에서 최소값이 모집수보다 클 수 없습니다.");
                 form.nmprMinCnt.focus();
                 return false;
             }
@@ -889,23 +912,26 @@
 
         if (nmprMaxCnt > 0) {
             if (nmprMaxCnt > rcritCnt) {
-                alert("인원 제약 조건에서 최대인원이 모집인원보다 클 수 없습니다.");
+                alert("모집수 제약 조건에서 최대값이 모집인원보다 클 수 없습니다.");
                 form.nmprMaxCnt.focus();
                 return false;
             }
         }
 
-/*
         if (!form.dscntUseYn.value) {
             alert("감면사용여부를 확인해주세요.");
             $('#dscntUseY').focus();
             return false;
         }
-*/
 
+        if (!form.telNoFmt.value) {
+            alert("문의전화를 입력해주세요.");
+            form.telNoFmt.focus();
+            return false;
+        }
         if (form.telNoFmt.value) {
-            if(!regexTel1.test(form.telNoFmt.value) && !regexTel2.test(form.telNoFmt.value) && !regexPhone.test(form.telNoFmt.value)) {
-                alert("연락처는 043-123-1234 또는 010-1234-5678 형식으로 입력해주세요.");
+            if(!regexTel1.test(form.telNoFmt.value) && !regexTel2.test(form.telNoFmt.value)) {
+                alert("문의전화는 043-123-1234 형식으로 입력해주세요. 휴대폰번호는 추후 문자 발송(발신자 번호로 사용)이 제한될 수 있습니다.");
                 form.telNoFmt.focus();
                 return false;
             }

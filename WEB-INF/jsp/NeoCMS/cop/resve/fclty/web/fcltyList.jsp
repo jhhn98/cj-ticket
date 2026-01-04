@@ -13,8 +13,15 @@
 </head>
 <body>
 
-<div class="programSearch">
-    <form method="post" name="fcltySearchVO" action="./selectFcltyWebList.do">
+<c:set var="detailSearchYn" value="N"/>
+<c:if test="${!empty fcltySearchVO.searchInsttNo}"><c:set var="detailSearchYn" value="Y"/></c:if>
+<c:if test="${!empty fcltySearchVO.searchAreaGu}"><c:set var="detailSearchYn" value="Y"/></c:if>
+<c:if test="${!empty fcltySearchVO.searchAreaEmd}"><c:set var="detailSearchYn" value="Y"/></c:if>
+<c:if test="${!empty fcltySearchVO.searchFcltyAmt}"><c:set var="detailSearchYn" value="Y"/></c:if>
+<c:if test="${fn:length(fcltySearchVO.searchTargetCd) > 0}"><c:set var="detailSearchYn" value="Y"/></c:if>
+
+<div class="programSearch<c:if test="${detailSearchYn == 'Y'}"> showDetail</c:if>">
+    <form method="post" name="fcltySearchVO" id="fcltySearchVO" action="./selectFcltyWebList.do">
         <input type="hidden" name="key" value="<c:out value="${key}"/>" />
         <input type="hidden" name="pageUnit" value="<c:out value="${fcltySearchVO.pageUnit}"/>" />
         <fieldset>
@@ -65,9 +72,12 @@
                         <label for="searchInsttNo0">운영기관</label>
                         <div class="customSelect">
                             <select name="searchInsttNo" id="searchInsttNo0" class="customSelect">
-                                <option value="0">전체</option>
-                                <c:forEach var="result" items="${fctInsttList}">
-                                    <option value="<c:out value="${result.insttNo}"/>"<c:if test="${fcltySearchVO.searchInsttNo == result.insttNo}"> selected</c:if>><c:out value="${result.insttNm}"/></option>
+                                <option value="">전체</option>
+                                <c:forEach var="result" items="${fctWebInsttList}">
+                                    <c:if test="${result.insttNo eq 13}">
+                                        <option value="ptf"<c:if test="${fcltySearchVO.searchInsttNo eq 'ptf'}"> selected</c:if>>체육시설과</option>
+                                    </c:if>
+                                    <option value="<c:out value="${result.insttNo}"/>"<c:if test="${fcltySearchVO.searchInsttNo ne 'ptf' and fcltySearchVO.searchInsttNo eq result.insttNo}"> selected</c:if>><c:out value="${result.insttNm}"/></option>
                                 </c:forEach>
                             </select>
                         </div>
@@ -129,11 +139,11 @@
             </div>
             <div class="formButton">
                 <button type="submit" class="button submit">검색</button>
-                <button type="reset" class="button reset">초기화</button>
+                <button type="button" class="button reset" onclick="window.location.href='./sub.do?key=<c:out value="${key}"/>'">초기화</button>
             </div>
         </fieldset>
     </form>
-    <button type="button" class="detailCloseButton"><span>상세검색 <em class="openText">열기</em><em class="closeText">닫기</em></span></button>
+    <button type="button" class="detailCloseButton<c:if test="${detailSearchYn eq 'Y'}"> open</c:if>"><span>상세검색 <em class="openText">열기</em><em class="closeText">닫기</em></span></button>
 </div>
 <div class="dataList-program">
     <div class="asideInformation">
@@ -158,13 +168,16 @@
             <c:forEach var="result" items="${fcltyList}" begin="0" end="7">
                 <li>
                     <a href="./selectFcltyWebView.do?fcltyNo=<c:out value="${result.fcltyNo}"/>&<c:out value="${fcltySearchVO.params}"/><c:out value="${fcltySearchVO.paramsWeb}"/>">
-                        <span class="image<c:out value="${not empty result.mainImg ? '' : ' noImage'}"/>">
+                        <span class="image<c:out value="${(empty result.mainImg and empty result.svcTyCd) ? ' noImage' : ''}"/>">
                             <c:choose>
-                                <c:when test="${empty result.mainImg}">
-                                    <img src="/site/www/images/program/no-image.png" alt="<c:out value="${result.fcltyNm}"/> 이미지 없음">
+                                <c:when test="${not empty result.mainImg}">
+                                    <img src="/<c:out value="${result.mainImg.storePath}"/>/thumb/p_<c:out value="${result.mainImg.storeFileNm}"/>" alt="<c:out value="${result.fcltyNm}"/> 이미지">
+                                </c:when>
+                                <c:when test="${empty result.mainImg and not empty result.svcTyCd}">
+                                    <img src="/DATA/fct/no_img/<c:out value="${result.svcTyCd}"/>.jpg" alt="<c:out value="${svcTyMap[result.svcTyCd]}"/><c:out value="${fn:contains(svcTyMap[result.svcTyCd],'장')?'':'장'}"/> 이미지">
                                 </c:when>
                                 <c:otherwise>
-                                    <img src="/<c:out value="${result.mainImg.storePath}"/>/thumb/p_<c:out value="${result.mainImg.storeFileNm}"/>" alt="<c:out value="${result.fcltyNm}"/> 이미지">
+                                    <img src="/site/www/images/program/no-image.png" alt="<c:out value="${result.fcltyNm}"/> 이미지 없음">
                                 </c:otherwise>
                             </c:choose>
                         </span>
@@ -189,10 +202,17 @@
                             <li><span>장소</span><c:out value="${fctPlaceMap[placeNo]}"/></li>
                             <li>
                                 <span>대상</span>
-                                <c:forEach var="targetCd" items="${result.targetCdArr}" varStatus="status">
-                                    <c:out value="${targetMap[targetCd]}"/>
-                                    <c:if test="${!status.last}">|</c:if>
-                                </c:forEach>
+                                <c:choose>
+                                    <c:when test="${fn:length(targetList) == fn:length(result.targetCdArr)}">
+                                        제한없음
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:forEach var="targetCd" items="${result.targetCdArr}" varStatus="status">
+                                            <c:out value="${targetMap[targetCd]}"/>
+                                            <c:if test="${!status.last}">|</c:if>
+                                        </c:forEach>
+                                    </c:otherwise>
+                                </c:choose>
                             </li>
                             <li><span>접수</span><c:out value="${result.rcptBgnDe}"/> ~ <c:out value="${result.rcptEndDe}"/></li>
                             <li>
@@ -282,10 +302,17 @@
                         <span class="mobile-th">접수기간</span>
                         <span class="mobile-td"><c:out value="${result.rcptBgnDe}"/> ~ <c:out value="${result.rcptEndDe}"/></span></td>
                     <td><span class="mobile-th">대상</span>
-                        <c:forEach var="targetCd" items="${result.targetCdArr}" varStatus="status">
-                            <c:out value="${targetMap[targetCd]}"/>
-                            <c:if test="${!status.last}">|</c:if>
-                        </c:forEach>
+                        <c:choose>
+                            <c:when test="${fn:length(targetList) == fn:length(result.targetCdArr)}">
+                                제한없음
+                            </c:when>
+                            <c:otherwise>
+                                <c:forEach var="targetCd" items="${result.targetCdArr}" varStatus="status">
+                                    <c:out value="${targetMap[targetCd]}"/>
+                                    <c:if test="${!status.last}">|</c:if>
+                                </c:forEach>
+                            </c:otherwise>
+                        </c:choose>
                     </td>
                     <td><span class="mobile-th">이용요금</span>
                         <c:choose>

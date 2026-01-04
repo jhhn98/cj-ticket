@@ -60,9 +60,17 @@
             <th scope="row">개인 / 단체</th>
             <td>
                 <c:if test="${empty fcltyApplVO.grpNm}">개인</c:if>
-                <c:if test="${!empty fcltyApplVO.grpNm}"><c:out value="${fcltyApplVO.grpNm}"/></c:if>
+                <c:if test="${!empty fcltyApplVO.grpNm}">[단체] <c:out value="${fcltyApplVO.grpNm}"/></c:if>
             </td>
         </tr>
+        <c:if test="${!empty fcltyApplVO.grpNm}">
+        <tr>
+            <th scope="row">사용인원</th>
+            <td>
+                <c:out value="${fcltyApplVO.useCnt}"/> 명
+            </td>
+        </tr>
+        </c:if>
         <tr>
             <th scope="row">이메일</th>
             <td>
@@ -201,7 +209,7 @@
             <a href="<c:out value="${applListUrl}"/><c:out value="${applListParam}"/>" class="p-button cancel">목록 </a>
         </div>
         <div class="col-12 right">
-            <a href="./updateFcltyApplView.do?fcltyApplNo=<c:out value="${fcltyApplVO.fcltyApplNo}"/>&amp;<c:out value="${fcltyApplSearchVO.params}"/>&amp;<c:out value="${fcltyApplSearchVO.paramsMng}"/>" class="p-button p-button--small edit" onclick="alert('개발 진행 중입니다.'); return false;">수정</a>
+<%--            <a href="./updateFcltyApplView.do?fcltyApplNo=<c:out value="${fcltyApplVO.fcltyApplNo}"/>&amp;<c:out value="${fcltyApplSearchVO.params}"/>&amp;<c:out value="${fcltyApplSearchVO.paramsMng}"/>" class="p-button p-button--small edit" onclick="alert('개발 진행 중입니다.'); return false;">수정</a>--%>
         </div>
     </div>
 

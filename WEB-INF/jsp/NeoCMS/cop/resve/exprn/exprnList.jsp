@@ -183,7 +183,14 @@
                     </c:if>
                 </td>
                 <td>
-                    <c:out value="${result.totResveCnt} / ${result.totRcritCnt}"/>
+                    <c:choose>
+                        <c:when test="${result.slctMthdCd == 'CONFM'}">
+                            <c:out value="${result.totResveCmplCnt} / ${result.totRcritCnt}"/>
+                        </c:when>
+                        <c:otherwise>
+                            <c:out value="${result.totResveCnt} / ${result.totRcritCnt}"/>
+                        </c:otherwise>
+                    </c:choose>
                 </td>
                 <td>
                     <c:if test="${result.exprnAmt > 0}">

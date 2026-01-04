@@ -324,13 +324,13 @@
                 <tr>
                     <th scope="row" class="first">
                         <div class="innerCell">
-                            신청인원
+                            신청수
                         </div>
                     </th>
                     <td>
                         <div class="innerCell">
-                            총 <c:out value="${exprnApplVO.totalCnt}"/>명
-                            <c:if test="${exprnVO.detailNmprUseYn == 'Y'}">
+                            총 <c:out value="${exprnApplVO.totalCnt}"/><c:out value="${exprnVO.rcritUnit}"/>
+                            <c:if test="${exprnVO.detailNmprUseYn == 'Y' && exprnVO.rcritUnit == '명'}">
                                 (성인 <c:out value="${exprnApplVO.adltCnt}"/>명,
                                 청소년 <c:out value="${exprnApplVO.teenCnt}"/>명,
                                 초등학생 <c:out value="${exprnApplVO.elmntCnt}"/>명,

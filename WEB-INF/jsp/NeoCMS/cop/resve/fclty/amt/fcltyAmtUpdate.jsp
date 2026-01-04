@@ -16,7 +16,7 @@
   <link rel="stylesheet" type="text/css" href="/common/css/default.css" />
   <link rel="stylesheet" type="text/css" href="/common/css/program.css" />
   <script src="/common/js/program.js"></script>
-  <title><c:out value="${menuInfo.naviList[0].menuNm}"/> &gt; ${menuInfo.cntntsNm} &gt; 사용료관리 <c:out value="${not empty fcltySchdVO.schdMthd ? '수정' : '등록'}"/> </title>
+  <title><c:out value="${menuInfo.naviList[0].menuNm}"/> &gt; ${menuInfo.cntntsNm} &gt; 사용료관리 수정 </title>
 </head>
 <body>
 
@@ -39,14 +39,14 @@
       <th scope="row">시설 사용료 설정 <span class="p-form__required--icon margin_l_5">필수</span></th>
       <td>
         <div class="p-form-group w20p">
-          <%-- 시설 사용료 등록방법 - PD:시설기간(규칙) / DE:일자별 선택(불규칙) --%>
+          <%-- 시설 사용료 등록방법 - S: 동일요금 / D: 차등요금 --%>
             <span class="p-form-radio">
-                <input type="radio" name="schdMthdRadio" id="schdMthd1" class="p-form-radio__input" value="PD"<c:if test="${fcltySchdVO.schdMthd == 'PD'}"> checked</c:if>>
-                <label for="schdMthd1" class="p-form-radio__label">시설 및 시간별 동일요금 적용 (<b><fmt:formatNumber value="${fcltySchd.fcltyAmt}" pattern="#,###"/></b>)원</label>
+                <input type="radio" name="amtMthdRadio" id="amtMthd1" class="p-form-radio__input" value="S"<c:if test="${fcltyVO.amtMthd == 'S'}"> checked</c:if>>
+                <label for="amtMthd1" class="p-form-radio__label">운영 시간별 동일요금 적용 (<b><fmt:formatNumber value="${fcltyVO.fcltyAmt}" pattern="#,###"/></b>)원</label>
             </span>
             <span class="p-form-radio">
-                <input type="radio" name="schdMthdRadio" id="schdMthd2" class="p-form-radio__input" onclick="alert('에러가 발생했습니다.')" value="DE"<c:if test="${fcltySchdVO.schdMthd == 'DE'}"> checked</c:if>>
-                <label for="schdMthd2" class="p-form-radio__label">시설 및 시간별 차등요금 적용</label>
+                <input type="radio" name="amtMthdRadio" id="amtMthd2" class="p-form-radio__input" value="D"<c:if test="${fcltyVO.amtMthd == 'D'}"> checked</c:if>>
+                <label for="amtMthd2" class="p-form-radio__label">운영 시간별 차등요금 적용</label>
             </span>
         </div>
       </td>
@@ -54,6 +54,25 @@
     </tbody>
   </table>
 
+  <form action="" name="sFrm" id="sFrm">
+    <input type="hidden" name="fcltyNo" value="">
+  </form>
+
+
+  <div class="row margin_t_20">
+    <div class="col-12">
+      <a href="./selectFcltyList.do?<c:out value="${fcltySearchVO.params}"/><c:out value="${fcltySearchVO.paramsMng}"/>" class="p-button cancel">목록 </a>
+    </div>
+    <div class="col-12 right">
+      <c:choose>
+        <c:when test="${applCnt gt 0}">
+          <svg width="20" height="25" fill="#202e70" focusable="false"><use xlink:href="/common/images/program/p-icon.svg#exclamation-circle"></use></svg>
+          신청자가 있는 경우 사용료 수정이 불가합니다.
+        </c:when>
+        <c:otherwise><input type="submit" class="p-button edit" value="수정"></c:otherwise>
+      </c:choose>
+    </div>
+  </div>
 </div>
 </body>
 </html>

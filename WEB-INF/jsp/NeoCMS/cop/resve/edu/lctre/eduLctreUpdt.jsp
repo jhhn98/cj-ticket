@@ -966,19 +966,6 @@
             this.value = this.value.replace(/[^0-9]/g, '');
         });
 
-        // 문의전화 : 휴대전화 입력불가
-        $("#telNo").on("blur", function() {
-            var telNo = $(this).val();
-            if (telNo && telNo.length > 0) {
-                var mobilePattern = /^(01[0-9])\d{7,8}$/;
-                if (mobilePattern.test(telNo)) {
-                    alert("문의전화는 0431231234 형식으로 입력해주세요. 휴대폰번호는 추후 문자 발송(발신자 번호로 사용)이 제한될 수 있습니다.");
-                    $(this).val('');
-                    $(this).focus();
-                }
-            }
-        });
-
         // eduAmt 값에 따라 chrgeSe 자동 설정 (무료/유료 구분)
         var eduAmt = $("#eduAmt").val();
         if (eduAmt && eduAmt != '0' && eduAmt != '') {
@@ -1704,6 +1691,20 @@
         // 문의전화 필수 체크
         if (!frm.telNo.value.trim()) {
             alert("문의전화번호를 입력해주세요.");
+            frm.telNo.focus();
+            return false;
+        }
+        // 문의전화 형식 체크
+        var telNo = frm.telNo.value.trim();
+        var mobilePattern = /^(01[0-9])\d{7,8}$/;
+        if (mobilePattern.test(telNo)) {
+            alert("문의전화는 0431231234 형식으로 입력해주세요. 휴대폰번호는 추후 문자 발송(발신자 번호로 사용)이 제한될 수 있습니다.");
+            frm.telNo.focus();
+            return false;
+        }
+        var areaCodePattern = /^(0[2-9]{1,2})\d{7,9}$/;
+        if (!areaCodePattern.test(telNo)) {
+            alert("문의전화는 지역번호를 포함하여 입력해주세요. (예: 0431231234)");
             frm.telNo.focus();
             return false;
         }

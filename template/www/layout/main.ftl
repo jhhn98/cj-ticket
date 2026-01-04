@@ -15,7 +15,7 @@ LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
     <title>청주시 통합예약</title>
     <link rel="preload" href="/common/font/EDB-R.woff2?260105" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="/common/font/EDB-R.woff?260105" as="font" type="font/woff" crossorigin>
-    <link rel="stylesheet" href="/site/www/css/font.css260105">
+    <link rel="stylesheet" href="/site/www/css/font.css?260105">
     <link rel="stylesheet" href="/common/css/style-reset.css">
     <link rel="stylesheet" href="/site/www/css/common.css?260105">
     <link rel="stylesheet" href="/site/www/css/main.css?260105">
@@ -96,18 +96,11 @@ LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
                 <h3>이벤트 팝업</h3>
                 <div class="event-slide">
                     <div class="slide-list">
+                        <c:forEach var="result" items="@@{popupZoneItemList02}">
                         <div class="slide-item">
-                            <a href=""><img src="/site/www/images/main/event1.jpg" alt=""></a>
+                            <a href="<c:out value="@@{result.linkUrl}"/>"><img src="/DATA/popup/<c:out value="@@{result.imageFileNm}"/>" alt="<c:out value="@@{result.imageReplcText}"/>"></a>
                         </div>
-                        <div class="slide-item">
-                            <a href=""><img src="/site/www/images/main/event2.jpg" alt=""></a>
-                        </div>
-                        <div class="slide-item">
-                            <a href=""><img src="/site/www/images/main/event1.jpg" alt=""></a>
-                        </div>
-                        <div class="slide-item">
-                            <a href=""><img src="/site/www/images/main/event2.jpg" alt=""></a>
-                        </div>
+                        </c:forEach>
                     </div>
                     <div class="controller">
                         <button type="button" class="prev"><svg><use href="/site/www/images/main/sprite-main.svg#icon-arr-simple"></use></svg><em>이전 슬라이드</em></button>
@@ -194,7 +187,7 @@ LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
                                     <em class="count"><i>...</i><svg><use href="/site/www/images/main/sprite-main.svg#icon-comment-arr"></use></svg></em>
                                 </span>
                             </label>
-                            <a href="./index.do" class="label category4"><span>공연&middot;영화</span></a>
+                            <a href="./selectPblprfrApiList.do?key=27" class="label category4"><span>공연&middot;영화</span></a>
                             <a href="./sub.do?key=60" class="label category5"><span>행정서비스</span></a>
                         </div>
                     </li>

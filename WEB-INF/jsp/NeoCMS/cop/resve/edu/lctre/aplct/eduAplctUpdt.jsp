@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="tsu" uri="http://www.hanshinit.co.kr/jstl/tagStringUtil"%>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -47,9 +48,7 @@
 				<th scope="row">예약일시</th>
 				<td colspan="4">
 					<c:if test="${not empty eduAplctVO.applDtMs && fn:length(eduAplctVO.applDtMs) >= 8}">
-						<c:set var="dt" value="${eduAplctVO.applDtMs}" />
-						${fn:substring(dt, 0, 4)}-${fn:substring(dt, 4, 6)}-${fn:substring(dt, 6, 8)}
-						${fn:substring(dt, 8, 10)}:${fn:substring(dt, 10, 12)}:${fn:substring(dt, 12, 14)}.${fn:substring(dt, 14, 18)}
+						<c:out value="${tsu:toDateFormat(eduAplctVO.applDtMs, 'yyyyMMddHHmmssSSS', 'yyyy-MM-dd HH:mm:ss')}"/>
 					</c:if>
 				</td>
 			</tr>

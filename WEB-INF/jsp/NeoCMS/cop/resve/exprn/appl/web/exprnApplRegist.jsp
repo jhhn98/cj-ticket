@@ -228,11 +228,11 @@
                             <select id="totalCnt" name="totalCnt">
                                 <option value="0">선택</option>
                                 <c:forEach var="i" begin="${nmprMinCnt}" end="${nmprMaxCnt}" varStatus="status">
-                                    <option value="<c:out value="${i}"/>"<c:if test="${i == exprnApplVO.totalCnt}"> selected</c:if>><c:out value="${i}"/>명</option>
+                                    <option value="<c:out value="${i}"/>"<c:if test="${i == exprnApplVO.totalCnt}"> selected</c:if>><c:out value="${i}"/><c:out value="${exprnVO.rcritUnit}"/></option>
                                 </c:forEach>
                             </select>
                         </div>
-                        <c:if test="${exprnVO.detailNmprUseYn == 'Y'}">
+                        <c:if test="${exprnVO.detailNmprUseYn == 'Y' && exprnVO.rcritUnit == '명'}">
                               ( 성인
                             <div class="customSelect inlineBlock">
                                 <select id="adltCnt" name="adltCnt">
@@ -283,11 +283,11 @@
                     <c:if test="${exprnVO.nmprMinCnt > 0 || exprnVO.nmprMaxCnt > 0}">
                         <p class="iconText caution">
                             <c:if test="${exprnVO.nmprMinCnt > 0}">
-                                최소 신청인원 : <c:out value="${exprnVO.nmprMinCnt}"/> 명
+                                최소 신청 : <c:out value="${exprnVO.nmprMinCnt}"/> <c:out value="${exprnVO.rcritUnit}"/>
                             </c:if>
                             <c:if test="${exprnVO.nmprMinCnt > 0 && exprnVO.nmprMaxCnt > 0}"> / </c:if>
                             <c:if test="${exprnVO.nmprMaxCnt > 0}">
-                                최대 신청인원 : <c:out value="${exprnVO.nmprMaxCnt}"/> 명
+                                최대 신청 : <c:out value="${exprnVO.nmprMaxCnt}"/> <c:out value="${exprnVO.rcritUnit}"/>
                             </c:if>
                         </p>
                     </c:if>
@@ -735,7 +735,7 @@
             }
         }
 
-        <c:if test="${exprnVO.detailNmprUseYn == 'Y'}">
+        <c:if test="${exprnVO.detailNmprUseYn == 'Y' && exprnVO.rcritUnit == '명'}">
         // 총 인원
         let totalCnt = parseInt($("#totalCnt").val() || 0);
 

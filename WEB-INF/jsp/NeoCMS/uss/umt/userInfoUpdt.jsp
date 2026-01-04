@@ -137,7 +137,7 @@
 				<tr>
 		            <th scope="row"><form:label path="moblphon">휴대전화</form:label></th>
 					<td>
-						<form:input path="moblphon" size="40"/> <form:errors path="moblphon"/>
+						<form:input path="moblphon" size="40" placeholder="'-'없이 번호만 입력해주세요."/> <form:errors path="moblphon"/>
 					</td>
 		        </tr>
                 </tbody>
@@ -226,6 +226,15 @@
                     return false;
                 }
             }else{
+                var regexMobile = RegExp(/^01[0-9]{8,9}$/);
+                if (frm.moblphon.value) {
+                    if(!regexMobile.test(frm.moblphon.value)) {
+                        alert("휴대전화는 010XXXXXXXX 형식으로 '-'없이 번호만 11자리 입력바랍니다.");
+                        frm.moblphon.focus();
+                        return false;
+                    }
+                }
+
                 validateUserInfoUpdate(frm);
             }
         }

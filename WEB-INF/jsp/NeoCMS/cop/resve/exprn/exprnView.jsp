@@ -218,14 +218,17 @@
             </td>
         </tr>
         <tr>
-            <th scope="row">모집인원</th>
+            <th scope="row">모집수</th>
             <td>
-                <c:out value="${exprnVO.rcritCnt}"/> 명 / 세부인원(성인, 청소년, 초등학생, 아동, 영유아)
-                <c:if test="${exprnVO.detailNmprUseYn == 'Y'}">
-                    사용함
-                </c:if>
-                <c:if test="${exprnVO.detailNmprUseYn == 'N'}">
-                    사용안함
+                <c:out value="${exprnVO.rcritCnt}"/>  <c:out value="${exprnVO.rcritUnit}"/>
+                <c:if test="${exprnVO.rcritUnit == '명'}">
+                    / 세부인원(성인, 청소년, 초등학생, 아동, 영유아)
+                    <c:if test="${exprnVO.detailNmprUseYn == 'Y'}">
+                        사용함
+                    </c:if>
+                    <c:if test="${exprnVO.detailNmprUseYn == 'N'}">
+                        사용안함
+                    </c:if>
                 </c:if>
             </td>
         </tr>

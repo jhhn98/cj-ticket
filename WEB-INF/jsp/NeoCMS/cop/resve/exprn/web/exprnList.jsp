@@ -169,11 +169,18 @@
             <!-- //검색결과, 데이터 있을때 -->
             <c:forEach var="result" items="${exprnList}" begin="0" end="7">
                 <li>
-                    <a href="./selectExprnWebView.do?exprnNo=<c:out value="${result.exprnNo}"/>&<c:out value="${exprnSearchVO.params}"/><c:out value="${exprnSearchVO.paramsWeb}"/>">
+                    <c:choose>
+                        <c:when test="${result.aditIem1 == 'LINK_URL'}">
+                            <a href="<c:out value="${result.aditIem2}"/>" target="_blank">
+                        </c:when>
+                        <c:otherwise>
+                            <a href="./selectExprnWebView.do?exprnNo=<c:out value="${result.exprnNo}"/>&<c:out value="${exprnSearchVO.params}"/><c:out value="${exprnSearchVO.paramsWeb}"/>">
+                        </c:otherwise>
+                    </c:choose>
                         <span class="image">
                             <c:choose>
                                 <c:when test="${empty result.mainImg}">
-                                    <img src="/site/www/images/program/no-image.png" alt="<c:out value="${result.exprnNm}"/> 이미지 없음">
+                                    <img src="/DATA/exprn/img/no_img_<c:out value="${result.svcTyCd}"/>.jpg" alt="<c:out value="${result.exprnNm}"/> 이미지 없음">
                                 </c:when>
                                 <c:otherwise>
                                     <img src="/<c:out value="${result.mainImg.storePath}"/>/thumb/p_<c:out value="${result.mainImg.storeFileNm}"/>" alt="<c:out value="${result.exprnNm}"/> 이미지">
@@ -293,7 +300,15 @@
                 <tr>
                     <td class="first">
                         <span class="mobile-th">No</span>
-                        <a href="./selectExprnWebView.do?exprnNo=<c:out value="${result.exprnNo}"/>&<c:out value="${exprnSearchVO.params}"/><c:out value="${exprnSearchVO.paramsWeb}"/>" class="trFullLink" title="<c:out value="${result.exprnNm}"/> 상세보기"><span>"<c:out value="${result.exprnNm}"/>" 상세보기</span></a>
+                        <c:choose>
+                            <c:when test="${result.aditIem1 == 'LINK_URL'}">
+                                <a href="<c:out value="${result.aditIem2}"/>" class="trFullLink" title="<c:out value="${result.exprnNm}"/> 링크 이동" target="_blank"><span>"<c:out value="${result.exprnNm}"/>" 링크 이동</span></a>
+                                <c:set var="exprnLink" value="${result.detailCn}" />
+                            </c:when>
+                            <c:otherwise>
+                                <a href="./selectExprnWebView.do?exprnNo=<c:out value="${result.exprnNo}"/>&<c:out value="${exprnSearchVO.params}"/><c:out value="${exprnSearchVO.paramsWeb}"/>" class="trFullLink" title="<c:out value="${result.exprnNm}"/> 상세보기"><span>"<c:out value="${result.exprnNm}"/>" 상세보기</span></a>
+                            </c:otherwise>
+                        </c:choose>
                         <c:out value="${currentPageStartNo}"/>
                     </td>
                     <td class="textAlignLeft">
@@ -307,10 +322,12 @@
                                     <c:out value="${tsu:toDateFormat(result.exprnMaxEndDe, 'yyyyMMdd', 'yyy-MM-dd')}"/>
                                 </span>
                                 <%--<span class="day">화, 수, 목</span>--%>
-                                <span class="time">
-                                    <c:out value="${tsu:toDateFormat(result.exprnMinBgnTm, 'HHmm', 'HH:mm')}"/> ~
-                                    <c:out value="${tsu:toDateFormat(result.exprnMaxEndTm, 'HHmm', 'HH:mm')}"/>
-                                </span>
+                                <c:if test="${result.aditIem1 != 'LINK_URL'}">
+                                    <span class="time">
+                                        <c:out value="${tsu:toDateFormat(result.exprnMinBgnTm, 'HHmm', 'HH:mm')}"/> ~
+                                        <c:out value="${tsu:toDateFormat(result.exprnMaxEndTm, 'HHmm', 'HH:mm')}"/>
+                                    </span>
+                                </c:if>
                                 <span class="place">
                                     <c:set var="placeNo" value="place${result.placeNo}"/>
                                     <c:out value="${expPlaceMap[placeNo]}"/>
@@ -344,7 +361,13 @@
                             </c:otherwise>
                         </c:choose>
                     </td>
-                    <td><span class="mobile-th">신청/정원</span><strong><c:out value="${result.totResveCnt}"/></strong>/<c:out value="${result.totRcritCnt}"/><%--<span class="block">(<c:out value="${result.totResveCnt}/${result.totRcritCnt}"/>)</span>--%></td>
+                    <td>
+                        <span class="mobile-th">신청/정원</span>
+                        <c:if test="${result.aditIem1 != 'LINK_URL'}">
+                            <strong><c:out value="${result.totResveCnt}"/></strong>/<c:out value="${result.totRcritCnt}"/>
+                        </c:if>
+                        <%--<span class="block">(<c:out value="${result.totResveCnt}/${result.totRcritCnt}"/>)</span>--%>
+                    </td>
                     <c:set var="operSttus" value="${result.operSttus}"/>
                     <c:set var="sttusType" value=""/>
                     <c:if test="${operSttus == 'RCPT_WAIT'}">

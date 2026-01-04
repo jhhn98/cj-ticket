@@ -49,9 +49,16 @@
             <tr>
                 <th scope="row">모집상태</th>
                 <td><c:out value="${operSttusMap[exprnVO.operSttus]}"/></td>
-                <th scope="row">신청/모집정원</th>
+                <th scope="row">신청/모집</th>
                 <td colspan="3">
-                    <c:out value="${exprnVO.totResveCnt}/${exprnVO.totRcritCnt}"/>
+                    <c:choose>
+                        <c:when test="${exprnVO.slctMthdCd == 'CONFM'}">
+                            <c:out value="${exprnVO.totResveCmplCnt}/${exprnVO.totRcritCnt}"/>
+                        </c:when>
+                        <c:otherwise>
+                            <c:out value="${exprnVO.totResveCnt}/${exprnVO.totRcritCnt}"/>
+                        </c:otherwise>
+                    </c:choose>
                 </td>
             </tr>
             <tr>
@@ -248,9 +255,9 @@
         <div class="col-6 right">
             <button type="button" class="p-button primary" id="sms-modal-button">선택SMS발송</button>
             <a href="./downloadExprnApplXls.do" class="p-button p-button--combine excel" onclick="fn_downloadExprnApplXls(this.href); return false;">엑셀다운로드</a>
-            <c:if test="${fn:contains(exprnVO.rcptMthdCd, 'TLPHN') || fn:contains(exprnVO.rcptMthdCd, 'VISIT')}">
+            <%--<c:if test="${fn:contains(exprnVO.rcptMthdCd, 'TLPHN') || fn:contains(exprnVO.rcptMthdCd, 'VISIT')}">--%>
                 <a href="./addExprnApplView.do?exprnNo=<c:out value="${exprnVO.exprnNo}"/>&amp;<c:out value="${exprnApplSearchVO.params}"/><c:out value="${exprnApplSearchVO.paramsMng}"/>" class="p-button write">등록</a>
-            </c:if>
+            <%--</c:if>--%>
         </div>
     </div>
     <div class="row">

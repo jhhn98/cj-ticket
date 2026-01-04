@@ -113,6 +113,39 @@
                         </c:if>
                     </td>
                 </tr>
+                <tr>
+                    <th scope="row" class="first">교육장소</th>
+                    <td>
+                        <c:set var="placeNo" value="place${eduLctreVO.placeNo}"/>
+                        <c:out value="${eduPlaceMap[placeNo]}"/>
+                    </td>
+                    <th scope="row">교육장 주소</th>
+                    <td>
+                        <c:forEach var="place" items="${eduPlaceList}">
+                            <c:if test="${place.placeNo eq eduLctreVO.placeNo}">
+                                <c:out value="${place.addr}"/>
+                                <c:if test="${not empty place.detailAddr}">
+                                    <c:out value=" ${place.detailAddr}"/>
+                                </c:if>
+                            </c:if>
+                        </c:forEach>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row" class="first">모집상태</th>
+                    <td>
+                        <c:out value="${operSttusMap[eduLctreVO.operSttus]}"/>
+                    </td>
+                    <th scope="row">이용요금</th>
+                    <td>
+                        <c:choose>
+                            <c:when test="${!empty eduLctreVO.eduAmt and eduLctreVO.eduAmt > 0}">
+                                유료 ( <fmt:formatNumber value="${eduLctreVO.eduAmt}" pattern="#,###"/>원 )
+                            </c:when>
+                            <c:otherwise>무료</c:otherwise>
+                        </c:choose>
+                    </td>
+                </tr>
                 </tbody>
             </table>
         </div>
@@ -339,6 +372,7 @@
                                         <option value="gmail.com">gmail.com</option>
                                         <option value="nate.com">nate.com</option>
                                         <option value="kakao.com">kakao.com</option>
+                                        <option value="daum.net">daum.net</option>
                                     </select>
                                 </div>
                             </c:if>
@@ -392,7 +426,7 @@
                     <td>
                         <div class="innerCell">
                             <c:if test="${not empty eduAplctVO.applDtMs}">
-                                <c:out value="${tsu:toDateFormat(eduAplctVO.applDtMs, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss')}"/>
+                                <c:out value="${tsu:toDateFormat(eduAplctVO.applDtMs, 'yyyyMMddHHmmssSSS', 'yyyy-MM-dd HH:mm:ss')}"/>
                             </c:if>
                         </div>
                     </td>

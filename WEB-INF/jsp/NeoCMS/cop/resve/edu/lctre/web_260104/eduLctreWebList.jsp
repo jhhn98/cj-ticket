@@ -22,8 +22,7 @@
                   or fn:length(eduLctreVO.searchTargetCdList) > 0}">
          showDetail
         </c:if>">
-    <form method="get" action="./selectEduLctreWebList.do">
-        <input type="hidden" name="key" value="<c:out value="${key}"/>"/>
+    <form method="post" action="./selectEduLctreWebList.do?key=<c:out value="${key}"/>">
         <fieldset>
             <legend>검색</legend>
             <div class="searchFormWrap default">
@@ -188,18 +187,13 @@
                     <c:forEach var="result" items="${eduLctreList}" varStatus="status">
                         <li>
                             <a href="./selectEduLctreWebView.do?key=<c:out value="${key}"/>&lctreNo=<c:out value="${result.lctreNo}"/>">
-                                <span class="image<%--<c:if test="${empty result.mainImg}"> noImage</c:if>--%>">
+                                <span class="image<c:if test="${empty result.mainImg}"> noImage</c:if>">
                                     <c:choose>
                                         <c:when test="${not empty result.mainImg}">
                                             <img src="/<c:out value="${result.mainImg.storePath}"/>/thumb/p_<c:out value="${result.mainImg.storeFileNm}"/>" alt="<c:out value="${result.lctreNm}"/> 이미지">
                                         </c:when>
                                         <c:otherwise>
-                                            <c:if test="${empty result.svcTyCd}">
-                                                <img src="/site/www/images/program/no-image.png" alt="<c:out value="${result.lctreNm}"/> 이미지 없음">
-                                            </c:if>
-                                            <c:if test="${!empty result.svcTyCd}">
-                                                <img src="/DATA/edu/no_img/<c:out value="${result.svcTyCd}"/>.jpg" alt="<c:out value="${result.lctreNm}"/> 이미지 없음">
-                                            </c:if>
+                                            <img src="/site/www/images/program/no-image.png" alt="<c:out value="${result.lctreNm}"/> 이미지 없음">
                                         </c:otherwise>
                                     </c:choose>
                                 </span>

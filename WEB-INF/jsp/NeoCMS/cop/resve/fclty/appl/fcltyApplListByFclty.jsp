@@ -146,7 +146,7 @@
             <col style="width:100px">
             <col style="width:100px">
             <col style="width:100px">
-            <col style="width:60px">
+<%--            <col style="width:60px">--%>
         </colgroup>
         <thead>
         <tr>
@@ -162,7 +162,7 @@
             <th scope="col">예약일자</th>
             <th scope="col">예약상태</th>
             <th scope="col">결제상태</th>
-            <th scope="col">관리</th>
+<%--            <th scope="col">관리</th>--%>
         </tr>
         </thead>
         <tbody class="text_center">
@@ -211,7 +211,7 @@
                         <br/><c:out value="${tsu:toDateFormat(result.payDeadlineDt, 'yyyyMMddHHmmss', 'HH:mm:ss')}"/>
                     </c:if>
                 </td>
-                <td><a href="./updateFcltyApplView.do?fcltyApplNo=<c:out value="${result.fcltyApplNo}"/>&amp;<c:out value="${fcltyApplSearchVO.params}"/>&amp;<c:out value="${fcltyApplSearchVO.paramsMng}"/>&amp;<c:out value="${fcltySearchVO.fcltyParamsMng}"/>" class="p-button p-button--small edit" onclick="alert('개발 진행 중입니다.'); return false;">수정</a></td>
+<%--                <td><a href="./updateFcltyApplView.do?fcltyApplNo=<c:out value="${result.fcltyApplNo}"/>&amp;<c:out value="${fcltyApplSearchVO.params}"/>&amp;<c:out value="${fcltyApplSearchVO.paramsMng}"/>&amp;<c:out value="${fcltySearchVO.fcltyParamsMng}"/>" class="p-button p-button--small edit" onclick="alert('개발 진행 중입니다.'); return false;">수정</a></td>--%>
             </tr>
             <c:set var="currentPageStartNo" value="${currentPageStartNo-1}" />
         </c:forEach>

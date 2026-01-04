@@ -114,7 +114,7 @@
     <table class="p-table p-table--bordered">
         <caption>시설 신청 목록 - 번호, 예약번호, 신청자, 생년월일, 성별, 연락처, 신청일시, 개인/단체 여부, 인원, 시설일자, 결제상태, 예약상태 등 제공</caption>
         <colgroup>
-            <col style="width:20px">
+<%--            <col style="width:20px">--%>
             <col style="width:50px">
             <col style="width:90px">
             <col style="width:60px">
@@ -127,11 +127,11 @@
             <col style="width:60px">
             <col style="width:60px">
             <col style="width:60px">
-            <col style="width:30px">
+<%--            <col style="width:30px">--%>
         </colgroup>
         <thead>
         <tr>
-            <th scope="col">선택</th>
+<%--            <th scope="col">선택</th>--%>
             <th scope="col">번호</th>
             <th scope="col">예약번호</th>
             <th scope="col">신청자</th>
@@ -144,19 +144,19 @@
             <th scope="col">예약일자</th>
             <th scope="col">예약상태</th>
             <th scope="col">결제상태</th>
-            <th scope="col">관리</th>
+<%--            <th scope="col">관리</th>--%>
         </tr>
         </thead>
         <tbody class="text_center">
         <c:set var="currentPageStartNo" value="${paginationInfo.currentPageStartNo}" />
         <c:forEach var="result" items="${fcltyApplList}">
             <tr>
-                <td class="p-table__checkbox">
-                    <span class="p-form-checkbox p-form-checkbox--single">
-                        <input type="checkbox" name="fcltyApplNoArr" id="fcltyApplNo<c:out value="${result.fcltyApplNo}"/>" class="p-form-checkbox__input" value="<c:out value="${result.fcltyApplNo}"/>">
-                        <label for="fcltyApplNo<c:out value="${result.fcltyApplNo}"/>" class="p-form-checkbox__label">시설 신청 <c:out value="${result.fcltyApplNo}"/>번 </label>
-                    </span>
-                </td>
+<%--                <td class="p-table__checkbox">--%>
+<%--                    <span class="p-form-checkbox p-form-checkbox--single">--%>
+<%--                        <input type="checkbox" name="fcltyApplNoArr" id="fcltyApplNo<c:out value="${result.fcltyApplNo}"/>" class="p-form-checkbox__input" value="<c:out value="${result.fcltyApplNo}"/>">--%>
+<%--                        <label for="fcltyApplNo<c:out value="${result.fcltyApplNo}"/>" class="p-form-checkbox__label">시설 신청 <c:out value="${result.fcltyApplNo}"/>번 </label>--%>
+<%--                    </span>--%>
+<%--                </td>--%>
                 <td>${currentPageStartNo}</td>
                 <td>
                     <a href="./selectFcltyApplView.do?fcltyApplNo=<c:out value="${result.fcltyApplNo}"/>&amp;<c:out value="${fcltyApplSearchVO.params}"/><c:out value="${fcltyApplSearchVO.paramsMng}"/><c:out value="${fcltySearchVO.fcltyParamsMng}"/>">
@@ -180,7 +180,7 @@
                     <c:if test="${empty result.grpNm}">개인</c:if>
                     <c:if test="${!empty result.grpNm}"><c:out value="${result.grpNm}"/></c:if>
                 </td>
-                <td><c:out value="${result.totalCnt}"/></td>
+                <td><c:out value="${result.useCnt}"/></td>
                 <td>
                     <c:out value="${tsu:toDateFormat(result.fcltyDe, 'yyyyMMdd', 'yyyy-MM-dd')}"/><br/>
                     <c:out value="${tsu:toDateFormat(result.fcltyBgnHm, 'HHmm', 'HH:mm')}"/> ~ <c:out value="${tsu:toDateFormat(result.fcltyEndHm, 'HHmm', 'HH:mm')}"/>
@@ -194,7 +194,7 @@
                         <br/><c:out value="${tsu:toDateFormat(result.payDeadlineDt, 'yyyyMMddHHmmss', 'HH:mm:ss')}"/>
                     </c:if>
                 </td>
-                <td><a href="./updateFcltyApplView.do?fcltyApplNo=<c:out value="${result.fcltyApplNo}"/>&amp;<c:out value="${fcltyApplSearchVO.params}"/><c:out value="${fcltyApplSearchVO.paramsMng}"/><c:out value="${fcltySearchVO.fcltyParamsMng}"/>" class="p-button p-button--small edit" onclick="alert('개발 진행 중입니다.'); return false;">수정</a></td>
+<%--                <td><a href="./updateFcltyApplView.do?fcltyApplNo=<c:out value="${result.fcltyApplNo}"/>&amp;<c:out value="${fcltyApplSearchVO.params}"/><c:out value="${fcltyApplSearchVO.paramsMng}"/><c:out value="${fcltySearchVO.fcltyParamsMng}"/>" class="p-button p-button--small edit" onclick="alert('개발 진행 중입니다.'); return false;">수정</a></td>--%>
             </tr>
             <c:set var="currentPageStartNo" value="${currentPageStartNo-1}" />
         </c:forEach>

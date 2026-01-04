@@ -41,7 +41,15 @@
 							<td class="textAlignCenter"><span class="mobile-th">운영기관</span><c:out value="${item.insttNm}"/></td>
 							<td class="textAlignCenter"><span class="mobile-th">이용요금</span><c:choose><c:when test="${!empty item.chrge && item.chrge ne 0}"><fmt:formatNumber value="${item.chrge}" type="number" /></c:when><c:otherwise>무료</c:otherwise></c:choose></td>
 							<td class="textAlignCenter"><span class="mobile-th">신청/정원</span><c:out value="${item.rceptNmpr}"/>/<c:out value="${item.rcritNmpr}"/></td>
-                            <td class="textAlignCenter"><span class="mobile-th">운영상태</span><!--<span class="lectureState state1"></span>--></td>
+                            <td class="textAlignCenter">
+								<span class="mobile-th">운영상태</span>
+							<c:choose>
+								<c:when test="${item.rceptSttus eq 'RCPT_WAIT'}"><span class="lectureState state1"></c:when>
+								<c:when test="${item.rceptSttus eq 'RCPT_END' || item.rceptSttus eq 'RCPT_END'}"><span class="lectureState state3"></c:when>
+								<c:otherwise><span class="lectureState state2"></c:otherwise>
+							</c:choose>
+								<c:out value="${exprnSttusMap[item.rceptSttus]}"/></span>
+							</td>
                         </tr>
 				</c:forEach>
 				<c:if test="${empty exprnInfoList}">
@@ -89,7 +97,15 @@
 							<td class="textAlignCenter"><span class="mobile-th">운영기관</span><c:out value="${item.insttNm}"/></td>
 							<td class="textAlignCenter"><span class="mobile-th">이용요금</span><c:choose><c:when test="${!empty item.chrge && item.chrge ne 0}"><fmt:formatNumber value="${item.chrge}" type="number" /></c:when><c:otherwise>무료</c:otherwise></c:choose></td>
 							<td class="textAlignCenter"><span class="mobile-th">신청/정원</span><c:out value="${item.rceptNmpr}"/>/<c:out value="${item.rcritNmpr}"/></td>
-                            <td class="textAlignCenter"><span class="mobile-th">운영상태</span><!--<span class="lectureState state1"></span>--></td>
+                            <td class="textAlignCenter">
+								<span class="mobile-th">운영상태</span>
+							<c:choose>
+								<c:when test="${item.rceptSttus eq 'RCPT_WAIT'}"><span class="lectureState state1"></c:when>
+								<c:when test="${item.rceptSttus eq 'RCPT_END' || item.rceptSttus eq 'RCPT_END'}"><span class="lectureState state3"></c:when>
+								<c:otherwise><span class="lectureState state2"></c:otherwise>
+							</c:choose>
+								<c:out value="${fcltySttusMap[item.rceptSttus]}"/></span>
+							</td>
                         </tr>
 				</c:forEach>
 				<c:if test="${empty fctInfoList}">
@@ -145,7 +161,15 @@
 							<td class="textAlignCenter"><span class="mobile-th">대상</span><c:out value="${targetNm}"/></td>
 							<td class="textAlignCenter"><span class="mobile-th">이용요금</span><c:choose><c:when test="${!empty item.chrge && item.chrge ne 0}"><fmt:formatNumber value="${item.chrge}" type="number" /></c:when><c:otherwise>무료</c:otherwise></c:choose></td>
 							<td class="textAlignCenter"><span class="mobile-th">신청/정원</span><c:out value="${item.rceptNmpr}"/>/<c:out value="${item.rcritNmpr}"/></td>
-                            <td class="textAlignCenter"><span class="mobile-th">운영상태</span><!--<span class="lectureState state1"></span>--></td>
+                            <td class="textAlignCenter">
+								<span class="mobile-th">운영상태</span>
+							<c:choose>
+								<c:when test="${item.rceptSttus eq 'RCPT_WAIT'}"><span class="lectureState state1"></c:when>
+								<c:when test="${item.rceptSttus eq 'RCPT_END' || item.rceptSttus eq 'RCPT_END'}"><span class="lectureState state3"></c:when>
+								<c:otherwise><span class="lectureState state2"></c:otherwise>
+							</c:choose>
+								<c:out value="${eduSttusMap[item.rceptSttus]}"/></span>
+							</td>
                         </tr>
 				</c:forEach>
 				<c:if test="${empty eduInfoList}">
@@ -155,43 +179,6 @@
 				</c:if>
                         </tbody>
                     </table>
-            </section>
-			
-			<section class="searchDetailResult">
-                <div class="titleArea">
-                    <h4>시티투어</h4>
-                    <span class="resultCount">총 <c:out value="${totCntMap['TOUR']}"/>건</span>
-                    <a href="./searchList.do?searchCnd=TOUR&amp;searchKrwd=<c:out value="${searchInfoVO.searchKrwd}"/>">더보기</a>
-                </div>
-                <div class="tableScroll">
-                    <table class="table-searchResult">
-                        <caption>체험/견학-번호, 강좌명, 내용, 운영상태</caption>
-                        <thead>
-                        <tr>
-                            <th scope="col" class="first">번호</th>
-                            <th scope="col">코스명</th>
-							<th scope="col">접수기간</th>
-							<th scope="col">이용기간</th>
-							<th scope="col">운영기관</th>
-							<th scope="col">이용요금</th>
-							<th scope="col">신청/정원</th>
-                            <th scope="col">운영상태</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td class="first textAlignCenter"><span class="mobile-th">번호</span><c:out value="${idx.index + 1}"/></td>
-                            <td><span class="mobile-th">코스명</span><a href="#n" target="_blank" title="새창"><c:out value="${item.resveNm}"/></a></td>
-							<td class="textAlignCenter"><span class="mobile-th">접수기간</span></td>
-							<td class="textAlignCenter"><span class="mobile-th">이용기간</span></td>
-							<td class="textAlignCenter"><span class="mobile-th">운영기관</span></td>
-                            <td class="textAlignCenter"><span class="mobile-th">이용요금</span></td>
-                            <td class="textAlignCenter"><span class="mobile-th">신청/정원</span></td>
-                            <td class="textAlignCenter"><span class="mobile-th">운영상태</span></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
             </section>
 			
 			<section class="searchDetailResult">

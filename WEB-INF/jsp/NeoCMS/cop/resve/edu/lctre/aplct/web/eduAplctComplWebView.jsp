@@ -49,8 +49,7 @@
         <th scope="row" class="first">신청일시</th>
         <td colspan="3">
             <c:if test="${not empty eduAplctVO.applDtMs && fn:length(eduAplctVO.applDtMs) >= 14}">
-                ${fn:substring(eduAplctVO.applDtMs, 0, 4)}-${fn:substring(eduAplctVO.applDtMs, 4, 6)}-${fn:substring(eduAplctVO.applDtMs, 6, 8)}
-                ${fn:substring(eduAplctVO.applDtMs, 8, 10)}:${fn:substring(eduAplctVO.applDtMs, 10, 12)}
+                <c:out value="${tsu:toDateFormat(eduAplctVO.applDtMs, 'yyyyMMddHHmmssSSS', 'yyyy-MM-dd HH:mm:ss')}"/>
             </c:if>
         </td>
     </tr>

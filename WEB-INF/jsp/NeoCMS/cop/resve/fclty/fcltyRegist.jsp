@@ -63,8 +63,8 @@
                         <form:select path="operYear" class="p-input p-input--auto">
                             <form:option value="" label="연도 선택"/>
                             <c:set var="year" value="${fn:substring(fcltyVO.today,0,4)}"/>
-                            <c:forEach var="i" begin="0" end="2">
-                                <form:option value="${year + i}" label="${year + i}"/>
+                            <c:forEach var="i" begin="2025" end="${year + 2}">
+                                <form:option value="${i}" label="${i}"/>
                             </c:forEach>
                         </form:select>
                     </td>
@@ -75,7 +75,7 @@
                         <div class="p-form-group w20p">
                             <%-- 선발방식 공통코드 - FIRST : 선착순 / CONFM : 승인 / DRWLT : 추첨 --%>
                             <c:forEach var="result" items="${slctMthdList}" varStatus="status">
-                                <c:if test="${result.code != 'DRWLT'}">
+                                <c:if test="${result.code eq 'FIRST'}">
                                     <span class="p-form-radio">
                                         <input type="radio" name="slctMthdCd" id="slctMthdCd<c:out value="${status.count}"/>" class="p-form-radio__input" value="<c:out value="${result.code}"/>"<c:if test="${status.first}"> checked</c:if>>
                                         <label for="slctMthdCd<c:out value="${status.count}"/>" class="p-form-radio__label"><c:out value="${result.codeNm}"/></label>
@@ -148,6 +148,10 @@
                 <tr>
                     <th scope="row"><form:label path="targetCdArr">대상</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>
                     <td>
+                        <span class="p-form-checkbox">
+                            <input type="checkbox" name="" id="targetCdAll" class="p-form-checkbox__input" value=""<c:if test="${fn:length(fcltyVO.targetCdArr) == fn:length(targetList)}"> checked</c:if>>
+                            <label for="targetCdAll" class="p-form-checkbox__label">전체</label>
+                        </span>
                         <%-- 대상 공통코드 - TARGET01 : 영유아 / TARGET02 : 아동 / TARGET03 : 초등학생 / TARGET04 : 청소년 / TARGET05 : 성인 / TARGET06 : 어르신 / TARGET07 : 장애인 / TARGET08 : 기타 --%>
                         <c:forEach var="result" items="${targetList}" varStatus="status">
                             <span class="p-form-checkbox">
@@ -310,7 +314,8 @@
                     <th scope="row"><form:label path="payTmlmtCnt">결제기한</form:label></th>
                     <td>
                         <div class="p-form-group w20p">
-                            <span class="p-form__split">예약일/추첨일/승인일로부터 </span>
+<%--                            <span class="p-form__split">예약일/추첨일/승인일로부터 </span>--%>
+                            <span class="p-form__split">예약일로부터 </span>
                             <form:select path="payTmlmtCnt" class="p-input p-input--auto text_center" disabled="true">
                                 <c:forEach var="i" begin="1" end="30">
                                     <form:option value="${i}"/>
@@ -372,7 +377,7 @@
                             <label for="fdrmCloseDay2" class="p-form-checkbox__label">월</label>
                         </span>
                         <span class="p-form-checkbox">
-                            <input type="checkbox" name="fdrmCloseDayArr" id="fdrmCloseDay3" class="p-form-checkbox__input" value="3"><c:if test="${fn:indexOf(fcltyVO.fdrmCloseDay, '3') > -1}"> checked</c:if>
+                            <input type="checkbox" name="fdrmCloseDayArr" id="fdrmCloseDay3" class="p-form-checkbox__input" value="3"<c:if test="${fn:indexOf(fcltyVO.fdrmCloseDay, '3') > -1}"> checked</c:if>>
                             <label for="fdrmCloseDay3" class="p-form-checkbox__label">화</label>
                         </span>
                         <span class="p-form-checkbox">
@@ -509,19 +514,21 @@
                         </span>
                     </td>
                 </tr>
-                <tr>
-                    <th scope="row"><form:label path="dscntUseYn">감면 사용여부</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>
-                    <td>
-                        <span class="p-form-radio">
-                            <input type="radio" name="dscntUseYn" id="dscntUseY" class="p-form-radio__input" value="Y">
-                            <label for="dscntUseY" class="p-form-radio__label">사용</label>
-                        </span>
-                        <span class="p-form-radio">
-                            <input type="radio" name="dscntUseYn" id="dscntUseN" class="p-form-radio__input" value="N" checked>
-                            <label for="dscntUseN" class="p-form-radio__label">미사용</label>
-                        </span>
-                    </td>
-                </tr>
+
+                <input type="hidden" id="dscntUseY" name="dscntUseYn" value="N" />
+<%--                <tr>--%>
+<%--                    <th scope="row"><form:label path="dscntUseYn">감면 사용여부</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>--%>
+<%--                    <td>--%>
+<%--                        <span class="p-form-radio">--%>
+<%--                            <input type="radio" name="dscntUseYn" id="dscntUseY" class="p-form-radio__input" value="Y">--%>
+<%--                            <label for="dscntUseY" class="p-form-radio__label">사용</label>--%>
+<%--                        </span>--%>
+<%--                        <span class="p-form-radio">--%>
+<%--                            <input type="radio" name="dscntUseYn" id="dscntUseN" class="p-form-radio__input" value="N" checked>--%>
+<%--                            <label for="dscntUseN" class="p-form-radio__label">미사용</label>--%>
+<%--                        </span>--%>
+<%--                    </td>--%>
+<%--                </tr>--%>
                 <tr>
                     <th scope="row"><form:label path="telNoFmt">문의전화</form:label></th>
                     <td>
@@ -532,11 +539,11 @@
                     <th scope="row"><form:label path="useYn">표시여부</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>
                     <td>
                         <span class="p-form-radio">
-                            <input type="radio" name="useYn" id="useY" class="p-form-radio__input" value="Y" checked>
+                            <input type="radio" name="useYn" id="useY" class="p-form-radio__input" value="Y">
                             <label for="useY" class="p-form-radio__label">표시</label>
                         </span>
                             <span class="p-form-radio">
-                            <input type="radio" name="useYn" id="useN" class="p-form-radio__input" value="N">
+                            <input type="radio" name="useYn" id="useN" class="p-form-radio__input" value="N" checked>
                             <label for="useN" class="p-form-radio__label">숨김</label>
                         </span>
                     </td>
@@ -559,6 +566,22 @@
 <script>
 
     $(document).ready(function(){
+
+        $('#targetCdAll').on("change",function() {
+            if ($(this).is(":checked")) {
+                $('input[type=checkbox][name=targetCdArr]').prop('checked', true);
+            } else {
+                $('input[type=checkbox][name=targetCdArr]').prop('checked', false);
+            }
+        });
+
+        $('input[type=checkbox][name=targetCdArr]').on("change",function() {
+            if($('input[type=checkbox][name=targetCdArr]:checked').length == $('input[type=checkbox][name=targetCdArr]').length) {
+                $('#targetCdAll').prop('checked', true);
+            } else {
+                $('#targetCdAll').prop('checked', false);
+            }
+        });
 
         var areaGu = $('select[name=areaGuCd]').val();
         if(areaGu != '') {
