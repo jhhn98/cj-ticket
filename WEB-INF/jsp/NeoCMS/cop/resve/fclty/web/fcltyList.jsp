@@ -324,8 +324,10 @@
             </tbody>
         </table>
         <c:if test="${fn:length(fcltyList) > 0}">
-            <div class="pagination-default">
-                <ui:pagination paginationInfo="${paginationInfo}" type="board" jsFunction="./selectFcltyWebList.do?${fcltySearchVO.paramsExclPi}${fcltySearchVO.paramsWeb}&amp;pageIndex=" />
+            <div class="p-pagination">
+                <div class="p-page">
+                    <ui:pagination paginationInfo="${paginationInfo}" type="board" jsFunction="./selectFcltyWebList.do?${fcltySearchVO.paramsExclPi}${fcltySearchVO.paramsWeb}&amp;pageIndex=" />
+                </div>
             </div>
         </c:if>
     </div>

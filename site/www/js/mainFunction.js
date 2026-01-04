@@ -271,8 +271,8 @@ function handleSelectMap(){
         selectDong(selectDetailArea.value)
     }
     document.querySelector('.initialSelect').addEventListener('click', () => {
-        selectAllArea.value='구 선택'
-        selectDetailArea.value='읍/면/동 선택'
+        selectAllArea.value=''// value와 일치하는 값으로 넣어줌.
+        selectDetailArea.value='읍/면/동 선택'// 근데 이건 왜 들어가지?
         resetDong()
         clearSelection()
         clearDetailSelection()

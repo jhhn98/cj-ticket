@@ -39,15 +39,26 @@ function contentNavigation() {
     const contentNavigation = document.querySelector('.contentNavigation');
     const navigationButton = contentNavigation.querySelectorAll('button');
 
-    navigationButton.forEach( item => {
-        item.addEventListener('click', (e) => {
+    navigationButton.forEach(item => {
+        item.addEventListener('click', () => {
+            const parentLi = item.closest('li');
+            const isActive = item.classList.contains('active');
+
+            // 이미 active 인 상태라면 → 해제하고 종료
+            if (isActive) {
+                item.classList.remove('active');
+                parentLi.classList.remove('active');
+                return;
+            }
+
+            // 기존 active 전체 제거
             contentNavigation.querySelectorAll('.active').forEach(el => {
                 el.classList.remove('active');
             });
 
-            // 2. 클릭된 버튼 + 부모 li에만 active 추가
+            // 클릭된 버튼 + 부모 li active
             item.classList.add('active');
-            item.closest('li').classList.add('active');
+            parentLi.classList.add('active');
         });
     });
 }

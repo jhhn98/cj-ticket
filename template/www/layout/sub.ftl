@@ -15,14 +15,14 @@ LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=5.0">
     <title>청주시 통합예약</title>
-    <link rel="preload" href="/common/font/EDB-R.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="/common/font/EDB-R.woff" as="font" type="font/woff" crossorigin>
-    <link rel="stylesheet" href="/site/www/css/font.css">
+    <link rel="preload" href="/common/font/EDB-R.woff2?260105" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/common/font/EDB-R.woff?260105" as="font" type="font/woff" crossorigin>
+    <link rel="stylesheet" href="/site/www/css/font.css260105">
     <link rel="stylesheet" href="/common/css/style-reset.css">
-    <link rel="stylesheet" href="/site/www/css/common.css?260102">
-    <link rel="stylesheet" href="/site/www/css/sub.css?260102">
-    <link rel="stylesheet" href="/site/www/css/contents.css">
-    <link rel="stylesheet" href="/site/www/css/program.css?260102">
+    <link rel="stylesheet" href="/site/www/css/common.css?260105">
+    <link rel="stylesheet" href="/site/www/css/sub.css?260105">
+    <link rel="stylesheet" href="/site/www/css/contents.css260105">
+    <link rel="stylesheet" href="/site/www/css/program.css?260105">
     <link rel="stylesheet" href="/common/css/program.css">
     <script src="/common/js/jquery-1.12.4.HS-20200709.min.js"></script>
 	<decorator:head/>
@@ -56,7 +56,7 @@ LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
                 <c:choose>
                     <c:when test="@@{!empty loginVO}">
                         <li class="myPage">
-                            <svg><use href="/site/www/images/common/sprite-common-side.svg#icon-user"></use></svg>
+                            <a href="./myPageList.do?key=59"><svg><use href="/site/www/images/common/sprite-common-side.svg#icon-user"></use></svg></a><svg><use href="/site/www/images/common/sprite-common-side.svg#icon-user"></use></svg></a>
                             <div class="linkLayer">
                                 <svg><use href="/site/www/images/common/sprite-common-side.svg#icon-arrTop"></use></svg>
                                 <a href="./myPageList.do?key=59"><span>마이페이지</span></a>
@@ -147,7 +147,6 @@ LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
             <ul>
                 <li><a href="https://www.cheongju.go.kr/www/contents.do?key=587" target="_blank" title="새창" class="privacyPolicy">개인정보처리방침</a></li>
                 <li><a href="https://www.cheongju.go.kr/www/contents.do?key=586" target="_blank" title="새창">저작권보호정책</a></li>
-                <li><a href="#n">홈페이지가이드</a></li>
             </ul>
         </nav>
         <address>[28527] 충청북도 청주시 상당구 상당로69번길 38 (청주시청 임시청사)</address>
@@ -349,8 +348,8 @@ LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
 </div>
 <script src="/lib/jquery-3.7.1.min.js"></script>
 <script src="/lib/slick/slick.min.js"></script>
-<script src="/site/www/js/commonFunction.js"></script>
-<script src="/site/www/js/subFunction.js"></script>
+<script src="/site/www/js/commonFunction.js?260105"></script>
+<script src="/site/www/js/subFunction.js?260105"></script>
 <%--
 <!--아래 스크립트들은 시설/체험 상세보기 페이지에만 추가되게 해주세요-->
 <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=21afdca76805d74b4e167d981b8fe3e3&autoload=false"></script>

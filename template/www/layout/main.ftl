@@ -13,12 +13,12 @@ LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=5.0">
     <title>청주시 통합예약</title>
-    <link rel="preload" href="/common/font/EDB-R.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="/common/font/EDB-R.woff" as="font" type="font/woff" crossorigin>
-    <link rel="stylesheet" href="/site/www/css/font.css">
+    <link rel="preload" href="/common/font/EDB-R.woff2?260105" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/common/font/EDB-R.woff?260105" as="font" type="font/woff" crossorigin>
+    <link rel="stylesheet" href="/site/www/css/font.css260105">
     <link rel="stylesheet" href="/common/css/style-reset.css">
-    <link rel="stylesheet" href="/site/www/css/common.css?260102">
-    <link rel="stylesheet" href="/site/www/css/main.css?251216">
+    <link rel="stylesheet" href="/site/www/css/common.css?260105">
+    <link rel="stylesheet" href="/site/www/css/main.css?260105">
 </head>
 <body>
 <h1>청주시 통합예약 메인</h1>
@@ -35,7 +35,7 @@ LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
                 <c:choose>
                     <c:when test="@@{!empty loginVO}">
                         <li class="myPage">
-                            <svg><use href="/site/www/images/common/sprite-common-side.svg#icon-user"></use></svg>
+                            <a href="./myPageList.do?key=59"><svg><use href="/site/www/images/common/sprite-common-side.svg#icon-user"></use></svg></a>
                             <div class="linkLayer">
                                 <svg><use href="/site/www/images/common/sprite-common-side.svg#icon-arrTop"></use></svg>
                                 <a href="./myPageList.do?key=59"><span>마이페이지</span></a>
@@ -355,7 +355,6 @@ LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
             <ul>
                 <li><a href="https://www.cheongju.go.kr/www/contents.do?key=587" target="_blank" title="새창" class="privacyPolicy">개인정보처리방침</a></li>
                 <li><a href="https://www.cheongju.go.kr/www/contents.do?key=586" target="_blank" title="새창">저작권보호정책</a></li>
-                <li><a href="#n">홈페이지가이드</a></li>
             </ul>
         </nav>
         <address>[28527] 충청북도 청주시 상당구 상당로69번길 38 (청주시청 임시청사)</address>
@@ -370,9 +369,9 @@ LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
 </footer>
 <script src="/lib/jquery-3.7.1.min.js"></script>
 <script src="/lib/slick/slick.min.js"></script>
-<script src="/site/www/js/commonFunction.js"></script>
-<script src="/site/www/js/mainFunction.js?251211"></script>
-<script src="/site/www/js/mainSearch.js?251212"></script>
+<script src="/site/www/js/commonFunction.js?260105"></script>
+<script src="/site/www/js/mainFunction.js?260105"></script>
+<script src="/site/www/js/mainSearch.js?260105"></script>
 
 </body>
 </html>
