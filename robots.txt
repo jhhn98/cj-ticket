@@ -1,0 +1,9 @@
+User-agent: *
+Disallow: /neo/
+Disallow: /login*
+Disallow: /logout*
+Disallow: /myPageList*
+
+Allow: /
+
+Sitemap: https://ticket.cheongju.go.kr/sitemap.xml

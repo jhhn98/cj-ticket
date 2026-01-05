@@ -112,13 +112,13 @@ function loadResveList() {
 
 function resveItems(dataList) {
     const $container = $('.reserve-item-list');
-
+	
 	if ($container.hasClass('slick-initialized')) {
         $container.slick('unslick');
     }
 	$container.empty();
 	let strValue = [];
-
+	
     dataList.forEach(function(item, index) {
 		if( index < 8 ) {
 			const methodMap = {
@@ -126,42 +126,36 @@ function resveItems(dataList) {
 				'DRWLT':  { text: '추첨', classNm: 'lottery' },
 				'CONFM':  { text: '승인', classNm: 'waiting' }
 			};
-
+			
 			item.slctMthdCdText = methodMap[item.slctMthdCd]?.text || item.slctMthdCd || '';
 			item.slctMthdCdClass = methodMap[item.slctMthdCd]?.classNm || '';
-
+			
 			const sttusMap = {
 				'RCPT_ING': { text: '접수중', classNm: 'apcType1' },
 				'RCPT_WAIT':  { text: '접수대기', classNm: 'apcType2' },
 				'RCPT_END':  { text: '접수마감', classNm: 'apcType3' },
 				'ADD_ING':  { text: '추가모집', classNm: 'apcType4' },
 				'WAIT_ING':  { text: '대기자접수', classNm: 'apcType5' },
-				'OPER_CNCL':  { text: '폐강', classNm: 'apcType6' },
-				'OPER_ING':  { text: '운영중', classNm: 'apcType7' },
+				'OPER_CNCL':  { text: '폐강', classNm: 'apcType6' }, 
+				'OPER_ING':  { text: '운영중', classNm: 'apcType7' }, 
 				'OPER_END':  { text: '종료', classNm: 'apcType8' }
 			};
-
+			
 			item.sttusText = sttusMap[item.rceptSttus]?.text || item.rceptSttus || '';
 			item.sttusClass = sttusMap[item.rceptSttus]?.classNm || '';
-
+			
 			const resveLinkMap = {
 				'EDU': { url: './selectEduLctreWebView.do?key=19&lctreNo='},
 				'EXPRN':  { url: './selectExprnWebView.do?key=8&exprnNo='},
 				'FCLTY':  { url: './selectFcltyWebView.do?key=14&fcltyNo='}
 			};
-
+			
 			item.linkUrlText = resveLinkMap[item.resveSe]?.url || item.resveSe || '';
-			item.linkTarget = '';
-			if (item.resveSe === 'EXPRN' && item.aditIem1 === 'LINK_URL') {
-				item.linkUrlText = item.aditIem2;
-				item.resveNo = '';
-				item.linkTarget = ' target="_blank"';
-			}
-
+			
 			const targetMap = {
 				'TARGET01': '#영유아', 'TARGET02': '#아동', 'TARGET03': '#초등학생', 'TARGET04': '#청소년', 'TARGET05': '#성인', 'TARGET06': '#어르신', 'TARGET07': '#장애인', 'TARGET08': '#기타'
 			};
-
+					
 			item.targetCdText = (item.targetCd || '').split('|').map(code => code.trim()).filter(code => targetMap[code]).map(code => targetMap[code]).join('') || '';
 
 			// 예약상태별 색상
@@ -179,7 +173,7 @@ function resveItems(dataList) {
 
 			const html = `
 				<div class="slide-item" data-filter-keyword="${item.sttusText}">
-					<a href="${item.linkUrlText}${item.resveNo}"${item.linkTarget}>
+					<a href="${item.linkUrlText}${item.resveNo}">
 						<i class="state ${item.sttusClass}">
 							<svg>
 								<defs>
@@ -211,9 +205,9 @@ function resveItems(dataList) {
 			strValue.push(html);
 		}
     });
-
+	
 	$container.append(strValue.join(''));
-
+	
 	slideProgram('.reservationList')
 }
 

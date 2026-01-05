@@ -331,7 +331,7 @@
     </c:if>
 </div>
     <table class="table boardList">
-        <caption>시설-예약번호, 시설명, 운영기관, 신청일자, 체험일자, 체험시간, 결제상태, 예약상태, 예약취소</caption>
+        <caption>시설-예약번호, 시설명, 운영기관, 신청일자, 예약일자, 예약시간, 결제상태, 예약상태, 예약취소</caption>
         <thead>
         <tr>
             <th scope="col" class="first">예약번호</th>
@@ -360,10 +360,37 @@
                 </td>
                 <td><span class="mobile-th">예약일자</span><c:out value="${tsu:toDateFormat(result.fcltyDe, 'yyyyMMdd', 'yyyy-MM-dd(EE)')}"/></td>
                 <td><span class="mobile-th">예약시간</span><c:out value="${tsu:toDateFormat(result.fcltyBgnHm, 'HHmm', 'HH:mm')}"/> ~ <c:out value="${tsu:toDateFormat(result.fcltyEndHm, 'HHmm', 'HH:mm')}"/></td>
-                <td><span class="mobile-th">결제상태</span><c:out value="${expPayMap[result.paySttusCd]}"/></td>
-                <td><span class="mobile-th">예약상태</span><c:out value="${expRsvMap[result.rsvSttusCd]}"/></td>
+                <td><span class="mobile-th">결제상태</span><c:out value="${fctPayMap[result.paySttusCd]}"/></td>
+                <td><span class="mobile-th">예약상태</span><c:out value="${fctRsvMap[result.rsvSttusCd]}"/></td>
                 <td><span class="mobile-th">예약취소</span>
-                    <button type="button" class="customLink" data-modal-button="modal3"><span>취소</span></button>
+                    <%-- 시설 취소가능일자가 지나지 않은 경우에만 취소(환불)요청 가능 --%>
+                    <c:if test="${(tsu:getNowDateTime('yyyyMMddHHmmss')+0) lt (result.canclClosDt+0)}">
+                        <%--
+                            시설 아래 상태값에 해당하는 경우에만 취소 요청 버튼 활성화
+                            - 예약상태 : 사용자취소(USR_CNCL) or 관리자취소(MNG_CNCL) 아닌 상태
+                            - 결제상태 : 무료(PAY_FREE) or 결제대기(PAY_WAIT)+전자결제(가상계좌)X / 결제대기의 경우 전자결제(가상계좌)는 가상계좌 발급했기 때문에 환불요청을 해야한다.
+                        --%>
+                        <c:if test="${!fn:contains(result.rsvSttusCd, 'CNCL') && (result.paySttusCd eq 'PAY_FREE' || (result.paySttusCd eq 'PAY_WAIT' && result.tossMethod ne '가상계좌'))}">
+                            <button type="button" class="customLink" onclick="fn_fcltyApplCnclAjax('<c:out value="${result.fcltyApplNo}"/>')"><span>취소</span></button>
+                        </c:if>
+
+                        <%--
+                            시설 아래 상태값에 해당하는 경우에만 환불 요청 버튼 활성화
+                            - 예약상태 : 사용자취소(USR_CNCL) or 관리자취소(MNG_CNCL) 아닌 상태
+                            - 결제상태 : 결제완료(PAY_CMPL) or 결제대기(PAY_WAIT)+전자결제(가상계좌)O / 결제대기의 경우 전자결제(가상계좌)는 가상계좌 발급했기 때문에 환불요청을 해야한다.
+                        --%>
+                        <c:if test="${!fn:contains(result.rsvSttusCd, 'CNCL') && (result.paySttusCd eq 'PAY_CMPL' || (result.paySttusCd eq 'PAY_WAIT' && result.tossMethod eq '가상계좌'))}">
+                            <c:choose>
+                                <c:when test="${result.tossMethod eq '카드' || result.tossMethod eq '간편결제'}">
+                                    <button type="button" class="customLink" data-modal-button="modal3" onclick="fn_fcltyApplRfndAjax(<c:out value="${result.fcltyApplNo}"/>)"><span>환불요청</span></button>
+                                </c:when>
+                                <c:otherwise>
+                                    <button type="button" class="customLink" data-modal-button="modal3" data-appl-no="<c:out value="${result.fcltyApplNo}"/>" data-prg-se="FCT"><span>환불요청</span></button>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:if>
+
+                    </c:if>
                 </td>
             </tr>
         </c:forEach>
@@ -588,6 +615,44 @@
                 console.log("code:", request.status);
                 console.log("message:", request.responseText);
                 console.log("error:" + status)
+            }
+        });
+    }
+
+    function fn_fcltyApplCnclAjax(cancelApplNo) {
+        if (!confirm('취소하시겠습니까?')) {
+            return false;
+        }
+
+        console.log(cancelApplNo)
+
+        $.ajax({
+            cache: false,
+            url: './updateFcltyApplCnclAjax.do',
+            type: 'POST',
+            data: {fcltyApplNo: cancelApplNo},
+            success: function (res) {
+                if (res == 1) {
+                    alert("취소 처리되었습니다.");
+                    location.reload();
+                } else if (res == -1) {
+                    alert("신청 정보를 확인할 수 없습니다.");
+                } else if (res == -2) {
+                    alert("이미 취소된 건입니다. 다시 확인해주시기 바랍니다.");
+                } else if (res == -3) {
+                    alert("결제가 완료되었거나 환불 요청이 필요한 상태입니다. 다시 확인해주시기 바랍니다.");
+                } else if (res == -4) {
+                    alert("취소가능일자가 지나 취소가 불가합니다.");
+                } else {
+                    alert("처리된 내역이 없습니다.");
+                }
+            }, // success
+            error: function (request, xhr, status) {
+                //alert(request.responseText);
+                alert("에러가 발생하였습니다.");
+                console.log("code:", request.status);
+                console.log("message:", request.responseText);
+                console.log("error:" + error)
             }
         });
     }

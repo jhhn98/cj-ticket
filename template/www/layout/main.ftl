@@ -13,15 +13,25 @@ LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=5.0">
     <title>청주시 통합예약</title>
+    <meta name="robots" content="index,follow">
+    <meta name="description" content="청주시 통합예약 서비스에서 시설예약, 체험&middot;관광, 교육&middot;강좌, 공연 정보를 한 번에 확인하고 예약하세요.">
+    <meta name="keywords" content="청주시, 청주 예약, 시설예약, 체험예약, 체험&middot;관광예약, 교육강좌, 교육&middot;강좌예약, 공연, 통합예약">
+    <link rel="canonical" href="https://ticket.cheongju.go.kr/www/index.do">
     <link rel="preload" href="/common/font/EDB-R.woff2?260105" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="/common/font/EDB-R.woff?260105" as="font" type="font/woff" crossorigin>
     <link rel="stylesheet" href="/site/www/css/font.css?260105">
     <link rel="stylesheet" href="/common/css/style-reset.css">
     <link rel="stylesheet" href="/site/www/css/common.css?2601050838">
     <link rel="stylesheet" href="/site/www/css/main.css?260105">
+    <meta property="og:site_name" content="청주시 통합예약">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="청주시 통합예약">
+    <meta property="og:description" content="청주시 시설·체험·교육 통합예약 서비스">
+    <meta property="og:url" content="https://ticket.cheongju.go.kr/www/index.do">
+    <meta property="og:image" content="https://ticket.cheongju.go.kr/site/www/images/og-image.png">
 </head>
 <body>
-<h1>청주시 통합예약 메인</h1>
+<h1>청주시 통합예약 서비스</h1>
 <header class="userLogin">
     <h2>통합예약 메뉴 및 보조기능</h2>
     <div class="headerWrapper">

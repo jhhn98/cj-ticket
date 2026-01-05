@@ -8,13 +8,29 @@
 <%
 LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
 %>
-
 <!DOCTYPE html>
 <html lang="kr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=5.0">
-    <title>청주시 통합예약</title>
+    <link rel="canonical" href="https://ticket.cheongju.go.kr/www/sub.do?key=@@{menuInfo.menuNo}">
+    <title>
+        <c:choose>
+            <c:when test="@@{not empty menuInfo and not empty menuInfo.menuNm}">
+                @@{menuInfo.menuNm} | 청주시 통합예약
+            </c:when>
+            <c:otherwise>
+                청주시 통합예약
+            </c:otherwise>
+        </c:choose>
+    </title>
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="@@{menuInfo.menuNm} | 청주시 통합예약">
+    <meta property="og:description"
+          content="청주시 @@{menuInfo.menuNm} 정보를 확인하고 예약하세요.">
+    <meta property="og:url"
+          content="https://ticket.cheongju.go.kr/www/sub.do?key=@@{menuInfo.menuNo}">
+    <meta property="og:site_name" content="청주시 통합예약">
     <link rel="preload" href="/common/font/EDB-R.woff2?260105" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="/common/font/EDB-R.woff?260105" as="font" type="font/woff" crossorigin>
     <link rel="stylesheet" href="/site/www/css/font.css?260105">
@@ -29,7 +45,7 @@ LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
 	<decorator:head/>
 </head>
 <body>
-<h1>청주시 통합예약 서브</h1>
+<h1>@@{menuInfo.menuNm}</h1>
 <div class="bg-circle">
     <div class="circle colorGreen"></div>
     <div class="circle colorBlue"></div>

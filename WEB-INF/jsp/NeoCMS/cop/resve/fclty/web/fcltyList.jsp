@@ -74,7 +74,7 @@
                             <select name="searchInsttNo" id="searchInsttNo0" class="customSelect">
                                 <option value="">전체</option>
                                 <c:forEach var="result" items="${fctWebInsttList}">
-                                    <c:if test="${result.insttNo eq 13}">
+                                    <c:if test="${result.insttNo eq 26}">
                                         <option value="ptf"<c:if test="${fcltySearchVO.searchInsttNo eq 'ptf'}"> selected</c:if>>체육시설과</option>
                                     </c:if>
                                     <option value="<c:out value="${result.insttNo}"/>"<c:if test="${fcltySearchVO.searchInsttNo ne 'ptf' and fcltySearchVO.searchInsttNo eq result.insttNo}"> selected</c:if>><c:out value="${result.insttNm}"/></option>

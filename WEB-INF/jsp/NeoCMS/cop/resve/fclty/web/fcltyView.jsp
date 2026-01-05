@@ -279,7 +279,7 @@
             <span class="stateType <c:out value="${sttusType}"/>"><c:out value="${operSttusMap[fcltyVO.operSttus]}"/></span>
             <strong><c:out value="${fcltyVO.fcltyNm}"/></strong>
             <div class="linkGroup">
-                <c:if test="${fcltyVO.operSttus == 'RCPT_ING'}">
+                <c:if test="${fcltyVO.operSttus == 'RCPT_ING' && fn:contains(fcltyVO.rcptMthdCd, 'ONLIN')}">
                     <a href="./fcltyApplCalendarWebView.do?fcltyNo=<c:out value="${fcltyVO.fcltyNo}"/>&amp;<c:out value="${fcltySearchVO.params}"/><c:out value="${fcltySearchVO.paramsWeb}"/>" class="anchorButton wide line-color-green">신청하기</a>
                 </c:if>
                 <a href="./myPageList.do?key=59" class="anchorButton wide line-color-green">예약확인</a>

@@ -27,33 +27,33 @@
         <span class="p-form__required--icon margin_l_5">필수</span> 표시는 필수 항목 입니다.
     </div>
 
-    <table class="p-table">
-        <caption>시설 일정 등록방법 선택</caption>
-        <colgroup>
-            <col class="w15p">
-            <col />
-        </colgroup>
-        <tbody class="p-table--th-left">
-        <tr>
-            <th scope="row">시설시간 등록방법 <span class="p-form__required--icon margin_l_5">필수</span></th>
-            <td>
-                <div class="p-form-group w20p">
-                    <%-- 시설 일정 등록방법 - PD:시설기간(규칙) / DE:일자별 선택(불규칙) --%>
-                    <span class="p-form-radio">
-                        <input type="radio" name="schdMthdRadio" id="schdMthd1" class="p-form-radio__input" value="PD"<c:if test="${fcltySchdVO.schdMthd == 'PD'}"> checked</c:if>>
-                        <label for="schdMthd1" class="p-form-radio__label">시설기간(규칙 접수)</label>
-                    </span>
+<%--    <table class="p-table">--%>
+<%--        <caption>시설 일정 등록방법 선택</caption>--%>
+<%--        <colgroup>--%>
+<%--            <col class="w15p">--%>
+<%--            <col />--%>
+<%--        </colgroup>--%>
+<%--        <tbody class="p-table--th-left">--%>
+<%--        <tr>--%>
+<%--            <th scope="row">시설시간 등록방법 <span class="p-form__required--icon margin_l_5">필수</span></th>--%>
+<%--            <td>--%>
+<%--                <div class="p-form-group w20p">--%>
+<%--                    &lt;%&ndash; 시설 일정 등록방법 - PD:시설기간(규칙) / DE:일자별 선택(불규칙) &ndash;%&gt;--%>
 <%--                    <span class="p-form-radio">--%>
-<%--                        <input type="radio" name="schdMthdRadio" id="schdMthd2" class="p-form-radio__input" value="DE"<c:if test="${fcltySchdVO.schdMthd == 'DE'}"> checked</c:if>>--%>
-<%--                        <label for="schdMthd2" class="p-form-radio__label">일자별 선택(불규칙 접수)</label>--%>
+<%--                        <input type="radio" name="schdMthdRadio" id="schdMthd1" class="p-form-radio__input" value="PD"<c:if test="${fcltySchdVO.schdMthd == 'PD'}"> checked</c:if>>--%>
+<%--                        <label for="schdMthd1" class="p-form-radio__label">시설기간(규칙 접수)</label>--%>
 <%--                    </span>--%>
-                </div>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+<%--&lt;%&ndash;                    <span class="p-form-radio">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                        <input type="radio" name="schdMthdRadio" id="schdMthd2" class="p-form-radio__input" value="DE"<c:if test="${fcltySchdVO.schdMthd == 'DE'}"> checked</c:if>>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                        <label for="schdMthd2" class="p-form-radio__label">일자별 선택(불규칙 접수)</label>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                    </span>&ndash;%&gt;--%>
+<%--                </div>--%>
+<%--            </td>--%>
+<%--        </tr>--%>
+<%--        </tbody>--%>
+<%--    </table>--%>
 
-    <form:form modelAttribute="fcltySchdVO" id="fcltySchdPdVO" name="fcltySchdPdVO" method="post" action="addFcltySchdPd.do" onsubmit="return fn_addFcltySchdPdCheck(this);" style="display:none;">
+    <form:form modelAttribute="fcltySchdVO" id="fcltySchdPdVO" name="fcltySchdPdVO" method="post" action="addFcltySchdPd.do" onsubmit="return fn_addFcltySchdPdCheck(this);">
         <fieldset>
             <legend>시설 일정 등록</legend>
             <table class="p-table" id="fcltySchdPdTable">
