@@ -7,7 +7,7 @@
         <c:choose>
             <c:when test="@@{!empty loginVO}">
                 <div class="navi_myPage">
-                    <svg><use href="/site/www/images/common/sprite-common-side.svg#icon-user"></use></svg>
+                    <a href="./myPageList.do?key=59"><svg><use href="/site/www/images/common/sprite-common-side.svg#icon-user"></use></svg></a>
                     <div class="navi_linkLayer">
                         <svg><use href="/site/www/images/common/sprite-common-side.svg#icon-arrTop"></use></svg>
                         <a href="./myPageList.do?key=59"><span>마이페이지</span></a>

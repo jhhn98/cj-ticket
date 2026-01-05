@@ -3567,7 +3567,7 @@
   }
   .dataList-program .listWrap.detail table tbody td {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     width: 100%;
     margin: 10px 0 0;
     padding: 5px 20px;
@@ -4060,6 +4060,49 @@
     flex: 0 0 calc(50% - 10px);
     margin: 0 0 10px 10px;
   }
+  .dataList-program .listWrap.detail table tbody td {
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .dataList-program .listWrap.detail table tbody td .mobile-th,.dataList-program .listWrap.detail table .titleArea .mobile-th {
+    flex: 0 0 auto;
+    position:relative;
+    margin:0 20px 3px 0;
+    text-align: left;
+  }
+  .dataList-program .listWrap.detail table tbody td .mobile-th::before {
+    display: block;
+    position: absolute;
+    top: 2px;
+    right: -10px;
+    bottom: 0;
+    width: 1px;
+    height: 14px;
+    margin: auto 0;
+    background: #333;
+  }
+  .dataList-program .listWrap.detail table .titleArea {
+    display: block;
+  }
+  .dataList-program .listWrap.detail table tbody td .mobile-th, .dataList-program .listWrap.detail table .titleArea .mobile-th {
+    display: inline-block;
+  }
+  .dataList-program .listWrap.detail table .tableProgramTitle {
+    color: #666;
+    margin: 5px 0 0;
+  }
+  .dataList-program .listWrap.detail table tbody td.mobile-date {
+    align-items: flex-start;
+
+  }
+  .dataList-program .listWrap.detail table tbody td.mobile-date .mobile-th {
+    flex:0 0 52px;
+  }
+  .dataList-program .listWrap.detail table tbody td.mobile-date .mobile-td {
+    flex:0 0 calc(100% - 100px);
+  }
+  .dataList-program .listWrap.detail table .programDetailInformation{margin:3px 0 0;padding:0 0 0 0;}
+  .dataList-program .listWrap.detail table .programDetailInformation span{white-space:normal;}
 }
 @media all and (max-width: 620px) {
   .program .viewProgram .anchorButton {
@@ -4268,42 +4311,6 @@
   .programSearch .customIconOption {
     flex: 0 0 calc(50% - 8px);
   }
-  .dataList-program .listWrap.detail table tbody td {
-    flex-wrap: wrap;
-    align-items: center;
-  }
-  .dataList-program .listWrap.detail table tbody td .mobile-th,.dataList-program .listWrap.detail table .titleArea .mobile-th {
-    flex: 0 0 auto;
-    position:relative;
-    margin:0 20px 3px 0;
-    text-align: left;
-  }
-  .dataList-program .listWrap.detail table tbody td .mobile-th::before {
-    display: block;
-    position: absolute;
-    top: 2px;
-    right: -10px;
-    bottom: 0;
-    width: 1px;
-    height: 14px;
-    margin: auto 0;
-    background: #333;
-  }
-  .dataList-program .listWrap.detail table .tableProgramTitle {
-    color: #666;
-  }
-  .dataList-program .listWrap.detail table tbody td.mobile-date {
-    align-items: flex-start;
-
-  }
-  .dataList-program .listWrap.detail table tbody td.mobile-date .mobile-th {
-    flex:0 0 52px;
-  }
-  .dataList-program .listWrap.detail table tbody td.mobile-date .mobile-td {
-    flex:0 0 calc(100% - 100px);
-  }
-  .dataList-program .listWrap.detail table .programDetailInformation{margin:10px 0 0;padding:0 0 0 0;}
-  .dataList-program .listWrap.detail table .programDetailInformation span{white-space:normal;}
 }
 
 /*# sourceMappingURL=program.css.map */

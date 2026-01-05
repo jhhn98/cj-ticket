@@ -267,6 +267,8 @@ header .site-name {
 }
 .aside-links span, .aside-links a, .aside-links button {
   display: block;
+  position: relative;
+  z-index: 1;
 }
 .aside-links button {
   margin: -5px 0 0 10px;

@@ -112,12 +112,8 @@
             <div class="tabContentIㄱtem" data-content-key="tab1" id="tab1">
                 <h4 class="noLine">교육정보</h4>
                 <div class="itemWrap">
-                    <table class="table default" data-table-response>
+                    <table class="table default">
                         <caption>상세내용 - 운영기관, 기수(회차), 대상, 장소, 주소, 접수기간, 운영기간, 모집인원, 이용요금, 선별방법, 예약방법, 문의전화, 강의계획서</caption>
-                        <colgroup>
-                            <col style="width:200px">
-                            <col>
-                        </colgroup>
                         <tbody>
                         <tr>
                             <th scope="row" class="first">운영기관</th>

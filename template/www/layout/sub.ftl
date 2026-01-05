@@ -19,7 +19,7 @@ LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
     <link rel="preload" href="/common/font/EDB-R.woff?260105" as="font" type="font/woff" crossorigin>
     <link rel="stylesheet" href="/site/www/css/font.css?260105">
     <link rel="stylesheet" href="/common/css/style-reset.css">
-    <link rel="stylesheet" href="/site/www/css/common.css?260105">
+    <link rel="stylesheet" href="/site/www/css/common.css?2601050838">
     <link rel="stylesheet" href="/site/www/css/sub.css?260105">
     <link rel="stylesheet" href="/site/www/css/contents.css?260105">
     <link rel="stylesheet" href="/site/www/css/program.css?260105">
@@ -57,7 +57,7 @@ LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
                 <c:choose>
                     <c:when test="@@{!empty loginVO}">
                         <li class="myPage">
-                            <a href="./myPageList.do?key=59"><svg><use href="/site/www/images/common/sprite-common-side.svg#icon-user"></use></svg></a><svg><use href="/site/www/images/common/sprite-common-side.svg#icon-user"></use></svg></a>
+                            <a href="./myPageList.do?key=59"><svg><use href="/site/www/images/common/sprite-common-side.svg#icon-user"></use></svg></a>
                             <div class="linkLayer">
                                 <svg><use href="/site/www/images/common/sprite-common-side.svg#icon-arrTop"></use></svg>
                                 <a href="./myPageList.do?key=59"><span>마이페이지</span></a>
