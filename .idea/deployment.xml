@@ -66,6 +66,7 @@
             <excludedPath path="/repository/empty.jsp" />
             <excludedPath path="/repository/propgram_auth_test.jsp" />
             <excludedPath path="/repository/smsTest.jsp" />
+            <excludedPath local="true" path="$PROJECT_DIR$/repository/www/component" />
           </excludedPaths>
         </serverdata>
       </paths>
