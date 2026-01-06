@@ -22,7 +22,7 @@ LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
     <link rel="stylesheet" href="/site/www/css/font.css?260105">
     <link rel="stylesheet" href="/common/css/style-reset.css">
     <link rel="stylesheet" href="/site/www/css/common.css?2601050838">
-    <link rel="stylesheet" href="/site/www/css/main.css?260105">
+    <link rel="stylesheet" href="/site/www/css/main.css?2601061031">
     <meta property="og:site_name" content="청주시 통합예약">
     <meta property="og:type" content="website">
     <meta property="og:title" content="청주시 통합예약">
@@ -280,7 +280,7 @@ LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
                 <h3>알립니다.</h3>
                 <div class="board-tab">
                     <div class="tab-element">
-                        <button type="button" class="tab-button current">
+                        <%--<button type="button" class="tab-button current">
                             <svg class="svgBg">
                                 <use href="/site/www/images/main/sprite-main.svg#icon-comment2" fill="url(/site/www/images/main/sprite-main.svg#comment-bg)"></use>
                             </svg>
@@ -291,7 +291,7 @@ LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
                             <svg class="icon"><use href="/site/www/images/main/sprite-main.svg#icon-notePin"></use></svg>
                             공지사항
                         </span>
-                        </button>
+                        </button>--%>
                         <div class="tab-content">
                             <a href="./sub.do?key=70" class="more"><svg><use href="/site/www/images/main/sprite-main.svg#icon-grid"></use></svg><span>공지사항 더보기</span></a>
 						<c:if test="@@{!empty boardList1}">

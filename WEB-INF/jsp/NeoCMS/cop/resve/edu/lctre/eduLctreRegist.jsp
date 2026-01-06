@@ -31,9 +31,11 @@
             <legend>등록정보 작성</legend>
             <input type="hidden" name="key" value="${key}"/>
             <input type="hidden" name="prgSe" value="EDU"/>
-            <c:forEach var="map" items="${eduLctreVO.paramsMap}">
-                <input type="hidden" name="${map.key}" value="${map.value}"/>
-            </c:forEach>
+            <c:if test="${not empty eduLctreVO.paramsMapOther}">
+                <c:forEach var="map" items="${eduLctreVO.paramsMapOther}">
+                    <input type="hidden" name="${map.key}" value="${map.value}"/>
+                </c:forEach>
+            </c:if>
 
             <table class="p-table">
                 <colgroup>
@@ -518,12 +520,12 @@
                                     maxlength="100"/>
                     </td>
                 </tr>
-                <!-- 온라인인원/대기인원 -->
+                <!-- 모집인원/대기인원 -->
                 <tr>
                     <th scope="row"><label for="onlineCnt">교육인원(대기인원)</label>
                         <span class="p-form__required--icon">필수</span></th>
                     <td>
-                        <span>온라인 인원</span>&nbsp;
+                        <span>모집인원</span>&nbsp;
                         <form:input path="onlineCnt" id="onlineCnt" cssClass="p-input w5p numberonly" maxlength="10"/>
                         명
                         <form:errors path="onlineCnt" cssClass="form_error"/>
@@ -593,9 +595,9 @@
                         <form:input path="telNo" id="telNo" cssClass="p-input w10p" maxlength="11"
                                     placeholder="숫자만 입력"/><br/>
                         <svg width="20" height="25" fill="#202e70" focusable="false"><use xlink:href="/common/images/program/p-icon.svg#info-circle"></use></svg>
-                        <em class="em_black">알림 문자는 시스템 정책에 의해 발신자가 <em class="em_b_red">‘문의전화(대표번호)’</em>로 표기됩니다.</em><br/>
+                        <em class="em_black">알림 문자는 시스템 정책에 의해 발신자가 <em class="em_b_red">‘문의전화(대표번호)’</em>로 표기됩니다. 예시) 0432010000</em><br/>
                         <svg width="20" height="25" fill="#202e70" focusable="false"><use xlink:href="/common/images/program/p-icon.svg#info-circle"></use></svg>
-                        <em class="em_black">휴대폰번호 입력시 추후 문자 발송<em class="em_b_red">(발신자 번호로 사용)</em>이 제한될 수 있습니다.</em>
+                        <em class="em_black">휴대폰번호 입력시 추후 문자 발송<em class="em_b_red">(발신자 번호로 사용)</em>이 제한될 수 있습니다. </em>
                     </td>
                 </tr>
                 <tr>
@@ -1311,14 +1313,14 @@
             }
         }
 
-        // 온라인인원 필수 체크
+        // 모집인원 필수 체크
         if (!frm.onlineCnt.value.trim()) {
-            alert("온라인인원을 입력해주세요.");
+            alert("모집인원을 입력해주세요.");
             frm.onlineCnt.focus();
             return false;
         }
         if (isNaN(frm.onlineCnt.value) || frm.onlineCnt.value < 0) {
-            alert("온라인인원은 0 이상의 숫자를 입력해주세요.");
+            alert("모집인원은 0 이상의 숫자를 입력해주세요.");
             frm.onlineCnt.focus();
             return false;
         }

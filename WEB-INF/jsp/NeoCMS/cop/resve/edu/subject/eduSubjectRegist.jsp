@@ -31,9 +31,11 @@
 		<legend>등록정보 작성</legend>
 		<input type="hidden" name="key" value="${key}"/>
 		<input type="hidden" name="prgSe" value="EDU"/>
-		<c:forEach var="map" items="${eduSubjectVO.paramsMap}">
-		<input type="hidden" name="${map.key}" value="${map.value}"/>
-		</c:forEach>
+		<c:if test="${not empty eduSubjectVO.paramsMapOther}">
+			<c:forEach var="map" items="${eduSubjectVO.paramsMapOther}">
+				<input type="hidden" name="${map.key}" value="${map.value}"/>
+			</c:forEach>
+		</c:if>
 		
 	<table class="p-table">
 		<colgroup>

@@ -33,9 +33,11 @@
             <input type="hidden" name="key" value="${key}"/>
             <input type="hidden" name="prgSe" value="EDU"/>
             <input type="hidden" name="lctreNo" value="${eduLctreVO.lctreNo}"/>
-            <c:forEach var="map" items="${eduLctreVO.paramsMap}">
-                <input type="hidden" name="${map.key}" value="${map.value}"/>
-            </c:forEach>
+            <c:if test="${not empty eduLctreSearchVO.paramsMapOther}">
+                <c:forEach var="map" items="${eduLctreSearchVO.paramsMapOther}">
+                    <input type="hidden" name="${map.key}" value="${map.value}"/>
+                </c:forEach>
+            </c:if>
 
             <table class="p-table">
                 <colgroup>
@@ -642,11 +644,11 @@
                                class="p-input w20p" placeholder="예금주명" maxlength="100"/>
                     </td>
                 </tr>
-                <!-- 온라인인원/대기인원 -->
+                <!-- 모집인원/대기인원 -->
                 <tr>
                     <th scope="row"><label for="onlineCnt">교육인원</label></th>
                     <td>
-                        <span>온라인 인원</span>&nbsp;
+                        <span>모집인원</span>&nbsp;
                         <input type="text" id="onlineCnt" name="onlineCnt" value="${eduLctreVO.onlineCnt}"
                                class="p-input w10p numberonly" maxlength="10"/> 명
                         <span id="error_onlineCnt" class="form_error"></span>
@@ -718,7 +720,7 @@
                         <input type="text" id="telNo" name="telNo" value="<c:out value='${eduLctreVO.telNo}'/>"
                                class="p-input w10p" maxlength="11" placeholder="숫자만 입력"/><br/>
                         <svg width="20" height="25" fill="#202e70" focusable="false"><use xlink:href="/common/images/program/p-icon.svg#info-circle"></use></svg>
-                        <em class="em_black">알림 문자는 시스템 정책에 의해 발신자가 <em class="em_b_red">‘문의전화(대표번호)’</em>로 표기됩니다.</em><br/>
+                        <em class="em_black">알림 문자는 시스템 정책에 의해 발신자가 <em class="em_b_red">‘문의전화(대표번호)’</em>로 표기됩니다. 예시) 0432010000</em><br/>
                         <svg width="20" height="25" fill="#202e70" focusable="false"><use xlink:href="/common/images/program/p-icon.svg#info-circle"></use></svg>
                         <em class="em_black">휴대폰번호 입력시 추후 문자 발송<em class="em_b_red">(발신자 번호로 사용)</em>이 제한될 수 있습니다.</em>
                     </td>
@@ -1572,12 +1574,12 @@
 
         // 교육인원
         if (!frm.onlineCnt.value.trim()) {
-            alert("온라인 인원을 입력해주세요.");
+            alert("모집인원을 입력해주세요.");
             frm.onlineCnt.focus();
             return false;
         }
         if (isNaN(frm.onlineCnt.value) || Number(frm.onlineCnt.value) < 0) {
-            alert("온라인 인원은 0 이상 숫자로 입력해주세요.");
+            alert("모집인원은 0 이상 숫자로 입력해주세요.");
             frm.onlineCnt.focus();
             return false;
         }

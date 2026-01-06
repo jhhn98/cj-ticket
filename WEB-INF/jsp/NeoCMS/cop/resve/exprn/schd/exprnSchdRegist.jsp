@@ -313,7 +313,7 @@
                                             </select>
                                             <span class="p-form__split">:</span>
                                             <select name="<c:out value="${exprnBgnMm}"/>" id="<c:out value="${exprnBgnMm}"/>" class="p-input p-input--auto exprnTm exprnBgnMm" disabled>
-                                                <c:forEach var="i" begin="0" end="59" step="5">
+                                                <c:forEach var="i" begin="0" end="59" step="10">
                                                     <c:set var="mm" value="${tsu:zerofill(i, 2, '0')}"/>
                                                     <option value="<c:out value="${mm}"/>" label="<c:out value="${mm}"/>"<c:if test="${result.exprnBgnMm == mm}"> selected</c:if>/>
                                                 </c:forEach>
@@ -327,7 +327,7 @@
                                             </select>
                                             <span class="p-form__split">:</span>
                                             <select name="<c:out value="${exprnEndMm}"/>" id="<c:out value="${exprnEndMm}"/>" class="p-input p-input--auto exprnTm exprnEndMm" disabled>
-                                                <c:forEach var="i" begin="0" end="59" step="5">
+                                                <c:forEach var="i" begin="0" end="59" step="10">
                                                     <c:set var="mm" value="${tsu:zerofill(i, 2, '0')}"/>
                                                     <option value="<c:out value="${mm}"/>" label="<c:out value="${mm}"/>"<c:if test="${result.exprnEndMm == mm}"> selected</c:if>/>
                                                 </c:forEach>
@@ -570,6 +570,7 @@
 
         // PD 화면 보임
         $('#exprnSchdPdVO').show();
+        $('#exprnSchdPdVO').find('input, select').prop('disabled', false);
 
         // PD dayAll checkbox
         <c:if test="${fn:length(exprnTmListByPd) > 0}">

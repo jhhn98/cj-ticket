@@ -101,7 +101,7 @@
                         </div>
                         <c:if test="${fn:length(exprnDeListByPd) == 0}">
                             <div class="p-form-group w20p">
-                                <input type="text" name="exprnBgnDeFmt" style="width:100px;" class="p-input p-input--auto" placeholder="yyyy-MM-dd" disabled />
+                                <input type="text" name="exprnBgnDeFmt" style="width:100px;" class="p-input p-input--auto" placeholder="yyyy-MM-dd" />
                                 <span class="p-input__addon">
                                     <button type="button" class="p-input__item" title="시작일 선택" onclick="getCalendar(document.exprnSchdPdVO.exprnBgnDeFmt);"> <!--getCalendar(document.bbsNttForm.start_date);-->
                                         <svg width="14" height="16" fill="#888" focusable="false">
@@ -110,7 +110,7 @@
                                     </button>
                                 </span>
                                 <span class="p-form__split">~</span>
-                                <input type="text" name="exprnEndDeFmt" style="width:100px;" class="p-input p-input--auto" placeholder="yyyy-MM-dd" disabled />
+                                <input type="text" name="exprnEndDeFmt" style="width:100px;" class="p-input p-input--auto" placeholder="yyyy-MM-dd" />
                                 <span class="p-input__addon">
                                     <button type="button" class="p-input__item" title="종료일 선택" onclick="getCalendar(document.exprnSchdPdVO.exprnEndDeFmt);"> <!--getCalendar(document.bbsNttForm.start_date);-->
                                         <svg width="14" height="16" fill="#888" focusable="false">
@@ -567,22 +567,9 @@
     // 등록방법 PD 초기화면 set
     <c:if test="${exprnSchdVO.schdMthd == 'PD'}">
 
-        // PD disabled false
+        // PD 화면 보임
         $('#exprnSchdPdVO').show();
         $('#exprnSchdPdVO').find('input, select').prop('disabled', false);
-
-        // PD 점심시간 등록여부에 따른 disabled 설정
-        $('#exprnSchdPdVO input[name=lunchYn]').on("change", function () {
-            if ($('input[name=lunchYn]:checked').length > 0) {
-                $('select[name=lunchBgnHh]').prop('disabled', false);
-                $('select[name=lunchEndHh]').prop('disabled', false);
-            } else {
-                $('select[name=lunchBgnHh]').val('');
-                $('select[name=lunchEndHh]').val('');
-                $('select[name=lunchBgnHh]').prop('disabled', true);
-                $('select[name=lunchEndHh]').prop('disabled', true);
-            }
-        });
 
         // PD dayAll checkbox
         <c:if test="${fn:length(exprnTmListByPd) > 0}">
@@ -601,18 +588,36 @@
 
     // 등록방법 DE 초기화면 set
     <c:if test="${exprnSchdVO.schdMthd == 'DE'}">
-        <%-- DE disabled false --%>
+
+        // DE 화면 보임
         $('#exprnSchdDeVO').show();
-        $('#exprnSchdDeVO').find('input, select').prop('disabled', false);
+
         if($('#exprnSchdDeVO #exprnDeList div').length > 0) {
+            // 체험일자 있으면 등록 안내 문구 숨김
             $('#exprnSchdDeVO #exprnDeWarning').hide();
             $('#exprnSchdDeVO #exprnDeList').show();
         } else {
+            // 체험일자 없으면 등록 안내 문구 표출('체험일자를 지정해주세요.')
             $('#exprnSchdDeVO #exprnDeWarning').show();
             $('#exprnSchdDeVO #exprnDeList').hide();
         }
+
+        // 시간 등록되어있는 회차만 disalbed false
         $('#exprnSchdDeVO input.useYn:not(:checked)').closest('div').find('input:not(.useYn), select').prop('disabled', true);
     </c:if>
+
+        // PD 점심시간 체크여부에 따른 disabled 설정
+        $('#exprnSchdPdVO input[name=lunchYn]').on("change", function () {
+            if ($('input[name=lunchYn]:checked').length > 0) {
+                $('select[name=lunchBgnHh]').prop('disabled', false);
+                $('select[name=lunchEndHh]').prop('disabled', false);
+            } else {
+                $('select[name=lunchBgnHh]').val('');
+                $('select[name=lunchEndHh]').val('');
+                $('select[name=lunchBgnHh]').prop('disabled', true);
+                $('select[name=lunchEndHh]').prop('disabled', true);
+            }
+        });
     })
 
     // 등록방법 선택(라디오버튼)에 따른 화면 set
@@ -621,13 +626,11 @@
         // 등록방법 PD 선택
         if ($(this).val() == 'PD') {
 
-            // DE 화면 숨김 / disabled true
+            // DE 화면 숨김
             $('#exprnSchdDeVO').hide();
-            $('#exprnSchdDeVO').find('input, select').prop('disabled', true);
 
-            // PD 화면 보임 / disabled false
+            // PD 화면 보임
             $('#exprnSchdPdVO').show();
-            $('#exprnSchdPdVO').find('input, select').prop('disabled', false);
             if($('#exprnSchdPdVO #exprnTimeTable').find('input.useYn').length > 0) {
                 $('#exprnSchdPdVO #dayAllCheck').show();
             }
@@ -642,24 +645,19 @@
         // 등록방법 DE 선택
         else if ($(this).val() == 'DE') {
 
-            // PD 화면 숨김 / disabled true
+            // PD 화면 숨김
             $('#exprnSchdPdVO').hide();
-            $('#exprnSchdPdVO').find('input, select').prop('disabled', true);
             $('#exprnSchdPdVO #dayAllCheck').hide();
 
-            // DE 화면 보임 / disabled false
+            // DE 화면 보임
             $('#exprnSchdDeVO').show();
-            $('#exprnSchdDeVO').find('input, select').prop('disabled', false);
             $('#exprnSchdDeVO input.useYn:not(:checked)').closest('div').find('input:not(.useYn), select').prop('disabled', true);
         }
 
         // 등록방법 null이면 모두 숨김
         else {
             $('.exprnSchdPdVO').hide();
-            $('#exprnSchdPdVO').find('input, select').prop('disabled', true);
-
             $('.exprnSchdDeVO').hide();
-            $('#exprnSchdDeVO').find('input, select').prop('disabled', true);
         }
     });
 

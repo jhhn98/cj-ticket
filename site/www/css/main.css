@@ -1682,7 +1682,7 @@ main::before {
   display: block;
 }
 .boardGroup .tab-content {
-  display: none;
+  /*display: none;*/
   position: absolute;
   top: 0;
   left: 0;
@@ -1711,10 +1711,17 @@ main::before {
 .boardGroup .tab-content li a {
   display: block;
   position: relative;
-  padding: 25px 164px 25px 0;
+  padding: 20px 164px 22px 0;
   color: #515862;
   font-size: 24px;
   line-height: 26px;
+}
+.boardGroup .tab-content li a span {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .boardGroup .tab-content li a em {
   display: block;
@@ -2546,7 +2553,7 @@ main::before {
   }
   .boardGroup {
     width: 100%;
-    height: 280px;
+    height: auto;
     margin: 0;
   }
   .boardGroup h3 {
@@ -2556,12 +2563,16 @@ main::before {
     line-height: 24px;
   }
   .boardGroup .more {
+    top: -45px;
     width: 36px;
     height: 36px;
   }
   .boardGroup .more svg {
     flex: 0 0 14px;
     height: 14px;
+  }
+  .boardGroup .board-tab {
+    display: block;
   }
   .boardGroup .board-tab .tab-element:first-child {
     margin: 0;
@@ -2590,7 +2601,11 @@ main::before {
     line-height: 18px;
   }
   .boardGroup .tab-content {
-    padding: 45px 0 0;
+    position: relative;
+    top: initial;
+    left: initial;
+    right: initial;
+    padding: 0;
   }
   .boardGroup .tab-content li {
     padding: 0 0 0 15px;
