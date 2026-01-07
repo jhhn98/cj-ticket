@@ -22,7 +22,7 @@ LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
     <link rel="stylesheet" href="/site/www/css/font.css?260105">
     <link rel="stylesheet" href="/common/css/style-reset.css">
     <link rel="stylesheet" href="/site/www/css/common.css?2601050838">
-    <link rel="stylesheet" href="/site/www/css/main.css?2601061031">
+    <link rel="stylesheet" href="/site/www/css/main.css?260107">
     <meta property="og:site_name" content="청주시 통합예약">
     <meta property="og:type" content="website">
     <meta property="og:title" content="청주시 통합예약">
@@ -168,7 +168,7 @@ LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
                                     </div>
                                 </div>
                             </div>
-							
+
 							<jsp:include page="/repository/common/mapArea.jsp" />
 							
                         </div>
@@ -197,13 +197,23 @@ LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
                                     <em class="count"><i>...</i><svg><use href="/site/www/images/main/sprite-main.svg#icon-comment-arr"></use></svg></em>
                                 </span>
                             </label>
-                            <a href="./selectPblprfrApiList.do?key=27" class="label category4"><span>공연&middot;영화</span></a>
-                            <a href="./sub.do?key=60" class="label category5"><span>행정서비스</span></a>
+                            <button type="submit">
+                                <svg><use href="/site/www/images/main/sprite-main.svg#icon-search-normal"></use></svg>
+                                검색
+                            </button>
                         </div>
                     </li>
                     <li class="state">
-                        <strong class="title">예약상태 선택<span>Step3</span></strong>
-                        <div class="stateWrap">
+                        <strong class="title">바로가기</strong>
+                        <a href="./selectPblprfrApiList.do?key=27" class="label category4">
+                            <span>공연&middot;영화</span>
+                            <p>각종 공연&middot;영화 정보를 확인하세요.</p>
+                        </a>
+                        <a href="./sub.do?key=60" class="label category5">
+                            <span>행정서비스</span>
+                            <p>다양한 행정서비스를 확인하세요.</p>
+                        </a>
+                        <!--<div class="stateWrap">
                             <div class="radioWrap">
                                 <label for="STATE_KEY1">
                                     <input type="radio" id="STATE_KEY1" name="searchOperSttus" value="">
@@ -222,11 +232,8 @@ LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
                                 <svg><use href="/site/www/images/main/sprite-main.svg#icon-comment"></use></svg>
                                 <span id="searchTxt">지역과 분류를 선택해주세요.<span>
                             </p>
-                            <button type="submit">
-                                <svg><use href="/site/www/images/main/sprite-main.svg#icon-search-normal"></use></svg>
-                                검색
-                            </button>
-                        </div>
+
+                        </div>-->
                     </li>
                 </ol>
             </fieldset>
@@ -374,7 +381,7 @@ LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
 <script src="/lib/slick/slick.min.js"></script>
 <script src="/site/www/js/commonFunction.js?260105"></script>
 <script src="/site/www/js/mainFunction.js?260105"></script>
-<script src="/site/www/js/mainSearch.js?260105"></script>
+<script src="/site/www/js/mainSearch.js?260107"></script>
 
 </body>
 </html>

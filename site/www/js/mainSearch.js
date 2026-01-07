@@ -7,10 +7,10 @@ function fn_searchMainSubmit(obj) {
 		return false;
 	}
 	
-	if( !$('input[name="searchOperSttus"]').is(':checked') ) {
+	/*if( !$('input[name="searchOperSttus"]').is(':checked') ) {
 		alert("예약상태 선택값을 선택해 주세요");
 		return false;
-	}
+	}*/
 	
 	var actionUrl = "";
 	var searchKey = "";
