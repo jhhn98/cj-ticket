@@ -16,7 +16,7 @@
     <link rel="stylesheet" type="text/css" href="/common/css/default.css" />
     <link rel="stylesheet" type="text/css" href="/common/css/program.css" />
     <script src="/common/js/program.js"></script>
-    <title>${menuInfo.cntntsNm} 수정</title>
+    <title>${menuInfo.cntntsNm} > 체험 일정 수정</title>
 </head>
 <body>
 

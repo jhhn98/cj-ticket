@@ -29,7 +29,7 @@
 <div class="contents">
     <form name="ipBlock" id="ipBlock" method="post" action="./updateIpBlock.do" onsubmit="return validate()" >
     <input type="hidden" name="siteId" id="siteId" value="<c:out value="${mngSiteId}"/>" />
-    <ul class="ipSetList marginTop_10 marginBottom_10">
+    <ul class="ipSetList marginTop_10 marginBottom_10 scroll_view">
         <li class="ipSet-element">
             <div class="label-title">
                 <input id="ipTy1" name="ipBlockMode" value="allow" type="radio" ${ipBlockMode eq 'allow' ?"checked=\"checked\"":""}>

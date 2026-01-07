@@ -16,7 +16,7 @@
     <link rel="stylesheet" type="text/css" href="/common/css/default.css" />
     <link rel="stylesheet" type="text/css" href="/common/css/program.css" />
     <script src="/common/js/program.js"></script>
-    <title>${menuInfo.cntntsNm} 등록</title>
+    <title>${menuInfo.cntntsNm} > 신청자 정보 등록</title>
 </head>
 <body>
 
@@ -50,8 +50,8 @@
                 <th scope="row">모집상태</th>
                 <td><c:out value="${operSttusMap[exprnVO.operSttus]}"/></td>
                 <th scope="row">신청/모집</th>
-                    <c:out value="${exprnVO.totResveCnt}/${exprnVO.totRcritCnt}"/>
                 <td colspan="3">
+                    <c:out value="${exprnVO.totResveCnt}/${exprnVO.totRcritCnt}"/>
                 </td>
             </tr>
             <tr>
@@ -144,14 +144,10 @@
                 <tr>
                     <th scope="row"><form:label path="birthDe">생년월일</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>
                     <td>
-                        <div class="p-form-group w10p">
-                            <input type="text" name="birthDe" id="birthDe" value="<c:out value="${tsu:toDateFormat(exprnApplVO.birthDe, 'yyyyMMdd', 'yyyy-MM-dd')}"/>" style="width: 100px;" class="p-input" placeholder="yyyy-MM-dd" readonly/>
-                            <span class="p-input__addon">
-                                <button type="button" class="p-input__item" id="drwtDeBtn" title="생년월일 선택" onclick="getCalendar(document.exprnApplVO.birthDe);"> <!--getCalendar(document.bbsNttForm.start_date);-->
-                                    <svg width="14" height="16" fill="#888" focusable="false">
-                                        <use xlink:href="/common/images/program/p-icon.svg#calendar-alt"></use>
-                                    </svg>
-                                </button>
+                        <div class="p-form-group p-date w10p" data-date="datepicker" data-date-start-view="3">
+                            <input type="text" name="birthDe" id="birthDe" value="<c:out value="${tsu:toDateFormat(exprnApplVO.birthDe, 'yyyyMMdd', 'yyyy-MM-dd')}"/>" class="p-input" placeholder="yyyy-MM-dd"/>
+                            <span class="p-input__split">
+                                <button type="button" class="p-input__item p-date__icon">달력 열기</button>
                             </span>
                         </div>
                     </td>
@@ -342,7 +338,7 @@
 
     function fn_addExprnCheck(form) {
 
-        var regexDate = RegExp(/^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/);
+        var regexDate = RegExp(/^(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/);
         var regPhone = /^01[016789]-?\d{3,4}-?\d{4}$/;
         var regEmail = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 
@@ -376,7 +372,7 @@
             return false;
         } else {
             if (!regexDate.test(form.birthDe.value)) {
-                alert("생년월일은 yyyy-MM-dd 형식으로 입력해주세요.");
+                alert("생년월일(yyyy-MM-dd)을 확인해주세요.");
                 form.birthDe.focus();
                 return false;
             }

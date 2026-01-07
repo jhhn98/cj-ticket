@@ -120,32 +120,6 @@
 
 </div>
 
-<script src="<c:url value='/cmm/validator.do'/>"></script>
-<validator:javascript formName="dscnt" staticJavascript="false" xhtml="true" cdata="false"/>
-<spring:hasBindErrors name="dscnt">
-    <script nonce="NEOCMSSCRIPT">
-        <c:forEach items="${errors.allErrors}" var="error" varStatus="status">
-        <c:if test="${status.first}">
-        <c:set var="errMsg"><spring:message code="${error.code}" arguments="${error.arguments}" /></c:set>
-        alert("<c:out value="${errMsg}"/>");
-        </c:if>
-        </c:forEach>
-    </script>
-</spring:hasBindErrors>
-<c:if test="${!empty message}">
-    <script nonce="NEOCMSSCRIPT">
-        function fn_check_message() {
-            alert("<c:out value='${message}'/>");
-            <c:if test="${!empty fieldName}">
-            $("#<c:out value="${fieldName}"/>").focus();
-            </c:if>
-        }
-        $(window).load(function() {
-            fn_check_message();
-        });
-    </script>
-</c:if>
-
 <script>
 
     function fn_addDscntCheck(form){

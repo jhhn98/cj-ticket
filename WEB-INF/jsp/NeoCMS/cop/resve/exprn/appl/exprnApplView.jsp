@@ -16,7 +16,7 @@
     <link rel="stylesheet" type="text/css" href="/common/css/default.css" />
     <link rel="stylesheet" type="text/css" href="/common/css/program.css" />
     <script src="/common/js/program.js"></script>
-    <title>${menuInfo.cntntsNm} 상세보기</title>
+    <title>${menuInfo.cntntsNm} > 신청자 정보 상세보기</title>
 </head>
 <body>
 
