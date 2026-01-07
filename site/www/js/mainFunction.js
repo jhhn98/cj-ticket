@@ -276,6 +276,7 @@ function handleSelectMap(){
         resetDong()
         clearSelection()
         clearDetailSelection()
+        loadResveCnt();
     })
 }
 function applyProgramFilter() {
