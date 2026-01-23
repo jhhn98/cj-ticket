@@ -1,7 +1,9 @@
+<%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="tsu" uri="http://www.hanshinit.co.kr/jstl/tagStringUtil" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 
 <html lang="ko">
@@ -92,7 +94,7 @@
         <tr>
             <th scope="row" class="first">신청인원</th>
             <td colspan="3">
-                <fmt:formatNumber value="${tsu:xssNumberFilter(fcltyApplVO.useCnt)}" pattern="#,###"/> 명
+                <fmt:formatNumber value="${tsu:xssNumberFilter(fcltyApplVO.useCnt)}" pattern="#,##0"/> 명
             </td>
         </tr>
     </c:if>
@@ -120,18 +122,20 @@
             <ul>
                 <li>
                     <strong>이용요금</strong>
-                    <span><fmt:formatNumber value="${tsu:xssNumberFilter(fcltyApplVO.fcltyAmt)}" pattern="#,###"/>원</span>
+                    <span><fmt:formatNumber value="${tsu:xssNumberFilter(fcltyApplVO.fcltyAmt)}" pattern="#,##0"/>원</span>
                 </li>
-                <li>
-                    <strong>할인(국가유공자감면)</strong>
-                    <span>-<fmt:formatNumber value="${tsu:xssNumberFilter(fcltyApplVO.dscntAmt)}" pattern="#,###"/>원</span>
-                </li>
+                <c:if test="${fcltyVO.dscntUseYn eq 'Y' and fcltyApplVO.dscntAmt > 0}">
+                    <li>
+                        <strong>할인<c:out value="${(not empty fcltyApplVO.dscntCd) ? ('(' += dscntSeMap[fn:trim(fcltyApplVO.dscntCd)] += ')') : ''}"/></strong>
+                        <span>-<fmt:formatNumber value="${tsu:xssNumberFilter(fcltyApplVO.dscntAmt)}" pattern="#,##0"/>원</span>
+                    </li>
+                </c:if>
             </ul>
         </c:if>
 
         <p class="sumAmount">
             <strong>총 결제금액</strong>
-            <span><fmt:formatNumber value="${tsu:xssNumberFilter(fcltyApplVO.totalPayAmt)}" pattern="#,###"/>원</span>
+            <span><fmt:formatNumber value="${tsu:xssNumberFilter(fcltyApplVO.totalPayAmt)}" pattern="#,##0"/>원</span>
         </p>
     </div>
 </div>

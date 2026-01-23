@@ -24,7 +24,8 @@
     <c:set var="fcltyEndHm" value="${tsu:toDateFormat(result.fcltyEndHm, 'HHmm', 'HH:mm')}"/>
     <li>
         <label for="time<c:out value="${i}"/>" class="customCheckBox<c:out value="${disabledClass}"/>">
-            <input type="checkbox" name="fcltySchdNo" id="time<c:out value="${i}"/>" value="<c:out value="${result.fcltySchdNo}"/>"<c:out value="${disabledClass}"/> data-tm-interval="<c:out value="${result.tmInterval}"/>"/>
+            <input type="checkbox" name="fcltySchdNo" id="time<c:out value="${i}"/>" value="<c:out value="${result.fcltySchdNo}"/>"
+                   data-time-amt="<c:out value="${fcltyVO.amtMthd eq 'S' ? fcltyVO.fcltyAmt : result.timeAmt}"/>"<c:out value="${disabledClass}"/> data-tm-interval="<c:out value="${result.tmInterval}"/>"/>
             <span class="customStyle">
                 <i class="checkbox"></i>
                 <span id="timeText<c:out value="${result.fcltySchdNo}"/>"><c:out value="${fcltyBgnHm}"/> ~ <c:out value="${fcltyEndHm}"/></span>

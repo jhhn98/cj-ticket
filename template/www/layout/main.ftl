@@ -8,7 +8,7 @@
 LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
 %>
 <!DOCTYPE html>
-<html lang="kr">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=5.0">
@@ -21,7 +21,7 @@ LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
     <link rel="preload" href="/common/font/EDB-R.woff?260105" as="font" type="font/woff" crossorigin>
     <link rel="stylesheet" href="/site/www/css/font.css?260105">
     <link rel="stylesheet" href="/common/css/style-reset.css">
-    <link rel="stylesheet" href="/site/www/css/common.css?2601050838">
+    <link rel="stylesheet" href="/site/www/css/common.css?260123">
     <link rel="stylesheet" href="/site/www/css/main.css?260107">
     <meta property="og:site_name" content="청주시 통합예약">
     <meta property="og:type" content="website">
@@ -94,7 +94,7 @@ LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
                             <div class="form-wrap">
                                 <div class="inner-wrap">
                                     <svg class="srcIcon"><use href="/site/www/images/main/sprite-main.svg#icon-searchImg"></use></svg>
-                                    <input type="text" title="검색어 입력" placeholder="어떤 예약을 도와드릴까요?" name="searchKrwd" id="searchKrwd" />
+                                    <input type="text" title="검색어 입력" placeholder="어떤 예약을 도와드릴까요?" name="searchKrwd"/>
                                     <button type="submit"><svg><use href="/site/www/images/main/sprite-main.svg#icon-search-visual"></use></svg><span>검색버튼</span></button>
                                 </div>
                             </div>

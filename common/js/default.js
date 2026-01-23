@@ -98,7 +98,7 @@ function fn_isEmpty( frm, fieldNm ) {
 function fn_numChk( obj ) {
 	if ( /[^0-9]/gi.test(obj.value) ) {
 		alert('숫자만 입력 가능합니다.');
-		obj.value = '';
+		obj.value = '0';
 		obj.focus();
 		return false;
 	}

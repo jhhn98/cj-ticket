@@ -117,8 +117,6 @@
                     </th>
                     <td>
                         <c:forEach var="result" items="${slctMthdList}" varStatus="status">
-                            <%-- 추첨 숨김처리 --%>
-                            <c:if test="${result.code ne 'DRWLT'}">
                             <span class="p-form-radio">
                                 <form:radiobutton path="slctMthdCd"
                                                   id="slctMthdCd${status.count}"
@@ -128,7 +126,6 @@
                                     <c:out value="${result.codeNm}"/>
                                 </label>
                             </span>
-                            </c:if>
                         </c:forEach>
                     </td>
                 </tr>
@@ -504,6 +501,8 @@
                                 <label for="pay${sts.index}" class="p-form-checkbox__label"><c:out value="${pay.codeNm}"/></label>
                             </span>
                         </c:forEach>
+                        <br/><svg width="20" height="25" fill="#202e70" focusable="false"><use xlink:href="/common/images/program/p-icon.svg#info-circle"></use></svg>
+                        <em class="em_black margin_t_5">유료 결제 사용을 위해서는 토스페이먼츠와 별도 계약 후 상점ID(MID)를 발급받아야 합니다.</em>
                     </td>
                 </tr>
                 <!-- 무통장입금 선택시 -->

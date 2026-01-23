@@ -361,7 +361,7 @@
 		<form name="bbsNttDelete" id="bbsNttDelete" method="post" onsubmit="return fn_deleteBbsNttOk()" action="./deleteBbsNtt.do<c:out value="@@{paramValue}"/>">
 			<fieldset>
 				<legend><c:out value="@@{bbs.bbsNm}"/> 게시물삭제</legend>
-				<select name="deleteResn" id="deleteResn" class="p-input p-input--auto"  >
+				<select name="deleteResn" id="deleteResn" class="p-input p-input--auto" title="삭제 사유 선택">
 					<c:forEach var="dr" items="@@{deleteResn}" varStatus="status">
 						<option value="@@{dr.codeNm}"><c:out value="@@{dr.codeNm}"/></option>
 					</c:forEach>

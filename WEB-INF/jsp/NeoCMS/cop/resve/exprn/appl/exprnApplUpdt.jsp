@@ -237,7 +237,7 @@
             <tr>
                 <th scope="row">신청일시</th>
                 <td colspan="7">
-                    <c:out value="${tsu:toDateFormat(exprnApplVO.applDtMs, 'yyyyMMddHHmmssSS', 'yyyy-MM-dd HH:mm:ss:SS')}"/>
+                    <c:out value="${tsu:toDateFormat(fn:substring(exprnApplVO.applDtMs, 0, 16), 'yyyyMMddHHmmssSS', 'yyyy-MM-dd HH:mm:ss.SS')}"/>
                 </td>
             </tr>
             <tr>

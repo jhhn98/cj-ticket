@@ -112,17 +112,18 @@
     </div>
 
     <table class="p-table p-table--bordered">
-        <caption>시설 신청 목록 - 번호, 예약번호, 신청자, 생년월일, 성별, 연락처, 신청일시, 개인/단체 여부, 인원, 시설일자, 결제상태, 예약상태 등 제공</caption>
+        <caption>시설 신청 목록 - 번호, 예약번호, 예약시설, 신청자, 생년월일, 성별, 연락처, 신청일시, 개인/단체 여부, 인원, 시설일자, 결제상태, 예약상태 등 제공</caption>
         <colgroup>
-<%--            <col style="width:20px">--%>
+            <col style="width:20px">
             <col style="width:50px">
-            <col style="width:90px">
+            <col style="width:100px">
+            <col style="width:100px">
             <col style="width:60px">
             <col style="width:50px">
             <col style="width:20px">
             <col style="width:70px">
             <col style="width:50px">
-            <col style="width:100px">
+            <col style="width:60px">
             <col style="width:30px">
             <col style="width:60px">
             <col style="width:60px">
@@ -131,9 +132,10 @@
         </colgroup>
         <thead>
         <tr>
-<%--            <th scope="col">선택</th>--%>
+            <th scope="col">선택</th>
             <th scope="col">번호</th>
             <th scope="col">예약번호</th>
+            <th scope="col">[운영기관]<br>예약시설명</th>
             <th scope="col">신청자</th>
             <th scope="col">생년월일</th>
             <th scope="col">성별</th>
@@ -151,23 +153,29 @@
         <c:set var="currentPageStartNo" value="${paginationInfo.currentPageStartNo}" />
         <c:forEach var="result" items="${fcltyApplList}">
             <tr>
-<%--                <td class="p-table__checkbox">--%>
-<%--                    <span class="p-form-checkbox p-form-checkbox--single">--%>
-<%--                        <input type="checkbox" name="fcltyApplNoArr" id="fcltyApplNo<c:out value="${result.fcltyApplNo}"/>" class="p-form-checkbox__input" value="<c:out value="${result.fcltyApplNo}"/>">--%>
-<%--                        <label for="fcltyApplNo<c:out value="${result.fcltyApplNo}"/>" class="p-form-checkbox__label">시설 신청 <c:out value="${result.fcltyApplNo}"/>번 </label>--%>
-<%--                    </span>--%>
-<%--                </td>--%>
+                <td class="p-table__checkbox">
+                    <span class="p-form-checkbox p-form-checkbox--single">
+                        <input type="checkbox" name="fcltyApplNoArr" data-sttus="<c:out value="${result.rsvSttusCd}"/>" id="fcltyApplNo<c:out value="${result.fcltyApplNo}"/>" class="p-form-checkbox__input" value="<c:out value="${result.fcltyApplNo}"/>">
+                        <label for="fcltyApplNo<c:out value="${result.fcltyApplNo}"/>" class="p-form-checkbox__label">시설 신청 <c:out value="${result.fcltyApplNo}"/>번 </label>
+                    </span>
+                </td>
                 <td>${currentPageStartNo}</td>
                 <td>
                     <a href="./selectFcltyApplView.do?fcltyApplNo=<c:out value="${result.fcltyApplNo}"/>&amp;<c:out value="${fcltyApplSearchVO.params}"/><c:out value="${fcltyApplSearchVO.paramsMng}"/><c:out value="${fcltySearchVO.fcltyParamsMng}"/>">
                         <c:out value="${result.fcltyApplId}"/>
                     </a>
                 </td>
+                <td>
+                    <c:set var="insttNo" value="instt${result.insttNo}"/>
+                    [<c:out value="${fctInsttMap[insttNo]}"/>]
+                    <br>
+                    <c:out value="${result.fcltyNm}"/>
+                </td>
                 <td><c:out value="${result.applNm}"/></td>
                 <td><c:out value="${tsu:toDateFormat(result.birthDe, 'yyyyMMdd', 'yyyy-MM-dd')}"/></td>
                 <td>
                     <c:if test="${result.genderSe == 'M'}">남</c:if>
-                    <c:if test="${result.genderSe == 'W'}">여</c:if>
+                    <c:if test="${result.genderSe == 'F'}">여</c:if>
                 </td>
                 <td>
                     <c:out value="${result.mobileNo1}"/>-<c:out value="${result.mobileNo2}"/>-<c:out value="${result.mobileNo3}"/>
@@ -178,14 +186,26 @@
                 </td>
                 <td>
                     <c:if test="${empty result.grpNm}">개인</c:if>
-                    <c:if test="${!empty result.grpNm}"><c:out value="${result.grpNm}"/></c:if>
+                    <c:if test="${!empty result.grpNm}">단체(<c:out value="${result.grpNm}"/>)</c:if>
                 </td>
                 <td><c:out value="${result.useCnt}"/></td>
                 <td>
                     <c:out value="${tsu:toDateFormat(result.fcltyDe, 'yyyyMMdd', 'yyyy-MM-dd')}"/><br/>
                     <c:out value="${tsu:toDateFormat(result.fcltyBgnHm, 'HHmm', 'HH:mm')}"/> ~ <c:out value="${tsu:toDateFormat(result.fcltyEndHm, 'HHmm', 'HH:mm')}"/>
                 </td>
-                <td><c:out value="${rsvSttusMap[result.rsvSttusCd]}"/></td>
+                <td>
+                    <c:out value="${rsvSttusMap[result.rsvSttusCd]}"/>
+                    <c:choose>
+                        <c:when test="${!empty result.drwtWinYn}">
+                            <br>추첨완료
+                            <c:if test="${result.drwtWinYn eq 'Y'}">
+                                <span class="em_blue">(당첨)</span>
+                            </c:if>
+                            <c:if test="${result.drwtWinYn eq 'N'}">
+                                <span class="em_gray">(미당첨)</span>
+                            </c:if>
+                        </c:when>
+                    </c:choose>
                 <td>
                     <%--TODOSDB: 감면관련 상태값 추가--%>
                     <c:out value="${paySttusMap[result.paySttusCd]}"/>
@@ -207,23 +227,27 @@
     </table>
 
     <div class="row margin_b_30">
-        <div class="col-7 left">
-            <%--<button type="button" class="p-button darken" onclick="fn_fcltyApplNoCheckAll()">전체선택</button>
-            <select name="paySttus" id="" class="p-input p-input--auto">
-                <option value="">결제상태</option>
-                <c:forEach var="result" items="${paySttusList}">
-                    <option value="<c:out value="${result.code}"/>"><c:out value="${result.codeNm}"/></option>
-                </c:forEach>
-            </select>
-            <button type="button"  class="p-button edit" onclick="fn_fcltyApplSttusChange('paySttus')">변경</button>
-            <span class="p-form__split-short">/</span>
+        <div class="col-9 left">
+            <button type="button" class="p-button darken" onclick="fn_fcltyApplNoCheckAll()">전체선택</button>
+
             <select name="rsvSttus" id="" class="p-input p-input--auto">
                 <option value="">예약상태</option>
                 <c:forEach var="result" items="${rsvSttusList}">
                     <option value="<c:out value="${result.code}"/>"><c:out value="${result.codeNm}"/></option>
                 </c:forEach>
             </select>
-            <button type="button"  class="p-button edit" onclick="fn_fcltyApplSttusChange('rsvSttus')">변경</button>--%>
+            <button type="button" class="p-button edit" onclick="fn_fcltyApplRsvSttusChange()">변경</button>
+
+            <span class="p-form__split-short">/</span>
+
+            <select name="paySttus" id="" class="p-input p-input--auto">
+                <option value="">결제상태</option>
+                <c:forEach var="result" items="${paySttusList}">
+                    <option value="<c:out value="${result.code}"/>"><c:out value="${result.codeNm}"/></option>
+                </c:forEach>
+            </select>
+            <button type="button" class="p-button edit" onclick="fn_fcltyApplPaySttusChange()">변경</button>
+
         </div>
         <div class="col-10 center">
             <div class="p-pagination">
@@ -232,14 +256,67 @@
                 </div>
             </div>
         </div>
-        <div class="col-7 right">
-            <%--<a href="./downloadFcltyApplXls.do" class="p-button p-button--combine excel" onclick="fn_downloadFcltyApplXls(this.href); return false;">엑셀다운로드</a>
-            <a href="./addFcltyApplView.do?<c:out value="${fcltySearchApplVO.params}"/><c:out value="${fcltyApplSearchVO.paramsMng}"/>" class="p-button write">등록</a>--%>
+        <div class="col-5 right">
+            <button type="button" class="p-button p-button--combine excel excel-modal">엑셀다운로드</button>
+<%--            <a href="./downloadFcltyApplXls.do" class="p-button p-button--combine excel" onclick="fn_downloadFcltyApplXls(this.href); return false;">엑셀다운로드</a>--%>
         </div>
     </div>
+
+    <div class="modal" id="excel-default-modal" tabindex="0" role="dialog">
+        <div class="modal__body">
+            <div class="modal__header">
+                <div class="modal__title">개인정보 다운로드 사유 입력</div>
+            </div>
+            <form name="frm" id="frm" method="post" action="./downloadFcltyApplXls.do?<c:out value="${fcltyApplSearchVO.excelParamsExt}"/>" onsubmit="return fn_chkExcel();">
+                <fieldset>
+                    <legend>게시물 작성</legend>
+                    <div class="modal__content">
+                        개인정보보호법에 따라 개인정보가 포함된 자료를 다운로드할 경우 사용목적을 명시해야 합니다. <br>개인정보가 수록된 자료를 다운로드할 경우 취급 및 관리에 유의하여 주십시오.
+                        <div class="col-24 margin_t_5">
+                            <textarea id="dwldResn" name="dwldResn" placeholder="개인정보 다운로드 사유 입력은 최소 10글자 이상 입력해야만 합니다." class="p-input" cols="80" rows="5" required="required" minlength="10" maxlength="100" style="height: 100px"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal__footer">
+                        <button type="submit" class="p-button primary">엑셀 다운로드</button>
+                        <button type="button" class="p-button default" data-close="modal">닫기</button>
+                    </div>
+                </fieldset>
+            </form>
+            <div class="modal__close">
+                <button type="button" data-close="modal" class="modal__close-button">
+                    <span>닫기</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <script>
+    $(".excel-modal").on("click", function () {
+        <c:if test="${fn:length(fcltyApplList) eq 0}">
+            alert('다운로드 할 목록이 없습니다.');
+        </c:if>
+        <c:if test="${fn:length(fcltyApplList) > 0}">
+            $('#dwldResn').val('');
+            $(this).modalPop({
+                target: "#excel-default-modal",
+                width: "600",
+                height: "200",
+                backdrop: true,
+                keyboard: false
+            });
+        </c:if>
+    });
+
+    function fn_chkExcel() {
+        if (confirm('엑셀을 다운로드 하시겠습니까?')) {
+            $('#excel-default-modal').hide();
+            return;
+        } else {
+            return false;
+        }
+    }
 
     $(document).ready(function () {
         $('select[name=searchCnd]').on('change', function () {
@@ -333,38 +410,52 @@
         }
     }
 
-    function fn_fcltyApplSttusChange(sttusNm) {
+    function fn_fcltyApplRsvSttusChange() {
         var chkAt = $('input[name=fcltyApplNoArr]').is(":checked");
-        var fcltyApplNoParam = $('input[name=fcltyApplNoArr]').serialize();
+        var fcltyApplNoParam = [];
+        $('input[name=fcltyApplNoArr]:checked').each(function() {
+            fcltyApplNoParam.push($(this).val());
+        });
 
         if (chkAt) {
-            if (sttusNm == 'paySttus') {
-                var paySttus = $('select[name=paySttus]').val();
-                if (paySttus == "") {
-                    alert("결제상태를 선택해주세요.");
-                    $('select[name=paySttus]').focus();
-                    return false;
-                }
-                if (confirm("결제상태를 변경 하시겠습니까?")) {
-                    fn_fcltyApplSttusChangeAjax(fcltyApplNoParam, paySttus);
-                } else {
-                    return false;
-                }
+
+            var rsvSttus = $('select[name=rsvSttus]').val();
+            if (rsvSttus == "") {
+                alert("예약상태를 선택해주세요.");
+                $('select[name=rsvSttus]').focus();
+                return false;
             }
 
-            if (sttusNm == 'rsvSttus') {
-                var rsvSttus = $('select[name=rsvSttus]').val();
-                if (rsvSttus == "") {
-                    alert("예약상태를 선택해주세요.");
-                    $('select[name=rsvSttus]').focus();
-                    return false;
-                }
-                if (confirm("예약상태를 변경 하시겠습니까?")) {
-                    fn_fcltyApplSttusChangeAjax(fcltyApplNoParam, rsvSttus);
-                } else {
-                    return false;
-                }
+            if (!confirm("예약상태를 변경 하시겠습니까?")) {
+                return false;
             }
+
+            $.ajax({
+                cache: false,
+                url: './updateFcltyApplRsvSttusAjax.do',
+                type: 'POST',
+                data: {
+                    fcltyApplNoArr: fcltyApplNoParam,
+                    rsvSttusCd: rsvSttus
+                },
+                success: function (res) {
+                    if (res > 0) {
+                        alert("상태 변경이 완료되었습니다.");
+                    } else if (res == 0) {
+                        alert("변경된 내역이 없습니다.");
+                    } else {
+                        alert("상태값 변경 중 오류가 발생하였습니다.");
+                    }
+                    location.reload();
+                }, // success
+                error: function (request,xhr, status) {
+                    //alert(request.responseText);
+                    alert("에러가 발생하였습니다.");
+                    console.log("code:",request.status);
+                    console.log("message:",request.responseText);
+                    console.log("error:"+error)
+                }
+            });
 
         } else {
             alert("시설 신청 번호를 선택해주세요.");
@@ -372,11 +463,66 @@
         }
     }
 
-    function fn_fcltyApplSttusChangeAjax(fcltyApplNoParam, sttusVal) {
-        /*var para = document.location.href.split("?");
-        var url = './updateFcltyApplSttus.do?' + para[1];
+    function fn_fcltyApplPaySttusChange() {
+        var chkAt = $('input[name=fcltyApplNoArr]').is(":checked");
+        var fcltyApplNoParam = [];
+        let chkBool = false;
+        $('input[name=fcltyApplNoArr]:checked').each(function() {
+            fcltyApplNoParam.push($(this).val());
+            if ($(this).data('sttus') === 'APPL_WAIT') {
+                chkBool = true;
+            }
+        });
 
-        window.location.href = url + '&' + fcltyApplNoParam + "&useYn=" + sttusVal;*/
+        if (chkBool) {
+            alert('결제상태가 접수대기인 건은 결제상태를 변경할 수 없습니다. 예약상태부터 변경처리 해주세요.');
+            return false;
+        }
+
+        if (chkAt) {
+
+            var paySttus = $('select[name=paySttus]').val();
+            if (paySttus == "") {
+                alert("결제상태를 선택해주세요.");
+                $('select[name=paySttus]').focus();
+                return false;
+            }
+
+            if (!confirm("결제상태를 변경 하시겠습니까?")) {
+                return false;
+            }
+
+            $.ajax({
+                cache: false,
+                url: './updateFcltyApplPaySttusAjax.do',
+                type: 'POST',
+                data: {
+                    fcltyApplNoArr: fcltyApplNoParam,
+                    paySttusCd: paySttus
+                },
+                success: function (res) {
+                    if (res > 0) {
+                        alert("상태 변경이 완료되었습니다.");
+                    } else if (res == 0) {
+                        alert("변경된 내역이 없습니다.");
+                    } else {
+                        alert("상태값 변경 중 오류가 발생하였습니다.");
+                    }
+                    location.reload();
+                }, // success
+                error: function (request,xhr, status) {
+                    //alert(request.responseText);
+                    alert("에러가 발생하였습니다.");
+                    console.log("code:",request.status);
+                    console.log("message:",request.responseText);
+                    console.log("error:"+error)
+                }
+            });
+
+        } else {
+            alert("시설 신청 번호를 선택해주세요.");
+            return false;
+        }
     }
 
     function fn_downloadFcltyApplXls(url) {

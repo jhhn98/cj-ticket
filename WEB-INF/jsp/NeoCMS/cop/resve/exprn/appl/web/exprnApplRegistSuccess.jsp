@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="tsu" uri="http://www.hanshinit.co.kr/jstl/tagStringUtil" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <!DOCTYPE html>
 
@@ -47,7 +48,7 @@
     </tr>
     <tr>
         <th scope="row" class="first">신청일시</th>
-        <td colspan="3"><c:out value="${tsu:toDateFormat(exprnApplVO.applDtMs, 'yyyyMMddHHmmssSS', 'yyyy-MM-dd HH:mm:ss')}"/></td>
+        <td colspan="3"><c:out value="${tsu:toDateFormat(fn:substring(exprnApplVO.applDtMs, 0, 14), 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss')}"/></td>
     </tr>
     <tr>
         <th scope="row" class="first">운영기관</th>

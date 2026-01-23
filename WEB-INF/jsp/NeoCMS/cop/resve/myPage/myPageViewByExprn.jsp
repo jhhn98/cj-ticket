@@ -124,7 +124,20 @@
                     <th scope="row" class="first"><div class="innerCell">예약상태</div></th>
                     <td>
                         <div class="innerCell">
-                            <c:out value="${rsvSttusMap[exprnApplVO.rsvSttusCd]}"/>
+                            <c:choose>
+                                <c:when test="${!empty exprnApplVO.drwtWinYn}">
+                                    추첨완료
+                                    <c:if test="${exprnApplVO.drwtWinYn eq 'Y'}">
+                                        <span class="em_blue">(당첨)</span>
+                                    </c:if>
+                                    <c:if test="${exprnApplVO.drwtWinYn eq 'N'}">
+                                        <span class="em_gray">(미당첨)</span>
+                                    </c:if>
+                                </c:when>
+                                <c:otherwise>
+                                    <c:out value="${rsvSttusMap[exprnApplVO.rsvSttusCd]}"/>
+                                </c:otherwise>
+                            </c:choose>
                         </div>
                     </td>
                 </tr>
@@ -353,7 +366,7 @@
                 </tr>--%>
                 <tr>
                     <th scope="row" class="first"><div class="innerCell">신청일시</div></th>
-                    <td><div class="innerCell"><c:out value="${tsu:toDateFormat(exprnApplVO.applDtMs, 'yyyyMMddHHmmssSSS', 'yyyy-MM-dd HH:mm:ss')}"/></div></td>
+                    <td><div class="innerCell"><c:out value="${tsu:toDateFormat(fn:substring(exprnApplVO.applDtMs, 0, 14), 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss')}"/></div></td>
                 </tr>
                 </tbody>
             </table>
@@ -363,11 +376,13 @@
                 <a href="./myPageList.do?<c:out value="${myPageSearchVO.params}"/>" class="customLink lineGray"><span>목록</span></a>
             </div>
             <div class="flexRight">
-                <c:if test="${myPageMode == 'UPDT'}">
-                    <button type="submit" class="customLink bgGreen" onclick="return formCheck(this);"><span>수정</span></button>
-                </c:if>
-                <c:if test="${myPageMode == 'VIEW'}">
-                    <a href="./myPageViewByExprn.do?exprnApplNo=<c:out value="${exprnApplVO.exprnApplNo}"/>&amp;<c:out value="${myPageSearchVO.params}"/>&amp;myPageMode=UPDT" class="customLink bgGreen"><span>수정</span></a>
+                <c:if test="${exprnApplVO.today < exprnApplVO.exprnDe}">
+                    <c:if test="${myPageMode == 'UPDT'}">
+                        <button type="submit" class="customLink bgGreen" onclick="return formCheck(this);"><span>수정</span></button>
+                    </c:if>
+                    <c:if test="${myPageMode == 'VIEW'}">
+                        <a href="./myPageViewByExprn.do?exprnApplNo=<c:out value="${exprnApplVO.exprnApplNo}"/>&amp;<c:out value="${myPageSearchVO.params}"/>&amp;myPageMode=UPDT" class="customLink bgGreen"><span>수정</span></a>
+                    </c:if>
                 </c:if>
             </div>
         </div>

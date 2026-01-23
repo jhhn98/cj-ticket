@@ -29,7 +29,7 @@
                 <label for="searchInsttNo" class="p-form__label col-4 right">운영기관</label>
                 <div class="col-3">
                     <form:select path="searchInsttNo" class="p-input">
-                        <form:option value="0" label="운영기관 선택"/>
+                        <form:option value="" label="운영기관 선택"/>
                         <form:options items="${fctInsttList}" itemValue="insttNo" itemLabel="insttNm"/>
                     </form:select>
                 </div>

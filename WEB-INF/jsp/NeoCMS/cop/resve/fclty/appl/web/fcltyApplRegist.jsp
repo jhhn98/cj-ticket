@@ -406,7 +406,7 @@
                 <ul>
                     <li>
                         <strong>이용요금</strong>
-                        <span><fmt:formatNumber value="${fcltyVO.fcltyAmt}" pattern="#,###"/></span>
+                        <span><fmt:formatNumber value="${fcltyVO.fcltyAmt}" pattern="#,##0"/></span>
                     </li>
                     <c:if test="${fcltyVO.dscntUseYn == 'Y'}">
                         <li>
@@ -417,7 +417,7 @@
                 </ul>
                 <p class="sumAmount">
                     <strong>총 결제금액</strong>
-                    <span><fmt:formatNumber value="${fcltyVO.fcltyAmt}" pattern="#,###"/></span>
+                    <span><fmt:formatNumber value="${fcltyVO.fcltyAmt}" pattern="#,##0"/></span>
                 </p>
             </div>
         </div>

@@ -182,7 +182,7 @@ header .site-name {
   display: block;
   flex: 0 0 79.738563%;
   width: 79.738563%;
-  padding: 10px 0 0 27px;
+  padding: 10px 0 50px 27px;
   font-size: 0;
 }
 .navigation .navDepth2Wrap > li {

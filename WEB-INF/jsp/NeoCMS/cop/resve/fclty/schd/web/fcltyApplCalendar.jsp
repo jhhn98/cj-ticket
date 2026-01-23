@@ -84,7 +84,7 @@
 <div class="calendarFooter">
     <div class="selectCount">
         <span class="count">00/00</span>
-        <span class="text">신청수/총모집수</span>
+        <span class="text">신청수/회차수</span>
     </div>
     <div class="calendarLegend">
         <span class="today">오늘</span>

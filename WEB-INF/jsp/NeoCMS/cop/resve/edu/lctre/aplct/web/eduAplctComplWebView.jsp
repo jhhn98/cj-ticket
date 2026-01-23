@@ -54,6 +54,14 @@
         </td>
     </tr>
     <tr>
+        <th scope="row" class="first">추첨일시</th>
+        <td colspan="3">
+            <c:if test="${not empty eduLctreVO.drwtDt}">
+                <c:out value="${tsu:toDateFormat(eduLctreVO.drwtDt, 'yyyyMMddHHmm', 'yyyy-MM-dd')}"/>
+            </c:if>
+        </td>
+    </tr>
+    <tr>
         <th scope="row" class="first">운영기관</th>
         <td colspan="3"><c:out value="${eduLctreVO.insttNm}"/></td>
     </tr>

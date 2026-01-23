@@ -259,6 +259,15 @@
                 </td>
                 <td>
                     <c:out value="${resveSttusCdMap[result.resveSttusCd]}"/>
+                    <c:if test="${not empty result.drwtWinYn}">
+                        <br/>추첨완료
+                        <c:if test="${result.drwtWinYn eq 'Y'}">
+                            <span class="em_blue">(당첨)</span>
+                        </c:if>
+                        <c:if test="${result.drwtWinYn eq 'N'}">
+                            <span class="em_gray">(미당첨)</span>
+                        </c:if>
+                    </c:if>
                 </td>
                 <td>
                     <c:if test="${not empty result.applDtMs && fn:length(result.applDtMs) >= 14}">
@@ -331,13 +340,64 @@
             </div>
         </div>
         <div class="col-8 right">
-            
+            <button type="button" class="p-button p-button--combine excel excel-modal">엑셀다운로드</button>
         </div>
     </div>
 
 </div>
 
+<!-- 엑셀 다운로드 사유 입력 모달 -->
+<div class="modal" id="excel-default-modal" tabindex="0" role="dialog">
+    <div class="modal__body">
+        <div class="modal__header">
+            <div class="modal__title">개인정보 다운로드 사유 입력</div>
+        </div>
+        <form name="excelDownloadFrm" id="excelDownloadFrm" method="post" action="./downloadEduAplctListByEdu.do?<c:out value="${eduAplctVO.paramsExclPi}"/>" onsubmit="return fn_chkExcel();">
+            <fieldset>
+                <legend>엑셀 다운로드</legend>
+                <div class="modal__content">
+                    개인정보보호법에 따라 개인정보가 포함된 자료를 다운로드할 경우 사용목적을 명시해야 합니다. <br>개인정보가 수록된 자료를 다운로드할 경우 취급 및 관리에 유의하여 주십시오.
+                    <div class="col-24 margin_t_5">
+                        <textarea id="dwldResn" name="dwldResn" placeholder="개인정보 다운로드 사유 입력은 최소 10글자 이상 입력해야만 합니다." class="p-input" cols="80" rows="5" required="required" minlength="10" maxlength="100" style="height: 100px"></textarea>
+                    </div>
+                </div>
+                <div class="modal__footer">
+                    <button type="submit" class="p-button primary">엑셀 다운로드</button>
+                    <button type="button" class="p-button default" data-close="modal">닫기</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+
 <script nonce="NEOCMSSCRIPT">
+    // 엑셀다운로드 모달 열기
+    $(".excel-modal").on("click", function () {
+<c:if test="${fn:length(eduAplctList) eq 0}">
+    alert('다운로드 할 목록이 없습니다.');
+</c:if>
+<c:if test="${fn:length(eduAplctList) > 0}">
+    $('#dwldResn').val('');
+    $(this).modalPop({
+    target: "#excel-default-modal",
+    width: "600",
+    height: "200",
+    backdrop: true,
+    keyboard: false
+    });
+</c:if>
+    });
+
+    function fn_chkExcel() {
+        if (confirm('엑셀을 다운로드 하시겠습니까?')) {
+            // 모달 닫기
+            $('#excel-default-modal button[data-close="modal"]').first().trigger('click');
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     // 기관명 선택 이벤트 - 카테고리 동적 로딩
     function insttIdChange(val) {
         var isVal = false;

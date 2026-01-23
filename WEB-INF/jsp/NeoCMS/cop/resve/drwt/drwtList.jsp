@@ -1,0 +1,90 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="tsu" uri="http://www.hanshinit.co.kr/jstl/tagStringUtil"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
+<c:choose>
+    <c:when test="${empty resultMap}">예비추첨을 진행해주세요.</c:when>
+    <c:when test="${resultMap['code'] == 'DRWT_LIST_SUCCESS'}">
+        <table class="p-table">
+            <caption>추첨 결과 목록</caption>
+            <colgroup>
+                <col style="width:80px">
+                <col style="width:200px">
+                <col />
+                <c:if test="${drwtInfo.prgSe == 'EXP' || drwtInfo.prgSe == 'FCT'}">
+                <col style="width:80px">
+                <col style="width:100px">
+                </c:if>
+                <col style="width:150px">
+                <col style="width:80px">
+                <c:if test="${drwtInfo.prgSe == 'EXP' || drwtInfo.prgSe == 'FCT'}">
+                    <col style="width:100px">
+                </c:if>
+            </colgroup>
+            <thead>
+            <tr>
+                <th scope="col">번호</th>
+                <th scope="col">예약번호</th>
+                <th scope="col">신청자</th>
+                <c:if test="${drwtInfo.prgSe == 'EXP' || drwtInfo.prgSe == 'FCT'}">
+                <th scope="col"><c:out value="${(drwtInfo.prgSe == 'EXP') ? '체험' : '예약'}" />일자</th>
+                <th scope="col"><c:out value="${(drwtInfo.prgSe == 'EXP') ? '체험' : '예약'}" />시간</th>
+                </c:if>
+                <th scope="col">신청일시</th>
+                <th scope="col">당첨여부</th>
+                <c:if test="${drwtInfo.prgSe == 'EXP' || drwtInfo.prgSe == 'FCT'}">
+                <th scope="col">당첨확인</th>
+                </c:if>
+            </tr>
+            <tbody class="text_center">
+            <c:forEach var="result" items="${drwtWinList}" varStatus="status">
+                <tr>
+                    <td><c:out value="${status.count}"/></td>
+                    <td><c:out value="${result.applId}"/></td>
+                    <td><c:out value="${result.applNm}"/></td>
+                    <c:if test="${drwtInfo.prgSe == 'EXP' || drwtInfo.prgSe == 'FCT'}">
+                    <td><c:out value="${tsu:toDateFormat(result.prgDe, 'yyyyMMdd', 'yyyy-MM-dd')}"/></td>
+                    <td>
+                        <c:out value="${tsu:toDateFormat(result.prgBgnHm, 'HHmm', 'HH:mm')}"/> ~
+                        <c:out value="${tsu:toDateFormat(result.prgEndHm, 'HHmm', 'HH:mm')}"/>
+                    </td>
+                    </c:if>
+
+                    <td><c:out value="${tsu:toDateFormat(result.applDtMs, 'yyyyMMddHHmmssSSS', 'yyyy-MM-dd HH:mm:ss.SS')}"/></td>
+
+                    <td>
+                        <c:if test="${result.winYn == 'Y'}">당첨</c:if>
+                        <c:if test="${result.winYn == 'N'}">미당첨</c:if>
+                    </td>
+                    <c:if test="${drwtInfo.prgSe == 'EXP' || drwtInfo.prgSe == 'FCT'}">
+                        <td>
+                            <c:if test="${result.duplYn == 'Y'}">
+                                <button type="button" id="winCancel" class="p-button p-button--xsmall danger" data-drwt-no="<c:out value="${result.drwtNo}"/>">삭제</button>
+                            </c:if>
+                        </td>
+                    </c:if>
+                </tr>
+            </c:forEach>
+            <c:if test="${fn:length(drwtWinList) == 0}">
+                <tr><td colspan="8">추첨 결과가 없습니다.</td></tr>
+            </c:if>
+            </tbody>
+        </table>
+
+        <script>
+            $('#drwtWinList').modalPop({
+                target : "#drwt-result-modal",
+                width  : "1000",
+                height : "700"
+            });
+        </script>
+    </c:when>
+    <c:otherwise>
+        <script>
+            alert(<c:out value="${resultMap['message']}"/>);
+            location.reload();
+        </script>
+    </c:otherwise>
+</c:choose>

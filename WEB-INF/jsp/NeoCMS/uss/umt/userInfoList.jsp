@@ -88,7 +88,7 @@
                         <button type="submit" class="search_button">검색</button>
                     </span>
 					<span class="srch_element text">
-						<a href="./getGmuserInfoListTxt.do" class="iconTextButton write" onclick="fn_gmuserInfoSubmit(this.href);return false;"><span>직원정보 업데이트(파일)</span></a>
+						<%--<a href="./getGmuserInfoListTxt.do" class="iconTextButton write" onclick="fn_gmuserInfoSubmit(this.href);return false;"><span>직원정보 업데이트(파일)</span></a>--%>
 						<a href="./getGmuserInfoList.do" class="iconTextButton write" onclick="fn_gmuserInfoSubmit(this.href);return false;"><span>직원정보 업데이트(주소)</span></a>
 					</span>
                 </div>

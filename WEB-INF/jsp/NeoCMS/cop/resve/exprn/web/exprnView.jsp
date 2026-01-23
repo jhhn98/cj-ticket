@@ -52,18 +52,20 @@
     <div class="simpleImage">
         <div class="imageSlide">
             <div class="slideList">
-                <div class="slideItem">
-                    <c:choose>
-                        <c:when test="${fn:length(cmmnAtchImgList) == 0}">
+                <c:choose>
+                    <c:when test="${fn:length(cmmnAtchImgList) == 0}">
+                        <div class="slideItem">
                             <img src="/DATA/exprn/img/no_img_<c:out value="${exprnVO.svcTyCd}"/>.jpg" alt="<c:out value="${exprnVO.exprnNm}"/> 이미지 없음">
-                       </c:when>
-                        <c:otherwise>
-                            <c:forEach var="result" items="${cmmnAtchImgList}">
+                        </div>
+                    </c:when>
+                    <c:otherwise>
+                        <c:forEach var="result" items="${cmmnAtchImgList}">
+                            <div class="slideItem">
                                 <img src="/<c:out value="${result.storePath}"/>/thumb/p_<c:out value="${result.storeFileNm}"/>" alt="<c:out value="${exprnVO.exprnNm}"/> 이미지">
-                             </c:forEach>
-                        </c:otherwise>
-                    </c:choose>
-                </div>
+                            </div>
+                        </c:forEach>
+                    </c:otherwise>
+                </c:choose>
             </div>
             <div class="controller">
                 <div class="count">
@@ -169,7 +171,7 @@
                                 <%-- 선발방식 공통코드 - FIRST : 선착순 / CONFM : 승인 / DRWLT : 추첨 --%>
                                 <c:out value="${slctMthdMap[exprnVO.slctMthdCd]}"/>
                                 <%--<c:if test="${exprnVO.slctMthdCd == 'DRWLT'}">
-                                    / 추첨일시 : <c:out value="${tsu:toDateFormat(exprnVO.drwtDt, 'yyyyMMddHHss', 'yyyy-MM-dd HH:mm')}"/>
+                                    / 추첨일시 : <c:out value="${tsu:toDateFormat(exprnVO.drwtDt, 'yyyyMMddHHmm', 'yyyy-MM-dd HH:mm')}"/>
                                 </c:if>--%>
                             </td>
                         </tr>

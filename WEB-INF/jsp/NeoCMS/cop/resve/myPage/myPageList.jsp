@@ -136,7 +136,22 @@
                         </c:otherwise>
                     </c:choose>
                 </td>
-                <td><span class="mobile-th">예약상태</span><c:out value="${eduRsvMap[result.resveSttusCd]}"/></td>
+                <td><span class="mobile-th">예약상태</span>
+                    <c:choose>
+                        <c:when test="${!empty result.drwtWinYn}">
+                            추첨완료<br/>
+                            <c:if test="${result.drwtWinYn eq 'Y'}">
+                                <span class="em_blue">(당첨)</span>
+                            </c:if>
+                            <c:if test="${result.drwtWinYn eq 'N'}">
+                                <span class="em_gray">(미당첨)</span>
+                            </c:if>
+                        </c:when>
+                        <c:otherwise>
+                            <c:out value="${eduRsvMap[result.resveSttusCd]}"/>
+                        </c:otherwise>
+                    </c:choose>
+                </td>
                 <td>
                     <span class="mobile-th">예약취소</span>
                         <%--
@@ -234,7 +249,7 @@
                 <td>
                     <span class="mobile-th">신청일자</span>
                     <c:out value="${tsu:toDateFormat(result.applDtMs, 'yyyyMMddHHmmssSSS', 'yyyy-MM-dd(EE)')}"/>
-                    <c:out value="${tsu:toDateFormat(result.applDtMs, 'yyyyMMddHHmmssSSS', 'HH:mm:ss')}"/>
+                    <c:out value="${tsu:toDateFormat(fn:substring(result.applDtMs, 8, 14), 'HHmmss', 'HH:mm:ss')}"/>
                 </td>
                 <td><span class="mobile-th">체험일자</span><c:out value="${tsu:toDateFormat(result.exprnDe, 'yyyyMMdd', 'yyyy-MM-dd(EE)')}"/></td>
                 <td><span class="mobile-th">체험시간</span><c:out value="${tsu:toDateFormat(result.exprnBgnHm, 'HHmm', 'HH:mm')}"/> ~ <c:out value="${tsu:toDateFormat(result.exprnEndHm, 'HHmm', 'HH:mm')}"/></td>
@@ -249,7 +264,22 @@
                         </c:otherwise>
                     </c:choose>
                 </td>
-                <td><span class="mobile-th">예약상태</span><c:out value="${expRsvMap[result.rsvSttusCd]}"/></td>
+                <td><span class="mobile-th">예약상태</span>
+                    <c:choose>
+                        <c:when test="${!empty result.drwtWinYn}">
+                            추첨완료<br/>
+                            <c:if test="${result.drwtWinYn eq 'Y'}">
+                                <span class="em_blue">(당첨)</span>
+                            </c:if>
+                            <c:if test="${result.drwtWinYn eq 'N'}">
+                                <span class="em_gray">(미당첨)</span>
+                            </c:if>
+                        </c:when>
+                        <c:otherwise>
+                            <c:out value="${expRsvMap[result.rsvSttusCd]}"/>
+                        </c:otherwise>
+                    </c:choose>
+                </td>
                 <td>
                     <span class="mobile-th">예약취소</span>
                     <%--
@@ -361,10 +391,25 @@
                 <td><span class="mobile-th">예약일자</span><c:out value="${tsu:toDateFormat(result.fcltyDe, 'yyyyMMdd', 'yyyy-MM-dd(EE)')}"/></td>
                 <td><span class="mobile-th">예약시간</span><c:out value="${tsu:toDateFormat(result.fcltyBgnHm, 'HHmm', 'HH:mm')}"/> ~ <c:out value="${tsu:toDateFormat(result.fcltyEndHm, 'HHmm', 'HH:mm')}"/></td>
                 <td><span class="mobile-th">결제상태</span><c:out value="${fctPayMap[result.paySttusCd]}"/></td>
-                <td><span class="mobile-th">예약상태</span><c:out value="${fctRsvMap[result.rsvSttusCd]}"/></td>
+                <td><span class="mobile-th">예약상태</span>
+                    <c:choose>
+                        <c:when test="${!empty result.drwtWinYn}">
+                            추첨완료<br/>
+                            <c:if test="${result.drwtWinYn eq 'Y'}">
+                                <span class="em_blue">(당첨)</span>
+                            </c:if>
+                            <c:if test="${result.drwtWinYn eq 'N'}">
+                                <span class="em_gray">(미당첨)</span>
+                            </c:if>
+                        </c:when>
+                        <c:otherwise>
+                            <c:out value="${fctRsvMap[result.rsvSttusCd]}"/>
+                        </c:otherwise>
+                    </c:choose>
+                </td>
                 <td><span class="mobile-th">예약취소</span>
                     <%-- 시설 취소가능일자가 지나지 않은 경우에만 취소(환불)요청 가능 --%>
-                    <c:if test="${(tsu:getNowDateTime('yyyyMMddHHmmss')+0) lt (result.canclClosDt+0)}">
+                    <c:if test="${empty result.canclClosDt or ((tsu:getNowDateTime('yyyyMMddHHmmss')+0) lt (result.canclClosDt+0))}">
                         <%--
                             시설 아래 상태값에 해당하는 경우에만 취소 요청 버튼 활성화
                             - 예약상태 : 사용자취소(USR_CNCL) or 관리자취소(MNG_CNCL) 아닌 상태
@@ -624,7 +669,7 @@
             return false;
         }
 
-        console.log(cancelApplNo)
+        // console.log(cancelApplNo)
 
         $.ajax({
             cache: false,

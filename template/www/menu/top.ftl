@@ -23,7 +23,7 @@
             <fieldset>
                 <legend>통합예약 검색</legend>
                 <div class="mobile-search">
-                    <input type="text" title="검색어 입력" placeholder="어떤 예약을 도와드릴까요?" name="searchKrwd" id="searchKrwd" />
+                    <input type="text" title="검색어 입력" placeholder="어떤 예약을 도와드릴까요?" name="searchKrwd" />
                     <button type="submit"><svg><use href="/site/www/images/common/sprite-common-side.svg#icon-view"></use></svg><span>검색</span></button>
                 </div>
             </fieldset>

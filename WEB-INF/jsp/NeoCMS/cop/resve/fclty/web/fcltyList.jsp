@@ -40,8 +40,8 @@
                         </div>
                     </div>
                     <div class="formElement widthWide">
-                        <label for="searchKrwd">시설명</label>
-                        <input type="text" name="searchKrwd" id="searchKrwd" placeholder="시설명을 입력해주세요" class="customInputDefault">
+                        <label for="searchFcltyName">시설명</label>
+                        <input type="text" name="searchKrwd" id="searchFcltyName" placeholder="시설명을 입력해주세요" class="customInputDefault">
                     </div>
                 </div>
                 <div class="formElement w100per marginTop12">

@@ -570,7 +570,6 @@
 
         // PD 화면 보임
         $('#exprnSchdPdVO').show();
-        $('#exprnSchdPdVO').find('input, select').prop('disabled', false);
 
         // PD dayAll checkbox
         <c:if test="${fn:length(exprnTmListByPd) > 0}">

@@ -312,7 +312,7 @@
                                             </select>
                                             <span class="p-form__split">:</span>
                                             <select name="<c:out value="${exprnBgnMm}"/>" id="<c:out value="${exprnBgnMm}"/>" class="p-input p-input--auto exprnTm exprnBgnMm" disabled>
-                                                <c:forEach var="i" begin="0" end="59" step="5">
+                                                <c:forEach var="i" begin="0" end="59" step="10">
                                                     <c:set var="mm" value="${tsu:zerofill(i, 2, '0')}"/>
                                                     <option value="<c:out value="${mm}"/>" label="<c:out value="${mm}"/>"<c:if test="${result.exprnBgnMm == mm}"> selected</c:if>/>
                                                 </c:forEach>
@@ -326,7 +326,7 @@
                                             </select>
                                             <span class="p-form__split">:</span>
                                             <select name="<c:out value="${exprnEndMm}"/>" id="<c:out value="${exprnEndMm}"/>" class="p-input p-input--auto exprnTm exprnEndMm" disabled>
-                                                <c:forEach var="i" begin="0" end="59" step="5">
+                                                <c:forEach var="i" begin="0" end="59" step="10">
                                                     <c:set var="mm" value="${tsu:zerofill(i, 2, '0')}"/>
                                                     <option value="<c:out value="${mm}"/>" label="<c:out value="${mm}"/>"<c:if test="${result.exprnEndMm == mm}"> selected</c:if>/>
                                                 </c:forEach>
@@ -391,7 +391,15 @@
                     <a href="./selectExprnList.do?<c:out value="${exprnSearchVO.params}"/><c:out value="${exprnSearchVO.paramsMng}"/>" class="p-button cancel">목록 </a>
                 </div>
                 <div class="col-12 right">
-                    <input type="submit" class="p-button edit" value="수정">
+                    <c:choose>
+                        <c:when test="${exprnSchdVO.resveCnt == 0}">
+                            <input type="submit" class="p-button edit" value="수정">
+                        </c:when>
+                        <c:otherwise>
+                            <svg width="20" height="25" fill="#202e70" focusable="false"><use xlink:href="/common/images/program/p-icon.svg#info-circle"></use></svg>
+                            <em class="em_black">신청이력이 1건 이상 있는 경우 일정 수정이 불가합니다.</em>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
             </div>
         </fieldset>
@@ -466,14 +474,14 @@
                                         <label for="useYn<c:out value="${status.index+1}"/>" class="p-form-checkbox__label"><c:out value="${status.index+1}"/>회차</label>
                                     </span>
                                     <span class="p-form__split"></span>
-                                    <select name="<c:out value="${exprnBgnHh}"/>" id="<c:out value="${exprnBgnHh}"/>" class="p-input p-input--auto exprnTm exprnBgnHh" disabled>
+                                    <select name="<c:out value="${exprnBgnHh}"/>" id="<c:out value="${exprnBgnHh}"/>" class="p-input p-input--auto exprnTm exprnBgnHh" >
                                         <c:forEach var="i" begin="0" end="23">
                                             <c:set var="hh" value="${tsu:zerofill(i, 2, '0')}"/>
                                             <option value="<c:out value="${hh}"/>" label="<c:out value="${hh}"/>"<c:if test="${result.exprnBgnHh == hh}"> selected</c:if> />
                                         </c:forEach>
                                     </select>
                                     <span class="p-form__split">시 </span>
-                                    <select name="<c:out value="${exprnBgnMm}"/>" id="<c:out value="${exprnBgnMm}"/>" class="p-input p-input--auto exprnTm exprnBgnMm" disabled>
+                                    <select name="<c:out value="${exprnBgnMm}"/>" id="<c:out value="${exprnBgnMm}"/>" class="p-input p-input--auto exprnTm exprnBgnMm" >
                                         <c:forEach var="i" begin="0" end="59" step="5">
                                             <c:set var="mm" value="${tsu:zerofill(i, 2, '0')}"/>
                                             <option value="<c:out value="${mm}"/>" label="<c:out value="${mm}"/>"<c:if test="${result.exprnBgnMm == mm}"> selected</c:if>/>
@@ -481,14 +489,14 @@
                                     </select>
                                     <span class="p-form__split">분 </span>
                                     <span class="p-form__split">~</span>
-                                    <select name="<c:out value="${exprnEndHh}"/>" id="<c:out value="${exprnEndHh}"/>" class="p-input p-input--auto exprnTm exprnEndHh" disabled>
+                                    <select name="<c:out value="${exprnEndHh}"/>" id="<c:out value="${exprnEndHh}"/>" class="p-input p-input--auto exprnTm exprnEndHh" >
                                         <c:forEach var="i" begin="0" end="23">
                                             <c:set var="hh" value="${tsu:zerofill(i, 2, '0')}"/>
                                             <option value="<c:out value="${hh}"/>" label="<c:out value="${hh}"/>"<c:if test="${result.exprnEndHh == hh}"> selected</c:if>/>
                                         </c:forEach>
                                     </select>
                                     <span class="p-form__split">시 </span>
-                                    <select name="<c:out value="${exprnEndMm}"/>" id="<c:out value="${exprnEndMm}"/>" class="p-input p-input--auto exprnTm exprnEndMm" disabled>
+                                    <select name="<c:out value="${exprnEndMm}"/>" id="<c:out value="${exprnEndMm}"/>" class="p-input p-input--auto exprnTm exprnEndMm" >
                                         <c:forEach var="i" begin="0" end="59" step="5">
                                             <c:set var="mm" value="${tsu:zerofill(i, 2, '0')}"/>
                                             <option value="<c:out value="${mm}"/>" label="<c:out value="${mm}"/>"<c:if test="${result.exprnEndMm == mm}"> selected</c:if>/>
@@ -518,7 +526,7 @@
                                     </select>
                                     <span class="p-form__split">시 </span>
                                     <select name="<c:out value="${exprnBgnMm}"/>" id="<c:out value="${exprnBgnMm}"/>" class="p-input p-input--auto exprnTm exprnBgnMm" disabled>
-                                        <c:forEach var="result" begin="0" end="59" step="5">
+                                        <c:forEach var="result" begin="0" end="59" step="10">
                                             <fmt:formatNumber var="mm" value="${result}" pattern="00"/>
                                             <option value="<c:out value="${mm}"/>" label="<c:out value="${mm}"/>"/>
                                         </c:forEach>
@@ -533,7 +541,7 @@
                                     </select>
                                     <span class="p-form__split">시 </span>
                                     <select name="<c:out value="${exprnEndMm}"/>" id="<c:out value="${exprnEndMm}"/>" class="p-input p-input--auto exprnTm exprnEndMm" disabled>
-                                        <c:forEach var="result" begin="0" end="59" step="5">
+                                        <c:forEach var="result" begin="0" end="59" step="10">
                                             <fmt:formatNumber var="mm" value="${result}" pattern="00"/>
                                             <option value="<c:out value="${mm}"/>" label="<c:out value="${mm}"/>"/>
                                         </c:forEach>
@@ -551,7 +559,15 @@
                     <a href="./selectExprnList.do?<c:out value="${exprnSearchVO.params}"/><c:out value="${exprnSearchVO.paramsMng}"/>" class="p-button cancel">목록 </a>
                 </div>
                 <div class="col-12 right">
-                    <input type="submit" class="p-button edit" value="수정">
+                    <c:choose>
+                        <c:when test="${exprnSchdVO.resveCnt == 0}">
+                            <input type="submit" class="p-button edit" value="수정">
+                        </c:when>
+                        <c:otherwise>
+                            <svg width="20" height="25" fill="#202e70" focusable="false"><use xlink:href="/common/images/program/p-icon.svg#info-circle"></use></svg>
+                            <em class="em_black">신청이력이 1건 이상 있는 경우 일정 수정이 불가합니다.</em>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
             </div>
         </fieldset>
@@ -569,7 +585,6 @@
 
         // PD 화면 보임
         $('#exprnSchdPdVO').show();
-        $('#exprnSchdPdVO').find('input, select').prop('disabled', false);
 
         // PD dayAll checkbox
         <c:if test="${fn:length(exprnTmListByPd) > 0}">

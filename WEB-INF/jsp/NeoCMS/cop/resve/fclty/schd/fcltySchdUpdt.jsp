@@ -377,7 +377,11 @@
                             <svg width="20" height="25" fill="#202e70" focusable="false"><use xlink:href="/common/images/program/p-icon.svg#exclamation-circle"></use></svg>
                             신청자가 있는 경우 일정 수정이 불가합니다.
                         </c:when>
-                        <c:otherwise><input type="submit" class="p-button edit" value="수정"></c:otherwise>
+                        <c:otherwise>
+                            <c:if test="${!empty fcltyVO.fcltyAmt and fcltyVO.fcltyAmt gt 0}">
+                                <svg width="20" height="25" fill="#202e70" focusable="false"><use xlink:href="/common/images/program/p-icon.svg#exclamation-circle"></use></svg>일정 수정시 사용료관리도 함께 수정 하셔야 합니다. &nbsp;
+                            </c:if>
+                            <input type="submit" class="p-button edit" value="수정"></c:otherwise>
                     </c:choose>
                 </div>
             </div>

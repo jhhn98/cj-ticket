@@ -49,10 +49,27 @@
                 <%-- 선발방식 공통코드 - FIRST : 선착순 / CONFM : 승인 / DRWLT : 추첨 --%>
                 <c:out value="${slctMthdMap[fcltyVO.slctMthdCd]}"/>
                 <c:if test="${fcltyVO.slctMthdCd == 'DRWLT'}">
-                    / 추첨일시 : <c:out value="${tsu:toDateFormat(fcltyVO.drwtDt, 'yyyyMMddHHss', 'yyyy-MM-dd HH:mm')}"/>
+                    - 추첨일시 : <c:out value="${tsu:toDateFormat(fcltyVO.drwtDt, 'yyyyMMddHHmm', 'yyyy-MM-dd HH:mm')}"/>
                 </c:if>
             </td>
         </tr>
+
+        <c:if test="${fcltyVO.slctMthdCd == 'DRWLT'}">
+            <tr>
+                <th scope="row">추첨 상태</th>
+                <td>
+                    <ul>
+                        <li>- <c:out value="${fcltyVO.drwtYn eq 'Y' ? '추첨 완료' : '추첨 대기'}"/></li>
+                        <c:if test="${fcltyVO.drwtYn eq 'Y' and not empty fcltyVO.drwtProcDt}">
+                            <li>- 추첨 진행 일시 : <c:out value="${tsu:toDateFormat(fcltyVO.drwtProcDt, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss')}"/></li>
+                            <li>- 추첨 진행자 : <c:out value="${fcltyVO.drwtProcId}"/></li>
+                        </c:if>
+                    </ul>
+
+                </td>
+            </tr>
+        </c:if>
+
         <tr>
             <th scope="row">접수방식</th>
             <td>
@@ -133,7 +150,7 @@
             <td>
                 <c:choose>
                     <c:when test="${fcltyVO.fcltyAmt > 0}">
-                        <fmt:formatNumber value="${tsu:xssNumberFilter(fcltyVO.fcltyAmt)}" pattern="#,###"/> 원
+                        <fmt:formatNumber value="${tsu:xssNumberFilter(fcltyVO.fcltyAmt)}" pattern="#,##0"/> 원
                     </c:when>
                     <c:otherwise>
                         무료
@@ -155,7 +172,7 @@
             <th scope="row">무통장입금 정보</th>
             <td>
                 <c:if test="${fcltyVO.slctMthdCd == 'NBKRCP'}">
-                    <c:out value="${fcltyVO.placeNm}"/> <c:out value="${fcltyVO.acctNo}"/> (예금주:<c:out value="${fcltyVO.dpstrNm}"/>)
+                    [<c:out value="${fcltyVO.placeNm}"/>] <c:out value="${fcltyVO.acctNo}"/> (예금주:<c:out value="${fcltyVO.dpstrNm}"/>)
                 </c:if>
             </td>
         </tr>
@@ -336,6 +353,16 @@
             <th scope="row">문의전화</th>
             <td>
                 <c:out value="${fcltyVO.telNoFmt}"/>
+                <br>
+                <span class="p-table__content padding_l_10">
+                    <svg width="20" height="25" fill="#202e70" focusable="false"><use xlink:href="/common/images/program/p-icon.svg#info-circle"></use></svg>
+                    <em class="em_black">알림 문자는 시스템 정책에 의해 발신자가 ‘문의전화(대표번호)’로 표기됩니다. 예시) 043-201-0000</em>
+                </span>
+                <br>
+                <span class="p-table__content padding_l_10">
+                    <svg width="20" height="25" fill="#202e70" focusable="false"><use xlink:href="/common/images/program/p-icon.svg#info-circle"></use></svg>
+                    <em class="em_black">휴대폰번호 입력시 추후 문자 발송(발신자 번호로 사용)이 제한될 수 있습니다.</em>
+                </span>
             </td>
         </tr>
         <tr>
@@ -353,10 +380,10 @@
     </table>
     <div class="row margin_t_20 margin_b_20">
         <div class="col-12">
+            <td><a href="./deleteFclty.do?fcltyNo=<c:out value="${fcltyVO.fcltyNo}"/>&amp;<c:out value="${fcltySearchVO.params}"/><c:out value="${fcltySearchVO.paramsMng}"/>" class="p-button p-button--small delete" onclick="return fn_delete();">삭제</a></td>
         </div>
         <div class="col-12 right">
             <td><a href="./updateFcltyView.do?fcltyNo=<c:out value="${fcltyVO.fcltyNo}"/>&amp;<c:out value="${fcltySearchVO.params}"/><c:out value="${fcltySearchVO.paramsMng}"/>" class="p-button p-button--small edit">기본 정보 수정</a></td>
-            <td><a href="./deleteFclty.do?fcltyNo=<c:out value="${fcltyVO.fcltyNo}"/>&amp;<c:out value="${fcltySearchVO.params}"/><c:out value="${fcltySearchVO.paramsMng}"/>" class="p-button p-button--small delete" onclick="return fn_delete();">삭제</a></td>
         </div>
     </div>
 
@@ -368,14 +395,14 @@
             <col />
         </colgroup>
         <tbody class="p-table--th-left">
-        <tr>
-            <th scope="row">시설시간 등록방법</th>
-            <td>
-                <%-- 시설 일정 등록방법 - PD:시설기간(규칙) / DE:일자별 선택(불규칙) --%>
-                <c:if test="${fcltySchdVO.schdMthd == 'PD'}">시설기간(규칙 접수)</c:if>
-                <c:if test="${fcltySchdVO.schdMthd == 'DE'}">일자별 선택(불규칙 접수)</c:if>
-            </td>
-        </tr>
+<%--        <tr>--%>
+<%--            <th scope="row">시설시간 등록방법</th>--%>
+<%--            <td>--%>
+<%--                &lt;%&ndash; 시설 일정 등록방법 - PD:시설기간(규칙) / DE:일자별 선택(불규칙) &ndash;%&gt;--%>
+<%--                <c:if test="${fcltySchdVO.schdMthd == 'PD'}">시설기간(규칙 접수)</c:if>--%>
+<%--                <c:if test="${fcltySchdVO.schdMthd == 'DE'}">일자별 선택(불규칙 접수)</c:if>--%>
+<%--            </td>--%>
+<%--        </tr>--%>
         <c:if test="${fcltySchdVO.schdMthd == 'PD'}">
         <tr>
             <th scope="row">시설기간</th>
@@ -484,6 +511,87 @@
             <a href="./updateFcltySchdView.do?fcltyNo=<c:out value="${fcltyVO.fcltyNo}"/>&amp;<c:out value="${fcltySearchVO.params}"/><c:out value="${fcltySearchVO.paramsMng}"/>" class="p-button p-button--small edit">일정 수정</a>
         </div>
     </div>
+
+<c:if test="${fcltyVO.fcltyAmt > 0}">
+    <div class="h3">시설 사용료 정보</div>
+    <table class="p-table">
+        <caption>시설 사용료 보기</caption>
+        <colgroup>
+            <col class="w15p">
+            <col />
+        </colgroup>
+        <tbody class="p-table--th-left">
+        <tr>
+            <th scope="row">시설 사용료</th>
+            <td>
+                <c:choose>
+                    <c:when test="${fcltyVO.amtMthd eq 'S'}">운영 시간별 동일요금 적용 : <b><fmt:formatNumber value="${tsu:xssNumberFilter(fcltyVO.fcltyAmt)}" pattern="#,##0"/>원</b></c:when>
+                    <c:when test="${fcltyVO.amtMthd eq 'D'}">운영 시간별 차등요금 적용</c:when>
+                </c:choose>
+            </td>
+        </tr>
+        <c:if test="${fcltyVO.amtMthd eq 'D'}">
+            <tr>
+                <th scope="row">요일별, 시간별 사용료</th>
+                <td>
+                    <table class="w50p">
+                        <colgroup>
+                            <col class="w15p">
+                            <col />
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th style="text-align: center;">요일</th>
+                            <th style="text-align: center;">시간별 요금</th>
+                        </tr>
+                        </thead>
+                        <tbody class="text_center" id="fcltyTimeTable">
+                            <c:set var="day" value="${fcltyTmAmtList[0].fcltyDay}" />
+                            <c:set var="idx" value="1" />
+
+                        <c:forEach var="result" items="${fcltyTmAmtList}" varStatus="status">
+
+                            <c:if test="${day ne result.fcltyDay}">
+                                <c:set var="day" value="${fcltyTmAmtList[status.index].fcltyDay}" />
+                                <c:set var="idx" value="1" />
+                            </c:if>
+                            <c:if test="${day eq result.fcltyDay and idx eq 1}">
+                                <tr>
+                                    <td><em<c:out value="${(result.fcltyDay eq '1' or result.fcltyDay eq '7') ? ' class=em_red':''}"/>><c:out value="${dayMap[result.fcltyDay]}" /></em></td>
+                                    <td style="text-align: left;">
+                            </c:if>
+                                        <ul>
+                                            <li style="margin-bottom: 5px;">
+                                                · ${result.fcltyBgnHh} : ${result.fcltyBgnMm} ~  ${result.fcltyEndHh} : ${result.fcltyEndMm}
+                                                <c:set var="amt" value="${(result.timeAmt eq '0' or empty result.timeAmt) ? fcltyVO.fcltyAmt : result.timeAmt}"/> &nbsp;
+                                                <fmt:formatNumber value="${tsu:xssNumberFilter(amt)}" pattern="#,##0"/>원
+                                            </li>
+                                        </ul>
+                            <c:if test="${day ne result.fcltyDay}">
+                                    </td>
+                                </tr>
+                            </c:if>
+                            <c:set var="idx" value="${idx + 1}" />
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </c:if>
+        </tbody>
+    </table>
+
+    <div class="row margin_t_20">
+        <div class="col-12">
+            <a href="./selectFcltyList.do?<c:out value="${fcltySearchVO.params}"/><c:out value="${fcltySearchVO.paramsMng}"/>" class="p-button cancel">목록 </a>
+        </div>
+        <div class="col-12 right">
+            <a href="./updateFcltyAmtView.do?fcltyNo=<c:out value="${fcltyVO.fcltyNo}"/>&amp;<c:out value="${fcltySearchVO.params}"/><c:out value="${fcltySearchVO.paramsMng}"/>" class="p-button p-button--small edit">사용료 수정</a>
+        </div>
+    </div>
+</c:if>
+
+
 
 </div>
 

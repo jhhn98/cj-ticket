@@ -43,7 +43,7 @@
             <strong><c:out value="${fcltyVO.fcltyNm}"/></strong>
         </div>
         <div class="linkGroup">
-            <c:if test="${fcltyVO.operSttus == 'RCPT_ING'}">
+            <c:if test="${fcltyVO.operSttus == 'RCPT_ING' && fn:contains(fcltyVO.rcptMthdCd, 'ONLIN')}">
                 <a href="./fcltyApplCalendarWebView.do?fcltyNo=<c:out value="${fcltyVO.fcltyNo}"/>&amp;<c:out value="${fcltySearchVO.params}"/><c:out value="${fcltySearchVO.paramsWeb}"/>" class="anchorButton wide line-color-green">신청하기</a>
             </c:if>
             <a href="./myPageList.do?key=59" class="anchorButton wide line-color-green">예약확인</a>
@@ -166,7 +166,7 @@
                             <td>
                                 <c:choose>
                                     <c:when test="${fcltyVO.fcltyAmt > 0}">
-                                        <fmt:formatNumber value="${tsu:xssNumberFilter(fcltyVO.fcltyAmt)}" pattern="#,###"/> 원
+                                        <fmt:formatNumber value="${tsu:xssNumberFilter(fcltyVO.fcltyAmt)}" pattern="#,##0"/> 원
                                     </c:when>
                                     <c:otherwise>
                                         무료
@@ -180,7 +180,7 @@
                                 <%-- 선발방식 공통코드 - FIRST : 선착순 / CONFM : 승인 / DRWLT : 추첨 --%>
                                 <c:out value="${slctMthdMap[fcltyVO.slctMthdCd]}"/>
                                 <c:if test="${fcltyVO.slctMthdCd == 'DRWLT'}">
-                                    / 추첨일시 : <c:out value="${tsu:toDateFormat(fcltyVO.drwtDt, 'yyyyMMddHHss', 'yyyy-MM-dd HH:mm')}"/>
+                                    / 추첨일시 : <c:out value="${tsu:toDateFormat(fcltyVO.drwtDt, 'yyyyMMddHHmm', 'yyyy-MM-dd HH:mm')}"/>
                                 </c:if>
                             </td>
                         </tr>

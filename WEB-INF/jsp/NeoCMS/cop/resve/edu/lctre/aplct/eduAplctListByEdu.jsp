@@ -4,6 +4,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="tsu" uri="http://www.hanshinit.co.kr/jstl/tagStringUtil" %>
+<jsp:useBean id="now" class="java.util.Date" />
+<fmt:formatDate value="${now}" pattern="yyyyMMddHHmm" var="currentDateTime" />
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -116,6 +118,9 @@
 			<th scope="row">선발방법</th>
 			<td>
 				<c:out value="${slctMthdMap[eduLctreVO.slctMthdCd]}"/>
+				<c:if test="${slctMthdMap[eduLctreVO.slctMthdCd] eq '추첨'}">
+					( 예정일 : <c:out value="${tsu:toDateFormat(eduLctreVO.drwtDt, 'yyyyMMddHHmm', 'yyyy-MM-dd HH:mm')}"/> )
+				</c:if>
 			</td>
 		</tr>
 		<tr>
@@ -143,22 +148,37 @@
 				</c:choose>
 			</td>
 		</tr>
-		<%-- 추첨 영역 --%>
-		<c:if test="${not empty eduLctreVO.drwtDt}">
+		<%-- 추첨 영역: 선발방식이 추첨제(DRWLT)이고 추첨일자가 설정된 경우에만 표시 --%>
+		<c:if test="${eduLctreVO.slctMthdCd eq 'DRWLT'}">
 		<tr>
-			<th scope="row">추첨</th>
+			<th scope="row">추첨상태</th>
 			<td colspan="3">
-				<c:set var="drwtDe" value="${fn:substring(eduLctreVO.drwtDt, 0, 8)}"/>
 				<c:choose>
+					<%-- 추첨확정 완료 상태 (drwtYn = 'Y') --%>
+					<c:when test="${eduLctreVO.drwtYn eq 'Y'}">
+						<span class="text-success">
+							<strong>추첨완료</strong>
+							<c:if test="${not empty eduLctreVO.drwtProcDt}">
+								( <c:out value="${tsu:toDateFormat(eduLctreVO.drwtProcDt, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss')}"/> )
+							</c:if>
+						</span>
+					</c:when>
+					<%-- 예비추첨 완료 상태 (drwtYn = 'N' 이고 drwtProcDt가 있는 경우) --%>
+					<c:when test="${eduLctreVO.drwtYn eq 'N' && not empty eduLctreVO.drwtProcDt}">
+						<span class="text-warning"><strong>예비추첨완료</strong></span>
+						&nbsp;&nbsp;
+						<button type="button" id="drwtWinList" class="p-button edit">추첨결과확인</button>
+						<button type="button" id="drwtProcess" class="p-button danger">추첨확정진행</button>
+					</c:when>
 					<%-- 추첨일자 이전: 추첨대기 텍스트 표시 --%>
-					<c:when test="${drwtDe > eduLctreVO.today}">
-						<c:if test="${fn:length(drwtDe) >= 8}">
-							추첨대기 (${fn:substring(drwtDe, 0, 4)}-${fn:substring(drwtDe, 4, 6)}-${fn:substring(drwtDe, 6, 8)})
-						</c:if>
+					<c:when test="${eduLctreVO.drwtDt > currentDateTime}">
+						<span class="text-muted">
+							추첨대기 ( 예정일 : <c:out value="${tsu:toDateFormat(eduLctreVO.drwtDt, 'yyyyMMddHHmm', 'yyyy-MM-dd HH:mm')}"/> )
+						</span>
 					</c:when>
 					<%-- 추첨일자 이후: 예비추첨실행 버튼 활성화 --%>
 					<c:otherwise>
-						<button type="button" class="p-button primary" onclick="fn_executeTempDrwt()">예비추첨실행</button>
+						<button type="button" class="p-button info prepareDrwtProcess">예비추첨실행</button>
 					</c:otherwise>
 				</c:choose>
 			</td>
@@ -301,6 +321,16 @@
 			<td>
 				<!-- 예약상태 -->
 				<c:out value="${resveSttusCdMap[result.resveSttusCd]}"/>
+				<br/>
+				<c:if test="${eduLctreVO.slctMthdCd eq 'DRWLT' and eduLctreVO.drwtYn eq 'Y'}">
+					추첨완료
+					<c:if test="${result.drwtWinYn eq 'Y'}">
+						<span class="em_blue">(당첨)</span>
+					</c:if>
+					<c:if test="${result.drwtWinYn eq 'N'}">
+						<span class="em_gray">(미당첨)</span>
+					</c:if>
+				</c:if>
 			</td>
 				<td>
 					<%-- 관리자 등록은 이력보기 미표출 --%>
@@ -364,11 +394,50 @@
 			<a href="#" onclick="fnExcelUpload(); return false;" class="p-button p-button--combine excel">신청자 일괄업로드</a>
 		</div>
 		<div class="col-12 right">
-			<a href="#" onclick="fnExcelDownload(); return false;" class="p-button p-button--combine download">신청자정보 엑셀다운로드</a>
+			<button type="button" class="p-button p-button--combine download excel-modal-btn">신청자정보 엑셀다운로드</button>
 			<a href="./selectAtendList.do?lctreNo=${eduLctreVO.lctreNo}&amp;key=${key}"  class="p-button edit">출석관리</a>
 		</div>
 	</div>
 
+</div>
+
+<!-- 엑셀 다운로드 사유 입력 모달 -->
+<div class="modal" id="excel-default-modal" tabindex="0" role="dialog">
+	<div class="modal__body">
+		<div class="modal__header">
+			<div class="modal__title">개인정보 다운로드 사유 입력</div>
+		</div>
+		<form name="excelDownloadFrm" id="excelDownloadFrm" method="post" action="./downloadEduAplctListByEdu.do" onsubmit="return fn_chkExcelDownload();">
+			<fieldset>
+				<legend>엑셀 다운로드</legend>
+				<div class="modal__content">
+					개인정보보호법에 따라 개인정보가 포함된 자료를 다운로드할 경우 사용목적을 명시해야 합니다. <br>개인정보가 수록된 자료를 다운로드할 경우 취급 및 관리에 유의하여 주십시오.
+					<div class="col-24 margin_t_5">
+						<textarea id="dwldResn" name="dwldResn" placeholder="개인정보 다운로드 사유 입력은 최소 10글자 이상 입력해야만 합니다." class="p-input" cols="80" rows="5" required="required" minlength="10" maxlength="100" style="height: 100px"></textarea>
+					</div>
+				</div>
+				<div class="modal__footer">
+					<button type="submit" class="p-button primary">엑셀 다운로드</button>
+					<button type="button" class="p-button default" data-close="modal">닫기</button>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+</div>
+
+<!-- 추첨 결과 확인 모달 -->
+<div class="modal" id="drwt-result-modal" tabindex="0" role="dialog">
+	<div class="modal__body">
+		<div class="modal__header">
+			<div class="modal__title">추첨 결과 - <c:out value="${eduLctreVO.lctreNm}"/></div>
+		</div>
+		<div class="modal__content">
+			<jsp:include page="../../../drwt/drwtList.jsp" />
+		</div>
+		<div class="modal__footer">
+			<button type="button" class="p-button default" data-close="modal">닫기</button>
+		</div>
+	</div>
 </div>
 
 <!-- SMS 발송 모달 -->
@@ -422,12 +491,33 @@
 </div>
 
 <script nonce="NEOCMSSCRIPT">
-	// 엑셀다운로드
-	function fnExcelDownload() {
+	// 엑셀다운로드 모달 열기
+	$(".excel-modal-btn").on("click", function () {
+		$('#dwldResn').val('');
+		$(this).modalPop({
+			target: "#excel-default-modal",
+			width: "600",
+			height: "200",
+			backdrop: true,
+			keyboard: false
+		});
+	});
+
+	// 엑셀 다운로드 확인
+	function fn_chkExcelDownload() {
+		if (!confirm('엑셀을 다운로드 하시겠습니까?')) {
+			return false;
+		}
+
 		// 현재 검색 조건 유지하여 엑셀 다운로드
 		var param = document.location.href.split("?");
-		var url = './downloadEduAplctListByEdu.do?' + (param[1] || 'key=${key}&searchLctreNo=${eduLctreVO.lctreNo}');
+		var currentParams = param[1] || 'key=${key}&searchLctreNo=${eduLctreVO.lctreNo}';
+		var url = './downloadEduAplctListByEdu.do?' + currentParams + '&dwldResn=' + encodeURIComponent($('#dwldResn').val());
+
+		// 모달 닫기
+		$('#excel-default-modal button[data-close="modal"]').first().trigger('click');
 		window.location.href = url;
+		return false;
 	}
 	
 	// SMS 발송 모달 열기
@@ -654,13 +744,91 @@
 		}
 	}
 
-	// 예비추첨실행
-	function fn_executeTempDrwt() {
-		if (confirm("예비추첨을 실행하시겠습니까?")) {
-			// TODO: 예비추첨 기능 구현 필요
-			alert("예비추첨실행 기능 준비중입니다.");
+	// 예비추첨 실행
+	$('.prepareDrwtProcess').on('click', function () {
+		if (!confirm("추첨 진행 중 다른 동작은 중복당첨 등의 오류를 일으킬 수 있으니 주의바랍니다.")) {
+			return;
 		}
+		
+		$.ajax({
+			cache: false,
+			url: './preparDrwtProcessAjax.do',
+			type: 'POST',
+			data: {
+				prgSe: 'EDU',
+				prgNo: <c:out value="${eduLctreVO.lctreNo}"/>
+			},
+			success: function (res) {
+				$("body").css("cursor", "default");
+				var message = res['message'];
+				alert(message);
+				location.reload();
+			},
+			error: function (request, xhr, status) {
+				$("body").css("cursor", "default");
+				alert("에러가 발생하였습니다.");
+				console.log("code:", request.status);
+				console.log("message:", request.responseText);
+			}
+		});
+	});
+
+	// 추첨 결과 확인
+	$('#drwtWinList').on('click', function () {
+		selectDrwtWinList();
+	});
+
+	function selectDrwtWinList() {
+		$.ajax({
+			cache: false,
+			url: './selectDrwtWinListAjax.do',
+			type: 'POST',
+			data: {
+				prgSe: 'EDU',
+				prgNo: <c:out value="${eduLctreVO.lctreNo}"/>
+			},
+			success: function (res) {
+				$('#drwt-result-modal .modal__content').html(res);
+			},
+			error: function (request, xhr, status) {
+				alert("에러가 발생하였습니다.");
+				console.log("code:", request.status);
+				console.log("message:", request.responseText);
+			}
+		});
 	}
+
+	// 추첨확정 진행
+	$('#drwtProcess').on('click', function () {
+		if (!confirm("추첨 확정을 진행하시겠습니까?\n\n※ 당첨자/미당첨자에게 문자가 발송됩니다.")) {
+			return;
+		}
+		
+		$.ajax({
+			cache: false,
+			url: './drwtProcessAjax.do',
+			type: 'POST',
+			data: {
+				prgSe: 'EDU',
+				prgNo: <c:out value="${eduLctreVO.lctreNo}"/>
+			},
+			beforeSend: function() {
+				$("body").css("cursor", "wait");
+			},
+			success: function (res) {
+				$("body").css("cursor", "default");
+				var message = res['message'];
+				alert(message);
+				location.reload();
+			},
+			error: function (request, xhr, status) {
+				$("body").css("cursor", "default");
+				alert("에러가 발생하였습니다.");
+				console.log("code:", request.status);
+				console.log("message:", request.responseText);
+			}
+		});
+	});
 
 	// 상태 일괄 변경 (결제상태 또는 예약상태)
 	function fn_changeStatusMulti() {

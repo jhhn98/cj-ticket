@@ -40,8 +40,8 @@
                     </div>
                 </div>
                 <div class="formElement widthWide">
-                    <label for="searchKrwd">체험명</label>
-                    <input type="text" name="searchKrwd" id="searchKrwd" placeholder="시설예약명을 입력해주세요" class="customInputDefault">
+                    <label for="searchExprnName">체험명</label>
+                    <input type="text" name="searchKrwd" id="searchExprnName" placeholder="시설예약명을 입력해주세요" class="customInputDefault">
                 </div>
                 </div>
                 <div class="formElement w100per marginTop12">

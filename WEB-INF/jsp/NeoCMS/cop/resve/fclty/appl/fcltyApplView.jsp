@@ -16,11 +16,13 @@
     <link rel="stylesheet" type="text/css" href="/common/css/default.css" />
     <link rel="stylesheet" type="text/css" href="/common/css/program.css" />
     <script src="/common/js/program.js"></script>
-    <title><c:out value="${menuInfo.naviList[0].menuNm}"/> &gt; ${menuInfo.cntntsNm} &gt; 접수관리 상세보기</title>
+    <title><c:out value="${menuInfo.naviList[0].menuNm}"/> &gt; ${menuInfo.cntntsNm} &gt; 신청자 상세보기</title>
 </head>
 <body>
 
 <div class="p-wrap">
+
+    <jsp:include page="../incFcltyInfo.jsp" />
 
     <h3>신청자 기본 정보</h3>
     <table class="p-table">
@@ -77,6 +79,10 @@
                 <c:out value="${fcltyApplVO.email}"/>
             </td>
         </tr>
+        <tr>
+            <th scope="row">거주지 조회</th>
+            <td><c:out value="${lgldongMap[fcltyApplVO.resInqCd]}"/></td>
+        </tr>
         <%--<tr>
             <th scope="row">감면혜택</th>
             <td>
@@ -100,12 +106,6 @@
         </colgroup>
         <tbody class="p-table--th-left">
         <tr>
-            <th scope="row">시설명</th>
-            <td colspan="7">
-                <c:out value="${fcltyApplVO.fcltyNm}"/>
-            </td>
-        </tr>
-        <tr>
             <th scope="row">예약번호</th>
             <td colspan="7">
                 <c:out value="${fcltyApplVO.fcltyApplId}"/>
@@ -118,11 +118,12 @@
             </td>
         </tr>
         <tr>
-            <th scope="row">시설일자</th>
+            <th scope="row">시설사용 예약일</th>
             <td colspan="3">
                 <c:out value="${tsu:toDateFormat(fcltyApplVO.fcltyDe, 'yyyyMMdd', 'yyyy-MM-dd')}"/>
                 <c:out value="${tsu:toDateFormat(fcltyApplVO.fcltyBgnHm, 'HHmm', 'HH:mm')}"/> ~
                 <c:out value="${tsu:toDateFormat(fcltyApplVO.fcltyEndHm, 'HHmm', 'HH:mm')}"/>
+                (${fcltyApplVO.tmInterval} 분)
             </td>
             <th scope="row">결제금액</th>
             <td>
@@ -137,6 +138,18 @@
             <th scope="row">예약상태</th>
             <td colspan="3">
                 <c:out value="${rsvSttusMap[fcltyApplVO.rsvSttusCd]}"/>
+
+                <c:choose>
+                    <c:when test="${!empty fcltyApplVO.drwtWinYn}">
+                        <br>추첨완료
+                        <c:if test="${fcltyApplVO.drwtWinYn eq 'Y'}">
+                            <span class="em_blue">(당첨)</span>
+                        </c:if>
+                        <c:if test="${fcltyApplVO.drwtWinYn eq 'N'}">
+                            <span class="em_gray">(미당첨)</span>
+                        </c:if>
+                    </c:when>
+                </c:choose>
             </td>
             <th scope="row">결제상태</th>
             <td colspan="3">
@@ -145,46 +158,49 @@
         </tr>
         <tr>
             <th scope="row">승인일시</th>
-                <%--<c:out value="${fcltyApplVO.rsvSttusCd}"/>--%>
             <td>
+                <c:out value="${tsu:toDateFormat(fcltyApplVO.applCmplDt, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss')}"/>
             </td>
             <th scope="row">취소일시</th>
             <td>
-                <%--<c:out value="${fcltyApplVO.rsvSttusCd}"/>--%>
+                <c:out value="${tsu:toDateFormat(fcltyApplVO.cancelDt, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss')}"/>
             </td>
             <th scope="row">결제일시</th>
             <td>
-                <%--<c:out value="${fcltyApplVO.rsvSttusCd}"/>--%>
+                <c:out value="${tsu:toDateFormat(fcltyApplVO.payDt, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss')}"/>
             </td>
             <th scope="row">결제방법</th>
             <td>
-                <%--<c:out value="${fcltyApplVO.rsvSttusCd}"/>--%>
+                <c:out value="${payMthdMap[fcltyApplVO.payMthdCd]}"/>
+                <c:if test="${fcltyApplVO.payMthdCd == 'ELCTRN' && !empty fcltyApplVO.tossMethod}">(<c:out value="${fcltyApplVO.tossMethod}"/>)</c:if>
             </td>
         </tr>
         <tr>
             <th scope="row">취소사유</th>
             <td colspan="3">
-                <pre><c:out value="${fcltyApplVO.memo}"/></pre>
+                <pre><c:out value="${fcltyApplVO.cancelReason}"/></pre>
             </td>
             <th scope="row">환불사유</th>
             <td colspan="3">
-                <%--<c:out value="${fcltyApplVO.rsvSttusCd}"/>--%>
+                <pre><c:out value="${fcltyApplVO.rfndReason}"/></pre>
             </td>
         </tr>
         <tr>
             <th scope="row">환불요청일시</th>
             <td colspan="3">
-                <pre><c:out value="${fcltyApplVO.memo}"/></pre>
+                <c:out value="${tsu:toDateFormat(fcltyApplVO.rfndReqDt, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss')}"/>
             </td>
             <th scope="row">환불처리일시</th>
             <td colspan="3">
-                <%--<c:out value="${fcltyApplVO.rsvSttusCd}"/>--%>
+                <c:out value="${tsu:toDateFormat(fcltyApplVO.rfndCmplDt, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss')}"/>
             </td>
         </tr>
         <tr>
             <th scope="row">환불계좌</th>
             <td colspan="7">
-                <pre><c:out value="${fcltyApplVO.memo}"/></pre>
+                <c:if test="${not empty fcltyApplVO.rfndAcctNo}">
+                    <c:out value="${bankMap[fcltyApplVO.rfndBankNm]}"/> <c:out value="${fcltyApplVO.rfndAcctNo}"/> (예금주:<c:out value="${fcltyApplVO.rfndDpstrNm}"/>)
+                </c:if>
             </td>
         </tr>
         <tr>

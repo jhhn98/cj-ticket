@@ -94,7 +94,7 @@
                             </#list>
                         </select>
                         <span class="p-form__split"></span>
-                        <input type="text" name="searchKrwd" id="searchKrwd" class="p-input p-input--beside" title="검색단어 입력" value="<c:out value="@@{bbsNttVO.searchKrwd}"/>" placeholder="검색단어 입력">
+                        <input type="text" name="searchKrwd" class="p-input p-input--beside" title="검색단어 입력" value="<c:out value="@@{bbsNttVO.searchKrwd}"/>" placeholder="검색단어 입력">
                         <span class="p-form-group__button">
 						<button type="submit" class="p-button black">검색</button>
 					</span>

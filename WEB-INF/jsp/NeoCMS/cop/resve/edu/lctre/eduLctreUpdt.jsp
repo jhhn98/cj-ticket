@@ -132,7 +132,6 @@
                     <td>
                         <c:forEach var="result" items="${slctMthdList}" varStatus="status">
                             <%-- 추첨은 우선 숨김처리 --%>
-                            <c:if test="${result.code ne 'DRWLT'}">
                             <span class="p-form-radio">
                                 <form:radiobutton path="slctMthdCd"
                                                   id="slctMthdCd${status.count}"
@@ -142,7 +141,6 @@
                                     <c:out value="${result.codeNm}"/>
                                 </label>
                             </span>
-                            </c:if>
                         </c:forEach>
                     </td>
                 </tr>
@@ -613,20 +611,23 @@
                     <th scope="row"><label for="payMthdCd">결제방식</label></th>
                     <td>
                         <c:forEach var="pay" items="${payMthdList}" varStatus="sts">
-				<span class="p-form-checkbox">
-					<c:set var="isPayChecked" value="false"/>
-					<c:if test="${eduLctreVO.payMthdCdList != null}">
-                        <c:forEach var="selected" items="${eduLctreVO.payMthdCdList}">
-                            <c:if test="${selected eq pay.code}">
-                                <c:set var="isPayChecked" value="true"/>
-                            </c:if>
+                            <span class="p-form-checkbox">
+                                <c:set var="isPayChecked" value="false"/>
+                                <c:if test="${eduLctreVO.payMthdCdList != null}">
+                                    <c:forEach var="selected" items="${eduLctreVO.payMthdCdList}">
+                                        <c:if test="${selected eq pay.code}">
+                                            <c:set var="isPayChecked" value="true"/>
+                                        </c:if>
+                                    </c:forEach>
+                                </c:if>
+                                <input type="checkbox" name="payMthdCdList" id="pay${sts.index}"
+                                       value="${pay.code}"${isPayChecked ? ' checked':''} class="p-form-checkbox__input"/>
+                                <label for="pay${sts.index}" class="p-form-checkbox__label"><c:out value="${pay.codeNm}"/></label>
+                            </span>
                         </c:forEach>
-                    </c:if>
-					<input type="checkbox" name="payMthdCdList" id="pay${sts.index}"
-                           value="${pay.code}"${isPayChecked ? ' checked':''} class="p-form-checkbox__input"/>
-					<label for="pay${sts.index}" class="p-form-checkbox__label"><c:out value="${pay.codeNm}"/></label>
-				</span>
-                        </c:forEach>
+
+                        <br/><svg width="20" height="25" fill="#202e70" focusable="false"><use xlink:href="/common/images/program/p-icon.svg#info-circle"></use></svg>
+                        <em class="em_black margin_t_5">유료 결제 사용을 위해서는 토스페이먼츠와 별도 계약 후 상점ID(MID)를 발급받아야 합니다.</em>
                     </td>
                 </tr>
                 <!-- 무통장입금 선택시 -->

@@ -49,7 +49,7 @@
                 <%-- 선발방식 공통코드 - FIRST : 선착순 / CONFM : 승인 / DRWLT : 추첨 --%>
                 <c:out value="${slctMthdMap[exprnVO.slctMthdCd]}"/>
                 <c:if test="${exprnVO.slctMthdCd == 'DRWLT'}">
-                    / 추첨일시 : <c:out value="${tsu:toDateFormat(exprnVO.drwtDt, 'yyyyMMddHHss', 'yyyy-MM-dd HH:mm')}"/>
+                    / 추첨일시 : <c:out value="${tsu:toDateFormat(exprnVO.drwtDt, 'yyyyMMddHHmm', 'yyyy-MM-dd HH:mm')}"/>
                 </c:if>
             </td>
         </tr>
@@ -276,7 +276,7 @@
                 <ul class="attach">
                     <c:forEach var="cmmnAtchFile" items="${cmmnAtchImgList}" varStatus="idx">
                         <li>
-                            <a href="./downloadExprnFile.do?key=<c:out value="${param.key}"/>&amp;exprnNo=<c:out value="${exprnVO.exprnNo}"/>&amp;fileNo=<c:out value="${cmmnAtchFile.fileNo}"/>"><span class="p-icon p-icon__<c:out value="${cmmnAtchFile.fileExtsn}"/>"><c:out value="${cmmnAtchFile.fileExtsn}"/> 문서</span><span><c:out value="${cmmnAtchFile.fileNm}"/></span></a>
+                            <a href="./downloadExprnFile.do?key=<c:out value="${param.key}"/>&amp;exprnNo=<c:out value="${exprnVO.exprnNo}"/>&amp;fileNo=<c:out value="${cmmnAtchFile.fileNo}"/>&amp;fileSe=img"><span class="p-icon p-icon__<c:out value="${cmmnAtchFile.fileExtsn}"/>"><c:out value="${cmmnAtchFile.fileExtsn}"/> 문서</span><span><c:out value="${cmmnAtchFile.fileNm}"/></span></a>
                         </li>
                     </c:forEach>
                 </ul>

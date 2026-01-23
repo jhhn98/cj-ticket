@@ -63,7 +63,8 @@
             </tr>
             <tr>
                 <th scope="row">접수기간</th>
-                <td><c:out value="${exprnVO.rcptBgnDe}"/> <c:out value="${exprnVO.rcptBgnHh}"/>:<c:out value="${exprnVO.rcptBgnMm}"/>
+                <td>
+                    <c:out value="${exprnVO.rcptBgnDe}"/> <c:out value="${exprnVO.rcptBgnHh}"/>:<c:out value="${exprnVO.rcptBgnMm}"/>
                      ~
                     <c:out value="${exprnVO.rcptEndDe}"/> <c:out value="${exprnVO.rcptEndHh}"/>:<c:out value="${exprnVO.rcptEndMm}"/>
                 </td>
@@ -76,8 +77,13 @@
             </tr>
             <tr>
                 <th scope="row">선발방식</th>
-                <td><c:out value="${slctMthdMap[exprnVO.slctMthdCd]}"/></td>
-                <th scope="row">체험료 / 결제방식</th>
+                <td>
+                    <c:out value="${slctMthdMap[exprnVO.slctMthdCd]}"/>
+                    <c:if test="${exprnVO.slctMthdCd == 'DRWLT'}">
+                        ( 예정일 : <c:out value="${tsu:toDateFormat(exprnVO.drwtDt, 'yyyyMMddHHmm', 'yyyy-MM-dd HH:mm')}"/> )
+                    </c:if>
+                </td>
+                <th scope="row">체험료</th>
                 <td>
                     <c:choose>
                         <c:when test="${exprnVO.exprnAmt > 0}">
@@ -87,17 +93,39 @@
                             무료
                         </c:otherwise>
                     </c:choose>
-                     /
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">추첨상태</th>
+                <td>
+                    <c:if test="${exprnVO.slctMthdCd == 'DRWLT'}">
+                        <c:if test="${exprnVO.drwtYn == 'N'}">
+                            추첨대기
+                            <c:set var="todate" value="${exprnVO.today}${exprnVO.now}"/>
+                            <c:if test="${exprnVO.drwtDt <= todate && empty exprnVO.drwtProcDt}">
+                                <button type="button" class="p-button info prepareDrwtProcess">예비추첨실행</button>
+                            </c:if>
+                            <c:if test="${!empty exprnVO.drwtProcDt}">
+                                <button type="button" class="p-button info prepareDrwtProcess">예비추첨재실행</button>
+                                <button type="button" id="drwtWinList" class="p-button warning">추첨결과확인</button>
+                                <button type="button" id="drwtProcess" class="p-button danger">추첨확정진행</button>
+                            </c:if>
+                        </c:if>
+                        <c:if test="${exprnVO.drwtYn == 'Y'}">
+                            추첨완료 ( <c:out value="${tsu:toDateFormat(exprnVO.drwtProcDt, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss')}"/> )
+                        </c:if>
+                    </c:if>
+                </td>
+                <th scope="row">결제방식</th>
+                <td>
                     <c:forEach var="result" items="${exprnVO.payMthdCdArr}" varStatus="status">
                         <c:out value="${payMthdMap[result]}"/>
                         <c:if test="${result == 'NBKRCP'}">
                             [<c:out value="${exprnVO.bankNm}"/> <c:out value="${exprnVO.acctNo}"/> (예금주:<c:out value="${exprnVO.dpstrNm}"/>)]
                         </c:if>
-                        <c:if test="${!status.last}">, </c:if>
+                        <c:if test="${!status.last}"><br/></c:if>
                     </c:forEach>
                 </td>
-            </tr>
-            <tr>
             </tr>
             </tbody>
         </table>
@@ -116,6 +144,7 @@
             <form:form modelAttribute="exprnApplSearchVO" name="exprnApplSearchVO" method="get" class="p-form-inline">
                 <form:hidden path="key"/>
                 <form:hidden path="exprnNo"/>
+                <textarea name="dwldResn" hidden="hidden"></textarea>
                 <c:forEach var="result" items="${exprnSearchVO.paramsMapMng}">
                     <input type="hidden" name="<c:out value="${result.key}"/>" value="<c:out value="${result.value}"/>"/>
                 </c:forEach>
@@ -207,8 +236,8 @@
                     <c:out value="${result.mobileNo1}"/>-<c:out value="${result.mobileNo2}"/>-<c:out value="${result.mobileNo3}"/>
                 </td>
                 <td>
-                    <c:out value="${tsu:toDateFormat(result.applDtMs, 'yyyyMMddHHmmssSS', 'yyyy-MM-dd')}"/><br/>
-                    <c:out value="${tsu:toDateFormat(result.applDtMs, 'yyyyMMddHHmmssSS', 'HH:mm:ss:SS')}"/>
+                    <c:out value="${tsu:toDateFormat(result.applDtMs, 'yyyyMMddHHmmssSSS', 'yyyy-MM-dd')}"/><br/>
+                    <c:out value="${tsu:toDateFormat(fn:substring(result.applDtMs, 8, 16), 'HHmmssSS', 'HH:mm:ss.SS')}"/>
                 </td>
                 <td>
                     <c:if test="${result.nmprSeCd == 'IND'}">개인</c:if>
@@ -220,11 +249,20 @@
                     <c:out value="${tsu:toDateFormat(result.exprnBgnHm, 'HHmm', 'HH:mm')}"/> ~ <c:out value="${tsu:toDateFormat(result.exprnEndHm, 'HHmm', 'HH:mm')}"/>
                 </td>
                 <td><c:out value="${lgldongMap[result.resInqCd]}"/></td>
-                <td><c:out value="${rsvSttusMap[result.rsvSttusCd]}"/></td>
+                <td>
+                    <c:out value="${rsvSttusMap[result.rsvSttusCd]}"/>
+                    <c:if test="${!fn:contains(result.rsvSttusCd, 'CNCL') && !empty result.drwtWinYn}">
+                        <br/>
+                        추첨완료(
+                            <c:if test="${result.drwtWinYn == 'Y'}">당첨</c:if>
+                            <c:if test="${result.drwtWinYn == 'N'}">미당첨</c:if>
+                        )
+                    </c:if>
+                </td>
                 <td>
                     <%--TODOSDB: 감면관련 상태값 추가--%>
                     <c:out value="${paySttusMap[result.paySttusCd]}"/>
-                    <c:if test="${result.rsvSttusCd == 'APPL_CMPL' && result.paySttusCd == 'PAY_WAIT'}">
+                    <c:if test="${result.rsvSttusCd == 'APPL_CMPL' && result.paySttusCd == 'PAY_WAIT' && result.totalPayAmt > 0}">
                         <br/><c:out value="${tsu:toDateFormat(result.payDeadlineDt, 'yyyyMMddHHmmss', 'yyyy-MM-dd')}"/>
                         <br/><c:out value="${tsu:toDateFormat(result.payDeadlineDt, 'yyyyMMddHHmmss', 'HH:mm:ss')}"/>
                     </c:if>
@@ -254,7 +292,7 @@
         </div>
         <div class="col-6 right">
             <button type="button" class="p-button primary" id="sms-modal-button">선택SMS발송</button>
-            <a href="./downloadExprnApplXls.do" class="p-button p-button--combine excel" onclick="fn_downloadExprnApplXls(this.href); return false;">엑셀다운로드</a>
+            <button type="button" class="p-button p-button--combine excel excel-modal">엑셀다운로드</button>
             <%--<c:if test="${fn:contains(exprnVO.rcptMthdCd, 'TLPHN') || fn:contains(exprnVO.rcptMthdCd, 'VISIT')}">--%>
                 <a href="./addExprnApplView.do?exprnNo=<c:out value="${exprnVO.exprnNo}"/>&amp;<c:out value="${exprnApplSearchVO.params}"/><c:out value="${exprnApplSearchVO.paramsMng}"/>" class="p-button write">등록</a>
             <%--</c:if>--%>
@@ -311,6 +349,47 @@
             <div class="modal__footer">
                 <button type="button" class="p-button default" data-close="modal">닫기</button>
                 <button type="button" class="p-button secondary primary" id="send-sms-button">발송</button>
+            </div>
+            <div class="modal__close">
+                <button type="button" data-close="modal" class="modal__close-button">
+                    <span>닫기</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="drwt-result-modal" tabindex="0" role="dialog">
+        <div class="modal__body">
+            <div class="modal__header">
+                <div class="modal__title">추첨 결과 - <c:out value="${exprnVO.exprnNm}"/></div>
+            </div>
+            <div class="modal__content">
+                <jsp:include page="../../drwt/drwtList.jsp" />
+            </div>
+            <div class="modal__footer">
+                <button type="button" class="p-button default" data-close="modal">닫기</button>
+            </div>
+            <div class="modal__close">
+                <button type="button" data-close="modal" class="modal__close-button">
+                    <span>닫기</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="excel-default-modal" tabindex="0" role="dialog">
+        <div class="modal__body">
+            <div class="modal__header">
+                <div class="modal__title">개인정보 다운로드 사유 입력</div>
+            </div>
+            <div class="modal__content">
+                개인정보보호법에 따라 개인정보가 포함된 자료를 다운로드할 경우 사용목적을 명시해야 합니다. <br>개인정보가 수록된 자료를 다운로드할 경우 취급 및 관리에 유의하여 주십시오.
+                <div class="col-24 margin_t_5">
+                    <textarea id="dwldResnFmt" placeholder="개인정보 다운로드 사유 입력은 최소 10글자 이상 입력해야만 합니다." class="p-input" cols="80" rows="5" required="required" minlength="10" maxlength="100" style="height: 100px"></textarea>
+                </div>
+            </div>
+            <div class="modal__footer">
+                <a href="./downloadExprnApplXls.do" class="p-button primary" onclick="fn_chkExcel(this.href); return false;">엑셀 다운로드</a>
+                <button type="button" class="p-button default" data-close="modal">닫기</button>
             </div>
             <div class="modal__close">
                 <button type="button" data-close="modal" class="modal__close-button">
@@ -448,6 +527,46 @@
         $form.attr("action",originUrl);
     }
 
+    $(".excel-modal").on("click", function () {
+        <c:if test="${fn:length(exprnApplList) eq 0}">
+        alert('다운로드 할 목록이 없습니다.');
+        </c:if>
+        <c:if test="${fn:length(exprnApplList) > 0}">
+        $('textarea[name=dwldResn]').val('');
+        $('#dwldResnFmt').val('');
+        $(this).modalPop({
+            target: "#excel-default-modal",
+            width: "600",
+            height: "200",
+            backdrop: true,
+            keyboard: false
+        });
+        </c:if>
+    });
+
+    function fn_chkExcel(url) {
+
+        if (!$('#dwldResnFmt').val()) {
+            alert("문자 내용을 입력해주세요.");
+            $('#dwldResnFmt').focus();
+            return false;
+        }
+
+        if ($('#dwldResnFmt').val().length < 10) {
+            alert("개인정보 다운로드 사유 입력은 최소 10글자 이상 입력해야만 합니다.");
+            $('#dwldResnFmt').focus();
+            return false;
+        }
+
+        if (confirm('엑셀을 다운로드 하시겠습니까?')) {
+            $('#excel-default-modal').hide();
+            $('textarea[name=dwldResn]').val($('#dwldResnFmt').val());
+            fn_downloadExprnApplXls(url);
+        } else {
+            return false;
+        }
+    }
+
     var receiverNoParam = [];
     $("#sms-modal-button").on("click", function () {
 
@@ -464,7 +583,7 @@
             var receiverNo = $(this).data("receiverNo");
             receiverNoParam.push(receiverNo);
         });
-        console.log("receiverNoParam", receiverNoParam);
+
         $(this).modalPop({
             target : "#send-sms-modal",
             width  : "500",
@@ -534,6 +653,112 @@
             });
         }
     });
+
+    <c:if test="${exprnVO.slctMthdCd == 'DRWLT'}">
+        $('.prepareDrwtProcess').on('click', function () {
+            if (confirm("추첨 진행 중 다른 동작은 중복당첨 등의 오류를 일으킬 수 있으니 주의바랍니다.")) {
+                $.ajax({
+                    cache: false,
+                    url: './preparDrwtProcessAjax.do',
+                    type: 'POST',
+                    data: {
+                        prgSe: 'EXP',
+                        prgNo: <c:out value="${exprnVO.exprnNo}"/>
+                    },
+                    success: function (res) {
+                        var message = res['message'];
+                        alert(message);
+                        location.reload();
+                    }, // success
+                    error: function (request, xhr, status) {
+                        //alert(request.responseText);
+                        alert("에러가 발생하였습니다.");
+                        console.log("code:", request.status);
+                        console.log("message:", request.responseText);
+                        console.log("error:" + error)
+                    }
+                })
+            }
+        });
+
+        $('#drwtWinList').on('click', function () {
+            selectDrwtWinList();
+        })
+
+        function selectDrwtWinList() {
+            $.ajax({
+                cache: false,
+                url: './selectDrwtWinListAjax.do',
+                type: 'POST',
+                data: {
+                    prgSe: 'EXP',
+                    prgNo: <c:out value="${exprnVO.exprnNo}"/>
+                },
+                success: function (res) {
+                    $('#drwt-result-modal .modal__content').html(res);
+                }, // success
+                error: function (request, xhr, status) {
+                    //alert(request.responseText);
+                    alert("에러가 발생하였습니다.");
+                    console.log("code:", request.status);
+                    console.log("message:", request.responseText);
+                    console.log("error:" + error)
+                }
+            })
+        }
+
+        $(document).on("click", "#winCancel", function () {
+            if (confirm("미당첨 처리하시겠습니까?")) {
+                $.ajax({
+                    cache: false,
+                    url: './updateDrwtWinYn.do',
+                    type: 'POST',
+                    data: {
+                        drwtNo: $(this).data('drwtNo'),
+                        winYn: 'N'
+                    },
+                    success: function (res) {
+                        if (res > 0) {
+                            selectDrwtWinList();
+                        }
+                    }, // success
+                    error: function (request, xhr, status) {
+                        //alert(request.responseText);
+                        alert("에러가 발생하였습니다.");
+                        console.log("code:", request.status);
+                        console.log("message:", request.responseText);
+                        console.log("error:" + error)
+                    }
+                })
+            }
+        });
+
+        $('#drwtProcess').on('click', function () {
+            if (confirm("추첨 확정을 진행하시겠습니까?")) {
+                $.ajax({
+                    cache: false,
+                    url: './drwtProcessAjax.do',
+                    type: 'POST',
+                    data: {
+                        prgSe: 'EXP',
+                        prgNo: <c:out value="${exprnVO.exprnNo}"/>
+                    },
+                    success: function (res) {
+                        var message = res['message'];
+                        alert(message);
+                        location.reload();
+                    }, // success
+                    error: function (request, xhr, status) {
+                        //alert(request.responseText);
+                        alert("에러가 발생하였습니다.");
+                        console.log("code:", request.status);
+                        console.log("message:", request.responseText);
+                        console.log("error:" + error)
+                    }
+                })
+            }
+        });
+    </c:if>
 
 </script>
 

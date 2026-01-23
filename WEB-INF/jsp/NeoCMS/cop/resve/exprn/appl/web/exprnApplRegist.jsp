@@ -204,6 +204,7 @@
                     </div>
                 </td>
             </tr>
+            <c:if test="${!(exprnVO.slctMthdCd == 'DRWLT' && fn:contains(exprnVO.nmprSeCd, 'IND'))}">
             <tr>
                 <th scope="row" class="first">
                     <div class="innerCell">
@@ -293,6 +294,7 @@
                     </c:if>
                 </td>
             </tr>
+            </c:if>
             <tr>
                 <th scope="row" class="first"><div class="innerCell">이메일</div></th>
                 <td>
@@ -702,6 +704,7 @@
             }
         }
 
+        <c:if test="${!(exprnVO.slctMthdCd == 'DRWLT' && fn:contains(exprnVO.nmprSeCd, 'IND'))}">
         if (!form.totalCnt.value) {
             alert("신청인원을 입력해주세요.");
             form.totalCnt.focus();
@@ -714,10 +717,8 @@
             return false;
         }
 
-        var minCnt =
-        <c:out value="${exprnVO.nmprMinCnt}"/>
-        var maxCnt =
-        <c:out value="${exprnVO.nmprMaxCnt}"/>
+        var minCnt = <c:out value="${exprnVO.nmprMinCnt}"/>
+        var maxCnt = <c:out value="${exprnVO.nmprMaxCnt}"/>
 
         if (minCnt > 0) {
             if (form.totalCnt.value < minCnt) {
@@ -752,6 +753,7 @@
             alert("세부 인원이 총 신청인원과 일치하지 않습니다. 다시 확인해주세요.");
             return false;
         }
+        </c:if>
         </c:if>
 
         <c:if test="${exprnVO.resInqUseYn == 'Y'}">

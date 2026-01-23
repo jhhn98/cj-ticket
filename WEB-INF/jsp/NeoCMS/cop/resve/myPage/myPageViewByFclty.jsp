@@ -122,7 +122,20 @@
                     <th scope="row" class="first"><div class="innerCell">예약상태</div></th>
                     <td>
                         <div class="innerCell">
-                            <c:out value="${rsvSttusMap[fcltyApplVO.rsvSttusCd]}"/>
+                            <c:choose>
+                                <c:when test="${!empty fcltyApplVO.drwtWinYn}">
+                                    추첨완료
+                                    <c:if test="${fcltyApplVO.drwtWinYn eq 'Y'}">
+                                        <span class="em_blue">(당첨)</span>
+                                    </c:if>
+                                    <c:if test="${fcltyApplVO.drwtWinYn eq 'N'}">
+                                        <span class="em_gray">(미당첨)</span>
+                                    </c:if>
+                                </c:when>
+                                <c:otherwise>
+                                    <c:out value="${rsvSttusMap[fcltyApplVO.rsvSttusCd]}"/>
+                                </c:otherwise>
+                            </c:choose>
                             <%-- TODOSDB: 상태값 취소인 경우 취소일시/사유 표출 (유료는 환불 요청일시/사유)
                             사용자 취소(취소일: 2025-07-07 14:10)
                             <p class="iconText caution point-color-green">취소사유: 사용자 취소</p>--%>

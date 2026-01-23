@@ -242,7 +242,12 @@
                         ( <c:out value="${result.waitLstCnt != null ? result.waitLstCnt : 0}"/> / <c:out value="${result.waitCnt}"/> )
                     </c:if>
                 </td>
-                <td><c:out value="${slctMthdMap[result.slctMthdCd]}"/></td>
+                <td>
+                    <c:out value="${slctMthdMap[result.slctMthdCd]}"/>
+                    <c:if test="${slctMthdMap[result.slctMthdCd] eq '추첨'}">
+                        <br/>(<c:out value="${tsu:toDateFormat(result.drwtDt, 'yyyyMMddHHmm', 'yyyy-MM-dd HH:mm')}"/>)
+                    </c:if>
+                </td>
                     <%-- 선발방식 slctMthdMap --%>
                 <td> <%-- 수강료 --%>
                     <c:choose>

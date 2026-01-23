@@ -70,32 +70,32 @@
                         <th scope="row"><form:label path="slctMthdCd">선발방식</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>
                         <td>
                             <div class="p-form-group w20p">
+                                <input type="hidden" name="rcritCnt" id="rcritCnt" value="<c:out value="${fcltyVO.rcritCnt}"/>" />
                                 <%-- 선발방식 공통코드 - FIRST : 선착순 / CONFM : 승인 / DRWLT : 추첨 --%>
                                 <c:forEach var="result" items="${slctMthdList}" varStatus="status">
-                                    <c:if test="${result.code != 'DRWLT'}">
-                                        <span class="p-form-radio">
-                                            <input type="radio" name="slctMthdCd" id="slctMthdCd<c:out value="${status.count}"/>" class="p-form-radio__input" value="<c:out value="${result.code}"/>"<c:if test="${fcltyVO.slctMthdCd == result.code}"> checked</c:if>>
-                                            <label for="slctMthdCd<c:out value="${status.count}"/>" class="p-form-radio__label"><c:out value="${result.codeNm}"/></label>
-                                        </span>
-                                    </c:if>
+                                    <span class="p-form-radio">
+                                        <input type="radio" name="slctMthdCd" id="slctMthdCd<c:out value="${status.count}"/>" class="p-form-radio__input" value="<c:out value="${result.code}"/>"<c:if test="${fcltyVO.slctMthdCd == result.code}"> checked</c:if>>
+                                        <label for="slctMthdCd<c:out value="${status.count}"/>" class="p-form-radio__label"><c:out value="${result.codeNm}"/></label>
+                                    </span>
                                 </c:forEach>
-<%--                                <span class="p-form__split">: 추첨일자</span>--%>
-<%--                                <input type="text" name="drwtDe" id="drwtDe" value="<c:out value="${fcltyVO.drwtDe}"/>" style="width:100px;" class="p-input p-input--auto" placeholder="yyyy-MM-dd"<c:if test="${fcltyVO.slctMthdCd != 'DRWLT'}"> disabled</c:if>/>--%>
-<%--                                <span class="p-input__addon">--%>
-<%--                                    <button type="button" class="p-input__item" id="drwtDeBtn" title="추첨일 선택" onclick="getCalendar(document.fcltyVO.drwtDe);" disabled> <!--getCalendar(document.bbsNttForm.start_date);-->--%>
-<%--                                        <svg width="14" height="16" fill="#888" focusable="false">--%>
-<%--                                            <use xlink:href="/common/images/program/p-icon.svg#calendar-alt"></use>--%>
-<%--                                        </svg>--%>
-<%--                                    </button>--%>
-<%--                                </span>--%>
-<%--                                <span class="p-form__split"></span>--%>
-<%--                                <select name="drwtHm" id="drwtHm" class="p-input p-input--auto text_center" value="<c:out value="${fcltyVO.drwtHm}"/>"<c:if test="${fcltyVO.slctMthdCd != 'DRWLT'}"> disabled</c:if>>--%>
-<%--                                    <c:forEach var="i" begin="0" end="23">--%>
-<%--                                        <fmt:formatNumber var="hh" value="${i}" pattern="00"/>--%>
-<%--                                        <c:set var="hm" value="${hh}00"/>--%>
-<%--                                        <option value="${hm}" label="${i}시"<c:if test="${fcltyVO.drwtHm == hm}"> selected</c:if>/>--%>
-<%--                                    </c:forEach>--%>
-<%--                                </select>--%>
+                                <span class="p-form__split">: 추첨일자</span>
+                                <input type="text" name="drwtDe" id="drwtDe" value="<c:out value="${fcltyVO.drwtDe}"/>" style="width:100px;" class="p-input p-input--auto" placeholder="yyyy-MM-dd"<c:if test="${fcltyVO.slctMthdCd != 'DRWLT'}"> disabled</c:if>/>
+                                <span class="p-input__addon">
+                                    <button type="button" class="p-input__item" id="drwtDeBtn" title="추첨일 선택" onclick="getCalendar(document.fcltyVO.drwtDe);" disabled> <!--getCalendar(document.bbsNttForm.start_date);-->
+                                        <svg width="14" height="16" fill="#888" focusable="false">
+                                            <use xlink:href="/common/images/program/p-icon.svg#calendar-alt"></use>
+                                        </svg>
+                                    </button>
+                                </span>
+                                <span class="p-form__split"></span>
+                                <select name="drwtHm" id="drwtHm" class="p-input p-input--auto text_center" value="<c:out value="${fcltyVO.drwtHm}"/>"<c:if test="${fcltyVO.slctMthdCd != 'DRWLT'}"> disabled</c:if>>
+                                    <c:forEach var="i" begin="0" end="23">
+                                        <fmt:formatNumber var="hh" value="${i}" pattern="00"/>
+                                        <c:set var="hm" value="${hh}00"/>
+                                        <option value="${hm}" label="${i}시"<c:if test="${fcltyVO.drwtHm == hm}"> selected</c:if>/>
+                                    </c:forEach>
+                                </select>
+                                <input type="hidden" name="drwtYn" value="<c:out value="${fcltyVO.drwtYn}"/>" class="drwtInfo" <c:if test="${fcltyVO.slctMthdCd != 'DRWLT'}"> disabled</c:if>>
                             </div>
                         </td>
                     </tr>
@@ -184,7 +184,6 @@
                     <tr>
                         <th scope="row"><form:label path="nmprMinCnt">시설 사용 인원 제약 조건</form:label></th>
                         <td>
-                            <form:hidden path="rcritCnt" />
                             <div class="p-form-group col-2">
                                 <span class="p-form__split">최소 : </span>
                                 <form:input path="nmprMinCnt" style="width:50px;" class="p-input p-input--auto text_center" oninput="fn_numChk(this)" maxlength="4"/>
@@ -291,6 +290,11 @@
                                     <label for="payMthdCd<c:out value="${status.count}"/>" class="p-form-checkbox__label"><c:out value="${result.codeNm}"/></label>
                                 </span>
                             </c:forEach>
+                            <br>
+                            <span class="p-table__content padding_l_10 padding_t_10">
+                            <svg width="20" height="25" fill="#202e70" focusable="false"><use xlink:href="/common/images/program/p-icon.svg#info-circle"></use></svg>
+                            <em class="em_black">유료 결제 사용을 위해서는 토스페이먼츠와 별도 계약 후 상점ID(MID)를 발급받아야 합니다.</em>
+                        </span>
                         </td>
                     </tr>
                     <tr>
@@ -557,6 +561,15 @@
                         <th scope="row"><form:label path="telNoFmt">문의전화</form:label></th>
                         <td>
                             <form:input path="telNoFmt" class="p-input p-input--auto"/>
+                            <span class="p-table__content padding_l_10">
+                                <svg width="20" height="25" fill="#202e70" focusable="false"><use xlink:href="/common/images/program/p-icon.svg#info-circle"></use></svg>
+                                <em class="em_black">알림 문자는 시스템 정책에 의해 발신자가 ‘문의전화(대표번호)’로 표기됩니다. 예시) 043-201-0000</em>
+                            </span>
+                                <br>
+                                <span class="p-table__content padding_l_10">
+                                <svg width="20" height="25" fill="#202e70" focusable="false"><use xlink:href="/common/images/program/p-icon.svg#info-circle"></use></svg>
+                                <em class="em_black">휴대폰번호 입력시 추후 문자 발송(발신자 번호로 사용)이 제한될 수 있습니다.</em>
+                            </span>
                         </td>
                     </tr>
                     <tr>
@@ -613,6 +626,12 @@
         }
 
         $('input[name=slctMthdCd]').on("change",function() {
+            if ($(this).val() == 'FIRST') {
+                $('#rcritCnt').val('1');
+            } else {
+                $('#rcritCnt').val('1000');
+            }
+
             if ($(this).val() == 'DRWLT') {
                 $('input[name=drwtDe]').prop('disabled', false);
                 $('select[name=drwtHm]').prop('disabled', false);

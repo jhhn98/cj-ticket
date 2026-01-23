@@ -96,6 +96,9 @@
                     <th scope="row" class="first">선발방식</th>
                     <td>
                         <c:out value="${slctMthdMap[eduLctreVO.slctMthdCd]}"/>
+                        <c:if test="${eduLctreVO.slctMthdCd eq 'DRWLT'}">
+                            (추첨예정일 : <c:out value="${tsu:toDateFormat(eduLctreVO.drwtDt, 'yyyyMMddHHmm', 'yyyy-MM-dd HH:mm')}"/>)
+                        </c:if>
                     </td>
                     <th scope="row">추가접수기간</th>
                     <td>
@@ -196,7 +199,20 @@
                     <th scope="row" class="first"><div class="innerCell">예약상태</div></th>
                     <td>
                         <div class="innerCell">
-                            <c:out value="${resveSttusCdMap[eduAplctVO.resveSttusCd]}"/>
+                            <c:choose>
+                                <c:when test="${!empty eduAplctVO.drwtWinYn}">
+                                    추첨완료
+                                    <c:if test="${eduAplctVO.drwtWinYn eq 'Y'}">
+                                        <span class="em_blue">(당첨)</span>
+                                    </c:if>
+                                    <c:if test="${eduAplctVO.drwtWinYn eq 'N'}">
+                                        <span class="em_gray">(미당첨)</span>
+                                    </c:if>
+                                </c:when>
+                                <c:otherwise>
+                                    <c:out value="${eduRsvMap[eduAplctVO.resveSttusCd]}"/>
+                                </c:otherwise>
+                            </c:choose>
                         </div>
                     </td>
                 </tr>
@@ -263,10 +279,9 @@
                                 <c:if test="${currentPayMthdCd == 'ELCTRN' && eduAplctVO.paySttusCd == 'PAY_WAIT'}">
                                     <c:if test="${todate < eduAplctVO.payDeadlineDtHm}">
                                         <c:import url="/tosspaymentsView.do">
-                                            <%-- 추후 상점ID 추가 시 해당값으로 설정.
+                                            <%-- 상점ID 추가 필요 --%>
                                             <c:param name="insttNo" value="${eduLctreVO.insttNo}" />
-                                            --%>
-                                            <c:param name="insttNo" value="10" />
+<%--                                            <c:param name="insttNo" value="10" />--%>
                                             <c:param name="siteId" value="${siteId}" />
                                             <c:param name="applNo" value="${eduAplctVO.eduAplyNo}" />
                                             <c:param name="totalPayAmt" value="${eduAplctVO.payAmt}" />

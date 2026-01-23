@@ -25,6 +25,7 @@
     <div class="card">
         <form:form modelAttribute="exprnApplSearchVO" name="exprnApplSearchVO" method="get" class="p-form-group" cssClass="row" onsubmit="return fn_searchExprnApplCheck(this)">
             <form:hidden path="key"/>
+            <textarea name="dwldResn" hidden="hidden"></textarea>
             <div class="p-form-row">
                 <label for="" class="p-form__label col-6 right">운영기관</label>
                 <div class="col-3">
@@ -163,7 +164,8 @@
                     <c:out value="${tsu:toDateFormat(result.rfndReqDt, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss')}"/>
                     <c:if test="${!(result.payMthdCd == 'ELCTRN' && result.tossMethod != '가상계좌')}">
                         <br/>
-                        <c:out value="${bankMap[result.rfndBankNm]}"/> <c:out value="${result.rfndAcctNo}"/><br>
+                        <c:out value="${bankMap[result.rfndBankNm]}"/><br>
+                        <c:out value="${result.rfndAcctNo}"/><br>
                         (예금주 : <c:out value="${result.rfndDpstrNm}"/>)
                     </c:if>
                 </td>
@@ -205,8 +207,30 @@
             </div>
         </div>
         <div class="col-6 right">
-            <%--TODOSDB: 엑셀다운로드 로직 추가--%>
-            <a href="./downloadExprnRfndXls.do" class="p-button p-button--combine excel" onclick="fn_downloadExprnApplXls(this.href); return false;">엑셀다운로드</a>
+            <button type="button" class="p-button p-button--combine excel excel-modal">엑셀다운로드</button>
+        </div>
+    </div>
+
+    <div class="modal" id="excel-default-modal" tabindex="0" role="dialog">
+        <div class="modal__body">
+            <div class="modal__header">
+                <div class="modal__title">개인정보 다운로드 사유 입력</div>
+            </div>
+            <div class="modal__content">
+                개인정보보호법에 따라 개인정보가 포함된 자료를 다운로드할 경우 사용목적을 명시해야 합니다. <br>개인정보가 수록된 자료를 다운로드할 경우 취급 및 관리에 유의하여 주십시오.
+                <div class="col-24 margin_t_5">
+                    <textarea id="dwldResnFmt" placeholder="개인정보 다운로드 사유 입력은 최소 10글자 이상 입력해야만 합니다." class="p-input" cols="80" rows="5" required="required" minlength="10" maxlength="100" style="height: 100px"></textarea>
+                </div>
+            </div>
+            <div class="modal__footer">
+                <a href="./downloadExprnRfndXls.do" class="p-button primary" onclick="fn_chkExcel(this.href); return false;">엑셀 다운로드</a>
+                <button type="button" class="p-button default" data-close="modal">닫기</button>
+            </div>
+            <div class="modal__close">
+                <button type="button" data-close="modal" class="modal__close-button">
+                    <span>닫기</span>
+                </button>
+            </div>
         </div>
     </div>
 </div>
@@ -366,6 +390,47 @@
         $form.submit();
         $form.attr("action",originUrl);
     }
+
+    $(".excel-modal").on("click", function () {
+        <c:if test="${fn:length(exprnApplList) eq 0}">
+        alert('다운로드 할 목록이 없습니다.');
+        </c:if>
+        <c:if test="${fn:length(exprnApplList) > 0}">
+        $('textarea[name=dwldResn]').val('');
+        $('#dwldResnFmt').val('');
+        $(this).modalPop({
+            target: "#excel-default-modal",
+            width: "600",
+            height: "200",
+            backdrop: true,
+            keyboard: false
+        });
+        </c:if>
+    });
+
+    function fn_chkExcel(url) {
+
+        if (!$('#dwldResnFmt').val()) {
+            alert("문자 내용을 입력해주세요.");
+            $('#dwldResnFmt').focus();
+            return false;
+        }
+
+        if ($('#dwldResnFmt').val().length < 10) {
+            alert("개인정보 다운로드 사유 입력은 최소 10글자 이상 입력해야만 합니다.");
+            $('#dwldResnFmt').focus();
+            return false;
+        }
+
+        if (confirm('엑셀을 다운로드 하시겠습니까?')) {
+            $('#excel-default-modal').hide();
+            $('textarea[name=dwldResn]').val($('#dwldResnFmt').val());
+            fn_downloadExprnApplXls(url);
+        } else {
+            return false;
+        }
+    }
+
 </script>
 
 </body>

@@ -35,10 +35,11 @@
     <span class="stateType <c:out value="${sttusType}"/>"><c:out value="${operSttusMap[fcltyVO.operSttus]}"/></span>
     <strong><c:out value="${fcltyVO.fcltyNm}"/></strong>
 </div>
+
 <form method="post" name="fcltyApplVO" action="./addFcltyApplWebView.do" onsubmit="return fn_addFcltyApplCheck(this);">
     <input type="hidden" name="key" value="<c:out value="${key}"/>" />
     <input type="hidden" name="fcltyNo" value="<c:out value="${fcltyVO.fcltyNo}"/>" />
-    <input type="hidden" name="fcltyDe" value="" />
+    <input type="hidden" name="fcltyDe" id="fcltyDe" value="" />
 
     <fieldset>
         <legend>예약 일정선택/개인정보제공동의</legend>
@@ -79,7 +80,7 @@
                     </li>
                     <li>
                         <span class="title">금액</span>
-                        <p><em class="amount" data-fclty-amt="<c:out value="${fcltyVO.fcltyAmt}"/>">0</em>원</p>
+                        <p><em class="amount">0</em>원</p>
                     </li>
                 </ul>
             </div>
@@ -281,6 +282,53 @@
 
     $(document).on("change", "input[name=fcltySchdNo]", function () {
 
+        $.ajax({
+            cache: false,
+            url: './fcltyApplCheckAjax.do',
+            type: 'POST',
+            data: {
+                fcltyNo: '<c:out value="${fcltyVO.fcltyNo}"/>',
+                fcltyDe: $('#fcltyDe').val(),
+                fcltySchdNo : $(this).val()
+            },
+            success: function (res) {
+                var result = res['RESULT'];
+
+                if (result === '200') {
+
+                } else {
+                     let msg = '';
+                    if (result === 'PARAM_ERROR') {
+                        msg = '에러가 발생했습니다. 관리자에게 문의해주세요.';
+                    } else if (result === 'ERROR_1') {
+                        msg = '예약할 시설을 찾을 수 없습니다.';
+                    } else if (result === 'ERROR_2') {
+                        msg = '예약할 일정을 찾을 수 없습니다.';
+                    } else if (result === 'ERROR_3') {
+                        msg = '이미 신청완료된 일정입니다.';
+                    } else if (result === 'ERROR_4') {
+                        msg = '해당 기관의 월 신청 가능 횟수를 초과하여 신청할 수 없습니다.';
+                    } else if (result === 'ERROR_5') {
+                        msg = '해당 시설의 일일 신청 가능 시간이 초과되어 신청할 수 없습니다.';
+                    } else if (result === 'ERROR_6') {
+                        msg = '해당 시설의 월간 신청 가능 시간이 초과되어 신청할 수 없습니다.';
+                    }
+
+                    alert(msg);
+                    $("input[name='fcltySchdNo']:checked").prop("checked", false);
+                    $('.selectedTime').text('시간을 선택해주세요.');
+                }
+            }, // success
+            error: function (request, xhr, status) {
+                //alert(request.responseText);
+                alert("에러가 발생하였습니다.");
+                $('.selectedTime').text('시간을 선택해주세요.');
+                console.log("code:",request.status);
+                console.log("message:",request.responseText);
+                console.log("error:"+error)
+            }
+        });
+
         var $fcltySchdNoCheckd = $("input[name='fcltySchdNo']:checked");
         var $totalTime = $('.totalTime');
         var $selectedTime = $('.selectedTime');
@@ -295,7 +343,7 @@
             $("input[name='fcltySchdNo']").not(this).prop("checked", false);
 
             totalTimeVal += $(this).data('tmInterval');
-            amountVal = $amount.data('fcltyAmt');
+            amountVal = $(this).data('timeAmt');
             selectedTimeVal = $('#timeText' + $(this).val()).text();
 
         } else {
@@ -312,6 +360,7 @@
         $totalTime.text(hm);
         $selectedTime.text(selectedTimeVal);
         $amount.text(amountVal.toLocaleString());
+
     });
 
     function fn_addFcltyApplCheck(form){

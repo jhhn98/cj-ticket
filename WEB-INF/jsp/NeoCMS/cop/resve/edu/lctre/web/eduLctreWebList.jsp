@@ -231,7 +231,6 @@
                                             <span class="pay free">무료</span>
                                         </c:otherwise>
                                     </c:choose>
-                                    </span>
                                 </div>
                                 <span class="title"><c:out value="${result.lctreNm}"/></span>
                                 <ul class="prgInformation">
