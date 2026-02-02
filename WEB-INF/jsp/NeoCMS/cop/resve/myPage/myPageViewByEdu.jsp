@@ -53,13 +53,13 @@
                     <th scope="row">접수기간</th>
                     <td>
                         <c:if test="${not empty eduLctreVO.rcptBgnDt}">
-                            <c:out value="${tsu:toDateFormat(eduLctreVO.rcptBgnDt, 'yyyyMMddHHmm', 'yyyy.MM.dd HH')}"/>시
+                            <c:out value="${tsu:toDateFormat(eduLctreVO.rcptBgnDt, 'yyyyMMddHHmm', 'yyyy.MM.dd HH:mm')}"/>
                         </c:if>
                         <c:if test="${not empty eduLctreVO.rcptBgnDt && not empty eduLctreVO.rcptEndDt}">
                             ~
                         </c:if>
                         <c:if test="${not empty eduLctreVO.rcptEndDt}">
-                            <c:out value="${tsu:toDateFormat(eduLctreVO.rcptEndDt, 'yyyyMMddHHmm', 'yyyy.MM.dd HH')}"/>시
+                            <c:out value="${tsu:toDateFormat(eduLctreVO.rcptEndDt, 'yyyyMMddHHmm', 'yyyy.MM.dd HH:mm')}"/>
                         </c:if>
                     </td>
                 </tr>
@@ -67,13 +67,11 @@
                     <th scope="row" class="first">교육기간</th>
                     <td>
                         <c:if test="${not empty eduLctreVO.lctBgnDt}">
-                            <c:out value="${tsu:toDateFormat(eduLctreVO.lctBgnDt, 'yyyyMMddHHmm', 'yyyy-MM-dd')}"/>
+                            <c:out value="${tsu:toDateFormat(eduLctreVO.lctBgnDt, 'yyyyMMddHHmm', 'yyyy-MM-dd HH:mm')}"/>
                         </c:if>
-                        <c:if test="${not empty eduLctreVO.lctBgnDt && not empty eduLctreVO.lctEndDt}">
                             ~
-                        </c:if>
                         <c:if test="${not empty eduLctreVO.lctEndDt}">
-                            <c:out value="${tsu:toDateFormat(eduLctreVO.lctEndDt, 'yyyyMMddHHmm', 'yyyy-MM-dd')}"/>
+                            <c:out value="${tsu:toDateFormat(eduLctreVO.lctEndDt, 'yyyyMMddHHmm', 'yyyy-MM-dd HH:mm')}"/>
                         </c:if>
                     </td>
                     <th scope="row">교육시간/요일</th>
@@ -210,7 +208,7 @@
                                     </c:if>
                                 </c:when>
                                 <c:otherwise>
-                                    <c:out value="${eduRsvMap[eduAplctVO.resveSttusCd]}"/>
+                                    <c:out value="${resveSttusCdMap[eduAplctVO.resveSttusCd]}"/>
                                 </c:otherwise>
                             </c:choose>
                         </div>

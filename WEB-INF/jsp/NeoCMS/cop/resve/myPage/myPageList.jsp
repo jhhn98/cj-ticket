@@ -69,37 +69,26 @@
                 <td><span class="mobile-th">운영기관</span><c:out value="${result.insttNm}"/></td>
                 <td>
                     <span class="mobile-th">운영기간</span>
-                    <c:if test="${not empty result.lctBgnDt && fn:length(result.lctBgnDt) >= 8}">
-                        <c:set var="lctBgnDe" value="${fn:substring(result.lctBgnDt, 0, 8)}"/>
-                        <c:out value="${fn:substring(lctBgnDe, 0, 4)}.${fn:substring(lctBgnDe, 4, 6)}.${fn:substring(lctBgnDe, 6, 8)}"/>
+                    <c:if test="${not empty result.lctBgnDt}">
+                        <c:out value="${tsu:toDateFormat(result.lctBgnDt, 'yyyyMMddHHmm', 'yyyy-MM-dd')}"/>
                     </c:if>
-                    <c:if test="${not empty result.lctBgnDt && not empty result.lctEndDt}">
-                        ~
-                    </c:if>
-                    <c:if test="${not empty result.lctEndDt && fn:length(result.lctEndDt) >= 8}">
-                        <c:set var="lctEndDe" value="${fn:substring(result.lctEndDt, 0, 8)}"/>
-                        <c:out value="${fn:substring(lctEndDe, 0, 4)}.${fn:substring(lctEndDe, 4, 6)}.${fn:substring(lctEndDe, 6, 8)}"/>
-                    </c:if>
-                    <c:if test="${empty result.lctBgnDt && empty result.lctEndDt}">
-                        -
+                    ~
+                    <c:if test="${not empty result.lctEndDt}">
+                        <c:out value="${tsu:toDateFormat(result.lctEndDt, 'yyyyMMddHHmm', 'yyyy-MM-dd')}"/>
                     </c:if>
                 </td>
                 <td>
                     <span class="mobile-th">운영시간/요일</span>
-                    <c:if test="${not empty result.lctBgnDt && fn:length(result.lctBgnDt) >= 12}">
-                        <c:set var="lctBgnHm" value="${fn:substring(result.lctBgnDt, 8, 12)}"/>
-                        <c:out value="${fn:substring(lctBgnHm, 0, 2)}:${fn:substring(lctBgnHm, 2, 4)}"/>
+                    <c:if test="${not empty result.lctBgnDt}">
+                        <c:out value="${tsu:toDateFormat(result.lctBgnDt, 'yyyyMMddHHmm', 'HH:mm')}"/>
                     </c:if>
-                    <c:if test="${not empty result.lctBgnDt && not empty result.lctEndDt}">
-                        ~
-                    </c:if>
-                    <c:if test="${not empty result.lctEndDt && fn:length(result.lctEndDt) >= 12}">
-                        <c:set var="lctEndHm" value="${fn:substring(result.lctEndDt, 8, 12)}"/>
-                        <c:out value="${fn:substring(lctEndHm, 0, 2)}:${fn:substring(lctEndHm, 2, 4)}"/>
+                    ~
+                    <c:if test="${not empty result.lctEndDt}">
+                        <c:out value="${tsu:toDateFormat(result.lctEndDt, 'yyyyMMddHHmm', 'HH:mm')}"/>
                     </c:if>
                     <c:if test="${not empty result.lctWeek}">
                         /
-                        <c:set var="weekDays" value="월,화,수,목,금,토,일"/>
+                        <c:set var="weekDays" value="일,월,화,수,목,금,토"/>
                         <c:set var="weekArray" value="${fn:split(weekDays, ',')}"/>
                         <c:set var="lctWeekArray" value="${fn:split(result.lctWeek, ',')}"/>
                         <c:forEach var="weekIdx" items="${lctWeekArray}" varStatus="status">

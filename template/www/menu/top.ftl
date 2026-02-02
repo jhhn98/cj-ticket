@@ -7,7 +7,7 @@
         <c:choose>
             <c:when test="@@{!empty loginVO}">
                 <div class="navi_myPage">
-                    <a href="./myPageList.do?key=59"><svg><use href="/site/www/images/common/sprite-common-side.svg#icon-user"></use></svg></a>
+                    <a href="./myPageList.do?key=59"><span class="acc-skip">마이페이지 바로가기</span><svg><use href="/site/www/images/common/sprite-common-side.svg#icon-user"></use></svg></a>
                     <div class="navi_linkLayer">
                         <svg><use href="/site/www/images/common/sprite-common-side.svg#icon-arrTop"></use></svg>
                         <a href="./myPageList.do?key=59"><span>마이페이지</span></a>
@@ -48,7 +48,7 @@
                                 <#list secondMenuList as smenu>
                                     <#if fmenu.menuNo = smenu.upperMenuNo>
                                         <li <#if smenu.lwprtMenuCo != 0> class="current"</#if>>
-                                            <a href="${smenu.menuUrl!""}" target="${smenu.linkTrget}" data-navigation-depth="2" class="navDepth2">
+                                            <a href="${smenu.menuUrl!""}" target="${smenu.linkTrget}" data-navigation-depth="2" class="navDepth2"<#if smenu.linkTrget = "_blank"> title="새창"</#if>>
                                                 ${smenu.menuNm}
                                                 <!-- 하위메뉴가 존재할 때만 넣어주세요 -->
                                                 <#if smenu.lwprtMenuCo != 0><svg class="mobile-icon"><use href="/site/www/images/common/sprite-common-side.svg#icon-menu-arr"></use></svg></#if>
@@ -61,7 +61,7 @@
                                                 <ul data-navigation="depth3Wrap" class="navDepth3Wrap">
                                                     <#list thirdMenuList as tmenu>
                                                         <#if smenu.menuNo = tmenu.upperMenuNo>
-                                                            <li><a href="${tmenu.menuUrl!""}" target="${tmenu.linkTrget}" data-navigation-depth="3" class="navDepth3">
+                                                            <li><a href="${tmenu.menuUrl!""}" target="${tmenu.linkTrget}" data-navigation-depth="3" class="navDepth3"<#if smenu.linkTrget = "_blank"> title="새창"</#if>>
                                                                     ${tmenu.menuNm}
                                                                     <!-- a target=_blank 일 경우 넣어주세요. -->
                                                                     <#if smenu.linkTrget = "_blank"><svg class="icon-blank"><use href="/site/www/images/common/sprite-common-side.svg#icon-blank"></use></svg></#if>

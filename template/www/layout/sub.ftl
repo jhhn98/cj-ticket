@@ -45,6 +45,7 @@ LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
 	<decorator:head/>
 </head>
 <body>
+<a href="#contents" class="skip-link">본문 바로가기</a>
 <h1>@@{menuInfo.menuNm}</h1>
 <div class="bg-circle">
     <div class="circle colorGreen"></div>
@@ -73,7 +74,7 @@ LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
                 <c:choose>
                     <c:when test="@@{!empty loginVO}">
                         <li class="myPage">
-                            <a href="./myPageList.do?key=59"><svg><use href="/site/www/images/common/sprite-common-side.svg#icon-user"></use></svg></a>
+                            <a href="./myPageList.do?key=59"><span class="acc-skip">마이페이지 바로가기</span><svg><use href="/site/www/images/common/sprite-common-side.svg#icon-user"></use></svg></a>
                             <div class="linkLayer">
                                 <svg><use href="/site/www/images/common/sprite-common-side.svg#icon-arrTop"></use></svg>
                                 <a href="./myPageList.do?key=59"><span>마이페이지</span></a>
@@ -107,7 +108,7 @@ LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
 
 <c:if test="@@{!empty key}">
 
-<main>
+<main id="contents">
     <h2 class="page-title">
         <c:choose>
             <c:when test="@@{menuInfo.naviList[3] ne null}">

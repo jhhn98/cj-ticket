@@ -31,6 +31,7 @@ LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
     <meta property="og:image" content="https://ticket.cheongju.go.kr/site/www/images/og-image.png">
 </head>
 <body>
+<a href="#contents" class="skip-link">본문 바로가기</a>
 <h1>청주시 통합예약 서비스</h1>
 <header class="userLogin">
     <h2>통합예약 메뉴 및 보조기능</h2>
@@ -45,7 +46,7 @@ LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
                 <c:choose>
                     <c:when test="@@{!empty loginVO}">
                         <li class="myPage">
-                            <a href="./myPageList.do?key=59"><svg><use href="/site/www/images/common/sprite-common-side.svg#icon-user"></use></svg></a>
+                            <a href="./myPageList.do?key=59"><span class="acc-skip">마이페이지 바로가기</span><svg><use href="/site/www/images/common/sprite-common-side.svg#icon-user"></use></svg></a>
                             <div class="linkLayer">
                                 <svg><use href="/site/www/images/common/sprite-common-side.svg#icon-arrTop"></use></svg>
                                 <a href="./myPageList.do?key=59"><span>마이페이지</span></a>
@@ -73,7 +74,7 @@ LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
     </div>
 </header>
 <div class="mainBg"></div>
-<main>
+<main id="contents">
     <h2>main content</h2>
     <div class="mainContentGroup group1">
         <div class="colgroup1">
@@ -95,7 +96,7 @@ LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
                                 <div class="inner-wrap">
                                     <svg class="srcIcon"><use href="/site/www/images/main/sprite-main.svg#icon-searchImg"></use></svg>
                                     <input type="text" title="검색어 입력" placeholder="어떤 예약을 도와드릴까요?" name="searchKrwd"/>
-                                    <button type="submit"><svg><use href="/site/www/images/main/sprite-main.svg#icon-search-visual"></use></svg><span>검색버튼</span></button>
+                                    <button type="submit"><svg><use href="/site/www/images/main/sprite-main.svg#icon-search-visual"></use></svg><span>검색</span></button>
                                 </div>
                             </div>
                         </fieldset>

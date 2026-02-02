@@ -145,7 +145,8 @@
                     </td>
                 </tr>
                 <tr id="tr_drwtDt">
-                    <th scope="row"><label for="drwtDt">추첨일자</label></th>
+                    <th scope="row"><label for="drwtDt">추첨일자</label> <span class="p-form__required--icon">필수</span>
+                    </th>
                     <td>
                         <c:set var="drwtDtHr" value="${fn:substring(eduLctreVO.drwtDt,8,10)}"/>
                         <c:set var="drwtDtMn" value="${fn:substring(eduLctreVO.drwtDt,10,12)}"/>
@@ -1404,6 +1405,15 @@
             alert("선발방식을 선택해주세요.");
             $("#slctMthdCd1").focus();
             return false;
+        }
+
+        // 선발방식이 추첨일 경우 추첨일자 필수 체크
+        if ($("input[name='slctMthdCd']:checked").val() === 'DRWLT') {
+            if (!$("#drwtDe").val()) {
+                alert("추첨일자를 설정해주세요.");
+                $("#drwtDe").focus();
+                return false;
+            }
         }
 
         // 접수방식

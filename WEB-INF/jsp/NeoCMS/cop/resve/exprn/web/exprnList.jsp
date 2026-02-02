@@ -66,6 +66,7 @@
                     </div>
                 </div>
             </div>
+            <button type="button" class="detailCloseButton<c:if test="${detailSearchYn == 'Y'}"> open</c:if>"><span>상세검색 <em class="openText">열기</em><em class="closeText">닫기</em></span></button>
             <div class="searchFormWrap detail">
                 <div class="selectElementGroup facilityGroup">
                     <div class="formElement">
@@ -145,7 +146,6 @@
             </div>
         </fieldset>
     </form>
-    <button type="button" class="detailCloseButton<c:if test="${detailSearchYn == 'Y'}"> open</c:if>"><span>상세검색 <em class="openText">열기</em><em class="closeText">닫기</em></span></button>
 </div>
 <div class="dataList-program">
     <div class="asideInformation">

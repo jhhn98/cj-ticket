@@ -375,7 +375,7 @@ main::before {
 .reserveStep .title span {
   display: block;
   margin: 0 0 0 15px;
-  color: rgba(13, 161, 101, 0.6);
+  color: rgb(7 141 86);
   font-size: 16px;
   font-weight: 600;
   line-height: 18px;
@@ -407,9 +407,10 @@ main::before {
   flex: 0 0 170px;
   width: 170px;
   color: #fff;
+  text-shadow: 0 0 8px rgba(0,0,0,.7)
 }
 .reserveStep .map .title span {
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.9);
 }
 .reserveStep .map .mapSelect {
   display: flex;
@@ -1033,7 +1034,23 @@ main::before {
   background-position: -106px 0;
 }
 .reserveStep .category label input[type=radio], .reserveStep .category .label input[type=radio] {
-  display: none;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  overflow: hidden;
+}
+.reserveStep .category label input[type=radio]:focus + span, .reserveStep .category .label input[type=radio]:focus + span {
+  outline: 2px dashed #1e6fff;
+  outline-offset: 4px;
+}
+.reserveStep .category label input[type=radio]:checked + span, .reserveStep .category .label input[type=radio]:checked + span {
+  outline: 2px solid #1e6fff;
+  outline-offset: 4px;
 }
 .reserveStep .category label span, .reserveStep .category .label span {
   display: block;
@@ -1413,7 +1430,7 @@ main::before {
 }
 .reservationList .reserve-item-list .slide-item .keyword i.price {
   background: #e3f1fc;
-  color: #008bfd;
+  color: #00559a;
 }
 .reservationList .reserve-item-list .slide-item .keyword i.price.free {
   background: #e5eaf5;

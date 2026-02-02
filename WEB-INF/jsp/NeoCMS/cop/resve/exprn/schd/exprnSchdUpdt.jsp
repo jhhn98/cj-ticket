@@ -133,7 +133,7 @@
                             </form:select>
                             <span class="p-form__split">시간 </span>
                             <form:select path="unitMin" class="p-input p-input--auto exprnTmPdInfo">
-                                <c:forEach var="i" begin="0" end="59" step="30">
+                                <c:forEach var="i" begin="0" end="59" step="10">
                                     <fmt:formatNumber var="mm" value="${i}" pattern="00"/>
                                     <form:option value="${i}" label="${mm}"/>
                                 </c:forEach>
@@ -304,28 +304,28 @@
                                     <td><c:out value="${status.count}"/>회차</td>
                                     <td>
                                         <div class="p-form-group">
-                                            <select name="<c:out value="${exprnBgnHh}"/>" id="<c:out value="${exprnBgnHh}"/>" class="p-input p-input--auto exprnTm exprnBgnHh" disabled>
+                                            <select name="<c:out value="${exprnBgnHh}"/>" id="<c:out value="${exprnBgnHh}"/>" class="p-input p-input--auto exprnTm exprnBgnHh">
                                                 <c:forEach var="i" begin="0" end="23">
                                                     <c:set var="hh" value="${tsu:zerofill(i, 2, '0')}"/>
                                                     <option value="<c:out value="${hh}"/>" label="<c:out value="${hh}"/>"<c:if test="${result.exprnBgnHh == hh}"> selected</c:if> />
                                                 </c:forEach>
                                             </select>
                                             <span class="p-form__split">:</span>
-                                            <select name="<c:out value="${exprnBgnMm}"/>" id="<c:out value="${exprnBgnMm}"/>" class="p-input p-input--auto exprnTm exprnBgnMm" disabled>
+                                            <select name="<c:out value="${exprnBgnMm}"/>" id="<c:out value="${exprnBgnMm}"/>" class="p-input p-input--auto exprnTm exprnBgnMm">
                                                 <c:forEach var="i" begin="0" end="59" step="10">
                                                     <c:set var="mm" value="${tsu:zerofill(i, 2, '0')}"/>
                                                     <option value="<c:out value="${mm}"/>" label="<c:out value="${mm}"/>"<c:if test="${result.exprnBgnMm == mm}"> selected</c:if>/>
                                                 </c:forEach>
                                             </select>
                                             <span class="p-form__split">~</span>
-                                            <select name="<c:out value="${exprnEndHh}"/>" id="<c:out value="${exprnEndHh}"/>" class="p-input p-input--auto exprnTm exprnEndHh" disabled>
+                                            <select name="<c:out value="${exprnEndHh}"/>" id="<c:out value="${exprnEndHh}"/>" class="p-input p-input--auto exprnTm exprnEndHh">
                                                 <c:forEach var="i" begin="0" end="23">
                                                     <c:set var="hh" value="${tsu:zerofill(i, 2, '0')}"/>
                                                     <option value="<c:out value="${hh}"/>" label="<c:out value="${hh}"/>"<c:if test="${result.exprnEndHh == hh}"> selected</c:if>/>
                                                 </c:forEach>
                                             </select>
                                             <span class="p-form__split">:</span>
-                                            <select name="<c:out value="${exprnEndMm}"/>" id="<c:out value="${exprnEndMm}"/>" class="p-input p-input--auto exprnTm exprnEndMm" disabled>
+                                            <select name="<c:out value="${exprnEndMm}"/>" id="<c:out value="${exprnEndMm}"/>" class="p-input p-input--auto exprnTm exprnEndMm">
                                                 <c:forEach var="i" begin="0" end="59" step="10">
                                                     <c:set var="mm" value="${tsu:zerofill(i, 2, '0')}"/>
                                                     <option value="<c:out value="${mm}"/>" label="<c:out value="${mm}"/>"<c:if test="${result.exprnEndMm == mm}"> selected</c:if>/>
@@ -1013,8 +1013,8 @@
                 return false;
             }
         } else {
-            if (parseInt(form.unitHour.value) * 60 + parseInt(form.unitMin.value) < 30) {
-                alert("기준시간은 30분 이상이어야합니다.");
+            if (parseInt(form.unitHour.value) * 60 + parseInt(form.unitMin.value) < 10) {
+                alert("기준시간은 10분 이상이어야합니다.");
                 form.unitHour.focus();
                 return false;
             }

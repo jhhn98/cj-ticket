@@ -746,6 +746,13 @@
 
 	// 예비추첨 실행
 	$('.prepareDrwtProcess').on('click', function () {
+		// 추첨일자 확인
+		var drwtDt = '<c:out value="${eduLctreVO.drwtDt}"/>';
+		if (!drwtDt || drwtDt.trim() === '') {
+			alert("추첨일자가 설정되지 않아 예비추첨을 진행할 수 없습니다.\n강좌 관리에서 추첨일자를 설정해주세요.");
+			return;
+		}
+
 		if (!confirm("추첨 진행 중 다른 동작은 중복당첨 등의 오류를 일으킬 수 있으니 주의바랍니다.")) {
 			return;
 		}

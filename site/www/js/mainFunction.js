@@ -9,11 +9,14 @@ $(document).ready(function () {
 
     $('.cateDiv button').on('click', function() {
         const keyword = $(this).data('filter-keyword');
+        const isSelected = $(this).toggleClass('selected').hasClass('selected');
 
-        $(this).toggleClass('selected');
+        //$(this).toggleClass('selected');
+
+        $(this).attr('aria-pressed', isSelected);
 
         if (keyword.startsWith('CATE1')) {
-            if ($(this).hasClass('selected')) {
+            if (isSelected) {
                 selectedCate1.push(keyword);
             } else {
                 selectedCate1 = selectedCate1.filter(k => k !== keyword);
@@ -21,7 +24,7 @@ $(document).ready(function () {
         }
 
         if (keyword.startsWith('CATE2')) {
-            if ($(this).hasClass('selected')) {
+            if (isSelected) {
                 selectedCate2.push(keyword);
             } else {
                 selectedCate2 = selectedCate2.filter(k => k !== keyword);
@@ -33,12 +36,12 @@ $(document).ready(function () {
 })
 $(window).on('load', function(){
 
-    if( $('.event-slide') ) {
+    if( $('.event-slide').length ) {
         slidePopup('.event-slide')
     }
     handleSelectMap()
 
-    if ( $('.boardGroup') ) {
+    if ( $('.boardGroup').length ) {
         toggleBoard('.boardGroup')
     }
     responseEventPopup()
@@ -56,6 +59,13 @@ function slidePopup( slideObject ){
     const $current = $count.find('.current')
 
     const $eventPopupObject = $('.event')
+
+    $slideList.on('init reInit afterChange', function (event, slick) {
+        setTimeout(function () {
+            $(slick.$slides).removeAttr('tabindex')
+        }, 0)
+    })
+
     $slideList.slick({
         infinite: true,
         speed: 300,
@@ -306,6 +316,14 @@ function slideProgram( slideObject ){
     const $buttonNext = $controller.find('.next')
 
     const visibleCount = $('.reserve-item-list .slide-item:visible').length
+
+    $slideList.on('init reInit afterChange', function (event, slick) {
+        setTimeout(function () {
+            $(slick.$slides).removeAttr('tabindex')
+        }, 0)
+    })
+
+
     $slideList.slick({
         infinite: false,
         speed: 300,
