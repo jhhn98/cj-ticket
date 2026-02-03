@@ -8,7 +8,10 @@
   clip: rect(0, 0, 0, 0);
   border: 0;
 }
-
+a:focus, button:focus, input:focus, select:focus {
+  outline: 2px dashed #1e6fff;
+  outline-offset: 2px;
+}
 .formProgramWrap {
   display: block;
   position: relative;
@@ -86,18 +89,26 @@
   cursor: pointer;
 }
 .customCheckBox input {
-  display: none;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  overflow: hidden;
 }
 .customCheckBox .customStyle {
   display: block;
   position: relative;
-  padding: 0 0 0 30px;
+  padding: 0 0 0 40px;
 }
 .customCheckBox .customStyle .checkbox {
   display: block;
   position: absolute;
   top: 0;
-  left: 0;
+  left: 10px;
   width: 20px;
   height: 20px;
   border: 1px solid #c8cad2;
@@ -117,6 +128,14 @@
 .customCheckBox .customStyle span {
   font-size: 16px;
   line-height: 18px;
+}
+.customCheckBox input:focus + .customStyle .checkbox {
+  outline: 2px dashed #1e6fff;
+  outline-offset: 4px;
+}
+.customCheckBox input:checked + .customStyle .checkbox {
+  outline: 2px solid #1e6fff;
+  outline-offset: 4px;
 }
 .customCheckBox input:checked + .customStyle .checkbox {
   background: #009991;
@@ -141,7 +160,15 @@
   cursor: pointer;
 }
 .customRadioButton input {
-  display: none;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  overflow: hidden;
 }
 .customRadioButton + .customRadioButton {
   margin: 0 0 0 20px;
@@ -161,6 +188,14 @@
   background: #fff;
   border: 1px solid #c9cbd3;
   border-radius: 10px;
+}
+.customRadioButton input:focus + .customStyle .radioButton {
+  outline: 2px dashed #1e6fff;
+  outline-offset: 4px;
+}
+.customRadioButton input:checked + .customStyle .radioButton {
+  outline: 2px solid #1e6fff;
+  outline-offset: 4px;
 }
 .customRadioButton .customStyle .radioButton::before {
   display: block;
@@ -258,7 +293,23 @@
   cursor: pointer;
 }
 .programSearch .customIconOption input {
-  display: none;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  overflow: hidden;
+}
+.programSearch .customIconOption input:focus + span {
+  outline: 2px dashed #1e6fff;
+  outline-offset: 4px;
+}
+.programSearch .customIconOption input:checked + span {
+  outline: 2px solid #1e6fff;
+  outline-offset: 4px;
 }
 .programSearch .customIconOption .optionWrap {
   display: flex;
@@ -731,8 +782,8 @@
   color: #ccc;
 }
 .dataList-program .listWrap.thumbnail .option .stateType.type1 {
-  border-color: #18c3a2;
-  color: #18c3a2;
+  border-color: #07a485;
+  color: #07a485;
 }
 .dataList-program .listWrap.thumbnail .option .stateType.type2 {
   border-color: #3f65d9;
@@ -1477,7 +1528,7 @@
   font-weight: 500;
 }
 .programCalendar .time .timeList .customCheckBox .customStyle {
-  padding: 2px 0 0 30px;
+  padding: 2px 0 0 40px;
 }
 .programCalendar .time .timeList .customCheckBox.disabled {
   font-weight: 400;
@@ -1858,7 +1909,7 @@
 }
 .program .viewProgram .stateType.type1 {
   border-color: #18c3a2;
-  color: #18c3a2;
+  color: #00a182;
 }
 .program .viewProgram .stateType.type2 {
   border-color: #3f65d9;
@@ -2706,6 +2757,9 @@
   color: #fff;
   font-size: 18px;
   line-height: 20px;
+}
+.login .snsLogin .link li:nth-child(2) button {
+  text-shadow: 0 0 4px rgba(0,0,0,.7);
 }
 .login .snsLogin .link li button::before, .login .snsLogin .link li button::after {
   display: block;

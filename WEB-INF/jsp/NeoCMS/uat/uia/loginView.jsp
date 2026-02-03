@@ -43,12 +43,12 @@
         <li>
             <strong>휴대폰 본인인증</strong>
             <p>생년월일과 본인 명의의 휴대폰 정보를 이용하여 가상식별번호를 부여받아 활용하는 본인확인 서비스입니다.</p>
-            <a href="#" onclick="fn_smsSubmit(); return false;" class="loginButton"><span>인증하기</span></a>
+            <a href="#" onclick="fn_smsSubmit(); return false;" target="_blank" title="새창" class="loginButton"><span>인증하기</span></a>
         </li>
         <li>
             <strong>아이핀 인증</strong>
             <p>본인 명의의 아이핀 인증을 통해 청주시청 통합예약 누리집 서비스를 이용하실 수 있습니다.</p>
-            <a href="#" onclick="fn_ipinSubmit(); return false" class="loginButton"><span>인증하기</span></a>
+            <a href="#" onclick="fn_ipinSubmit(); return false" target="_blank" title="새창" class="loginButton"><span>인증하기</span></a>
         </li>
     </ul>
     <div class="flexHAlignCenter">

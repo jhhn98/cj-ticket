@@ -13,7 +13,7 @@
 <!-- 신청자 정보입력 -->
 <ol class="programFlow">
     <li class="selected"><i>1</i>개인정보동의</li>
-    <li class="selected"><i>2</i>신청자 정보입력</li>
+    <li class="selected"><span class="visualHidden">현재 단계</span><i>2</i>신청자 정보입력</li>
     <li><i>3</i>예약신청완료</li>
 </ol>
 <div class="programTitle">
@@ -166,7 +166,7 @@
                             <label for="addr">주소 검색</label>
                             <input type="text" id="addr" name="addr" placeholder="주소(도로명/지번/건물명)를 입력해주세요."
                                    class="customInputDefault addressSearch" readonly>
-                            <button type="button" class="addressSearchButton" onclick="fn_openDaumZipAddress();"><span>주소검색</span></button>
+                            <button type="button" class="addressSearchButton" onclick="fn_openDaumZipAddress();" title="새창"><span>주소검색</span></button>
                             <label for="addressDetail">끝번호/식별번호</label>
                             <input type="text" id="addressDetail" name="detailAddr" placeholder="상세주소를 입력해주세요."
                                    class="customInputDefault addressDetail">

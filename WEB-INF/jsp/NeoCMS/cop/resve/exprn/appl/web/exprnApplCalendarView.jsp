@@ -10,7 +10,7 @@
 <body>
 
 <ol class="programFlow">
-    <li class="selected"><i>1</i>일정선택/개인정보동의</li>
+    <li class="selected"><span class="visualHidden">현재 단계</span><i>1</i>일정선택/개인정보동의</li>
     <li><i>2</i>신청자 정보입력</li>
     <li><i>3</i>예약신청완료</li>
 </ol>
@@ -51,13 +51,13 @@
             </c:if>
         </ul>
         <div class="programCalendar timeSelect">
-            <div class="calendar" tabindex="0">
+            <div class="calendar">
                 <jsp:include page="../../schd/web/exprnApplCalendar.jsp" />
             </div>
             <div class="time">
                 <div class="timeTitle">시간선택</div>
                 <div class="timeScrollWrap">
-                    <ul class="timeList" tabindex="0">
+                    <ul class="timeList">
                         <jsp:include page="../../schd/web/exprnApplTimeList.jsp" />
                     </ul>
                 </div>

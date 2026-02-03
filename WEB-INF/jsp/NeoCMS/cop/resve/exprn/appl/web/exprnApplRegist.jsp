@@ -13,7 +13,7 @@
 
 <ol class="programFlow">
     <li class="selected"><i>1</i>일정선택/개인정보동의</li>
-    <li class="selected"><i>2</i>신청자 정보입력</li>
+    <li class="selected"><span class="visualHidden">현재 단계</span><i>2</i>신청자 정보입력</li>
     <li><i>3</i>예약신청완료</li>
 </ol>
 <div class="programTitle">
@@ -197,7 +197,7 @@
                             <label for="addressSearch">주소 검색</label>
                             <input type="hidden" name="zip" id="zip" value="<c:out value="${exprnApplVO.zip}"/>" readonly autocomplete="off" />
                             <input type="text" id="addressSearch" placeholder="주소(도로명/지번/건물명)를 입력해주세요." class="customInputDefault addressSearch" name="addr" value="<c:out value="${exprnApplVO.addr}"/>" readonly autocomplete="off">
-                            <button type="button" class="addressSearchButton" onclick="openDaumZipAddress();"><span>주소검색</span></button>
+                            <button type="button" class="addressSearchButton" onclick="openDaumZipAddress();" title="새창"><span>주소검색</span></button>
                             <label for="addressDetail">상세주소</label>
                             <input type="text" id="addressDetail" placeholder="상세주소를 입력해주세요." class="customInputDefault addressDetail" name="detailAddr" value="<c:out value="${exprnApplVO.detailAddr}"/>" autocomplete="off">
                         </div>

@@ -191,14 +191,14 @@
                                 <span class="image<%--<c:if test="${empty result.mainImg}"> noImage</c:if>--%>">
                                     <c:choose>
                                         <c:when test="${not empty result.mainImg}">
-                                            <img src="/<c:out value="${result.mainImg.storePath}"/>/thumb/p_<c:out value="${result.mainImg.storeFileNm}"/>" alt="<c:out value="${result.lctreNm}"/> 이미지">
+                                            <img src="/<c:out value="${result.mainImg.storePath}"/>/thumb/p_<c:out value="${result.mainImg.storeFileNm}"/>" alt="<c:out value="${result.lctreNm}"/> 기본 이미지">
                                         </c:when>
                                         <c:otherwise>
                                             <c:if test="${empty result.svcTyCd}">
-                                                <img src="/site/www/images/program/no-image.png" alt="<c:out value="${result.lctreNm}"/> 이미지 없음">
+                                                <img src="/site/www/images/program/no-image.png" alt="이미지 없음">
                                             </c:if>
                                             <c:if test="${!empty result.svcTyCd}">
-                                                <img src="/DATA/edu/no_img/<c:out value="${result.svcTyCd}"/>.jpg" alt="<c:out value="${result.lctreNm}"/> 이미지 없음">
+                                                <img src="/DATA/edu/no_img/<c:out value="${result.svcTyCd}"/>.jpg" alt="<c:out value="${result.lctreNm}"/>">
                                             </c:if>
                                         </c:otherwise>
                                     </c:choose>

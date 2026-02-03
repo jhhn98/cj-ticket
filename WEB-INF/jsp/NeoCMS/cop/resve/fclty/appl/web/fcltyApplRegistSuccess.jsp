@@ -16,7 +16,7 @@
 <ol class="programFlow">
     <li class="selected"><i>1</i>일정선택/개인정보동의</li>
     <li class="selected"><i>2</i>신청자 정보입력</li>
-    <li class="selected"><i>3</i>예약신청완료</li>
+    <li class="selected"><span class="visualHidden">현재 단계</span><i>3</i>예약신청완료</li>
 </ol>
 <div class="programTitle">
     <c:set var="operSttus" value="${fcltyVO.operSttus}"/>

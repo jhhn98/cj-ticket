@@ -55,13 +55,13 @@
 			<c:param name="u">@@{requestUrl}</c:param>
 			<c:param name="t">@@{bbsNtt.nttSj}</c:param>
 		</c:url>
-		<a href="#n" onclick="fn_sendTwitter('<c:out value="@@{facebookUrl}"/>')" class="p-icon p-icon__facebook">페이스북 공유</a>
+		<a href="#n" onclick="fn_sendTwitter('<c:out value="@@{facebookUrl}"/>')" class="p-icon p-icon__facebook" title="새창">페이스북 공유</a>
 	</#if>
 	<#if bbsInfo.twitterUseAt = 'Y'>
 		<c:url var="twitterUrl" value="http://twitter.com/home">
 			<c:param name="status">@@{bbsNtt.nttSj} @@{requestUrl}</c:param>
 		</c:url>
-		<a href="#n" onclick="fn_sendTwitter('<c:out value="@@{twitterUrl}"/>')" class="p-icon p-icon__twitter">트위터 공유</a>
+		<a href="#n" onclick="fn_sendTwitter('<c:out value="@@{twitterUrl}"/>')" class="p-icon p-icon__twitter" title="새창">트위터 공유</a>
 	</#if>
 	</div>
 </#if>

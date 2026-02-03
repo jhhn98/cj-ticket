@@ -174,10 +174,10 @@
                                     <img src="/<c:out value="${result.mainImg.storePath}"/>/thumb/p_<c:out value="${result.mainImg.storeFileNm}"/>" alt="<c:out value="${result.fcltyNm}"/> 이미지">
                                 </c:when>
                                 <c:when test="${empty result.mainImg and not empty result.svcTyCd}">
-                                    <img src="/DATA/fct/no_img/<c:out value="${result.svcTyCd}"/>.jpg" alt="<c:out value="${svcTyMap[result.svcTyCd]}"/><c:out value="${fn:contains(svcTyMap[result.svcTyCd],'장')?'':'장'}"/> 이미지">
+                                    <img src="/DATA/fct/no_img/<c:out value="${result.svcTyCd}"/>.jpg" alt="<c:out value="${svcTyMap[result.svcTyCd]}"/><c:out value="${fn:contains(svcTyMap[result.svcTyCd],'장')?'':'장'}"/> 기본 이미지">
                                 </c:when>
                                 <c:otherwise>
-                                    <img src="/site/www/images/program/no-image.png" alt="<c:out value="${result.fcltyNm}"/> 이미지 없음">
+                                    <img src="/site/www/images/program/no-image.png" alt="이미지 없음">
                                 </c:otherwise>
                             </c:choose>
                         </span>

@@ -187,6 +187,12 @@ function programViewImageSlide() {
     const $buttonPrev = $controllerWrap.find('.prev')
     const $buttonNext = $controllerWrap.find('.next')
 
+    $slideList.on('init reInit afterChange', function (event, slick) {
+        setTimeout(function () {
+            $(slick.$slides).removeAttr('tabindex')
+        }, 0)
+    })
+
     $slideList.slick({
         infinite: false,
         autoplay: false,

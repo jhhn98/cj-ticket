@@ -74,15 +74,15 @@
                     <c:choose>
                         <c:when test="${not empty cmmnAtchImgList}">
                             <c:forEach var="cmmnAtchmnfl" items="${cmmnAtchImgList}" varStatus="idx">
-                                <img src="/<c:out value="${cmmnAtchmnfl.storePath}"/>/thumb/p_<c:out value="${cmmnAtchmnfl.storeFileNm}"/>" alt="<c:out value="${eduLctreVO.lctreNm}"/> 이미지">
+                                <img src="/<c:out value="${cmmnAtchmnfl.storePath}"/>/thumb/p_<c:out value="${cmmnAtchmnfl.storeFileNm}"/>" alt="<c:out value="${eduLctreVO.lctreNm}"/> 이미지 <c:out value="${idx.count}"/>">
                             </c:forEach>
                         </c:when>
                         <c:otherwise>
                                 <c:if test="${empty eduLctreVO.svcTyCd}">
-                                    <img src="/site/www/images/program/no-image.png" alt="<c:out value="${eduLctreVO.lctreNm}"/> 이미지 없음">
+                                    <img src="/site/www/images/program/no-image.png" alt="<c:out value="${eduLctreVO.lctreNm}"/> 기본 이미지">
                                 </c:if>
                                 <c:if test="${!empty eduLctreVO.svcTyCd}">
-                                    <img src="/DATA/edu/no_img/<c:out value="${eduLctreVO.svcTyCd}"/>.jpg" alt="<c:out value="${eduLctreVO.lctreNm}"/> 이미지 없음">
+                                    <img src="/DATA/edu/no_img/<c:out value="${eduLctreVO.svcTyCd}"/>.jpg" alt="<c:out value="${eduLctreVO.lctreNm}"/> 이미지">
                                 </c:if>
                         </c:otherwise>
                     </c:choose>

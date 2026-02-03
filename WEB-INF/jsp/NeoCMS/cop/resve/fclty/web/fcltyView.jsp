@@ -56,9 +56,9 @@
             <div class="slideList">
                 <c:choose>
                     <c:when test="${fn:length(cmmnAtchImgList) gt 0}">
-                        <c:forEach var="result" items="${cmmnAtchImgList}">
+                        <c:forEach var="result" items="${cmmnAtchImgList}" varStatus="idx">
                             <div class="slideItem aaa">
-                                <img src="/<c:out value="${result.storePath}"/>/thumb/p_<c:out value="${result.storeFileNm}"/>" alt="<c:out value="${fcltyVO.fcltyNm}"/> 이미지">
+                                <img src="/<c:out value="${result.storePath}"/>/thumb/p_<c:out value="${result.storeFileNm}"/>" alt="<c:out value="${fcltyVO.fcltyNm}"/> 이미지 <c:out value="${idx.count}"/>">
                             </div>
                         </c:forEach>
                     </c:when>

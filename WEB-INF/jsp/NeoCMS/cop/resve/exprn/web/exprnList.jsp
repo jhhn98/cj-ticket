@@ -171,7 +171,7 @@
                 <li>
                     <c:choose>
                         <c:when test="${result.aditIem1 == 'LINK_URL'}">
-                            <a href="<c:out value="${result.aditIem2}"/>" target="_blank">
+                            <a href="<c:out value="${result.aditIem2}"/>" target="_blank" title="새창">
                         </c:when>
                         <c:otherwise>
                             <a href="./selectExprnWebView.do?exprnNo=<c:out value="${result.exprnNo}"/>&<c:out value="${exprnSearchVO.params}"/><c:out value="${exprnSearchVO.paramsWeb}"/>">
@@ -180,10 +180,10 @@
                         <span class="image">
                             <c:choose>
                                 <c:when test="${empty result.mainImg}">
-                                    <img src="/DATA/exprn/img/no_img_<c:out value="${result.svcTyCd}"/>.jpg" alt="<c:out value="${result.exprnNm}"/> 이미지 없음">
+                                    <img src="/DATA/exprn/img/no_img_<c:out value="${result.svcTyCd}"/>.jpg" alt="<c:out value="${result.exprnNm}"/> 기본 이미지">
                                 </c:when>
                                 <c:otherwise>
-                                    <img src="/<c:out value="${result.mainImg.storePath}"/>/thumb/p_<c:out value="${result.mainImg.storeFileNm}"/>" alt="<c:out value="${result.exprnNm}"/> 이미지">
+                                    <img src="/<c:out value="${result.mainImg.storePath}"/>/thumb/p_<c:out value="${result.mainImg.storeFileNm}"/>" alt="<c:out value="${result.exprnNm}"/>">
                                 </c:otherwise>
                             </c:choose>
                         </span>

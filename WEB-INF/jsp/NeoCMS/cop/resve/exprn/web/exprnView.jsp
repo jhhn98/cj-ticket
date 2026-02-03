@@ -55,13 +55,13 @@
                 <c:choose>
                     <c:when test="${fn:length(cmmnAtchImgList) == 0}">
                         <div class="slideItem">
-                            <img src="/DATA/exprn/img/no_img_<c:out value="${exprnVO.svcTyCd}"/>.jpg" alt="<c:out value="${exprnVO.exprnNm}"/> 이미지 없음">
+                            <img src="/DATA/exprn/img/no_img_<c:out value="${exprnVO.svcTyCd}"/>.jpg" alt="<c:out value="${exprnVO.exprnNm}"/> 이미지">
                         </div>
                     </c:when>
                     <c:otherwise>
-                        <c:forEach var="result" items="${cmmnAtchImgList}">
+                        <c:forEach var="result" items="${cmmnAtchImgList}" varStatus="idx">
                             <div class="slideItem">
-                                <img src="/<c:out value="${result.storePath}"/>/thumb/p_<c:out value="${result.storeFileNm}"/>" alt="<c:out value="${exprnVO.exprnNm}"/> 이미지">
+                                <img src="/<c:out value="${result.storePath}"/>/thumb/p_<c:out value="${result.storeFileNm}"/>" alt="<c:out value="${exprnVO.exprnNm}"/> 이미지 <c:out value="${idx.count}"/>">
                             </div>
                         </c:forEach>
                     </c:otherwise>
@@ -242,7 +242,7 @@
                                 <p class="locationInformationText"><c:out value="${exprnVO.telNoFmt}"/></p>
                             </li>
                         </ul>
-                        <a href="https://map.kakao.com/link/to/<c:out value="${expPlace}"/>,<c:out value="${lat}"/>,<c:out value="${lon}"/>" target="_blank" class="mapLink">길찾기</a>
+                        <a href="https://map.kakao.com/link/to/<c:out value="${expPlace}"/>,<c:out value="${lat}"/>,<c:out value="${lon}"/>" target="_blank" class="mapLink" title="새창">길찾기</a>
                     </div>
                     <div class="locationMap">
                         <div id="map"></div>
