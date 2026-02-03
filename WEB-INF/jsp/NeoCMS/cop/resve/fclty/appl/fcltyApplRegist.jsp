@@ -69,12 +69,11 @@
           <tr>
             <th scope="row">사용요금 지불 방식 <span class="p-form__required--icon margin_l_5">필수</span></th>
             <td>
-              <c:set var="payMthdCd" value="${fn:split(fcltyVO.payMthdCd, '|')}" />
               <form:select class="p-input p-input--auto" path="payMthdCd" required="required">
-                <form:option value="" label="선택해주세요." />
-                <c:forEach items="${payMthdCd}" var="item" varStatus="idx">
-                  <c:if test="${item ne 'ELCTRN'}">
-                    <form:option value="${item}" label="${payMthdMap[item]}" />
+                <form:option value="" label="= 선택해주세요. =" />
+                <c:forEach items="${payMthdList}" var="item" varStatus="idx">
+                  <c:if test="${item.code ne 'ELCTRN'}">
+                    <form:option value="${item.code}" label="${item.codeNm}" />
                   </c:if>
                 </c:forEach>
               </form:select>
@@ -194,7 +193,20 @@
                 <option value="daum.net">daum.net</option>
               </select>
             </div>
+          </td>
         </tr>
+
+        <c:if test="${fcltyVO.resInqUseYn eq 'Y'}">
+        <tr>
+          <th scope="row"><form:label path="resInqCd">거주지</form:label> </th>
+          <td>
+            <form:select class="p-input p-input--auto" path="resInqCd">
+              <form:option value="" label="= 선택해주세요 =" />
+              <form:options items="${lgldongList}" itemValue="code" itemLabel="codeNm"/>
+            </form:select>
+          </td>
+        </tr>
+        </c:if>
 
         <c:if test="${not empty fcltyVO.aditIem1}">
           <tr>
@@ -212,14 +224,8 @@
 
         <tr>
           <th scope="row"><form:label path="memo">메모(관리자만 확인 가능)</form:label> </th>
-          <td><form:textarea path="memo" class="p-input w50p" placeholder="메모 입력" /></td>
+          <td><form:textarea path="memo" class="p-input w50p" /></td>
         </tr>
-
-<%--        <tr>--%>
-<%--          <th scope="row"></th>--%>
-<%--          <td> todo 거주지조회, </td>--%>
-<%--        </tr>--%>
-
 
         </tbody>
       </table>
@@ -315,7 +321,7 @@
     }
 
     if (!regexDate.test(form.birthDe.value)) {
-      alert("생년월일(yyyy-MM-dd)을 확인해주세요.");
+      alert("생년월일(yyyy-MM-dd) 형식을 확인해주세요.");
       form.birthDe.focus();
       return false;
     }

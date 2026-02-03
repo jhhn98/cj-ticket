@@ -288,11 +288,11 @@ LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
                 <col>
             </colgroup>
             <tbody>
-            <input type="hidden" name="prgSe" id="prgSe">
-            <input type="hidden" name="rfndApplNo" id="rfndApplNo">
             <tr>
                 <th scope="row"><div class="innerCell"><label for="rfndBankNm">은행명<span class="point-color-red">*</span></label></div></th>
                 <td>
+                    <input type="hidden" name="prgSe" id="prgSe">
+                    <input type="hidden" name="rfndApplNo" id="rfndApplNo">
                     <div class="innerCell">
                         <div class="customSelect inlineBlock">
                             <select id="rfndBankNm" name="rfndBankNm">

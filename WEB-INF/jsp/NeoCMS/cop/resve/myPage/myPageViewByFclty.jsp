@@ -92,6 +92,7 @@
                 </tbody>
             </table>
         </div>
+
         <h4>신청 정보 <c:if test="${myPageMode == 'UPDT'}">입력</c:if></h4>
         <c:if test="${myPageMode == 'UPDT'}">
             <p class="iconText comment"><span class="point-color-red">*</span>표시는 필수 입력 항목입니다.</p>
@@ -132,26 +133,96 @@
                                         <span class="em_gray">(미당첨)</span>
                                     </c:if>
                                 </c:when>
+                                <c:when test="${fcltyVO.slctMthdCd eq 'CONFM' and fcltyApplVO.rsvSttusCd eq 'APPL_CMPL'}">
+                                    승인완료
+                                </c:when>
+                                <c:when test="${fcltyVO.slctMthdCd eq 'CONFM' and fcltyApplVO.rsvSttusCd eq 'APPL_WAIT'}">
+                                    미승인
+                                </c:when>
                                 <c:otherwise>
                                     <c:out value="${rsvSttusMap[fcltyApplVO.rsvSttusCd]}"/>
                                 </c:otherwise>
                             </c:choose>
-                            <%-- TODOSDB: 상태값 취소인 경우 취소일시/사유 표출 (유료는 환불 요청일시/사유)
-                            사용자 취소(취소일: 2025-07-07 14:10)
-                            <p class="iconText caution point-color-green">취소사유: 사용자 취소</p>--%>
                         </div>
                     </td>
                 </tr>
+
+                <c:if test="${fcltyApplVO.rsvSttusCd eq 'MNG_CNCL' or fcltyApplVO.rsvSttusCd eq 'USR_CNCL'}">
+                <tr>
+                    <th scope="row" class="first"><div class="innerCell">취소일시</div></th>
+                    <td>
+                        <div class="innerCell">
+                            <c:if test="${not empty fcltyApplVO.cancelReason}">
+                                <p class="iconText caution point-color-green">취소사유: <c:out value="${fcltyApplVO.cancelReason}"/></p>
+                            </c:if>
+                            (취소일: <c:out value="${tsu:toDateFormat(fcltyApplVO.cancelDt, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm')}"/>)
+                        </div>
+                    </td>
+                </tr>
+                </c:if>
+
                 <tr>
                     <th scope="row" class="first"><div class="innerCell">결제상태</div></th>
                     <td>
                         <div class="innerCell">
                             <c:out value="${paySttusMap[fcltyApplVO.paySttusCd]}"/>
-                            <%-- TODOSDB: 결제대기인 경우 결제기한까지 / 취소인 경우 환불처리일시 + 환불계좌 필요한 경우 환불계좌 정보까지
-                            <p class="iconText caution point-color-green">결제기한: 2025-07-11 00시 00분 00초</p>--%>
+                            <c:if test="${fcltyApplVO.paySttusCd eq 'PAY_WAIT' and not empty fcltyApplVO.payDeadlineDt}">
+                                <p class="iconText caution point-color-green">
+                                    결제기한: <c:out value="${tsu:toDateFormat(fcltyApplVO.payDeadlineDt, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH시 mm분 ss초 까지')}"/>
+                                </p>
+                            </c:if>
                         </div>
                     </td>
                 </tr>
+
+                <c:if test="${fcltyApplVO.paySttusCd eq 'RFND_CMPL' or fcltyApplVO.paySttusCd eq 'RFND_PART' or fcltyApplVO.paySttusCd eq 'RFND_REQ'}">
+                    <tr>
+                        <th scope="row" class="first"><div class="innerCell">환불요청일</div></th>
+                        <td>
+                            <div class="innerCell">
+                                <c:if test="${not empty fcltyApplVO.rfndReason}">
+                                    <p class="iconText caution point-color-green">환불사유: <c:out value="${fcltyApplVO.rfndReason}"/></p>
+                                </c:if>
+                                <c:if test="${not empty fcltyApplVO.rfndReqDt}">
+                                    <c:out value="${tsu:toDateFormat(fcltyApplVO.rfndReqDt, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH시 mm분 ss초')}"/>
+                                </c:if>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <c:if test="${not empty fcltyApplVO.rfndAcctNo}">
+                    <tr>
+                        <th scope="row" class="first"><div class="innerCell">환불계좌</div></th>
+                        <td>
+                            <div class="innerCell">
+                                <c:out value="${bankMap[fcltyApplVO.rfndBankNm]}"/> <c:out value="${fcltyApplVO.rfndAcctNo}"/> (예금주:<c:out value="${fcltyApplVO.rfndDpstrNm}"/>)
+                            </div>
+                        </td>
+                    </tr>
+                    </c:if>
+
+                    <tr>
+                        <th scope="row" class="first"><div class="innerCell">환불금액</div></th>
+                        <td>
+                            <div class="innerCell">
+                                <c:if test="${fcltyApplVO.rfndAmt > 0}">
+                                    <fmt:formatNumber value="${fcltyApplVO.rfndAmt}" pattern="#,##0"/> 원
+                                </c:if>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row" class="first"><div class="innerCell">환불완료일</div></th>
+                        <td>
+                            <div class="innerCell">
+                                <c:out value="${tsu:toDateFormat(fcltyApplVO.rfndCmplDt, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss')}"/>
+                            </div>
+                        </td>
+                    </tr>
+                </c:if>
+
+
                 <!-- 유료 옵션 -->
                 <c:if test="${fcltyApplVO.totalPayAmt > 0}">
                     <tr>
@@ -195,7 +266,7 @@
                             <th scope="row" class="first"><div class="innerCell">입금계좌</div></th>
                             <td>
                                 <div class="innerCell">
-                                    [<c:out value="${fcltyVO.bankNm}"/>] <c:out value="${fcltyVO.acctNo}"/> - <c:out value="${fcltyVO.dpstrNm}"/>
+                                    [<c:out value="${fcltyVO.bankNm}"/>] <c:out value="${fcltyVO.acctNo}"/> (예금주 : <c:out value="${fcltyVO.dpstrNm}"/>)
                                 </div>
                             </td>
                         </tr>
@@ -203,9 +274,13 @@
 
                     <tr>
                         <th scope="row" class="first"><div class="innerCell">결제일시</div></th>
-                        <td><%--<div class="innerCell"><c:out value="${fcltyApplVO.applNm}"/></div>--%></td>
+                        <td>
+                            <c:out value="${tsu:toDateFormat(fcltyApplVO.payDt, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss')}"/>
+                        </td>
                     </tr>
                 </c:if>
+
+
                 <tr>
                     <th scope="row" class="first"><div class="innerCell">성명</div></th>
                     <td><div class="innerCell"><c:out value="${fcltyApplVO.applNm}"/></div></td>

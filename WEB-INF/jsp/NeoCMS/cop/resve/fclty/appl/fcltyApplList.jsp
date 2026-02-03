@@ -127,8 +127,8 @@
             <col style="width:30px">
             <col style="width:60px">
             <col style="width:60px">
-            <col style="width:60px">
-<%--            <col style="width:30px">--%>
+            <col style="width:80px">
+            <col style="width:30px">
         </colgroup>
         <thead>
         <tr>
@@ -146,7 +146,7 @@
             <th scope="col">예약일자</th>
             <th scope="col">예약상태</th>
             <th scope="col">결제상태</th>
-<%--            <th scope="col">관리</th>--%>
+            <th scope="col">관리</th>
         </tr>
         </thead>
         <tbody class="text_center">
@@ -195,6 +195,11 @@
                 </td>
                 <td>
                     <c:out value="${rsvSttusMap[result.rsvSttusCd]}"/>
+
+                    <c:if test="${result.slctMthdCd eq 'CONFM' and result.rsvSttusCd eq 'APPL_CMPL' and not empty result.applCmplDt}">
+                        <br>승인완료
+                    </c:if>
+
                     <c:choose>
                         <c:when test="${!empty result.drwtWinYn}">
                             <br>추첨완료
@@ -210,11 +215,11 @@
                     <%--TODOSDB: 감면관련 상태값 추가--%>
                     <c:out value="${paySttusMap[result.paySttusCd]}"/>
                     <c:if test="${result.paySttusCd == 'PAY_WAIT'}">
-                        <br/><c:out value="${tsu:toDateFormat(result.payDeadlineDt, 'yyyyMMddHHmmss', 'yyyy-MM-dd')}"/>
-                        <br/><c:out value="${tsu:toDateFormat(result.payDeadlineDt, 'yyyyMMddHHmmss', 'HH:mm:ss')}"/>
+                        <br>결제시한
+                        <br/><c:out value="${tsu:toDateFormat(result.payDeadlineDt, 'yyyyMMddHHmmss', 'yy-MM-dd HH:mm:ss')}"/>
                     </c:if>
                 </td>
-<%--                <td><a href="./updateFcltyApplView.do?fcltyApplNo=<c:out value="${result.fcltyApplNo}"/>&amp;<c:out value="${fcltyApplSearchVO.params}"/><c:out value="${fcltyApplSearchVO.paramsMng}"/><c:out value="${fcltySearchVO.fcltyParamsMng}"/>" class="p-button p-button--small edit" onclick="alert('개발 진행 중입니다.'); return false;">수정</a></td>--%>
+                <td><a href="./updateFcltyApplView.do?fcltyApplNo=<c:out value="${result.fcltyApplNo}"/>&key=<c:out value="${key}"/>" class="p-button p-button--small edit">수정</a></td>
             </tr>
             <c:set var="currentPageStartNo" value="${currentPageStartNo-1}" />
         </c:forEach>
@@ -475,7 +480,7 @@
         });
 
         if (chkBool) {
-            alert('결제상태가 접수대기인 건은 결제상태를 변경할 수 없습니다. 예약상태부터 변경처리 해주세요.');
+            alert('예약상태가 접수대기인 건은 결제상태를 변경할 수 없습니다. 예약상태부터 변경처리 해주세요.');
             return false;
         }
 

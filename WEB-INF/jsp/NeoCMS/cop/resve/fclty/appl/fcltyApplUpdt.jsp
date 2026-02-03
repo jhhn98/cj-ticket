@@ -16,868 +16,573 @@
     <link rel="stylesheet" type="text/css" href="/common/css/default.css" />
     <link rel="stylesheet" type="text/css" href="/common/css/program.css" />
     <script src="/common/js/program.js"></script>
-    <title>${menuInfo.cntntsNm} 수정</title>
+    <title><c:out value="${menuInfo.naviList[0].menuNm}"/> &gt; ${menuInfo.cntntsNm} &gt; 신청서 수정</title>
 </head>
 <body>
 
+<script src="/common/js/default.js"></script>
+
 <div class="p-wrap">
 
-        <div>
-            <svg width="20" height="25" fill="#202e70" focusable="false"><use xlink:href="/common/images/program/p-icon.svg#exclamation-circle"></use></svg>
-            <span class="p-form__required--icon margin_l_5">필수</span> 표시는 필수 항목 입니다.
-        </div>
+    <jsp:include page="../incFcltyInfo.jsp" />
 
-        <form:form modelAttribute="fcltyVO" name="fcltyVO" method="post" action="updateFclty.do" onsubmit="return fn_updateFcltyCheck(this)" enctype="multipart/form-data">
-            <fieldset>
-                <legend>(관리자) 시설 신청 수정</legend>
-                <c:forEach var="result" items="${fcltySearchVO.paramsMap}">
-                    <input type="hidden" name="<c:out value="${result.key}"/>" value="<c:out value="${result.value}"/>"/>
-                </c:forEach>
-                <c:forEach var="result" items="${fcltySearchVO.paramsMapMng}">
-                    <input type="hidden" name="<c:out value="${result.key}"/>" value="<c:out value="${result.value}"/>"/>
-                </c:forEach>
-                <form:hidden path="fcltyNo"/>
-                <table class="p-table">
-                    <caption>(관리자) 시설 신청 수정</caption>
-                    <colgroup>
-                        <col class="w15p">
-                        <col />
-                    </colgroup>
-                    <tbody class="p-table--th-left">
-                    <tr>
-                        <th scope="row"><form:label path="insttNo">운영기관</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>
-                        <td>
-                            <form:select path="insttNo" class="p-input p-input--auto">
-                                <form:option value="" label="운영기관 선택"/>
-                                <form:options items="${fctInsttList}" itemValue="insttNo" itemLabel="insttNm"/>
-                            </form:select>
-                        </td>
+
+    <form:form modelAttribute="fcltyApplVO" name="fcltyApplVO" method="post" action="./updateFcltyAppl.do" onsubmit="return fn_updateFcltyApplCheck(this)">
+        <fieldset>
+            <legend>(관리자) 시설 사용 신청서 수정</legend>
+            <form:hidden path="fcltyApplNo"/>
+            <input type="hidden" name="key" value="<c:out value="${key}"/>" />
+
+            <h3>신청자 기본 정보</h3>
+            <div>
+                <svg width="20" height="25" fill="#202e70" focusable="false"><use xlink:href="/common/images/program/p-icon.svg#exclamation-circle"></use></svg>
+                <span class="p-form__required--icon margin_l_5">필수</span> 표시는 필수 항목 입니다.
+            </div>
+
+            <table class="p-table">
+                <caption>(관리자) 신청자 기본 정보 수정</caption>
+                <colgroup>
+                    <col class="w15p">
+                    <col />
+                </colgroup>
+                <tbody class="p-table--th-left">
+
+                <c:if test="${not empty fcltyApplVO.grpNm}">
+                    <tr id="grpNmTr">
+                        <th scope="row"><form:label path="grpNm">단체명</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>
+                        <td><form:input path="grpNm" class="p-input p-input--auto" maxlength="30" placeholder="단체명" required="required" /></td>
                     </tr>
-                    <tr>
-                        <th scope="row"><form:label path="operYear">운영년도</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>
+
+                    <tr id="useCntTr">
+                        <th scope="row"><form:label path="useCnt">사용인원</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>
                         <td>
-                            <form:select path="operYear" class="p-input p-input--auto">
-                                <form:option value="" label="연도 선택"/>
-                                <c:set var="year" value="${fn:substring(fcltyVO.today,0,4)}"/>
-                                <c:forEach var="i" begin="2025" end="${year + 2}">
-                                    <form:option value="${i}" label="${i}"/>
-                                </c:forEach>
-                            </form:select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><form:label path="slctMthdCd">선발방식</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>
-                        <td>
-                            <div class="p-form-group w20p">
-                                <%-- 선발방식 공통코드 - FIRST : 선착순 / CONFM : 승인 / DRWLT : 추첨 --%>
-                                <c:forEach var="result" items="${slctMthdList}" varStatus="status">
-                                <span class="p-form-radio">
-                                    <input type="radio" name="slctMthdCd" id="slctMthdCd<c:out value="${status.count}"/>" class="p-form-radio__input" value="<c:out value="${result.code}"/>"<c:if test="${fcltyVO.slctMthdCd == result.code}"> checked</c:if>>
-                                    <label for="slctMthdCd<c:out value="${status.count}"/>" class="p-form-radio__label"><c:out value="${result.codeNm}"/></label>
-                                </span>
-                                </c:forEach>
-                                <span class="p-form__split">: 추첨일자</span>
-                                <input type="text" name="drwtDe" id="drwtDe" value="<c:out value="${fcltyVO.drwtDe}"/>" style="width:100px;" class="p-input p-input--auto" placeholder="yyyy-MM-dd"<c:if test="${fcltyVO.slctMthdCd != 'DRWLT'}"> disabled</c:if>/>
-                                <span class="p-input__addon">
-                                    <button type="button" class="p-input__item" id="drwtDeBtn" title="추첨일 선택" onclick="getCalendar(document.fcltyVO.drwtDe);" disabled> <!--getCalendar(document.bbsNttForm.start_date);-->
-                                        <svg width="14" height="16" fill="#888" focusable="false">
-                                            <use xlink:href="/common/images/program/p-icon.svg#calendar-alt"></use>
-                                        </svg>
-                                    </button>
-                                </span>
-                                <span class="p-form__split"></span>
-                                <select name="drwtHm" id="drwtHm" class="p-input p-input--auto text_center" value="<c:out value="${fcltyVO.drwtHm}"/>"<c:if test="${fcltyVO.slctMthdCd != 'DRWLT'}"> disabled</c:if>>
-                                    <c:forEach var="i" begin="0" end="23">
-                                        <fmt:formatNumber var="hh" value="${i}" pattern="00"/>
-                                        <c:set var="hm" value="${hh}00"/>
-                                        <option value="${hm}" label="${i}시"<c:if test="${fcltyVO.drwtHm == hm}"> selected</c:if>/>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><form:label path="rcptMthdCdArr">접수방식</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>
-                        <td>
-                            <%-- 접수방식 공통코드 - ONLIN : 온라인 / TLPHN : 전화 / VISIT : 방문 --%>
-                            <c:forEach var="result" items="${rcptMthdList}" varStatus="status">
-                                <span class="p-form-checkbox">
-                                    <input type="checkbox" name="rcptMthdCdArr" id="rcptMthdCd<c:out value="${status.count}"/>" class="p-form-checkbox__input" value="<c:out value="${result.code}"/>"<c:if test="${fn:indexOf(fcltyVO.rcptMthdCd, result.code) > -1}"> checked</c:if>>
-                                    <label for="rcptMthdCd<c:out value="${status.count}"/>" class="p-form-checkbox__label"><c:out value="${result.codeNm}"/></label>
-                                </span>
-                            </c:forEach>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><form:label path="fcltyNm">시설명</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>
-                        <td>
-                            <form:input path="fcltyNm" style="width:700px" class="p-input"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><form:label path="svcTyCd">서비스유형</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>
-                        <td>
-                            <%-- 서비스유형 공통코드 - EXPSVC01 : 관람 / EXPSVC02 : 시설/레포츠 / EXPSVC03 : 관광/견학 / EXPSVC04 : 캠핑장 / EXPSVC05 : 기타 --%>
-                            <form:select path="svcTyCd" class="p-input p-input--auto">
-                                <form:option value="" label="서비스유형 선택"/>
-                                <form:options items="${svcTyList}" itemValue="code" itemLabel="codeNm"/>
-                            </form:select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><form:label path="areaGuCd">지역</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>
-                        <td>
-                            <form:select path="areaGuCd" class="p-input p-input--auto">
-                                <form:option value="" label="지역(구) 선택"/>
-                                <form:options items="${areaGuList}" itemValue="code" itemLabel="codeNm"/>
-                            </form:select>
-                            <form:select path="areaEmdCd" class="p-input p-input--auto">
-                                <form:option value="" label="지역(읍면동) 선택"/>
-                                <form:options items="${sdguList}" itemValue="code" itemLabel="codeNm" class="areaEmdList SDGU" style="display:none;"/>
-                                <form:options items="${hdguList}" itemValue="code" itemLabel="codeNm" class="areaEmdList HDGU" style="display:none;"/>
-                                <form:options items="${cwguList}" itemValue="code" itemLabel="codeNm" class="areaEmdList CWGU" style="display:none;"/>
-                                <form:options items="${swguList}" itemValue="code" itemLabel="codeNm" class="areaEmdList SWGU" style="display:none;"/>
-                            </form:select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><form:label path="targetCdArr">대상</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>
-                        <td>
-                            <%-- 대상 공통코드 - TARGET01 : 영유아 / TARGET02 : 아동 / TARGET03 : 초등학생 / TARGET04 : 청소년 / TARGET05 : 성인 / TARGET06 : 어르신 / TARGET07 : 장애인 / TARGET08 : 기타 --%>
-                            <c:forEach var="result" items="${targetList}" varStatus="status">
-                                <span class="p-form-checkbox">
-                                    <input type="checkbox" name="targetCdArr" id="targetCd<c:out value="${status.count}"/>" class="p-form-checkbox__input" value="<c:out value="${result.code}"/>"<c:if test="${fn:indexOf(fcltyVO.targetCd, result.code) > -1}"> checked</c:if>>
-                                    <label for="targetCd<c:out value="${status.count}"/>" class="p-form-checkbox__label"><c:out value="${result.codeNm}"/></label>
-                                </span>
-                            </c:forEach>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><form:label path="nmprSeCd">인원구분</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>
-                        <td>
-                            <%-- 인원구분 공통코드 - IND : 개인 / GRP : 단체 --%>
-                            <c:forEach var="result" items="${nmprSeList}" varStatus="status">
-                                <span class="p-form-radio">
-                                    <input type="radio" name="nmprSeCd" id="nmprSeCd<c:out value="${status.count}"/>" class="p-form-radio__input" value="<c:out value="${result.code}"/>"<c:if test="${status.first}"> checked</c:if>>
-                                    <label for="nmprSeCd<c:out value="${status.count}"/>" class="p-form-radio__label"><c:out value="${result.codeNm}"/></label>
-                                </span>
-                            </c:forEach>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><form:label path="rcptBgnDt">접수기간</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>
-                        <td>
-                            <div class="p-form-group w20p">
-                                <form:input path="rcptBgnDe" style="width:100px;" class="p-input p-input--auto" placeholder="yyyy-MM-dd"/>
-                                <span class="p-input__addon">
-                                    <button type="button" class="p-input__item" title="시작일 선택" onclick="getCalendar(document.fcltyVO.rcptBgnDe);"> <!--getCalendar(document.bbsNttForm.start_date);-->
-                                        <svg width="14" height="16" fill="#888" focusable="false">
-                                            <use xlink:href="/common/images/program/p-icon.svg#calendar-alt"></use>
-                                        </svg>
-                                    </button>
-                                </span>
-                                <span class="p-form__split"></span>
-                                <form:select path="rcptBgnHh" class="p-input p-input--auto">
-                                    <c:forEach var="result" begin="0" end="23">
-                                        <fmt:formatNumber var="hh" value="${result}" pattern="00"/>
-                                        <form:option value="${hh}"/>
-                                    </c:forEach>
-                                </form:select>
-                                <span class="p-form__split"></span>
-                                <form:select path="rcptBgnMm" class="p-input p-input--auto">
-                                    <c:forEach var="result" begin="0" end="59">
-                                        <fmt:formatNumber var="mm" value="${result}" pattern="00"/>
-                                        <form:option value="${mm}"/>
-                                    </c:forEach>
-                                </form:select>
-                                <span class="p-form__split">~</span>
-                                <form:input path="rcptEndDe" style="width:100px;" class="p-input p-input--auto" placeholder="yyyy-MM-dd"/>
-                                <span class="p-input__addon">
-                                    <button type="button" class="p-input__item" title="종료일 선택" onclick="getCalendar(document.fcltyVO.rcptEndDe);"> <!--getCalendar(document.bbsNttForm.start_date);-->
-                                        <svg width="14" height="16" fill="#888" focusable="false">
-                                            <use xlink:href="/common/images/program/p-icon.svg#calendar-alt"></use>
-                                        </svg>
-                                    </button>
-                                </span>
-                                <span class="p-form__split"></span>
-                                <form:select path="rcptEndHh" class="p-input p-input--auto">
-                                    <c:forEach var="result" begin="0" end="23">
-                                        <fmt:formatNumber var="hh" value="${result}" pattern="00"/>
-                                        <form:option value="${hh}"/>
-                                    </c:forEach>
-                                </form:select>
-                                <span class="p-form__split"></span>
-                                <form:select path="rcptEndMm" class="p-input p-input--auto">
-                                    <c:forEach var="result" begin="0" end="59">
-                                        <fmt:formatNumber var="mm" value="${result}" pattern="00"/>
-                                        <form:option value="${mm}"/>
-                                    </c:forEach>
-                                </form:select>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><form:label path="placeNo">시설장소</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>
-                        <td>
-                            <form:select path="placeNo" class="p-input p-input--auto">
-                                <form:option value="" label="시설장소 선택"/>
-                                <form:options items="${fctPlaceList}" itemValue="placeNo" itemLabel="placeNm"/>
-                            </form:select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><form:label path="fcltyAmt">시설료</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>
-                        <td>
-                            <span class="p-form-radio">
-                                <input type="radio" name="fcltyAmtYn" id="fcltyAmtN" class="p-form-radio__input" value="N"<c:if test="${fcltyVO.fcltyAmt == 0}"> checked</c:if>>
-                                <label for="fcltyAmtN" class="p-form-radio__label">무료</label>
-                            </span>
-                            <span class="p-form-radio">
-                                <input type="radio" name="fcltyAmtYn" id="fcltyAmtY" class="p-form-radio__input" value="Y"<c:if test="${fcltyVO.fcltyAmt > 0}"> checked</c:if>>
-                                <label for="fcltyAmtY" class="p-form-radio__label">유료</label>
-                            </span>
-                            <input type="text" name="fcltyAmtFmt" value="<c:if test="${fcltyVO.fcltyAmt > 0}"><c:out value="${fcltyVO.fcltyAmt}"/></c:if>" style="width:100px;" class="p-input p-input--auto text_right" data-mask="#,##0" data-mask-reverse="true"<c:if test="${fcltyVO.fcltyAmt == 0}"> disabled</c:if>/> 원
-                            <input type="hidden" name="fcltyAmt" value="<c:out value="${fcltyVO.fcltyAmt}"/>"<c:if test="${fcltyVO.fcltyAmt == 0}"> disabled</c:if>/>
-                            <span class="p-table__content padding_l_10" id="fcltyAmtWarning" <c:if test="${fcltyVO.fcltyAmt == 0}"> style="display:none;"</c:if>>
-                                <svg width="20" height="25" fill="#ff2a00" focusable="false"><use xlink:href="/common/images/program/p-icon.svg#exclamation-circle-solid"></use></svg>
-                                <em class="em_b_red">시설료가 유료인 경우 결제방식, 무통장입금 정보(결제방식이 '무통장입금'인 경우 기재), 결제기한 항목을 확인해주세요.</em>
-                            </span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><form:label path="payMthdCdArr">결제방식</form:label></th>
-                        <td>
-                            <%-- 결제방식 공통코드 - ELCTRN : 전자결제 / NBKRCP : 무통장입금 / DIRECT : 현장결제 --%>
-                            <c:forEach var="result" items="${payMthdList}" varStatus="status">
-                                <span class="p-form-checkbox">
-                                    <input type="checkbox" name="payMthdCdArr" id="payMthdCd<c:out value="${status.count}"/>" class="p-form-checkbox__input" value="<c:out value="${result.code}"/>"<c:if test="${fcltyVO.fcltyAmt == 0}"> disabled</c:if><c:if test="${fn:indexOf(fcltyVO.payMthdCd, result.code) > -1}"> checked</c:if>>
-                                    <label for="payMthdCd<c:out value="${status.count}"/>" class="p-form-checkbox__label"><c:out value="${result.codeNm}"/></label>
-                                </span>
-                            </c:forEach>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><form:label path="bankNm">무통장입금 정보</form:label></th>
-                        <td>
-                            <div class="p-form-group w30p">
-                                <span class="p-form__split">은행</span>
-                                <input type="text" name="bankNm" id="bankNm" class="p-input p-input--auto" value="<c:out value="${fcltyVO.bankNm}"/>"<c:if test="${fn:indexOf(fcltyVO.payMthdCd, 'NBKRCP') < 0}"> disabled</c:if>/>
-                                <span class="p-form__split"></span>
-                                <span class="p-form__split">계좌번호</span>
-                                <input type="text" name="acctNo" id="acctNo" class="p-input p-input--auto" value="<c:out value="${fcltyVO.acctNo}"/>"<c:if test="${fn:indexOf(fcltyVO.payMthdCd, 'NBKRCP') < 0}"> disabled</c:if>/>
-                                <span class="p-form__split"></span>
-                                <span class="p-form__split">예금주</span>
-                                <input type="text" name="dpstrNm" id="dpstrNm" class="p-input p-input--auto" value="<c:out value="${fcltyVO.dpstrNm}"/>"<c:if test="${fn:indexOf(fcltyVO.payMthdCd, 'NBKRCP') < 0}"> disabled</c:if>/>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><form:label path="payTmlmtCnt">결제기한</form:label></th>
-                        <td>
-                            <div class="p-form-group w20p">
-<%--                                <span class="p-form__split">예약일/추첨일/승인일로부터 </span>--%>
-                                <span class="p-form__split">예약일로부터 </span>
-                                <select name="payTmlmtCnt" id="payTmlmtCnt" class="p-input p-input--auto text_center"<c:if test="${fcltyVO.fcltyAmt == 0}"> disabled</c:if>>
-                                    <c:forEach var="i" begin="1" end="30">
-                                        <option value="${i}"<c:if test="${fcltyVO.payTmlmtCnt == i}"> selected</c:if>><c:out value="${i}"/></option>
-                                    </c:forEach>
-                                </select>
-                                <span class="p-form__split">일 이내 </span>
-                                <select name="payTmlmtHh" id="payTmlmtHh" class="p-input p-input--auto text_center"<c:if test="${fcltyVO.fcltyAmt == 0}"> disabled</c:if>>
-                                    <c:forEach var="i" begin="0" end="23">
-                                        <fmt:formatNumber var="hh" value="${i}" pattern="00"/>
-                                        <option value="${hh}"<c:if test="${fcltyVO.payTmlmtHh == hh}"> selected</c:if>><c:out value="${hh}"/></option>
-                                    </c:forEach>
-                                </select>
-                                <span class="p-form__split">시 까지</span>
-                            </div>
-                            <span class="p-table__content padding_l_10">
+                            <form:input path="useCnt" class="p-input p-input--auto" oninput="fn_numChk(this)" maxlength="4" placeholder="숫자만 입력 가능합니다." required="required" />명
+
+                            <c:if test="${fcltyVO.nmprMinCnt > 0 || fcltyVO.nmprMaxCnt > 0}">
+                              <span class="p-table__content padding_l_10">
                                 <svg width="20" height="25" fill="#202e70" focusable="false"><use xlink:href="/common/images/program/p-icon.svg#info-circle"></use></svg>
-                                <em class="em_black">신청자가 예약완료 후 설정된 시간(분)이내에 결제하지 않으면 예약이 자동으로 취소됩니다.</em>
+                                  <em class="em_black">
+                                <c:if test="${fcltyVO.nmprMinCnt > 0}">
+                                    최소 신청인원 : <c:out value="${fcltyVO.nmprMinCnt}"/> 명
+                                </c:if>
+                                <c:if test="${fcltyVO.nmprMinCnt > 0 && nmprMaxCnt > 0}"> / </c:if>
+                                <c:if test="${fcltyVO.nmprMaxCnt > 0}">
+                                    최대 신청인원 : <c:out value="${fcltyVO.nmprMaxCnt}"/> 명
+                                </c:if>
+                                </em>
+                              </span>
+                            </c:if>
+                        </td>
+                    </tr>
+                </c:if>
+                <c:if test="${empty fcltyApplVO.grpNm}">
+                    <form:hidden path="useCnt"/>
+                </c:if>
+
+                <tr>
+                    <th scope="row"><form:label path="applNm">신청자명</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>
+                    <td><form:input path="applNm" class="p-input p-input--auto" maxlength="20" placeholder="신청자명" required="required" /></td>
+                </tr>
+
+                <tr>
+                    <th scope="row"><form:label path="genderSe">성별</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>
+                    <td>
+                        <span class="p-form-radio">
+                            <form:radiobutton path="genderSe" id="genderSe1" value="M" cssClass="p-form-radio__input"/>
+                            <label for="genderSe1" class="p-form-radio__label">남</label>
+                        </span>
+                        <span class="p-form-radio">
+                            <form:radiobutton path="genderSe" id="genderSe2" value="F" cssClass="p-form-radio__input"/>
+                            <label for="genderSe2" class="p-form-radio__label">여</label>
+                        </span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th scope="row"><form:label path="birthDe">생년월일</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>
+                    <td>
+                        <div class="p-form-group p-date w10p" data-date="datepicker" data-date-start-view="3">
+                            <form:input path="birthDe" class="p-input p-input--auto" maxlength="10" placeholder="YYYY-MM-DD" required="required" />
+                            <span class="p-input__split">
+                                <button type="button" class="p-input__item p-date__icon">달력 열기</button>
                             </span>
-                            <br/>
-                            <span class="p-table__content padding_l_10">
-                                <svg width="20" height="25" fill="#202e70" focusable="false"><use xlink:href="/common/images/program/p-icon.svg#info-circle"></use></svg>
-                                <em class="em_black">해당 항목은 이용료가 유료인 경우에만 적용됩니다.</em>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th scope="row"><form:label path="mobileNo">연락처</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>
+                    <td><form:input path="mobileNo" class="p-input p-input--auto" oninput="fn_numChk(this)" maxlength="12" placeholder="숫자만입력가능" required="required" /></td>
+                </tr>
+
+                <tr>
+                    <th scope="row"><form:label path="zip">주소</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>
+                    <td>
+                        <div class="p-form-group w20p">
+                            <form:input path="zip" class="p-input p-input--auto" placeholder="우편번호 (자동입력)" readonly="true" maxlength="6" required="required"/>
+                            <span class="p-input__addon">
+                                <button type="button" class="p-button primary addressSearchButton" onclick="openDaumZipAddress();">주소검색</button>
                             </span>
-                        </td>
-                    </tr>
+                        </div>
+                        <div class="p-form-group w50p">
+                            <form:input path="addr" class="p-input" placeholder="주소 (자동입력)" readonly="true" required="required"/>
+                        </div>
+                        <div class="p-form-group w50p">
+                            <form:input path="detailAddr" class="p-input" placeholder="상세주소" maxlength="30" required="required"/>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th scope="row"><form:label path="email1">이메일</form:label></th>
+                    <td>
+                        <div class="p-form-group w40p">
+                            <form:input path="email1" class="p-input p-inpu--auto" maxlength="20" />
+                            <span class="p-form__split">@</span>
+                            <form:input path="email2" class="p-input p-inpu--auto" maxlength="20"/>
+                            <span class="p-form__split"> </span>
+                            <select id="email3" class="p-input p-input--auto">
+                                <option value="direct">직접입력</option>
+                                <option value="naver.com">naver.com</option>
+                                <option value="gmail.com">gmail.com</option>
+                                <option value="nate.com">nate.com</option>
+                                <option value="kakao.com">kakao.com</option>
+                                <option value="daum.net">daum.net</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+
+                <c:if test="${fcltyVO.resInqUseYn eq 'Y'}">
+                <tr>
+                    <th scope="row"><form:label path="resInqCd">거주지</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>
+                    <td>
+                        <form:select class="p-input p-input--auto" path="resInqCd" required="required">
+                            <form:option value="" label="= 선택해주세요 =" />
+                            <form:options items="${lgldongList}" itemValue="code" itemLabel="codeNm"/>
+                        </form:select>
+                    </td>
+                </tr>
+                </c:if>
+
+                <c:if test="${not empty fcltyVO.aditIem1}">
                     <tr>
-                        <th scope="row"><form:label path="reqstClosCnt">신청마감일수</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>
+                        <th scope="row"><form:label path="aditIem1"><c:out value="${fcltyVO.aditIem1}"/></form:label> </th>
+                        <td><form:input path="aditIem1" class="p-input w50p" maxlength="100" placeholder="${fcltyVO.aditIem1} 입력" /></td>
+                    </tr>
+                </c:if>
+
+                <c:if test="${not empty fcltyVO.aditIem2}">
+                    <tr>
+                        <th scope="row"><form:label path="aditIem2"><c:out value="${fcltyVO.aditIem2}"/></form:label> </th>
+                        <td><form:input path="aditIem2" class="p-input w50p" maxlength="100" placeholder="${fcltyVO.aditIem2} 입력" /></td>
+                    </tr>
+                </c:if>
+
+                <tr>
+                    <th scope="row"><form:label path="memo">메모(관리자만 확인 가능)</form:label> </th>
+                    <td><form:textarea path="memo" class="p-input w50p" /></td>
+                </tr>
+
+                </tbody>
+            </table>
+
+
+            <h3>예약 정보</h3>
+            <div>
+                <svg width="20" height="25" fill="#202e70" focusable="false"><use xlink:href="/common/images/program/p-icon.svg#exclamation-circle"></use></svg>
+                <span class="p-form__required--icon margin_l_5">필수</span> 표시는 필수 항목 입니다.
+            </div>
+            <table class="p-table">
+                <caption>(관리자) 예약 정보 수정</caption>
+                <colgroup>
+                    <col class="w15p">
+                    <col />
+                </colgroup>
+                <tbody class="p-table--th-left">
+
+                <tr>
+                    <th scope="row">예약번호</th>
+                    <td>
+                        <c:out value="${fcltyApplVO.fcltyApplId}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">신청일시 (밀리초)</th>
+                    <td>
+                        <c:out value="${tsu:toDateFormat(fcltyApplVO.applDtMs, 'yyyyMMddHHmmssSSS', 'yyyy-MM-dd HH:mm:ss (SSS)')}"/>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th scope="row">시설 사용일자</th>
+                    <td>
+                        <c:out value="${tsu:toDateFormat(fcltyApplVO.fcltyDe, 'yyyyMMdd', 'yyyy-MM-dd')}"/>
+                        <c:out value="${tsu:toDateFormat(fcltyApplVO.fcltyBgnHm, 'HHmm', 'HH:mm')}"/> ~
+                        <c:out value="${tsu:toDateFormat(fcltyApplVO.fcltyEndHm, 'HHmm', 'HH:mm')}"/>
+                        (<c:out value="${fcltyApplVO.tmInterval}"/> 분)
+                    </td>
+                </tr>
+
+                <tr>
+                    <th scope="row"><form:label path="rsvSttusCd">예약상태</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>
+                    <td>
+                        <form:select class="p-input p-input--auto" id="rsvSttusCd" path="rsvSttusCd" required="required">
+                            <form:option value="" label="= 선택해주세요. =" />
+                            <form:options items="${rsvSttusList}" itemValue="code" itemLabel="codeNm" />
+                        </form:select>
+                    </td>
+                </tr>
+
+                <c:if test="${fcltyVO.fcltyAmt > 0}">
+                    <tr>
+                        <th scope="row"><form:label path="totalPayAmt">시설 사용요금</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>
                         <td>
-                            <div class="p-form-group w30p">
-                                <span class="p-form__split">이용일 </span>
-                                <form:input path="reqstClosCnt" style="width:40px;" class="p-input p-input--auto text_center"/>
-                                <span class="p-form__split">일 전까지 신청가능</span>
-                                <span class="p-table__content padding_l_10">
-                                    <svg width="20" height="25" fill="#202e70" focusable="false"><use xlink:href="/common/images/program/p-icon.svg#info-circle"></use></svg>
-                                    <em class="em_black">이용일 7일 전까지 신청가능한 경우 9월 8일은 9월 1일까지 신청가능, 9월 2일부터는 신청불가 ('0'인 경우 당일 신청 가능)</em>
-                                </span>
-                            </div>
+                            <form:input path="totalPayAmt" class="p-input p-input--auto" maxlength="10" oninput="fn_numChk(this)" placeholder="사용요금" required="required" /> 원
                         </td>
                     </tr>
+
                     <tr>
-                        <th scope="row"><form:label path="canclClosCnt">취소마감일수</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>
+                        <th scope="row"><form:label path="payMthdCd">사용요금 결제 방법</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>
                         <td>
-                            <div class="p-form-group w30p">
-                                <span class="p-form__split">이용일 </span>
-                                <form:input path="canclClosCnt" style="width:40px;" class="p-input p-input--auto text_center"/>
-                                <span class="p-form__split">일 전까지 취소가능</span>
-                                <span class="p-table__content padding_l_10">
-                                    <svg width="20" height="25" fill="#202e70" focusable="false"><use xlink:href="/common/images/program/p-icon.svg#info-circle"></use></svg>
-                                    <em class="em_black">이용일 7일 전까지 취소가능한 경우 9월 8일은 9월 1일까지 취소가능, 9월 2일부터는 취소불가 ('0'인 경우 당일 취소 가능)</em>
-                                </span>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><form:label path="fdrmCloseDayArr">정기 휴관일(요일)</form:label></th>
-                        <td>
-                            <span class="p-form-checkbox">
-                                <input type="checkbox" name="fdrmCloseDayArr" id="fdrmCloseDay2" class="p-form-checkbox__input" value="2"<c:if test="${fn:indexOf(fcltyVO.fdrmCloseDay, '2') > -1}"> checked</c:if>>
-                                <label for="fdrmCloseDay2" class="p-form-checkbox__label">월</label>
-                            </span>
-                            <span class="p-form-checkbox">
-                                <input type="checkbox" name="fdrmCloseDayArr" id="fdrmCloseDay3" class="p-form-checkbox__input" value="3"<c:if test="${fn:indexOf(fcltyVO.fdrmCloseDay, '3') > -1}"> checked</c:if>>
-                                <label for="fdrmCloseDay3" class="p-form-checkbox__label">화</label>
-                            </span>
-                            <span class="p-form-checkbox">
-                                <input type="checkbox" name="fdrmCloseDayArr" id="fdrmCloseDay4" class="p-form-checkbox__input" value="4"<c:if test="${fn:indexOf(fcltyVO.fdrmCloseDay, '4') > -1}"> checked</c:if>>
-                                <label for="fdrmCloseDay4" class="p-form-checkbox__label">수</label>
-                            </span>
-                            <span class="p-form-checkbox">
-                                <input type="checkbox" name="fdrmCloseDayArr" id="fdrmCloseDay5" class="p-form-checkbox__input" value="5"<c:if test="${fn:indexOf(fcltyVO.fdrmCloseDay, '5') > -1}"> checked</c:if>>
-                                <label for="fdrmCloseDay5" class="p-form-checkbox__label">목</label>
-                            </span>
-                            <span class="p-form-checkbox">
-                                <input type="checkbox" name="fdrmCloseDayArr" id="fdrmCloseDay6" class="p-form-checkbox__input" value="6"<c:if test="${fn:indexOf(fcltyVO.fdrmCloseDay, '6') > -1}"> checked</c:if>>
-                                <label for="fdrmCloseDay6" class="p-form-checkbox__label">금</label>
-                            </span>
-                            <span class="p-form-checkbox">
-                                <input type="checkbox" name="fdrmCloseDayArr" id="fdrmCloseDay7" class="p-form-checkbox__input" value="7"<c:if test="${fn:indexOf(fcltyVO.fdrmCloseDay, '7') > -1}"> checked</c:if>>
-                                <label for="fdrmCloseDay7" class="p-form-checkbox__label">토</label>
-                            </span>
-                            <span class="p-form-checkbox">
-                                <input type="checkbox" name="fdrmCloseDayArr" id="fdrmCloseDay1" class="p-form-checkbox__input" value="1"<c:if test="${fn:indexOf(fcltyVO.fdrmCloseDay, '1') > -1}"> checked</c:if>>
-                                <label for="fdrmCloseDay1" class="p-form-checkbox__label">일</label>
-                            </span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><form:label path="rcritCnt">모집인원</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>
-                        <td>
-                            <div class="p-form-group w30p">
-                                <form:input path="rcritCnt" style="width:50px;" class="p-input p-input--auto text_center"/>
-                                <span class="p-form__split">명</span>
-                                <span class="p-form__split"></span>
-                                <span class="p-form-checkbox">
-                                    <input type="checkbox" name="detailNmprUseYn" id="detailNmprUseYn" class="p-form-checkbox__input" value="Y"<c:if test="${fcltyVO.detailNmprUseYn == 'Y'}"> checked</c:if>>
-                                    <label for="detailNmprUseYn" class="p-form-checkbox__label">세부인원 사용(성인, 청소년, 초등학생, 아동, 영유아)</label>
-                                </span>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><form:label path="nmprMinCnt">인원 제약 조건</form:label></th>
-                        <td>
-                            <div class="p-form-group col-2">
-                                <span class="p-form__split">최소 : </span>
-                                <form:input path="nmprMinCnt" style="width:50px;" class="p-input p-input--auto text_center"/>
-                                <span class="p-form__split">명, </span>
-                                <span class="p-form__split"></span>
-                                <span class="p-form__split">최대 : </span>
-                                <form:input path="nmprMaxCnt" style="width:50px;" class="p-input p-input--auto text_center"/>
-                                <span class="p-form__split">명</span>
-                                <span class="p-table__content padding_l_10">
-                                    <svg width="20" height="25" fill="#202e70" focusable="false"><use xlink:href="/common/images/program/p-icon.svg#info-circle"></use></svg>
-                                    <em class="em_black">'0'인 경우 제한없음</em>
-                                </span>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><form:label path="mtLmttTime">월 이용 제한시간</form:label></th>
-                        <td>
-                            <div class="p-form-group col-1">
-                                <form:select path="mtLmttTime" class="p-input p-input--auto text_center">
-                                    <form:option value="0" label="선택"/>
-                                    <c:forEach var="i" begin="1" end="20">
-                                        <form:option value="${i}" label="${i}"/>
-                                    </c:forEach>
-                                </form:select>
-                                <span class="p-form__split">시간</span>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><form:label path="detailCn">상세내용</form:label></th>
-                        <td>
-                            <form:textarea path="detailCn" class="p-input" cols="30" rows="6"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><form:label path="noticeCn">유의사항</form:label></th>
-                        <td>
-                            <form:textarea path="noticeCn" class="p-input" cols="30" rows="6"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><form:label path="refundPlcyCn">환불정책</form:label></th>
-                        <td>
-                            <form:textarea path="refundPlcyCn" class="p-input" cols="30" rows="6"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><label for="atchImg_1">이미지</label></th>
-                        <td colspan="3">
-                            <ul class="attach">
-                                <c:set var="fileCnt" value="0" />
-                                <c:forEach var="cmmnAtchFile" items="${cmmnAtchImgList}" varStatus="idx">
-                                    <li>
-                                        <span class="p-form-radio">
-                                            <input type="radio" name="fileStatus<c:out value="${cmmnAtchFile.fileNo}"/>" id="fileStatus_<c:out value="${cmmnAtchFile.fileNo}"/>_M" class="p-form-radio__input" value="M" checked>
-                                            <label for="fileStatus_<c:out value="${cmmnAtchFile.fileNo}"/>_M" class="p-form-radio__label">유지</label>
-                                        </span>
-                                        <span class="p-form-radio">
-                                            <input type="radio" name="fileStatus<c:out value="${cmmnAtchFile.fileNo}"/>" id="fileStatus_<c:out value="${cmmnAtchFile.fileNo}"/>_U" class="p-form-radio__input" value="U">
-                                            <label for="fileStatus_<c:out value="${cmmnAtchFile.fileNo}"/>_U" class="p-form-radio__label">변경</label>
-                                        </span>
-                                        <span class="p-form-radio">
-                                            <input type="radio" name="fileStatus<c:out value="${cmmnAtchFile.fileNo}"/>" id="fileStatus_<c:out value="${cmmnAtchFile.fileNo}"/>_D" class="p-form-radio__input" value="D">
-                                            <label for="fileStatus_<c:out value="${cmmnAtchFile.fileNo}"/>_D" class="p-form-radio__label">삭제</label>
-                                        </span>
-                                        <span class="file_input"><input type="file" name="atchImg_<c:out value="${cmmnAtchFile.fileNo}"/>" class="file" /></span>
-                                        <a href="./downloadFcltyFile.do?key=<c:out value="${param.key}"/>&amp;fcltyNo=<c:out value="${fcltyVO.fcltyNo}"/>&amp;fileNo=<c:out value="${cmmnAtchFile.fileNo}"/>"><span class="p-icon p-icon__<c:out value="${cmmnAtchFile.fileExtsn}"/>"><c:out value="${cmmnAtchFile.fileExtsn}"/> 문서</span><span><c:out value="${cmmnAtchFile.fileNm}"/></span></a>
-                                    </li>
-                                    <c:set var="fileCnt" value="${fileCnt + 1}" />
+                            <form:select class="p-input p-input--auto" path="payMthdCd" required="required">
+                                <form:option value="" label="= 선택해주세요. =" />
+                                <c:forEach items="${payMthdList}" var="item" varStatus="idx">
+                                    <c:if test="${item.code ne 'ELCTRN'}">
+                                        <form:option value="${item.code}" label="${item.codeNm}" />
+                                    </c:if>
                                 </c:forEach>
-                                <c:forEach begin="${fileCnt+1}" end="${cmmnAtchmnflInfoImg.fileMaxCo}" step="1" varStatus="i">
-                                    <li class="p-upload">
-                                        <span class="file_input"><input type="file" name="atchImg" class="file" /></span>
-                                    </li>
-                                </c:forEach>
+                            </form:select>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">결제기한</th>
+                        <td>
+                            <c:out value="${tsu:toDateFormat(fcltyApplVO.payDeadlineDt, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss')}"/>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row"><form:label path="paySttusCd">결제상태</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>
+                        <td>
+                            <form:select class="p-input p-input--auto" path="paySttusCd" required="required">
+                                <form:option value="" label="= 선택해주세요. =" />
+                                <form:options items="${paySttusList}" itemValue="code" itemLabel="codeNm" />
+                            </form:select>
+                        </td>
+                    </tr>
+
+                    <c:if test="${not empty payDt}">
+                        <tr>
+                            <th scope="row">결제일시</th>
+                            <td>
+                                <c:out value="${tsu:toDateFormat(fcltyApplVO.payDt, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss')}"/>
+                            </td>
+                        </tr>
+                    </c:if>
+                </c:if>
+
+
+                <c:if test="${fcltyVO.slctMthdCd eq 'DRWLT'}">
+                    <tr>
+                        <th scope="row">추첨상태</th>
+                        <td>
+                            <c:choose>
+                                <c:when test="${!empty fcltyApplVO.drwtWinYn}">
+                                    <br>추첨완료
+                                    <c:if test="${fcltyApplVO.drwtWinYn eq 'Y'}">
+                                        <span class="em_blue">(당첨)</span>
+                                    </c:if>
+                                    <c:if test="${fcltyApplVO.drwtWinYn eq 'N'}">
+                                        <span class="em_gray">(미당첨)</span>
+                                    </c:if>
+                                </c:when>
+                                <c:otherwise>미추첨</c:otherwise>
+                            </c:choose>
+                        </td>
+                    </tr>
+                </c:if>
+
+                <c:if test="${fcltyVO.slctMthdCd eq 'CONFM'}">
+                    <tr>
+                        <th scope="row">승인상태</th>
+                        <td>
+                            <c:choose>
+                                <c:when test="${fcltyApplVO.rsvSttusCd eq 'APPL_CMPL'}">승인</c:when>
+                                <c:otherwise>미승인</c:otherwise>
+                            </c:choose>
+                        </td>
+                    </tr>
+                </c:if>
+
+                <c:if test="${fcltyVO.slctMthdCd ne 'FIRST'}">
+                    <tr>
+                        <th scope="row"><c:out value="${(fcltyVO.slctMthdCd eq 'CONFM') ? '승인' : '당첨'}"/>일시</th>
+                        <td>
+                            <c:out value="${tsu:toDateFormat(fcltyApplVO.applCmplDt, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss')}"/>
+                        </td>
+                    </tr>
+                </c:if>
+
+
+                <tr>
+                    <th scope="row">취소마감일시</th>
+                    <td>
+                        <c:out value="${tsu:toDateFormat(fcltyApplVO.canclClosDt, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss')}"/>
+                    </td>
+                </tr>
+
+                <c:if test="${not empty cancelDt}">
+                    <tr>
+                        <th scope="row">취소일시</th>
+                        <td>
+                            <c:out value="${tsu:toDateFormat(fcltyApplVO.cancelDt, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss')}"/>
+                        </td>
+                    </tr>
+                </c:if>
+
+                <tr>
+                    <th scope="row"><form:label path="cancelReason">취소사유</form:label></th>
+                    <td>
+                        <form:input path="cancelReason" id="cancelReason" class="p-input w50p" maxlength="100" placeholder="취소사유를 입력해주세요." />
+                    </td>
+                </tr>
+
+                <c:if test="${fcltyVO.fcltyAmt > 0}">
+                    <c:if test="${not empty rfndReqDt}">
+                        <tr>
+                            <th scope="row">환불요청일시</th>
+                            <td>
+                                <c:out value="${tsu:toDateFormat(fcltyApplVO.rfndReqDt, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss')}"/>
+                            </td>
+                        </tr>
+                    </c:if>
+
+                    <tr>
+                        <th scope="row"><form:label path="rfndReason">환불사유</form:label></th>
+                        <td>
+                            <form:input path="rfndReason" id="rfndReason" class="p-input w50p" maxlength="100" placeholder="환불사유를 입력해주세요." />
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row"><form:label path="rfndAmt">환불완료금액</form:label> </th>
+                        <td>
+                            <form:input path="rfndAmt" id="rfndAmt" class="p-input p-input--auto" maxlength="10" oninput="fn_numChk(this)" placeholder="환불완료금액" /> 원
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row"><form:label path="rfndBankNm">환불계좌</form:label> </th>
+                        <td>
+                            <ul>
+                                <li>은행명 :
+                                    <form:select class="p-input p-input--auto" id="rfndBankNm" path="rfndBankNm">
+                                        <form:option value="" label="= 선택해주세요. =" />
+                                        <form:options items="${bankList}" itemValue="code" itemLabel="codeNm" />
+                                    </form:select>
+                                </li>
+                                <li>계좌번호 : <form:input path="rfndAcctNo" class="p-input p-input--auto w30p" maxlength="30" oninput="fn_numChk(this)" placeholder="계좌번호" /></li>
+                                <li>예금주명 : <form:input path="rfndDpstrNm" class="p-input p-input--auto w30p" maxlength="30" placeholder="예금주명" /></li>
                             </ul>
                         </td>
                     </tr>
-                    <tr>
-                        <th scope="row"><label for="atchFile_1">첨부파일</label></th>
-                        <td colspan="3">
-                            <ul class="attach">
-                                <c:set var="fileCnt" value="0" />
-                                <c:forEach var="cmmnAtchFile" items="${cmmnAtchFileList}" varStatus="idx">
-                                    <li>
-                                        <span class="p-form-radio">
-                                            <input type="radio" name="fileStatus<c:out value="${cmmnAtchFile.fileNo}"/>" id="fileStatus_<c:out value="${cmmnAtchFile.fileNo}"/>_M" class="p-form-radio__input" value="M" checked>
-                                            <label for="fileStatus_<c:out value="${cmmnAtchFile.fileNo}"/>_M" class="p-form-radio__label">유지</label>
-                                        </span>
-                                        <span class="p-form-radio">
-                                            <input type="radio" name="fileStatus<c:out value="${cmmnAtchFile.fileNo}"/>" id="fileStatus_<c:out value="${cmmnAtchFile.fileNo}"/>_U" class="p-form-radio__input" value="U">
-                                            <label for="fileStatus_<c:out value="${cmmnAtchFile.fileNo}"/>_U" class="p-form-radio__label">변경</label>
-                                        </span>
-                                        <span class="p-form-radio">
-                                            <input type="radio" name="fileStatus<c:out value="${cmmnAtchFile.fileNo}"/>" id="fileStatus_<c:out value="${cmmnAtchFile.fileNo}"/>_D" class="p-form-radio__input" value="D">
-                                            <label for="fileStatus_<c:out value="${cmmnAtchFile.fileNo}"/>_D" class="p-form-radio__label">삭제</label>
-                                        </span>
-                                        <span class="file_input"><input type="file" name="atchFile_<c:out value="${cmmnAtchFile.fileNo}"/>" class="file" /></span>
-                                        <a href="./downloadFcltyFile.do?key=<c:out value="${param.key}"/>&amp;fcltyNo=<c:out value="${fcltyVO.fcltyNo}"/>&amp;fileNo=<c:out value="${cmmnAtchFile.fileNo}"/>"><span class="p-icon p-icon__<c:out value="${cmmnAtchFile.fileExtsn}"/>"><c:out value="${cmmnAtchFile.fileExtsn}"/> 문서</span><span><c:out value="${cmmnAtchFile.fileNm}"/></span></a>
-                                    </li>
-                                    <c:set var="fileCnt" value="${fileCnt + 1}" />
-                                </c:forEach>
-                                <c:forEach begin="${fileCnt+1}" end="${cmmnAtchmnflInfoFile.fileMaxCo}" step="1" varStatus="i">
-                                    <li class="p-upload">
-                                        <span class="file_input"><input type="file" name="atchFile" class="file" /></span>
-                                    </li>
-                                </c:forEach>
-                            </ul>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><form:label path="aditIem1">신청자 추가 입력 항목</form:label></th>
-                        <td>
-                            <form:input path="aditIem1" class="p-input p-input--auto"/><br/>
-                            <form:input path="aditIem2" class="p-input p-input--auto"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><form:label path="resInqUseYn">거주지 조회 사용여부</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>
-                        <td>
-                            <span class="p-form-radio">
-                                <input type="radio" name="resInqUseYn" id="resInqUseY" class="p-form-radio__input" value="Y">
-                                <label for="resInqUseY" class="p-form-radio__label">사용</label>
-                            </span>
-                            <span class="p-form-radio">
-                                <input type="radio" name="resInqUseYn" id="resInqUseN" class="p-form-radio__input" value="N" checked>
-                                <label for="resInqUseN" class="p-form-radio__label">미사용</label>
-                            </span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><form:label path="dscntUseYn">감면 사용여부</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>
-                        <td>
-                            <span class="p-form-radio">
-                                <input type="radio" name="dscntUseYn" id="dscntUseY" class="p-form-radio__input" value="Y"<c:if test="${fcltyVO.dscntUseYn == 'Y'}"> checked</c:if>>
-                                <label for="dscntUseY" class="p-form-radio__label">사용</label>
-                            </span>
-                            <span class="p-form-radio">
-                                <input type="radio" name="dscntUseYn" id="dscntUseN" class="p-form-radio__input" value="N"<c:if test="${fcltyVO.dscntUseYn == 'N'}"> checked</c:if>>
-                                <label for="dscntUseN" class="p-form-radio__label">미사용</label>
-                            </span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><form:label path="telNoFmt">문의전화</form:label></th>
-                        <td>
-                            <form:input path="telNoFmt" class="p-input p-input--auto"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><form:label path="useYn">표시여부</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>
-                        <td>
-                            <span class="p-form-radio">
-                                <input type="radio" name="useYn" id="useY" class="p-form-radio__input" value="Y" checked>
-                                <label for="useY" class="p-form-radio__label">표시</label>
-                            </span>
-                                <span class="p-form-radio">
-                                <input type="radio" name="useYn" id="useN" class="p-form-radio__input" value="N">
-                                <label for="useN" class="p-form-radio__label">숨김</label>
-                            </span>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-                <div class="row margin_t_20">
-                    <div class="col-12">
-                        <a href="./selectFcltyList.do?<c:out value="${fcltySearchVO.params}"/><c:out value="${fcltySearchVO.paramsMng}"/>" class="p-button cancel">목록 </a>
-                    </div>
-                    <div class="col-12 right">
-                        <input type="submit" class="p-button edit" value="수정">
-                    </div>
+
+                    <c:if test="${not empty rfndCmplDt}">
+                        <tr>
+                            <th scope="row">환불처리일시</th>
+                            <td>
+                                <c:out value="${tsu:toDateFormat(fcltyApplVO.rfndCmplDt, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss')}"/>
+                            </td>
+                        </tr>
+                    </c:if>
+                </c:if>
+
+                </tbody>
+            </table>
+
+            <div class="row margin_t_20">
+                <div class="col-12">
+                    <button type="button" onclick="window.history.back();" class="p-button cancel">목록</button>
                 </div>
-            </fieldset>
-        </form:form>
+                <div class="col-12 right">
+                    <button type="submit" class="p-button edit">수정</button>
+                </div>
+            </div>
+        </fieldset>
+    </form:form>
 
 </div>
 
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
 
-    $(document).ready(function(){
-
-        var areaGu = $('select[name=areaGuCd]').val();
-        if(areaGu != '') {
-            $('#areaEmdCd option.' + areaGu).show();
-        }
-
-        $('input[name=slctMthdCd]').on("change",function() {
-            if ($(this).val() == 'DRWLT') {
-                $('input[name=drwtDe]').prop('disabled', false);
-                $('select[name=drwtHm]').prop('disabled', false);
-                $('#drwtDeBtn').prop('disabled', false);
-            } else {
-                $('input[name=drwtDe]').prop('disabled', true);
-                $('select[name=drwtHm]').prop('disabled', true);
-                $('#drwtDeBtn').prop('disabled', true);
+    function openDaumZipAddress() {
+        new daum.Postcode({
+            oncomplete:function(data) {
+                $("#zip").val(data.zonecode);
+                $("#addr").val(data.address);
+                $("#detailAddr").focus();
             }
-        });
-
-        $('select[name=areaGuCd]').on("change",function(){
-            $('#areaEmdCd').val('');
-            $('#areaEmdCd option.areaEmdList').hide();
-            $('#areaEmdCd option.' + $(this).val()).show();
-        });
-
-        $('input[name=fcltyAmtYn]').on("change",function(){
-            if ($(this).val() == 'Y') {
-                $('#fcltyAmtWarning').show();
-                $('input[name=fcltyAmtFmt]').prop('disabled', false);
-                $('input[name=fcltyAmt]').prop('disabled', false);
-                $('input[name=payMthdCdArr]').prop('disabled', false);
-                $('select[name=payTmlmtCnt]').prop('disabled', false);
-                $('select[name=payTmlmtHh]').prop('disabled', false);
-            } else {
-                $('#fcltyAmtWarning').hide();
-                $('input[name=fcltyAmtFmt]').prop('disabled', true);
-                $('input[name=fcltyAmt]').prop('disabled', true);
-                $('input[name=payMthdCdArr]').prop('disabled', true);
-                $('input[name=bankNm]').prop('disabled', true);
-                $('input[name=acctNo]').prop('disabled', true);
-                $('input[name=dpstrNm]').prop('disabled', true);
-                $('select[name=payTmlmtCnt]').prop('disabled', true);
-                $('select[name=payTmlmtHh]').prop('disabled', true);
-            }
-        });
-
-        $('input[name=fcltyAmtFmt]').on('input', function() {
-            var original = $(this).val().replace(/\D/g, ''); // 숫자만 추출
-            $('input[name=fcltyAmt]').val(original); // hidden에 동기화
-        });
-
-        $('input[name=payMthdCdArr][value="NBKRCP"]').on('change', function() {
-            if ($(this).is(':checked')) {
-                $('input[name=bankNm]').prop('disabled', false);
-                $('input[name=acctNo]').prop('disabled', false);
-                $('input[name=dpstrNm]').prop('disabled', false);
-            } else {
-                $('input[name=bankNm]').prop('disabled', true);
-                $('input[name=acctNo]').prop('disabled', true);
-                $('input[name=dpstrNm]').prop('disabled', true);
-            }
-        });
-    })
-
-    function fn_updateFcltyCheck(form){
-
-        var regexDate = RegExp(/^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/);
-        var regexTel1 = RegExp(/^02-\d{3,4}-\d{4}$/);
-        var regexTel2 = RegExp(/^0\d{2}-\d{3,4}-\d{4}$/);
-        var regexPhone = RegExp(/^01[016789]-\d{3,4}-\d{4}$/);
-
-        if (!form.insttNo.value) {
-            alert("운영기관을 선택해주세요.");
-            form.insttNo.focus();
-            return false;
-        }
-
-        if (!form.operYear.value) {
-            alert("운영년도를 선택해주세요.");
-            form.operYear.focus();
-            return false;
-        }
-
-        if (!form.slctMthdCd.value) {
-            alert("선발방식을 선택해주세요.");
-            $('#slctMthdCd1').focus();
-            return false;
-        }
-
-        if (form.slctMthdCd.value == 'DRWLT') {
-            if (!form.drwtDe.value || !form.drwtHm.value) {
-                alert("선발방식이 추첨인 경우 추첨일시를 입력해주세요.");
-
-                if (!form.drwtDe.value) {
-                    form.drwtDe.focus();
-                    return false;
-                }
-                if (!form.drwtHm.value) {
-                    form.drwtHm.focus();
-                    return false;
-                }
-            }
-            if(!regexDate.test(form.drwtDe.value)) {
-                alert("추첨일자는 yyyy-MM-dd 형식으로 입력해주세요.");
-                form.drwtDe.focus();
-                return false;
-            }
-        }
-
-        if ($('input[name=rcptMthdCdArr]:checked').length < 1) {
-            alert("접수방식을 선택해주세요.");
-            $('#rcptMthdCd1').focus();
-            return false;
-        }
-
-        if (!form.fcltyNm.value) {
-            alert("시설명을 입력해주세요.");
-            form.fcltyNm.focus();
-            return false;
-        }
-
-        if (!form.svcTyCd.value) {
-            alert("서비스유형을 선택해주세요.");
-            form.svcTyCd.focus();
-            return false;
-        }
-
-
-        if (!form.areaGuCd.value) {
-            alert("지역(구)을 선택해주세요.");
-            form.areaGuCd.focus();
-            return false;
-        }
-
-        if (!form.areaEmdCd.value) {
-            alert("지역(읍면동)을 입력해주세요.");
-            form.areaEmdCd.focus();
-            return false;
-        }
-
-        if ($('input[name=targetCdArr]:checked').length < 1) {
-            alert("대상을 선택해주세요.");
-            $('#targetCd1').focus();
-            return false;
-        }
-
-        if (!form.nmprSeCd.value) {
-            alert("인원구분을 선택해주세요.");
-            form.nmprSeCd.focus();
-            return false;
-        }
-
-        if (!form.rcptBgnDe.value || !form.rcptBgnHh.value || !form.rcptBgnMm.value ||
-            !form.rcptEndDe.value || !form.rcptEndHh.value || !form.rcptEndMm.value) {
-
-            alert("접수기간을 확인해주세요.");
-
-            if (!form.rcptBgnDe.value) {
-                form.rcptBgnDe.focus();
-                return false;
-            }
-
-            if (!form.rcptBgnHh.value) {
-                form.rcptBgnHh.focus();
-                return false;
-            }
-
-            if (!form.rcptBgnMm.value) {
-                form.rcptBgnMm.focus();
-                return false;
-            }
-
-            if (!form.rcptEndDe.value) {
-                form.rcptEndDe.focus();
-                return false;
-            }
-
-            if (!form.rcptEndHh.value) {
-                form.rcptEndHh.focus();
-                return false;
-            }
-
-            if (!form.rcptEndMm.value) {
-                form.rcptEndHh.focus();
-                return false;
-            }
-        } else {
-
-            if(!regexDate.test(form.rcptBgnDe.value)) {
-                alert("접수시작일은 yyyy-MM-dd 형식으로 입력해주세요.");
-                form.rcptBgnDe.focus();
-
-                return false;
-            }
-
-            if(!regexDate.test(form.rcptEndDe.value)) {
-                alert("접수종료일은 yyyy-MM-dd 형식으로 입력해주세요.");
-                form.rcptEndDe.focus();
-                return false;
-            }
-
-            var rcptBgnDt = form.rcptBgnDe.value + form.rcptBgnHh.value + form.rcptBgnMm.value;
-            var rcptEndDt = form.rcptEndDe.value + form.rcptEndHh.value + form.rcptEndMm.value;
-
-            if (rcptBgnDt > rcptEndDt) {
-                alert('접수시작일(일/시/분)이 접수종료일(일/시/분)보다 클 수 없습니다.');
-                form.rcptBgnDe.focus();
-                return false;
-            }
-        }
-
-        if (!form.placeNo.value) {
-            alert("시설장소를 선택해주세요.");
-            form.placeNo.focus();
-            return false;
-        }
-
-        if (!form.fcltyAmtYn.value) {
-            alert("시설료를 확인해주세요.");
-            $('#fcltyAmtN').focus();
-            return false;
-        }
-
-        if (form.fcltyAmtYn.value == 'Y') {
-
-            if (!form.fcltyAmt.value || form.fcltyAmt.value == 0) {
-                alert("시설료가 유료인 경우 금액을 입력해주세요.");
-                form.fcltyAmtFmt.focus();
-                return false;
-            }
-
-            if ($('input[name=payMthdCdArr]:checked').length < 1) {
-                alert("시설료가 유료인 경우 결제방식을 선택해주세요.");
-                $('#payMthdCd1').focus();
-                return false;
-            }
-
-            if ($('input[name=payMthdCdArr][value="NBKRCP"]').is(':checked')) {
-
-                if (!form.bankNm.value) {
-                    alert("결제방식이 무통장입금인 경우 무통장입금 정보(은행, 계좌번호, 예금주)를 모두 입력해주세요.");
-                    form.bankNm.focus();
-                    return false;
-                }
-
-                if (!form.acctNo.value) {
-                    alert("결제방식이 무통장입금인 경우 무통장입금 정보(은행, 계좌번호, 예금주)를 모두 입력해주세요.");
-                    form.acctNo.focus();
-                    return false;
-                }
-
-                if (!form.dpstrNm.value) {
-                    alert("결제방식이 무통장입금인 경우 무통장입금 정보(은행, 계좌번호, 예금주)를 모두 입력해주세요.");
-                    form.dpstrNm.focus();
-                    return false;
-                }
-            }
-
-            if (!form.payTmlmtCnt.value) {
-                alert("결제기한(일시)을 선택해주세요.");
-                form.payTmlmtCnt.focus();
-                return false;
-            }
-
-            if (!form.payTmlmtHh.value) {
-                alert("결제기한(일시)을 선택해주세요.");
-                form.payTmlmtHh.focus();
-                return false;
-            }
-        }
-
-        if (!form.reqstClosCnt.value) {
-            alert("신청마감일수를 선택해주세요.");
-            form.reqstClosCnt.focus();
-            return false;
-        }
-
-        if (!form.canclClosCnt.value) {
-            alert("취소마감일수를 선택해주세요.");
-            form.canclClosCnt.focus();
-            return false;
-        }
-
-        if (!form.rcritCnt.value || form.rcritCnt.value <= 0) {
-            alert("모집인원을 입력해주세요.");
-            form.rcritCnt.focus();
-            return false;
-        }
-
-        if (form.nmprMinCnt.value > form.nmprMaxCnt.value) {
-            alert("인원 제약 조건에서 최소인원이 최대인원보다 클 수 없습니다.");
-            form.nmprMinCnt.focus();
-            return false;
-        }
-
-        if (!form.dscntUseYn.value) {
-            alert("감면사용여부를 확인해주세요.");
-            $('#dscntUseY').focus();
-            return false;
-        }
-
-        if (form.telNoFmt.value) {
-            if(!regexTel1.test(form.telNoFmt.value) && !regexTel2.test(form.telNoFmt.value) && !regexPhone.test(form.telNoFmt.value)) {
-                alert("연락처는 043-123-1234 또는 010-1234-5678 형식으로 입력해주세요.");
-                form.telNoFmt.focus();
-                return false;
-            }
-        }
-
-        if (!form.useYn.value) {
-            alert("표시여부를 확인해주세요.");
-            $('#useY').focus();
-            return false;
-        }
-
-        return confirm("수정하시겠습니까?");
+        }).open();
     }
 
+    function fn_nmprSeCdChk(obj) {
+        if (obj === 'IND') {
+            $('#grpNmTr').hide();
+            $('#useCntTr').hide();
+        } else if (obj === 'GRP') {
+            $('#grpNmTr').show();
+            $('#useCntTr').show();
+        }
+    }
+
+    $(document).ready(function() {
+        <c:if test="${fcltyVO.nmprSeCd eq 'GRP'}">
+        $('#grpNmTr').show();
+        $('#useCntTr').show();
+        </c:if>
+
+        $('#email3').change(function () {
+            if ($('#email3').val() == 'direct') {
+                $('input[name=email2]').prop('readonly', false);
+                $('input[name=email2]').val('');
+            } else {
+                $('input[name=email2]').prop('readonly', true);
+                $('input[name=email2]').val($('#email3').val());
+            }
+        });
+
+    });
+
+    $(document).on('change', '#fcltySchdNo', function() {
+        let totAmt = $("#fcltySchdNo").find("option:selected").data("totAmt");
+        let fcltyAmt = $("#fcltySchdNo").find("option:selected").data("fcltyAmt");
+        if (Number(totAmt) > 0) {
+            $('#amt').text(fcltyAmt);
+            $('#fcltyAmt').val(totAmt);
+            $('#totalPayAmt').val(totAmt);
+        }
+    });
+
+    function fn_updateFcltyApplCheck(form) {
+        var regexDate = RegExp(/^(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/);
+
+        <c:if test="${!empty fcltyApplVO.grpNm}">
+            <c:if test="${fcltyVO.nmprMinCnt > 0}">
+            const minCnt = '<c:out value="${fcltyVO.nmprMinCnt}"/>';
+            if (Number(form.useCnt.value) < Number(minCnt)) {
+                alert("최소 신청인원은 "+minCnt+"명 입니다.");
+                form.useCnt.focus();
+                return false;
+            }
+            </c:if>
+            <c:if test="${fcltyVO.nmprMaxCnt > 0}">
+            const maxCnt = '<c:out value="${fcltyVO.nmprMaxCnt}"/>';
+            if (Number(form.useCnt.value) > Number(maxCnt)) {
+                alert("최대 신청인원은 "+maxCnt+"명 입니다.");
+                form.useCnt.focus();
+                return false;
+            }
+            </c:if>
+        </c:if>
+
+        if ($('input:radio[name="genderSe"]:checked').val() === null || $('input:radio[name="genderSe"]:checked').val() === undefined) {
+            alert("성별을 입력해주세요.");
+            $('#genderSe1').focus();
+            return false;
+        }
+
+        if (!regexDate.test(form.birthDe.value)) {
+            alert("생년월일(yyyy-MM-dd) 형식을 확인해주세요.");
+            form.birthDe.focus();
+            return false;
+        }
+
+        <c:if test="${!fn:contains(fcltyApplVO.rsvSttusCd, '_CNCL')}">
+            if (($('#rsvSttusCd').val() === 'MNG_CNCL' || $('#rsvSttusCd').val() === 'USR_CNCL') && $('#cancelReason').val() === '') {
+                alert('예약상태를 취소로 변경하려면, 취소 사유를 입력해주세요.');
+                form.cancelReason.focus();
+                return false;
+            }
+        </c:if>
+
+        <c:if test="${!fn:contains(fcltyApplVO.paySttusCd, 'RFND_') or fcltyApplVO.paySttusCd eq 'PAY_CMPL'}">
+            if (($('#paySttusCd').val() === 'RFND_CMPL' || $('#paySttusCd').val() === 'RFND_PART' || $('#paySttusCd').val() === 'RFND_REQ') && $('#rfndReason').val() === '') {
+                alert('결제상태를 환불로 변경하려면, 환불 사유를 입력해주세요.');
+                form.rfndReason.focus();
+                return false;
+            }
+            if (($('#paySttusCd').val() === 'RFND_CMPL' || $('#paySttusCd').val() === 'RFND_PART')) {
+                if ($('#rfndAmt').val() == '') {
+                    alert('결제상태를 환불로 변경하려면, 환불완료금액을 입력해주세요.');
+                    form.rfndAmt.focus();
+                    return false;
+                } else if (Number($('#rfndAmt').val()) == 0) {
+                    alert('환불완료금액은 0원 이상으로 입력해주세요.');
+                    form.rfndAmt.focus();
+                    return false;
+                }
+            }
+        </c:if>
+
+        if (!confirm('위 내용대로 수정하시겠습니까?')) {
+            return false;
+        }
+    }
+
+    $(document).on("click", ".prevButton, .nextButton", function () {
+
+        var programCalendar = $('#fcltyCalendar');
+        var year = $(this).data('year');
+        var month = $(this).data('month');
+
+        $.ajax({
+            cache: false,
+            url: './fcltyApplCalendarMngAjax.do',
+            type: 'POST',
+            data: {
+                fcltyNo: '<c:out value="${fcltyVO.fcltyNo}"/>',
+                year: year,
+                month: month
+            },
+            success: function (res) {
+                programCalendar.html(res);
+            }, // success
+            error: function (request,xhr, status) {
+                //alert(request.responseText);
+                alert("에러가 발생하였습니다.");
+                console.log("code:",request.status);
+                console.log("message:",request.responseText);
+                console.log("error:"+error)
+            }
+        });
+    });
+
+    $(document).on("change", ".ymdBtn", function (e) {
+        var date = $(this).val();
+
+        $.ajax({
+            cache: false,
+            url: './fcltyApplTimeListMngAjax.do',
+            type: 'POST',
+            data: {
+                fcltyNo: '<c:out value="${fcltyVO.fcltyNo}"/>',
+                fcltyDe: date
+            },
+            success: function (res) {
+                $('.timeList').html(res);
+            }, // success
+            error: function (request,xhr, status) {
+                //alert(request.responseText);
+                alert("에러가 발생하였습니다.");
+                console.log("code:",request.status);
+                console.log("message:",request.responseText);
+                console.log("error:"+error)
+            }
+        });
+    });
 </script>
 
 </body>

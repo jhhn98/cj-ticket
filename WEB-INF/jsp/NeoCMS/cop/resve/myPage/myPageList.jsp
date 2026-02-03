@@ -367,20 +367,38 @@
         <tbody class="textAlignCenter">
         <c:forEach var="result" items="${fcltyApplList}">
             <tr>
-                <td class="first"><span class="mobile-th">예약번호</span><a href="./myPageViewByFclty.do?key=<c:out value="${key}"/>&amp;fcltyApplNo=<c:out value="${result.fcltyApplNo}"/>&amp;myPageMode=VIEW"><span><c:out value="${result.fcltyApplId}"/></span></a></td>
-                <td class="textAlignLeft"><span class="mobile-th">시설명</span><c:out value="${result.fcltyNm}"/></td>
-                <td><span class="mobile-th">운영기관</span>
+                <td class="first">
+                    <span class="mobile-th">예약번호</span>
+                    <a href="./myPageViewByFclty.do?key=<c:out value="${key}"/>&amp;fcltyApplNo=<c:out value="${result.fcltyApplNo}"/>&amp;myPageMode=VIEW"><span><c:out value="${result.fcltyApplId}"/></span></a>
+                </td>
+                <td class="textAlignLeft">
+                    <span class="mobile-th">시설명</span>
+                    <c:out value="${result.fcltyNm}"/>
+                </td>
+                <td>
+                    <span class="mobile-th">운영기관</span>
                     <c:set var="insttNo" value="instt${result.insttNo}"/>
                     <c:out value="${fctInsttMap[insttNo]}"/>
                 </td>
-                <td><span class="mobile-th">신청일자</span>
+                <td>
+                    <span class="mobile-th">신청일자</span>
                     <c:out value="${tsu:toDateFormat(result.applDtMs, 'yyyyMMddHHmmssSSS', 'yyyy-MM-dd(EE)')}"/>
                     <c:out value="${tsu:toDateFormat(result.applDtMs, 'yyyyMMddHHmmssSSS', 'HH:mm:ss')}"/>
                 </td>
-                <td><span class="mobile-th">예약일자</span><c:out value="${tsu:toDateFormat(result.fcltyDe, 'yyyyMMdd', 'yyyy-MM-dd(EE)')}"/></td>
-                <td><span class="mobile-th">예약시간</span><c:out value="${tsu:toDateFormat(result.fcltyBgnHm, 'HHmm', 'HH:mm')}"/> ~ <c:out value="${tsu:toDateFormat(result.fcltyEndHm, 'HHmm', 'HH:mm')}"/></td>
-                <td><span class="mobile-th">결제상태</span><c:out value="${fctPayMap[result.paySttusCd]}"/></td>
-                <td><span class="mobile-th">예약상태</span>
+                <td>
+                    <span class="mobile-th">예약일자</span>
+                    <c:out value="${tsu:toDateFormat(result.fcltyDe, 'yyyyMMdd', 'yyyy-MM-dd(EE)')}"/>
+                </td>
+                <td>
+                    <span class="mobile-th">예약시간</span>
+                    <c:out value="${tsu:toDateFormat(result.fcltyBgnHm, 'HHmm', 'HH:mm')}"/> ~ <c:out value="${tsu:toDateFormat(result.fcltyEndHm, 'HHmm', 'HH:mm')}"/>
+                </td>
+                <td>
+                    <span class="mobile-th">결제상태</span>
+                    <c:out value="${fctPayMap[result.paySttusCd]}"/>
+                </td>
+                <td>
+                    <span class="mobile-th">예약상태</span>
                     <c:choose>
                         <c:when test="${!empty result.drwtWinYn}">
                             추첨완료<br/>
@@ -391,12 +409,20 @@
                                 <span class="em_gray">(미당첨)</span>
                             </c:if>
                         </c:when>
+                        <c:when test="${result.slctMthdCd eq 'CONFM' and result.rsvSttusCd eq 'APPL_CMPL'}">
+                            승인완료
+                        </c:when>
+                        <c:when test="${result.slctMthdCd eq 'CONFM' and result.rsvSttusCd eq 'APPL_WAIT'}">
+                            미승인
+                        </c:when>
                         <c:otherwise>
                             <c:out value="${fctRsvMap[result.rsvSttusCd]}"/>
                         </c:otherwise>
                     </c:choose>
                 </td>
-                <td><span class="mobile-th">예약취소</span>
+                <td>
+                    <span class="mobile-th">예약취소</span>
+
                     <%-- 시설 취소가능일자가 지나지 않은 경우에만 취소(환불)요청 가능 --%>
                     <c:if test="${empty result.canclClosDt or ((tsu:getNowDateTime('yyyyMMddHHmmss')+0) lt (result.canclClosDt+0))}">
                         <%--
@@ -428,6 +454,7 @@
                 </td>
             </tr>
         </c:forEach>
+
         <c:if test="${fn:length(fcltyApplList) == 0}">
             <td class="first" colspan="9">
                 <div>

@@ -79,7 +79,7 @@
             <col style="width:100px">
             <col style="width:100px">
             <col style="width:100px">
-<%--            <col style="width:60px">--%>
+            <col style="width:60px">
         </colgroup>
         <thead>
         <tr>
@@ -95,7 +95,7 @@
             <th scope="col">예약일자</th>
             <th scope="col">예약상태</th>
             <th scope="col">결제상태</th>
-<%--            <th scope="col">관리</th>--%>
+            <th scope="col">관리</th>
         </tr>
         </thead>
         <tbody class="text_center">
@@ -138,6 +138,9 @@
                 </td>
                 <td>
                     <c:out value="${rsvSttusMap[result.rsvSttusCd]}"/>
+                    <c:if test="${fcltyVO.slctMthdCd == 'CONFM' and result.rsvSttusCd eq 'APPL_CMPL' and not empty result.applCmplDt}">
+                        <br>승인완료
+                    </c:if>
                     <c:if test="${fcltyVO.slctMthdCd == 'DRWLT' && fcltyVO.drwtYn == 'Y'}">
                         <br/>
                         추첨완료
@@ -149,11 +152,11 @@
                     <%--TODOSDB: 감면관련 상태값 추가--%>
                     <c:out value="${paySttusMap[result.paySttusCd]}"/>
                     <c:if test="${result.paySttusCd == 'PAY_WAIT'}">
-                        <br/><c:out value="${tsu:toDateFormat(result.payDeadlineDt, 'yyyyMMddHHmmss', 'yyyy-MM-dd')}"/>
-                        <br/><c:out value="${tsu:toDateFormat(result.payDeadlineDt, 'yyyyMMddHHmmss', 'HH:mm:ss')}"/>
+                        <br>결제시한
+                        <br/><c:out value="${tsu:toDateFormat(result.payDeadlineDt, 'yyyyMMddHHmmss', 'yy-MM-dd HH:mm:ss')}"/>
                     </c:if>
                 </td>
-<%--                <td><a href="./updateFcltyApplView.do?fcltyApplNo=<c:out value="${result.fcltyApplNo}"/>&amp;<c:out value="${fcltyApplSearchVO.params}"/>&amp;<c:out value="${fcltyApplSearchVO.paramsMng}"/>&amp;<c:out value="${fcltySearchVO.fcltyParamsMng}"/>" class="p-button p-button--small edit" onclick="alert('개발 진행 중입니다.'); return false;">수정</a></td>--%>
+                <td><a href="./updateFcltyApplView.do?fcltyApplNo=<c:out value="${result.fcltyApplNo}"/>&key=<c:out value="${key}"/>" class="p-button p-button--small edit">수정</a></td>
             </tr>
             <c:set var="currentPageStartNo" value="${currentPageStartNo-1}" />
         </c:forEach>
@@ -179,7 +182,10 @@
             </c:if>
         </div>
         <div class="col-5 right">
-            <a href="./addFcltyApplView.do?fcltyNo=<c:out value="${fcltyVO.fcltyNo}"/>&key=<c:out value="${key}"/>" class="p-button write">등록</a>
+            <c:choose>
+                <c:when test="${fcltyVO.operSttus eq 'RCPT_ING'}"><a href="./addFcltyApplView.do?fcltyNo=<c:out value="${fcltyVO.fcltyNo}"/>&key=<c:out value="${key}"/>" class="p-button write">등록</a></c:when>
+                <c:otherwise>운영상태가 [접수중]인 경우 등록 가능합니다.</c:otherwise>
+            </c:choose>
         </div>
     </div>
 
@@ -196,15 +202,17 @@
             </select>
             <button type="button" class="p-button edit" onclick="fn_fcltyApplRsvSttusChange()">변경</button>
 
-            <span class="p-form__split-short">/</span>
+            <c:if test="${fcltyVO.fcltyAmt > 0}">
+                <span class="p-form__split-short">/</span>
 
-            <select name="paySttus" id="" class="p-input p-input--auto">
-                <option value="">결제상태</option>
-                <c:forEach var="result" items="${paySttusList}">
-                    <option value="<c:out value="${result.code}"/>"><c:out value="${result.codeNm}"/></option>
-                </c:forEach>
-            </select>
-            <button type="button" class="p-button edit" onclick="fn_fcltyApplPaySttusChange()">변경</button>
+                <select name="paySttus" id="" class="p-input p-input--auto">
+                    <option value="">결제상태</option>
+                    <c:forEach var="result" items="${paySttusList}">
+                        <option value="<c:out value="${result.code}"/>"><c:out value="${result.codeNm}"/></option>
+                    </c:forEach>
+                </select>
+                <button type="button" class="p-button edit" onclick="fn_fcltyApplPaySttusChange()">변경</button>
+            </c:if>
         </div>
         <div class="col-12 right">
             <button type="button" class="p-button primary" id="sms-modal-button">선택SMS발송</button>
@@ -490,7 +498,7 @@
         });
 
         if (chkBool) {
-            alert('결제상태가 접수대기인 건은 결제상태를 변경할 수 없습니다. 예약상태부터 변경처리 해주세요.');
+            alert('예약상태가 접수대기인 건은 결제상태를 변경할 수 없습니다. 예약상태부터 변경처리 해주세요.');
             return false;
         }
 
