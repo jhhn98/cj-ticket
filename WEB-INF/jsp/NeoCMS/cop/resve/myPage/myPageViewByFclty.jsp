@@ -195,7 +195,7 @@
                         <th scope="row" class="first"><div class="innerCell">환불계좌</div></th>
                         <td>
                             <div class="innerCell">
-                                <c:out value="${bankMap[fcltyApplVO.rfndBankNm]}"/> <c:out value="${fcltyApplVO.rfndAcctNo}"/> (예금주:<c:out value="${fcltyApplVO.rfndDpstrNm}"/>)
+                                <c:out value="${bankMap[fcltyApplVO.rfndBankCd]}"/> <c:out value="${fcltyApplVO.rfndAcctNo}"/> (예금주:<c:out value="${fcltyApplVO.rfndDpstrNm}"/>)
                             </div>
                         </td>
                     </tr>

@@ -75,13 +75,15 @@
                         </td>
                     </tr>
                 </c:if>
-                <c:if test="${empty fcltyApplVO.grpNm}">
-                    <form:hidden path="useCnt"/>
-                </c:if>
 
                 <tr>
                     <th scope="row"><form:label path="applNm">신청자명</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>
-                    <td><form:input path="applNm" class="p-input p-input--auto" maxlength="20" placeholder="신청자명" required="required" /></td>
+                    <td>
+                        <form:input path="applNm" class="p-input p-input--auto" maxlength="20" placeholder="신청자명" required="required" />
+                        <c:if test="${empty fcltyApplVO.grpNm}">
+                            <form:hidden path="useCnt"/>
+                        </c:if>
+                    </td>
                 </tr>
 
                 <tr>
@@ -290,7 +292,7 @@
                         <td>
                             <c:choose>
                                 <c:when test="${!empty fcltyApplVO.drwtWinYn}">
-                                    <br>추첨완료
+                                    추첨완료
                                     <c:if test="${fcltyApplVO.drwtWinYn eq 'Y'}">
                                         <span class="em_blue">(당첨)</span>
                                     </c:if>
@@ -374,11 +376,11 @@
                     </tr>
 
                     <tr>
-                        <th scope="row"><form:label path="rfndBankNm">환불계좌</form:label> </th>
+                        <th scope="row"><form:label path="rfndBankCd">환불계좌</form:label> </th>
                         <td>
                             <ul>
                                 <li>은행명 :
-                                    <form:select class="p-input p-input--auto" id="rfndBankNm" path="rfndBankNm">
+                                    <form:select class="p-input p-input--auto" id="rfndBankCd" path="rfndBankCd">
                                         <form:option value="" label="= 선택해주세요. =" />
                                         <form:options items="${bankList}" itemValue="code" itemLabel="codeNm" />
                                     </form:select>

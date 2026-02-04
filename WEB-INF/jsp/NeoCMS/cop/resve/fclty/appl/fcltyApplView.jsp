@@ -271,7 +271,7 @@
                 <th scope="row">환불계좌</th>
                 <td>
                     <c:if test="${not empty fcltyApplVO.rfndAcctNo}">
-                        <c:out value="${bankMap[fcltyApplVO.rfndBankNm]}"/> <c:out value="${fcltyApplVO.rfndAcctNo}"/> (예금주:<c:out value="${fcltyApplVO.rfndDpstrNm}"/>)
+                        [<c:out value="${bankMap[fcltyApplVO.rfndBankCd]}"/>] <c:out value="${fcltyApplVO.rfndAcctNo}"/> (예금주명 : <c:out value="${fcltyApplVO.rfndDpstrNm}"/>)
                     </c:if>
                 </td>
                 <th scope="row">환불처리일시</th>
