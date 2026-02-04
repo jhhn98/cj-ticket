@@ -17,7 +17,7 @@
     <c:forEach var="result" items="${months}">
         <c:choose>
             <c:when test="${fn:split(result, '-')[0] eq pblprfrApiSearchVO.searchYear && fn:split(result, '-')[1] eq pblprfrApiSearchVO.searchMonth}">
-                <a href="./selectPblprfrApiList.do?key=<c:out value="${key}"/>&searchYear=<c:out value="${fn:split(result, '-')[0]}"/>&searchMonth=<c:out value="${fn:split(result, '-')[1]}"/>" class="current"><em><c:out value="${fn:split(result, '-')[0]}"/>년</em><span><c:out value="${fn:split(result, '-')[1]}"/>월</span></a>
+                <a href="./selectPblprfrApiList.do?key=<c:out value="${key}"/>&searchYear=<c:out value="${fn:split(result, '-')[0]}"/>&searchMonth=<c:out value="${fn:split(result, '-')[1]}"/>" class="current"><span class="visualHidden">현재 선택된 달</span><em><c:out value="${fn:split(result, '-')[0]}"/>년</em><span><c:out value="${fn:split(result, '-')[1]}"/>월</span></a>
             </c:when>
             <c:otherwise>
                 <a href="./selectPblprfrApiList.do?key=<c:out value="${key}"/>&searchYear=<c:out value="${fn:split(result, '-')[0]}"/>&searchMonth=<c:out value="${fn:split(result, '-')[1]}"/>"><c:out value="${fn:split(result, '-')[1]}"/>월</a>

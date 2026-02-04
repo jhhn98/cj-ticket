@@ -2754,15 +2754,12 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   width: 100%;
   height: auto;
   padding: 20px 50px 18px 80px;
-  background: #00cf5d;
+  background: #00a94d;
   border: none;
   border-radius: 10px;
   color: #fff;
   font-size: 18px;
   line-height: 20px;
-}
-.login .snsLogin .link li:nth-child(2) button {
-  text-shadow: 0 0 4px rgba(0,0,0,.7);
 }
 .login .snsLogin .link li button::before, .login .snsLogin .link li button::after {
   display: block;
