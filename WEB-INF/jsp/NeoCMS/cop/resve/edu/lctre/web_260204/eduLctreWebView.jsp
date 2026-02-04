@@ -21,7 +21,7 @@
 </head>
 <body>
 <h3>교육 상세보기 - <c:out value="${eduLctreVO.lctreNm}"/> </h3>
-<input type="hidden" name="key" value="<c:out value="${key}"/>"/>
+<input type="hidden" name="key" value="${key}"/>
 
 <div class="viewProgram simpleInformation">
     <div class="simpleTextArea">
@@ -52,7 +52,7 @@
                             or eduLctreVO.operSttus eq 'WAIT_ING')
                             and fn:contains(eduLctreVO.rcptMthdCd, 'ONLIN')
                             }">
-                <a href="./eduAplctAgreWebView.do?lctreNo=<c:out value="${eduLctreVO.lctreNo}"/>&amp;<c:out value="${eduLctreVO.params}"/>" class="anchorButton wide line-color-green" onclick="return fn_goApply();">신청하기</a>
+                <a href="./eduAplctAgreWebView.do?lctreNo=${eduLctreVO.lctreNo}&amp;<c:out value="${eduLctreVO.params}"/>" class="anchorButton wide line-color-green" onclick="return fn_goApply();">신청하기</a>
             </c:if>
             <a href="./myPageList.do?key=59" class="anchorButton wide line-color-green">예약확인</a>
             <a href="./selectEduLctreWebList.do?<c:out value="${eduLctreVO.params}"/>" class="anchorButton">목록</a>
@@ -286,7 +286,7 @@
                                 or eduLctreVO.operSttus eq 'WAIT_ING')
                                 and fn:contains(eduLctreVO.rcptMthdCd, 'ONLIN')
                                 }">
-                        <a href="./eduAplctAgreWebView.do?lctreNo=<c:out value="${eduLctreVO.lctreNo}"/>&amp;<c:out value="${eduLctreVO.params}"/>" class="anchorButton wide line-color-green" onclick="return fn_goApply();">신청하기</a>
+                        <a href="./eduAplctAgreWebView.do?lctreNo=${eduLctreVO.lctreNo}&amp;<c:out value="${eduLctreVO.params}"/>" class="anchorButton wide line-color-green" onclick="return fn_goApply();">신청하기</a>
                     </c:if>
                     <a href="./myPageList.do?key=59" class="anchorButton wide line-color-green">예약확인</a>
                     <a href="./selectEduLctreWebList.do?<c:out value="${eduLctreVO.params}"/>" class="anchorButton">목록</a>
@@ -402,7 +402,7 @@
                             or eduLctreVO.operSttus eq 'WAIT_ING')
                             and fn:contains(eduLctreVO.rcptMthdCd, 'ONLIN')
                             }">
-                    <a href="./eduAplctAgreWebView.do?lctreNo=<c:out value="${eduLctreVO.lctreNo}"/>&amp;<c:out value="${eduLctreVO.params}"/>" class="anchorButton wide line-color-green" onclick="return fn_goApply();">신청하기</a>
+                    <a href="./eduAplctAgreWebView.do?lctreNo=${eduLctreVO.lctreNo}&amp;<c:out value="${eduLctreVO.params}"/>" class="anchorButton wide line-color-green" onclick="return fn_goApply();">신청하기</a>
                 </c:if>
 
                 <a href="./myPageList.do?key=59" class="anchorButton wide line-color-green">예약확인</a>
