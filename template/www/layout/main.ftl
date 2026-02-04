@@ -21,7 +21,7 @@ LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
     <link rel="preload" href="/common/font/EDB-R.woff?260105" as="font" type="font/woff" crossorigin>
     <link rel="stylesheet" href="/site/www/css/font.css?260105">
     <link rel="stylesheet" href="/common/css/style-reset.css">
-    <link rel="stylesheet" href="/site/www/css/common.css?260204">
+    <link rel="stylesheet" href="/site/www/css/common.css?2602041411">
     <link rel="stylesheet" href="/site/www/css/main.css?260204">
     <meta property="og:site_name" content="청주시 통합예약">
     <meta property="og:type" content="website">

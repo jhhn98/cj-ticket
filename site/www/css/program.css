@@ -9,6 +9,9 @@
   border: 0;
 }
 a:focus, button:focus, input:focus, select:focus {
+  outline: none;
+}
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible {
   outline: 2px dashed #1e6fff;
   outline-offset: 2px;
 }
@@ -129,7 +132,7 @@ a:focus, button:focus, input:focus, select:focus {
   font-size: 16px;
   line-height: 18px;
 }
-.customCheckBox input:focus + .customStyle .checkbox {
+.customCheckBox input:focus-visible + .customStyle .checkbox {
   outline: 2px dashed #1e6fff;
   outline-offset: 4px;
 }
@@ -189,7 +192,7 @@ a:focus, button:focus, input:focus, select:focus {
   border: 1px solid #c9cbd3;
   border-radius: 10px;
 }
-.customRadioButton input:focus + .customStyle .radioButton {
+.customRadioButton input:focus-visible + .customStyle .radioButton {
   outline: 2px dashed #1e6fff;
   outline-offset: 4px;
 }
@@ -303,7 +306,7 @@ a:focus, button:focus, input:focus, select:focus {
   clip-path: inset(50%);
   overflow: hidden;
 }
-.programSearch .customIconOption input:focus + span {
+.programSearch .customIconOption input:focus-visible + span {
   outline: 2px dashed #1e6fff;
   outline-offset: 4px;
 }

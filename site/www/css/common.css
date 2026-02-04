@@ -1,5 +1,5 @@
 a:focus, button:focus, input:focus, select:focus {
-
+  outline: none;
 }
 a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible {
   outline: 2px dashed #1e6fff;
