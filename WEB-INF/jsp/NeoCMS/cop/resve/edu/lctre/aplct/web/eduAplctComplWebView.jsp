@@ -34,7 +34,7 @@
                                                     or eduLctreVO.operSttus eq 'OPER_ING'}">
             <c:set var="stateTypeClass" value="type3"/>
         </c:if>
-        <span class="stateType ${stateTypeClass}"><c:out value="${operSttusMap[eduLctreVO.operSttus]}"/></span>
+        <span class="stateType <c:out value="${stateTypeClass}"/>"><c:out value="${operSttusMap[eduLctreVO.operSttus]}"/></span>
     <strong><c:out value="${eduLctreVO.lctreNm}"/></strong>
 </div>
 <h4>예약정보 확인</h4>
@@ -173,7 +173,7 @@
             <p class="iconText caution">예약정보 수정, 예약취소는 <span class="point-color-green">나의 예약현황</span>에서 가능합니다.</p>
         </div>
         <div class="formButtonGroup">
-            <a href="./myPageList.do?key=${key}" class="button"><span>나의 예약현황 보기</span></a>
+            <a href="./myPageList.do?key=<c:out value="${key}"/>" class="button"><span>나의 예약현황 보기</span></a>
         </div>
     </c:otherwise>
 </c:choose>

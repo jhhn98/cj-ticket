@@ -34,7 +34,7 @@
                             <select id="searchOperSttus" name="searchOperSttus">
                                 <option value="">전체</option>
                                 <c:forEach var="code" items="${operSttusList}">
-                                    <option value="${code.code}"${eduLctreVO.searchOperSttus eq code.code ? ' selected="true"':''}>
+                                    <option value="<c:out value="${code.code}"/>"${eduLctreVO.searchOperSttus eq code.code ? ' selected="true"':''}>
                                         <c:out value="${code.codeNm}"/>
                                     </option>
                                 </c:forEach>
@@ -56,7 +56,7 @@
                             <select name="svcTyCd" id="svcTyCd" class="customSelect">
                                 <option value="">선택하세요</option>
                                 <c:forEach var="item" items="${svcTyCdList}">
-                                    <option value="${item.code}"${item.code eq eduLctreVO.svcTyCd ? ' selected="selected"' : ''}>${item.codeNm}</option>
+                                    <option value="<c:out value="${item.code}"/>"${item.code eq eduLctreVO.svcTyCd ? ' selected="selected"' : ''}><c:out value="${item.codeNm}"/></option>
                                 </c:forEach>
                             </select>
                         </div>
@@ -125,7 +125,7 @@
                             <select name="searchInsttNo" id="searchInsttNo" class="customSelect">
                                 <option value="">운영기관 선택</option>
                                 <c:forEach var="instt" items="${eduInsttList}">
-                                    <option value="${instt.insttNo}"${instt.insttNo eq eduLctreVO.searchInsttNo ? ' selected="true"':''}>
+                                    <option value="<c:out value="${instt.insttNo}"/>"${instt.insttNo eq eduLctreVO.searchInsttNo ? ' selected="true"':''}>
                                         <c:out value="${instt.insttNm}"/></option>
                                 </c:forEach>
                             </select>
@@ -145,7 +145,7 @@
                                 </c:forEach>
                             </c:if>
                             <label for="searchTargetCd${sts.index+1}" class="customIconOption">
-                                <input type="checkbox" id="searchTargetCd${sts.index+1}" name="searchTargetCdList" value="${target.code}"${isChecked ? ' checked="checked"' : ''}/>
+                                <input type="checkbox" id="searchTargetCd${sts.index+1}" name="searchTargetCdList" value="<c:out value="${target.code}"/>"${isChecked ? ' checked="checked"' : ''}/>
                                 <span class="optionWrap">
                                     <i class="optionIcon <c:out value="${target.code}"/>"></i>
                                     <em><c:out value="${target.codeNm}"/></em>
@@ -221,7 +221,7 @@
                                                     or result.operSttus eq 'OPER_ING'}">
                                         <c:set var="statusTypeClass" value="type3"/>
                                     </c:if>
-                                    <span class="stateType ${statusTypeClass}"><c:out value="${operSttusMap[result.operSttus]}"/></span>
+                                    <span class="stateType <c:out value="${statusTypeClass}"/> "><c:out value="${operSttusMap[result.operSttus]}"/></span>
                                     <span class="organ"><c:out value="${result.insttNm}"/></span>
                                     <c:choose>
                                         <c:when test="${!empty result.eduAmt and result.eduAmt > 0}">
@@ -335,7 +335,7 @@
                         <tr>
                             <td class="first">
                                 <span class="mobile-th">No</span>
-                                <a href="selectEduLctreWebView.do?key=${key}&lctreNo=${result.lctreNo}" class="trFullLink" title="<c:out value="${result.lctreNm}"/> 상세보기"><span>"<c:out value="${result.lctreNm}"/>" 상세보기</span></a>
+                                <a href="selectEduLctreWebView.do?key=<c:out value="${key}"/>&lctreNo=<c:out value="${result.lctreNo}"/> " class="trFullLink" title="<c:out value="${result.lctreNm}"/> 상세보기"><span>"<c:out value="${result.lctreNm}"/>" 상세보기</span></a>
                                 <c:out value="${currentPageStartNo}"/>
                             </td>
                             <td class="textAlignLeft">
@@ -442,7 +442,7 @@
                                                 or result.operSttus eq 'RCPT_END'}">
                                     <c:set var="statusTypeClass" value="type3"/>
                                 </c:if>
-                                <span class="stateType ${statusTypeClass}"><c:out value="${operSttusMap[result.operSttus]}"/></span>
+                                <span class="stateType <c:out value="${statusTypeClass}"/>"><c:out value="${operSttusMap[result.operSttus]}"/></span>
                             </td>
                         </tr>
                         <c:set var="currentPageStartNo" value="${currentPageStartNo-1}"/>

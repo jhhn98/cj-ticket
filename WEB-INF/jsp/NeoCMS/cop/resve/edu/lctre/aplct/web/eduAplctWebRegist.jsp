@@ -72,9 +72,9 @@
 </div>
 <h4>신청자 정보 입력</h4>
 <form id="registForm" method="post" action="./addEduAplctWebRegist.do" onsubmit="return validateAndSubmitForm(this);">
-    <input type="hidden" name="lctreNo" value="${eduLctreVO.lctreNo}"/>
-    <input type="hidden" name="insttNo" value="${eduLctreVO.insttNo}"/>
-    <input type="hidden" name="key" value="${eduLctreVO.key}"/>
+    <input type="hidden" name="lctreNo" value="<c:out value="${eduLctreVO.lctreNo}"/>"/>
+    <input type="hidden" name="insttNo" value="<c:out value="${eduLctreVO.insttNo}"/>"/>
+    <input type="hidden" name="key" value="<c:out value="${eduLctreVO.key}"/>"/>
 
     <fieldset>
         <legend>신청자 정보</legend>
@@ -93,7 +93,7 @@
                 </th>
                 <td>
                     <div class="innerCell">
-                        <input type="text" id="name" value="${loginVO.userNm}" class="customInputDefault" readonly>
+                        <input type="text" id="name" value="<c:out value="${loginVO.userNm}"/>" class="customInputDefault" readonly>
 <%--                        <p class="iconText caution">이름을 정확히 입력하세요.</p>--%>
                     </div>
                 </td>
@@ -162,7 +162,7 @@
                 <td>
                     <div class="innerCell">
                         <div class="address">
-                            <input type="hidden" id="zip" name="zip" class="customInputDefault" value="${eduAplctVO.zip}" placeholder="우편번호" readonly maxlength="5"/>
+                            <input type="hidden" id="zip" name="zip" class="customInputDefault" value="<c:out value="${eduAplctVO.zip}"/>" placeholder="우편번호" readonly maxlength="5"/>
                             <label for="addr">주소 검색</label>
                             <input type="text" id="addr" name="addr" placeholder="주소(도로명/지번/건물명)를 입력해주세요."
                                    class="customInputDefault addressSearch" readonly>
@@ -199,10 +199,10 @@
                                     <option>감면 없음</option>
                                     <c:forEach var="result" items="${dscntList}">
                                         <c:if test="${result.piscYn == 'Y'}">
-                                            <option value="PISC_${result.dscntCd}" data-confirm-mthd="pisc"><c:out value="${dscntSeMap[result.dscntCd]}"/>(비대면)</option>
+                                            <option value="PISC_<c:out value="${result.dscntCd}"/>" data-confirm-mthd="pisc"><c:out value="${dscntSeMap[result.dscntCd]}"/>(비대면)</option>
                                         </c:if>
                                         <c:if test="${result.directYn == 'Y'}">
-                                            <option value="DIRECT_${result.dscntCd}" data-confirm-mthd="direct"><c:out value="${dscntSeMap[result.dscntCd]}"/>(서류직접제출)</option>
+                                            <option value="DIRECT_<c:out value="${result.dscntCd}"/>" data-confirm-mthd="direct"><c:out value="${dscntSeMap[result.dscntCd]}"/>(서류직접제출)</option>
                                         </c:if>
                                     </c:forEach>
                                 </select>

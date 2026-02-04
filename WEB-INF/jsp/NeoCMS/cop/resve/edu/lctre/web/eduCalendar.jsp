@@ -10,10 +10,10 @@
 <div id="eduCalendar" class="calendar viewPlan">
     <div class="calendarHeader">
         <strong><c:out value="${calendarYear}"/>년 <c:out value="${calendarMonth}"/>월</strong>
-        <button class="prevButton" onclick="location.href='?key=${key}&lctreNo=${eduLctreVO.lctreNo}&ym=${prevYear}${prevMonth}#eduCalendar'">
+        <button class="prevButton" onclick="location.href='?key=<c:out value="${key}"/>&lctreNo=<c:out value="${eduLctreVO.lctreNo}"/>&ym=<c:out value="${prevYear}"/><c:out value="${prevMonth}"/>#eduCalendar'">
             <span>이전달 달력 보기</span>
         </button>
-        <button class="nextButton" onclick="location.href='?key=${key}&lctreNo=${eduLctreVO.lctreNo}&ym=${nextYear}${nextMonth}#eduCalendar'">
+        <button class="nextButton" onclick="location.href='?key=<c:out value="${key}"/>&lctreNo=<c:out value="${eduLctreVO.lctreNo}"/>&ym=<c:out value="${nextYear}"/><c:out value="${nextMonth}"/>#eduCalendar'">
             <span>다음달 달력 보기</span>
         </button>
     </div>

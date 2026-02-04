@@ -6,7 +6,7 @@
 <%@ taglib prefix="tsu" uri="http://www.hanshinit.co.kr/jstl/tagStringUtil" %>
 <html>
 <head>
-    <meta name="decorator" content="${menuInfo.siteId}"/>
+    <meta name="decorator" content="<c:out value="${menuInfo.siteId}"/>"/>
     <title>${menuInfo.cntntsNm} 개인정보동의</title>
 </head>
 <body>
@@ -35,12 +35,12 @@
                                                     or eduLctreVO.operSttus eq 'OPER_ING'}">
             <c:set var="stateTypeClass" value="type3"/>
         </c:if>
-        <span class="stateType ${stateTypeClass}"><c:out value="${operSttusMap[eduLctreVO.operSttus]}"/></span>
+        <span class="stateType <c:out value="${stateTypeClass}"/>"><c:out value="${operSttusMap[eduLctreVO.operSttus]}"/></span>
     <strong><c:out value="${eduLctreVO.lctreNm}"/></strong>
 </div>
 <form id="agreeForm" method="post" action="./addEduAplctWebView.do" onsubmit="return validateAgreement();">
-    <input type="hidden" name="lctreNo" value="${eduLctreVO.lctreNo}"/>
-    <input type="hidden" name="key" value="${eduLctreVO.key}"/>
+    <input type="hidden" name="lctreNo" value="<c:out value="${eduLctreVO.lctreNo}"/>"/>
+    <input type="hidden" name="key" value="<c:out value="${eduLctreVO.key}"/>"/>
     <fieldset>
         <legend>개인정보제공동의</legend>
         <h4>개인정보 수집 및 동의</h4>
