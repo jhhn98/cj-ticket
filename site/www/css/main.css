@@ -1044,7 +1044,7 @@ main::before {
   clip-path: inset(50%);
   overflow: hidden;
 }
-.reserveStep .category label input[type=radio]:focus + span, .reserveStep .category .label input[type=radio]:focus + span {
+.reserveStep .category label input[type=radio]:focus-visible + span, .reserveStep .category .label input[type=radio]:focus-visible + span {
   outline: 2px dashed #1e6fff;
   outline-offset: 4px;
 }

@@ -35,7 +35,7 @@ LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
     <link rel="preload" href="/common/font/EDB-R.woff?260105" as="font" type="font/woff" crossorigin>
     <link rel="stylesheet" href="/site/www/css/font.css?260105">
     <link rel="stylesheet" href="/common/css/style-reset.css">
-    <link rel="stylesheet" href="/site/www/css/common.css?260123">
+    <link rel="stylesheet" href="/site/www/css/common.css?260204">
     <link rel="stylesheet" href="/site/www/css/sub.css?260105">
     <link rel="stylesheet" href="/site/www/css/contents.css?260105">
     <link rel="stylesheet" href="/site/www/css/program.css?260105">
