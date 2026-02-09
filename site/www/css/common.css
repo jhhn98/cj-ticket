@@ -476,6 +476,7 @@ footer {
   background: #181824;
 }
 footer .footer-wrapper {
+  position: relative;
   width: 100%;
   max-width: 1530px;
   margin: 0 auto;
@@ -545,7 +546,26 @@ footer .copyright {
   font-size: 16px;
   line-height: 18px;
 }
-
+footer .footer-wrapper .wa-mark {
+  display: block;
+  position: absolute;
+  right:0;
+  bottom: 0;
+  width: 110px;
+  height: 70px;
+  background: url(../images/common/wa-mark.png) no-repeat 0 0;
+  background-size: 100% auto;
+}
+footer .footer-wrapper .wa-mark span {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
 .activeContrast header .cj-logo {
   background-position: -10px -10px;
 }
@@ -1291,5 +1311,10 @@ footer .copyright {
     color: #009991;
   }
 }
-
+@media all and (max-width: 840px) {
+  footer .footer-wrapper .wa-mark {
+    position: static;
+    margin: 10px 0 0 auto;
+  }
+}
 /*# sourceMappingURL=common.css.map */

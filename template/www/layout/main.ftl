@@ -21,7 +21,7 @@ LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
     <link rel="preload" href="/common/font/EDB-R.woff?260105" as="font" type="font/woff" crossorigin>
     <link rel="stylesheet" href="/site/www/css/font.css?260105">
     <link rel="stylesheet" href="/common/css/style-reset.css">
-    <link rel="stylesheet" href="/site/www/css/common.css?2602041411">
+    <link rel="stylesheet" href="/site/www/css/common.css?260209">
     <link rel="stylesheet" href="/site/www/css/main.css?260204">
     <meta property="og:site_name" content="청주시 통합예약">
     <meta property="og:type" content="website">
@@ -376,6 +376,7 @@ LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
             <li>사업자등록번호 : <em>301－83－00793</em></li>
         </ul>
         <p class="copyright">COPYRIGHT CHEONGJU CITY. ALL RIGHTS RESERVED.</p>
+        <div class="wa-mark"><span>과학기술정보통신부 WA WEB 접근성-웹와치(WebWatch) 2026.02.05 ~ 2027.02.05</span></div>
     </div>
 </footer>
 <script src="/lib/jquery-3.7.1.min.js"></script>
