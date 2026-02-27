@@ -47,7 +47,7 @@
                 <a href="./fcltyApplCalendarWebView.do?fcltyNo=<c:out value="${fcltyVO.fcltyNo}"/>&amp;<c:out value="${fcltySearchVO.params}"/><c:out value="${fcltySearchVO.paramsWeb}"/>" class="anchorButton wide line-color-green">신청하기</a>
             </c:if>
             <a href="./myPageList.do?key=59" class="anchorButton wide line-color-green">예약확인</a>
-            <a href="./selectFcltyWebList.do?<c:out value="${fcltySearchVO.params}"/><c:out value="${fcltySearchVO.paramsWeb}"/>" class="anchorButton">목록</a>
+            <a href="./selectFcltyWebList.do?viewMode=<c:out value="${param.viewMode}"/>&amp;<c:out value="${fcltySearchVO.params}"/><c:out value="${fcltySearchVO.paramsWeb}"/>" class="anchorButton">목록</a>
             <a href="./selectBbsNttList.do?bbsNo=1&key=70" class="anchorButton">공지사항</a>
         </div>
     </div>
@@ -283,7 +283,7 @@
                     <a href="./fcltyApplCalendarWebView.do?fcltyNo=<c:out value="${fcltyVO.fcltyNo}"/>&amp;<c:out value="${fcltySearchVO.params}"/><c:out value="${fcltySearchVO.paramsWeb}"/>" class="anchorButton wide line-color-green">신청하기</a>
                 </c:if>
                 <a href="./myPageList.do?key=59" class="anchorButton wide line-color-green">예약확인</a>
-                <a href="./selectFcltyWebList.do?<c:out value="${fcltySearchVO.params}"/><c:out value="${fcltySearchVO.paramsWeb}"/>" class="anchorButton">목록</a>
+                <a href="./selectFcltyWebList.do?viewMode=<c:out value="${param.viewMode}"/>&amp;<c:out value="${fcltySearchVO.params}"/><c:out value="${fcltySearchVO.paramsWeb}"/>" class="anchorButton">목록</a>
                 <a href="./selectBbsNttList.do?bbsNo=1&key=70" class="anchorButton">공지사항</a>
             </div>
         </div>

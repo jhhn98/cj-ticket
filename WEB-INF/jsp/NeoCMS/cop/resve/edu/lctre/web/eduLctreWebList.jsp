@@ -24,6 +24,7 @@
         </c:if>">
     <form method="get" action="./selectEduLctreWebList.do">
         <input type="hidden" name="key" value="<c:out value="${key}"/>"/>
+        <input type="hidden" name="viewMode" value="<c:out value="${empty param.viewMode ? card : param.viewMode}"/>" />
         <fieldset>
             <legend>검색</legend>
             <div class="searchFormWrap default">
@@ -164,10 +165,10 @@
 </div>
 <div class="dataList-program">
     <div class="asideInformation">
-        <button type="button" class="viewType thumb active" data-list-view="thumbnail">썸네일 보기</button>
-        <button type="button" class="viewType detail" data-list-view="detail">리스트 보기</button>
+        <button type="button" class="viewType thumb <c:if test="${param.viewMode eq 'card' || empty param.viewMode}">active</c:if>" data-list-view="thumbnail">썸네일 보기</button>
+        <button type="button" class="viewType detail <c:if test="${param.viewMode eq 'list'}">active</c:if>" data-list-view="detail">리스트 보기</button>
     </div>
-    <div class="listWrap thumbnail show">
+    <div class="listWrap thumbnail <c:if test="${param.viewMode eq 'card' || empty param.viewMode}">show</c:if>">
         <div class="dataCount">
             총 : <em><c:out value="${paginationInfo.totalRecordCount}"/> </em>건
             / 페이지 <c:out value="${paginationInfo.currentPageNo}"/> / <c:out value="${paginationInfo.totalPageCount}"/>
@@ -187,7 +188,7 @@
                 <c:otherwise>
                     <c:forEach var="result" items="${eduLctreList}" varStatus="status">
                         <li>
-                            <a href="./selectEduLctreWebView.do?key=<c:out value="${key}"/>&lctreNo=<c:out value="${result.lctreNo}"/>">
+                            <a href="./selectEduLctreWebView.do?key=<c:out value="${key}"/>&amp;lctreNo=<c:out value="${result.lctreNo}"/>&amp;viewMode=card">
                                 <span class="image<%--<c:if test="${empty result.mainImg}"> noImage</c:if>--%>">
                                     <c:choose>
                                         <c:when test="${not empty result.mainImg}">
@@ -284,11 +285,11 @@
         </ul>
         <div class="p-pagination">
             <div class="p-page">
-            <ui:pagination paginationInfo="${paginationInfo}" type="board" jsFunction="/${menuInfo.siteId}/selectEduLctreWebList.do?${fn:escapeXml(eduLctreVO.paramsExclPi)}&amp;pageIndex=" />
+            <ui:pagination paginationInfo="${paginationInfo}" type="board" jsFunction="/${menuInfo.siteId}/selectEduLctreWebList.do?${fn:escapeXml(eduLctreVO.paramsExclPi)}&amp;viewMode=card&amp;pageIndex=" />
             </div>
         </div>
     </div>
-    <div class="listWrap detail">
+    <div class="listWrap detail <c:if test="${param.viewMode eq 'list'}">show</c:if>">
         <div class="dataCount">
             총 : <em><c:out value="${paginationInfo.totalRecordCount}"/> </em>건
             / 페이지 <c:out value="${paginationInfo.currentPageNo}"/> / <c:out value="${paginationInfo.totalPageCount}"/>
@@ -335,7 +336,7 @@
                         <tr>
                             <td class="first">
                                 <span class="mobile-th">No</span>
-                                <a href="selectEduLctreWebView.do?key=<c:out value="${key}"/>&lctreNo=<c:out value="${result.lctreNo}"/> " class="trFullLink" title="<c:out value="${result.lctreNm}"/> 상세보기"><span>"<c:out value="${result.lctreNm}"/>" 상세보기</span></a>
+                                <a href="selectEduLctreWebView.do?key=<c:out value="${key}&amp;viewMode=list"/>&lctreNo=<c:out value="${result.lctreNo}"/> " class="trFullLink" title="<c:out value="${result.lctreNm}"/> 상세보기"><span>"<c:out value="${result.lctreNm}"/>" 상세보기</span></a>
                                 <c:out value="${currentPageStartNo}"/>
                             </td>
                             <td class="textAlignLeft">
@@ -454,7 +455,7 @@
         </table>
         <div class="p-pagination">
             <div class="p-page">
-            <ui:pagination paginationInfo="${paginationInfo}" type="board" jsFunction="/${menuInfo.siteId}/selectEduLctreWebList.do?${fn:escapeXml(eduLctreVO.paramsExclPi)}&amp;pageIndex=" />
+            <ui:pagination paginationInfo="${paginationInfo}" type="board" jsFunction="/${menuInfo.siteId}/selectEduLctreWebList.do?${fn:escapeXml(eduLctreVO.paramsExclPi)}&amp;viewMode=list&amp;pageIndex=" />
             </div>
         </div>
     </div>
@@ -501,6 +502,23 @@
         // 페이지 로딩 시, 기존 선택 값이 있으면 반영
         changeEmdList(true);
     });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const listViewButtons = document.querySelectorAll('[data-list-view]')
+        const viewModeInput = document.querySelector('input[name="viewMode"]')
+        //버튼이 두개인데 이벤트함수 처리를 어떻게 해?
+        listViewButtons.forEach(listViewButton => {
+            listViewButton.addEventListener('click', function() {
+                const type = this.dataset.listView
+
+                if (type === 'thumbnail') {
+                    viewModeInput.value = 'card'
+                } else if (type === 'detail') {
+                    viewModeInput.value = 'list'
+                }
+            })
+        })
+    })
 
 </script>
 

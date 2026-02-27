@@ -24,6 +24,7 @@
     <form method="post" name="exprnSearchVO" action="./selectExprnWebList.do">
         <input type="hidden" name="key" value="<c:out value="${key}"/>" />
         <input type="hidden" name="pageUnit" value="<c:out value="${exprnSearchVO.pageUnit}"/>" />
+        <input type="hidden" name="viewMode" value="<c:out value="${empty param.viewMode ? card : param.viewMode}"/>" />
         <fieldset>
             <legend>검색</legend>
             <div class="searchFormWrap default">
@@ -149,10 +150,10 @@
 </div>
 <div class="dataList-program">
     <div class="asideInformation">
-        <button type="button" class="viewType thumb active" data-list-view="thumbnail">썸네일 보기</button>
-        <button type="button" class="viewType detail" data-list-view="detail">리스트 보기</button>
+        <button type="button" class="viewType thumb <c:if test="${param.viewMode eq 'card' || empty param.viewMode}">active</c:if>" data-list-view="thumbnail">썸네일 보기</button>
+        <button type="button" class="viewType detail <c:if test="${param.viewMode eq 'list'}">active</c:if>" data-list-view="detail">리스트 보기</button>
     </div>
-    <div class="listWrap thumbnail show">
+    <div class="listWrap thumbnail <c:if test="${param.viewMode eq 'card' || empty param.viewMode}">show</c:if>">
         <div class="dataCount">총 : <em><c:out value="${paginationInfo.totalRecordCount}"/></em>건 / 페이지 <c:out value="${paginationInfo.currentPageNo}"/>/<c:out value="${paginationInfo.totalPageCount}"/></div>
         <ul>
             <!-- 검색결과, 데이터 없을때 -->
@@ -174,7 +175,7 @@
                             <a href="<c:out value="${result.aditIem2}"/>" target="_blank" title="새창">
                         </c:when>
                         <c:otherwise>
-                            <a href="./selectExprnWebView.do?exprnNo=<c:out value="${result.exprnNo}"/>&<c:out value="${exprnSearchVO.params}"/><c:out value="${exprnSearchVO.paramsWeb}"/>">
+                            <a href="./selectExprnWebView.do?exprnNo=<c:out value="${result.exprnNo}"/>&amp;viewMode=card&amp;<c:out value="${exprnSearchVO.params}"/><c:out value="${exprnSearchVO.paramsWeb}"/>">
                         </c:otherwise>
                     </c:choose>
                         <span class="image">
@@ -250,18 +251,17 @@
         </ul>
         <div class="p-pagination">
             <div class="p-page">
-            <ui:pagination paginationInfo="${paginationInfo}" type="board" jsFunction="./selectExprnWebList.do?${exprnSearchVO.paramsExclPi}${exprnSearchVO.paramsWeb}&amp;pageIndex=" />
+            <ui:pagination paginationInfo="${paginationInfo}" type="board" jsFunction="./selectExprnWebList.do?${exprnSearchVO.paramsExclPi}${exprnSearchVO.paramsWeb}&amp;viewMode=card&amp;pageIndex=" />
             </div>
         </div>
     </div>
-    <div class="listWrap detail">
+    <div class="listWrap detail <c:if test="${param.viewMode eq 'list'}">show</c:if>">
         <div class="dataCount">총 : <em><c:out value="${paginationInfo.totalRecordCount}"/></em>건 / 페이지 <c:out value="${paginationInfo.currentPageNo}"/>/<c:out value="${paginationInfo.totalPageCount}"/></div>
         <div class="scrollWrap-table">
         <table>
             <caption>체험목록-No, 체험프로그램명, 접수기간, 대상, 이용요금, 신청/정원, 운영상태</caption>
             <colgroup>
                 <col style="width:80px">
-                <col>
                 <col>
                 <col>
                 <col>
@@ -306,7 +306,7 @@
                                 <c:set var="exprnLink" value="${result.detailCn}" />
                             </c:when>
                             <c:otherwise>
-                                <a href="./selectExprnWebView.do?exprnNo=<c:out value="${result.exprnNo}"/>&<c:out value="${exprnSearchVO.params}"/><c:out value="${exprnSearchVO.paramsWeb}"/>" class="trFullLink" title="<c:out value="${result.exprnNm}"/> 상세보기"><span>"<c:out value="${result.exprnNm}"/>" 상세보기</span></a>
+                                <a href="./selectExprnWebView.do?exprnNo=<c:out value="${result.exprnNo}"/>&amp;viewMode=list&amp;<c:out value="${exprnSearchVO.params}"/><c:out value="${exprnSearchVO.paramsWeb}"/>" class="trFullLink" title="<c:out value="${result.exprnNm}"/> 상세보기"><span>"<c:out value="${result.exprnNm}"/>" 상세보기</span></a>
                             </c:otherwise>
                         </c:choose>
                         <c:out value="${currentPageStartNo}"/>
@@ -394,7 +394,7 @@
         </div>
         <div class="p-pagination">
             <div class="p-page">
-            <ui:pagination paginationInfo="${paginationInfo}" type="board" jsFunction="./selectExprnWebList.do?${exprnSearchVO.paramsExclPi}${exprnSearchVO.paramsWeb}&amp;pageIndex=" />
+            <ui:pagination paginationInfo="${paginationInfo}" type="board" jsFunction="./selectExprnWebList.do?${exprnSearchVO.paramsExclPi}${exprnSearchVO.paramsWeb}&amp;viewMode=list&amp;pageIndex=" />
             </div>
         </div>
     </div>
@@ -413,8 +413,24 @@
             $('#searchAreaEmd option.areaEmdList').hide();
             $('#searchAreaEmd option.' + $(this).val()).show();
         });
-
     });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const listViewButtons = document.querySelectorAll('[data-list-view]')
+        const viewModeInput = document.querySelector('input[name="viewMode"]')
+        //버튼이 두개인데 이벤트함수 처리를 어떻게 해?
+        listViewButtons.forEach(listViewButton => {
+            listViewButton.addEventListener('click', function() {
+                const type = this.dataset.listView
+
+                if (type === 'thumbnail') {
+                    viewModeInput.value = 'card'
+                } else if (type === 'detail') {
+                    viewModeInput.value = 'list'
+                }
+            })
+        })
+    })
 
 </script>
 

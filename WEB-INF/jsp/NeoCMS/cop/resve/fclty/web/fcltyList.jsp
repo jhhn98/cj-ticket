@@ -24,6 +24,7 @@
     <form method="post" name="fcltySearchVO" id="fcltySearchVO" action="./selectFcltyWebList.do">
         <input type="hidden" name="key" value="<c:out value="${key}"/>" />
         <input type="hidden" name="pageUnit" value="<c:out value="${fcltySearchVO.pageUnit}"/>" />
+        <input type="hidden" name="viewMode" value="<c:out value="${empty param.viewMode ? card : param.viewMode}"/>" />
         <fieldset>
             <legend>검색</legend>
             <div class="searchFormWrap default">
@@ -147,10 +148,10 @@
 </div>
 <div class="dataList-program">
     <div class="asideInformation">
-        <button type="button" class="viewType thumb active" data-list-view="thumbnail">썸네일 보기</button>
-        <button type="button" class="viewType detail" data-list-view="detail">리스트 보기</button>
+        <button type="button" class="viewType thumb <c:if test="${param.viewMode eq 'card' || empty param.viewMode}" data-list-view="thumbnail">썸네일 보기</button>
+        <button type="button" class="viewType detail <c:if test="${param.viewMode eq 'list'}" data-list-view="detail">리스트 보기</button>
     </div>
-    <div class="listWrap thumbnail show">
+    <div class="listWrap thumbnail <c:if test="${param.viewMode eq 'card' || empty param.viewMode}">show</c:if>">
         <div class="dataCount">총 : <em><c:out value="${paginationInfo.totalRecordCount}"/></em>건 / 페이지 <c:out value="${paginationInfo.currentPageNo}"/>/<c:out value="${paginationInfo.totalPageCount}"/></div>
         <ul>
             <!-- 검색결과, 데이터 없을때 -->
@@ -167,7 +168,7 @@
             <!-- //검색결과, 데이터 있을때 -->
             <c:forEach var="result" items="${fcltyList}" begin="0" end="7">
                 <li>
-                    <a href="./selectFcltyWebView.do?fcltyNo=<c:out value="${result.fcltyNo}"/>&<c:out value="${fcltySearchVO.params}"/><c:out value="${fcltySearchVO.paramsWeb}"/>">
+                    <a href="./selectFcltyWebView.do?fcltyNo=<c:out value="${result.fcltyNo}"/>&amp;viewMode=card&amp;<c:out value="${fcltySearchVO.params}"/><c:out value="${fcltySearchVO.paramsWeb}"/>">
                         <span class="image<c:out value="${(empty result.mainImg and empty result.svcTyCd) ? ' noImage' : ''}"/>">
                             <c:choose>
                                 <c:when test="${not empty result.mainImg}">
@@ -229,12 +230,12 @@
         <c:if test="${fn:length(fcltyList) > 0}">
             <div class="p-pagination">
                 <div class="p-page">
-                <ui:pagination paginationInfo="${paginationInfo}" type="board" jsFunction="./selectFcltyWebList.do?${fcltySearchVO.paramsExclPi}${fcltySearchVO.paramsWeb}&amp;pageIndex=" />
+                <ui:pagination paginationInfo="${paginationInfo}" type="board" jsFunction="./selectFcltyWebList.do?${fcltySearchVO.paramsExclPi}${fcltySearchVO.paramsWeb}&amp;viewMode=card&amp;pageIndex=" />
                 </div>
             </div>
         </c:if>
     </div>
-    <div class="listWrap detail">
+    <div class="listWrap detail <c:if test="${param.viewMode eq 'list'}">show</c:if>">
         <div class="dataCount">총 : <em><c:out value="${paginationInfo.totalRecordCount}"/></em>건 / 페이지 <c:out value="${paginationInfo.currentPageNo}"/>/<c:out value="${paginationInfo.totalPageCount}"/></div>
         <table>
             <caption>시설목록-No, 시설명, 운영기간, 접수기간, 대상, 이용요금, 운영상태</caption>
@@ -278,7 +279,7 @@
                 <tr>
                     <td class="first">
                         <span class="mobile-th">No</span>
-                        <a href="./selectFcltyWebView.do?fcltyNo=<c:out value="${result.fcltyNo}"/>&<c:out value="${fcltySearchVO.params}"/><c:out value="${fcltySearchVO.paramsWeb}"/>" class="trFullLink" title="<c:out value="${result.fcltyNm}"/> 상세보기"><span>"<c:out value="${result.fcltyNm}"/>" 상세보기</span></a>
+                        <a href="./selectFcltyWebView.do?fcltyNo=<c:out value="${result.fcltyNo}"/>&amp;viewMode=list&amp;<c:out value="${fcltySearchVO.params}"/><c:out value="${fcltySearchVO.paramsWeb}"/>" class="trFullLink" title="<c:out value="${result.fcltyNm}"/> 상세보기"><span>"<c:out value="${result.fcltyNm}"/>" 상세보기</span></a>
                         <c:out value="${currentPageStartNo}"/>
                     </td>
                     <td class="textAlignLeft">
@@ -353,7 +354,7 @@
         <c:if test="${fn:length(fcltyList) > 0}">
             <div class="p-pagination">
                 <div class="p-page">
-                    <ui:pagination paginationInfo="${paginationInfo}" type="board" jsFunction="./selectFcltyWebList.do?${fcltySearchVO.paramsExclPi}${fcltySearchVO.paramsWeb}&amp;pageIndex=" />
+                    <ui:pagination paginationInfo="${paginationInfo}" type="board" jsFunction="./selectFcltyWebList.do?${fcltySearchVO.paramsExclPi}${fcltySearchVO.paramsWeb}&amp;viewMode=list&amp;pageIndex=" />
                 </div>
             </div>
         </c:if>
@@ -375,6 +376,23 @@
         });
 
     });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const listViewButtons = document.querySelectorAll('[data-list-view]')
+        const viewModeInput = document.querySelector('input[name="viewMode"]')
+        //버튼이 두개인데 이벤트함수 처리를 어떻게 해?
+        listViewButtons.forEach(listViewButton => {
+            listViewButton.addEventListener('click', function() {
+                const type = this.dataset.listView
+
+                if (type === 'thumbnail') {
+                    viewModeInput.value = 'card'
+                } else if (type === 'detail') {
+                    viewModeInput.value = 'list'
+                }
+            })
+        })
+    })
 
 </script>
 

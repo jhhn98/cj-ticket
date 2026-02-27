@@ -55,7 +55,7 @@
                 <a href="./eduAplctAgreWebView.do?lctreNo=<c:out value="${eduLctreVO.lctreNo}"/>&amp;<c:out value="${eduLctreVO.params}"/>" class="anchorButton wide line-color-green" onclick="return fn_goApply();">신청하기</a>
             </c:if>
             <a href="./myPageList.do?key=59" class="anchorButton wide line-color-green">예약확인</a>
-            <a href="./selectEduLctreWebList.do?<c:out value="${eduLctreVO.params}"/>" class="anchorButton">목록</a>
+            <a href="./selectEduLctreWebList.do?viewMode=<c:out value="${param.viewMode}"/>&amp;<c:out value="${eduLctreVO.params}"/>" class="anchorButton">목록</a>
             <a href="./selectBbsNttList.do?bbsNo=1&key=70" class="anchorButton">공지사항</a>
         </div>
     </div>
@@ -289,7 +289,7 @@
                         <a href="./eduAplctAgreWebView.do?lctreNo=<c:out value="${eduLctreVO.lctreNo}"/>&amp;<c:out value="${eduLctreVO.params}"/>" class="anchorButton wide line-color-green" onclick="return fn_goApply();">신청하기</a>
                     </c:if>
                     <a href="./myPageList.do?key=59" class="anchorButton wide line-color-green">예약확인</a>
-                    <a href="./selectEduLctreWebList.do?<c:out value="${eduLctreVO.params}"/>" class="anchorButton">목록</a>
+                    <a href="./selectEduLctreWebList.do?viewMode=<c:out value="${param.viewMode}"/>&amp;<c:out value="${eduLctreVO.params}"/>" class="anchorButton">목록</a>
                     <a href="./selectBbsNttList.do?bbsNo=1&key=70" class="anchorButton">공지사항</a>
                 </div>
             </div>
@@ -406,7 +406,7 @@
                 </c:if>
 
                 <a href="./myPageList.do?key=59" class="anchorButton wide line-color-green">예약확인</a>
-                <a href="./selectEduLctreWebList.do?<c:out value="${eduLctreVO.params}"/>" class="anchorButton">목록</a>
+                <a href="./selectEduLctreWebList.do?viewMode=<c:out value="${param.viewMode}"/>&amp;<c:out value="${eduLctreVO.params}"/>" class="anchorButton">목록</a>
                 <a href="./selectBbsNttList.do?bbsNo=1&key=70" class="anchorButton">공지사항</a>
             </div>
         </div>
