@@ -49,9 +49,26 @@
                             </form:select>
                             <form:select path="insttNo" class="p-input p-input--auto">
                                 <form:option value="" label="운영기관 선택"/>
-                                <form:options items="${eduInsttList}" itemValue="insttNo" itemLabel="insttNm" class="insttList EDU" style="display:none;"/>
-                                <form:options items="${expInsttList}" itemValue="insttNo" itemLabel="insttNm" class="insttList EXP" style="display:none;"/>
-                                <form:options items="${fctInsttList}" itemValue="insttNo" itemLabel="insttNm" class="insttList FCT" style="display:none;"/>
+                                <c:if test="${empty placeVO.prgSe}">
+                                    <form:options items="${eduInsttList}" itemValue="insttNo" itemLabel="insttNm" class="insttList EDU" style="display:none;"/>
+                                    <form:options items="${expInsttList}" itemValue="insttNo" itemLabel="insttNm" class="insttList EXP" style="display:none;"/>
+                                    <form:options items="${fctInsttList}" itemValue="insttNo" itemLabel="insttNm" class="insttList FCT" style="display:none;"/>
+                                </c:if>
+                                <c:if test="${placeVO.prgSe == 'EDU'}">
+                                    <form:options items="${eduInsttList}" itemValue="insttNo" itemLabel="insttNm" class="insttList EDU"/>
+                                    <form:options items="${expInsttList}" itemValue="insttNo" itemLabel="insttNm" class="insttList EXP" style="display:none;"/>
+                                    <form:options items="${fctInsttList}" itemValue="insttNo" itemLabel="insttNm" class="insttList FCT" style="display:none;"/>
+                                </c:if>
+                                <c:if test="${placeVO.prgSe == 'EXP'}">
+                                    <form:options items="${eduInsttList}" itemValue="insttNo" itemLabel="insttNm" class="insttList EDU" style="display:none;"/>
+                                    <form:options items="${expInsttList}" itemValue="insttNo" itemLabel="insttNm" class="insttList EXP"/>
+                                    <form:options items="${fctInsttList}" itemValue="insttNo" itemLabel="insttNm" class="insttList FCT" style="display:none;"/>
+                                </c:if>
+                                <c:if test="${placeVO.prgSe == 'FCT'}">
+                                    <form:options items="${eduInsttList}" itemValue="insttNo" itemLabel="insttNm" class="insttList EDU" style="display:none;"/>
+                                    <form:options items="${expInsttList}" itemValue="insttNo" itemLabel="insttNm" class="insttList EXP" style="display:none;"/>
+                                    <form:options items="${fctInsttList}" itemValue="insttNo" itemLabel="insttNm" class="insttList FCT"/>
+                                </c:if>
                             </form:select>
                         </td>
                     </tr>

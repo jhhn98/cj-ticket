@@ -39,7 +39,7 @@
     <option value="">날짜 선택</option>
     <c:forEach var="i" begin="0" end="5">
         <c:forEach var="j" begin="0" end="6">
-            <c:if test="${!empty arrCalendar[i][j][0] && arrCalendar[i][j][3] == 'Y'}">
+            <c:if test="${!empty arrCalendar[i][j][0] && (arrCalendar[i][j][3] == 'Y' || arrCalendar[i][j][3] == 'F')}">
                 <fmt:formatNumber var="dayChk" minIntegerDigits="2" value="${arrCalendar[i][j][0]}" type="number"/>
                 <c:set var="ymd" value="${year}${month}${dayChk}" />
                 <option value="${ymd}" label="${tsu:toDateFormat(ymd, 'yyyyMMdd', 'yyyy년 MM월 dd일 (EE)')}"></option>

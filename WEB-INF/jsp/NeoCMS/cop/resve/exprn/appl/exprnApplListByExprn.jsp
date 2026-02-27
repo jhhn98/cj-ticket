@@ -186,7 +186,8 @@
             <col style="width:100px">
             <col style="width:50px">
             <col style="width:100px">
-            <col style="width:100px">
+            <c:if test="${exprnVO.resInqUseYn == 'Y'}"><col style="width:100px"></c:if>
+            <c:if test="${exprnVO.dscntUseYn == 'Y'}"><col style="width:100px"></c:if>
             <col style="width:100px">
             <col style="width:100px">
             <col style="width:60px">
@@ -204,7 +205,8 @@
             <th scope="col">개인/단체</th>
             <th scope="col">인원</th>
             <th scope="col">체험일자</th>
-            <th scope="col">거주지</th>
+            <c:if test="${exprnVO.resInqUseYn == 'Y'}"><th scope="col">거주지</th></c:if>
+            <c:if test="${exprnVO.dscntUseYn == 'Y'}"><th scope="col">감면혜택</th></c:if>
             <th scope="col">예약상태</th>
             <th scope="col">결제상태</th>
             <th scope="col">관리</th>
@@ -222,7 +224,7 @@
                 </td>
                 <td>${currentPageStartNo}</td>
                 <td>
-                    <a href="./selectExprnApplView.do?exprnApplNo=<c:out value="${result.exprnApplNo}"/>&amp;<c:out value="${exprnApplSearchVO.params}"/><c:out value="${exprnApplSearchVO.paramsMng}"/>&amp;<c:out value="${exprnSearchVO.exprnParamsMng}"/>&amp;isExprnList=Y">
+                    <a href="./selectExprnApplView.do?exprnApplNo=<c:out value="${result.exprnApplNo}"/>&amp;<c:out value="${exprnApplSearchVO.params}"/><c:out value="${exprnApplSearchVO.paramsMng}"/>&amp;<c:out value="${exprnSearchVO.exprnParamsMng}"/>&amp;listSe=E">
                         <c:out value="${result.exprnApplId}"/>
                     </a>
                 </td>
@@ -248,7 +250,17 @@
                     <c:out value="${tsu:toDateFormat(result.exprnDe, 'yyyyMMdd', 'yyyy-MM-dd')}"/><br/>
                     <c:out value="${tsu:toDateFormat(result.exprnBgnHm, 'HHmm', 'HH:mm')}"/> ~ <c:out value="${tsu:toDateFormat(result.exprnEndHm, 'HHmm', 'HH:mm')}"/>
                 </td>
-                <td><c:out value="${lgldongMap[result.resInqCd]}"/></td>
+                <c:if test="${exprnVO.resInqUseYn == 'Y'}">
+                    <td><c:out value="${lgldongMap[result.resInqCd]}"/></td>
+                </c:if>
+                <c:if test="${exprnVO.dscntUseYn == 'Y'}">
+                <td>
+                    <c:if test="${!empty result.dscntCd}">
+                        <c:if test="${result.piscYn == 'Y'}">감면혜택<br/>(비대면)</c:if>
+                        <c:if test="${result.piscYn == 'N'}">감면혜택<br/>(직접제출)</c:if>
+                    </c:if>
+                </td>
+                </c:if>
                 <td>
                     <c:out value="${rsvSttusMap[result.rsvSttusCd]}"/>
                     <c:if test="${!fn:contains(result.rsvSttusCd, 'CNCL') && !empty result.drwtWinYn}">
@@ -260,14 +272,19 @@
                     </c:if>
                 </td>
                 <td>
-                    <%--TODOSDB: 감면관련 상태값 추가--%>
                     <c:out value="${paySttusMap[result.paySttusCd]}"/>
-                    <c:if test="${result.rsvSttusCd == 'APPL_CMPL' && result.paySttusCd == 'PAY_WAIT' && result.totalPayAmt > 0}">
-                        <br/><c:out value="${tsu:toDateFormat(result.payDeadlineDt, 'yyyyMMddHHmmss', 'yyyy-MM-dd')}"/>
-                        <br/><c:out value="${tsu:toDateFormat(result.payDeadlineDt, 'yyyyMMddHHmmss', 'HH:mm:ss')}"/>
+                    <br/>
+                    <c:if test="${!empty result.payMthdCd && empty result.tossMethod}">
+                        (<c:out value="${payMthdMap[result.payMthdCd]}"/>)
+                    </c:if>
+                    <c:if test="${result.payMthdCd == 'ELCTRN' && !empty result.tossMethod}">
+                        (T<c:out value="${result.tossMethod}"/>)
+                    </c:if>
+                    <c:if test="${result.rsvSttusCd == 'APPL_CMPL' && result.paySttusCd == 'PAY_WAIT' && result.totalPayAmt > 0 && result.payMthdCd == 'ELCTRN' && empty result.tossMethod}">
+                        <br/><c:out value="${tsu:toDateFormat(result.payDeadlineDt, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss')}"/>
                     </c:if>
                 </td>
-                <td><a href="./updateExprnApplView.do?exprnApplNo=<c:out value="${result.exprnApplNo}"/>&amp;<c:out value="${exprnApplSearchVO.params}"/>&amp;<c:out value="${exprnApplSearchVO.paramsMng}"/>&amp;<c:out value="${exprnSearchVO.exprnParamsMng}"/>&isExprnList=Y" class="p-button p-button--small edit">수정</a></td>
+                <td><a href="./updateExprnApplView.do?exprnApplNo=<c:out value="${result.exprnApplNo}"/>&amp;<c:out value="${exprnApplSearchVO.params}"/>&amp;<c:out value="${exprnApplSearchVO.paramsMng}"/>&amp;<c:out value="${exprnSearchVO.exprnParamsMng}"/>&amp;listSe=E" class="p-button p-button--small edit">수정</a></td>
             </tr>
             <c:set var="currentPageStartNo" value="${currentPageStartNo-1}" />
         </c:forEach>

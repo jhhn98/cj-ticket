@@ -99,7 +99,7 @@
                     failUrl: window.location.origin + "/tosspaymentsFail.do",
                     customerName: "<c:out value="${tosspayments.applNm}"/>",
                     // 가상계좌 안내, 퀵계좌이체 휴대폰 번호 자동 완성에 사용되는 값입니다. 필요하다면 주석을 해제해 주세요.
-                    // customerMobilePhone: "01012341234",
+                    customerMobilePhone: "<c:out value="${tosspayments.mobileNo}"/>",
                     transfer: {
                         cashReceipt: {
                             type: "소득공제",
@@ -117,7 +117,7 @@
                     failUrl: window.location.origin + "/tosspaymentsFail.do",
                     customerName: "<c:out value="${tosspayments.applNm}"/>",
                     // 가상계좌 안내, 퀵계좌이체 휴대폰 번호 자동 완성에 사용되는 값입니다. 필요하다면 주석을 해제해 주세요.
-                    // customerMobilePhone: "01012341234",
+                    customerMobilePhone: "<c:out value="${tosspayments.mobileNo}"/>",
                     virtualAccount: {
                         cashReceipt: {
                             type: "소득공제",

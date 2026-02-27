@@ -164,7 +164,7 @@
             <td>
                 <c:choose>
                     <c:when test="${exprnVO.exprnAmt > 0}">
-                        예약일/추첨일/승인일로부터  <em class="em_black"><c:out value="${exprnVO.payTmlmtCnt}"/></em>일 이내 <em class="em_black"><c:out value="${exprnVO.payTmlmtCnt}"/></em>시 까지<br/>
+                        예약일/추첨일/승인일로부터  <em class="em_black"><c:out value="${exprnVO.payTmlmtCnt}"/></em>일 이내 <em class="em_black"><c:out value="${exprnVO.payTmlmtHh}"/></em>시 까지<br/>
                         <span class="p-table__content padding_l_10">
                             <svg width="20" height="25" fill="#202e70" focusable="false"><use xlink:href="/common/images/program/p-icon.svg#info-circle"></use></svg>
                             <em class="em_black">신청자가 예약완료 후 설정된 시간(분)이내에 결제하지 않으면 예약이 자동으로 취소됩니다.</em>

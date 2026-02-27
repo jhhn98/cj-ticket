@@ -147,7 +147,8 @@
                         <div class="innerCell">
                             <c:out value="${paySttusMap[exprnApplVO.paySttusCd]}"/>
                             <%-- 결제대기인 경우 결제기한까지 표출--%>
-                            <c:if test="${result.rsvSttusCd == 'APPL_CMPL' && exprnApplVO.paySttusCd == 'PAY_WAIT'}">
+                            <c:if test="${exprnApplVO.rsvSttusCd == 'APPL_CMPL' && exprnApplVO.paySttusCd == 'PAY_WAIT'
+                                            && exprnApplVO.payMthdCd == 'ELCTRN' && empty exprnApplVO.tossMethod && exprnApplVO.totalPayAmt > 0}}">
                                 <p class="iconText caution point-color-green">
                                     <c:if test="${todate < exprnApplVO.payDeadlineDt}">
                                         결제기한: <c:out value="${tsu:toDateFormat(exprnApplVO.payDeadlineDt, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss')}"/> 까지
@@ -158,9 +159,13 @@
                                 </p>
                             </c:if>
                             <%-- 취소인 경우 환불처리일시 + 환불금액 + 환불계좌 필요한 경우 환불계좌 정보 표출--%>
-                            <c:if test="${fn:indexOf(exprnApplVO.paySttusCd, 'RFND') > -1}">
+                            <%--<c:if test="${fn:indexOf(exprnApplVO.paySttusCd, 'RFND') > -1}">--%>
+                            <c:if test="${exprnApplVO.paySttusCd == 'RFND_PART'}">
                                 <p class="iconText caution point-color-green">
-                                    환불처리일시 : <c:out value="${tsu:toDateFormat(exprnApplVO.rfndCmplDt, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss')}"/> / 환불금액 : <fmt:formatNumber value="${exprnApplVO.rfndAmt}" pattern="#,##0"/>원 / 환불계좌정보 : <c:out value="${bankMap[exprnApplVO.rfndBankNm]}"/> <c:out value="${exprnApplVO.rfndAcctNo}"/> (예금주:<c:out value="${exprnApplVO.rfndDpstrNm}"/>)
+                                    <%--환불처리일시 : <c:out value="${tsu:toDateFormat(exprnApplVO.rfndCmplDt, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss')}"/> / --%>환불금액 : <fmt:formatNumber value="${exprnApplVO.rfndAmt}" pattern="#,##0"/>원
+                                    <%--<c:if test="${!empty exprnApplVO.rfndBankNm && !empty exprnApplVO.rfndAcctNo && !empty exprnApplVO.rfndDpstrNm}">
+                                        / 환불계좌정보 : <c:out value="${bankMap[exprnApplVO.rfndBankNm]}"/> <c:out value="${exprnApplVO.rfndAcctNo}"/> (예금주:<c:out value="${exprnApplVO.rfndDpstrNm}"/>)
+                                    </c:if>--%>
                                 </p>
                             </c:if>
                         </div>
@@ -173,6 +178,11 @@
                         <td>
                             <div class="innerCell">
                                 <fmt:formatNumber value="${exprnApplVO.totalPayAmt}" pattern="#,##0"/> 원
+                                <c:if test="${exprnApplVO.dscntYn == 'Y'}">
+                                    <p class="iconText caution point-color-green">
+                                        감면혜택 : <fmt:formatNumber value="${exprnApplVO.dscntAmt}" pattern="#,##0"/> 원
+                                    </p>
+                                </c:if>
                             </div>
                         </td>
                     </tr>
@@ -181,18 +191,34 @@
                         <td>
                             <div class="innerCell">
                                 <p>
+                                    <%--결제수단--%>
                                     <c:out value="${payMthdMap[exprnApplVO.payMthdCd]}"/>
+
+                                    <%--전자결제인 경우 toss 결제방법 표출--%>
                                     <c:if test="${exprnApplVO.payMthdCd == 'ELCTRN' && !empty exprnApplVO.tossMethod}">
                                         (<c:out value="${exprnApplVO.tossMethod}"/>)
                                     </c:if>
-                                    <c:if test="${exprnApplVO.payMthdCd == 'ELCTRN' && exprnApplVO.rsvSttusCd == 'APPL_CMPL' && exprnApplVO.paySttusCd == 'PAY_WAIT'}">
-                                        (결제기한 : <c:out value="${tsu:toDateFormat(exprnApplVO.payDeadlineDt, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss')}"/>)
-                                    </c:if>
-                                    <c:if test="${exprnApplVO.payMthdCd == 'NBKRCP'}">
-                                        (<c:out value="${exprnVO.bankNm}"/> <c:out value="${exprnVO.acctNo}"/> (예금주:<c:out value="${exprnVO.dpstrNm}"/>))
+
+                                    <%--결제대기인 경우 입금정보 표출--%>
+                                    <c:if test="${exprnApplVO.rsvSttusCd == 'APPL_CMPL' && exprnApplVO.paySttusCd == 'PAY_WAIT' && exprnApplVO.totalPayAmt > 0}">
+                                        <%--무통장입금--%>
+                                        <c:if test="${exprnApplVO.payMthdCd == 'NBKRCP'}">
+                                            <p class="iconText caution point-color-green">
+                                                입금계좌정보 : <c:out value="${exprnVO.bankNm}"/> <c:out value="${exprnVO.acctNo}"/> (예금주:<c:out value="${exprnVO.dpstrNm}"/>)
+                                            </p>
+                                        </c:if>
+
+                                        <%--전자결제(가상계좌)--%>
+                                        <c:if test="${exprnApplVO.payMthdCd == 'ELCTRN' && exprnApplVO.tossMethod == '가상계좌' && todate < exprnApplVO.tossVaDueDate}">
+                                            <p class="iconText caution point-color-green">
+                                                입금계좌정보 : <c:out value="${bankMap[exprnApplVO.tossVaBankCode]}"/> <c:out value="${exprnApplVO.tossVaAccountNumber}"/>
+                                            </p>
+                                        </c:if>
                                     </c:if>
                                 </p>
-                                <c:if test="${exprnApplVO.payMthdCd == 'ELCTRN' && exprnApplVO.rsvSttusCd == 'APPL_CMPL' && exprnApplVO.paySttusCd == 'PAY_WAIT'}">
+                                <%--결제대기, 전자결제인 경우 결제버튼 활성화--%>
+                                <c:if test="${exprnApplVO.rsvSttusCd == 'APPL_CMPL' && exprnApplVO.paySttusCd == 'PAY_WAIT'
+                                                && exprnApplVO.payMthdCd == 'ELCTRN' && empty exprnApplVO.tossMethod && todate < exprnApplVO.payDeadlineDt}">
                                     <c:if test="${todate < exprnApplVO.payDeadlineDt}">
                                         <c:import url="/tosspaymentsView.do">
                                             <c:param name="insttNo" value="${exprnApplVO.insttNo}" />
@@ -203,7 +229,16 @@
                                             <c:param name="orderName" value="${exprnVO.exprnNm}" />
                                             <c:param name="applNm" value="${exprnApplVO.applNm}" />
                                             <c:param name="prgSe" value="EXP" />
+                                            <c:param name="mobileNo" value="${exprnApplVO.mobileNo}" />
                                         </c:import>
+                                        <p class="iconText caution point-color-green">
+                                            결제기한 : <c:out value="${tsu:toDateFormat(exprnApplVO.payDeadlineDt, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss')}"/>
+                                        </p>
+                                    </c:if>
+                                    <c:if test="${todate >= exprnApplVO.payDeadlineDt}">
+                                        <p class="iconText caution point-color-green">
+                                            결제기한이 만료되었습니다.
+                                        </p>
                                     </c:if>
                                 </c:if>
                             </div>
@@ -216,7 +251,14 @@
                 </c:if>
                 <tr>
                     <th scope="row" class="first"><div class="innerCell">인원구분</div></th>
-                    <td><div class="innerCell"><c:out value="${nmprSeMap[exprnApplVO.nmprSeCd]}"/><c:if test="${exprnApplVO.nmprSeCd == 'GRP'}">(<c:out value="${exprnApplVO.grpNm}"/>)</c:if></div></td>
+                    <td>
+                        <div class="innerCell">
+                            <c:out value="${nmprSeMap[exprnApplVO.nmprSeCd]}"/>
+                            <c:if test="${exprnApplVO.nmprSeCd == 'GRP'}">
+                                <br/>(<c:out value="${exprnApplVO.grpNm}"/>)
+                            </c:if>
+                        </div>
+                    </td>
                 </tr>
                 <tr>
                     <th scope="row" class="first"><div class="innerCell">신청자명</div></th>

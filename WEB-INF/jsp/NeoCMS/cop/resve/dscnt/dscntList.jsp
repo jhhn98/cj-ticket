@@ -70,8 +70,8 @@
             <th scope="col">감면구분</th>
             <th scope="col">감면혜택조건</th>
             <th scope="col">감면율</th>
-            <th scope="col">비대면<br/>사용여부</th>
-            <th scope="col">서류직접제출<br/>사용여부</th>
+            <th scope="col">자격확인방법</th>
+            <th scope="col">사용여부</th>
             <th scope="col">관리</th>
         </tr>
         </thead>
@@ -84,19 +84,24 @@
                     <c:set var="insttNo" value="instt${result.insttNo}"/>
                     <c:out value="${insttMap[insttNo]}"/>
                 </td>
-                <td><a href="./selectDscntView.do?dscntNo=<c:out value="${result.dscntNo}"/>&amp;<c:out value="${dscntSearchVO.params}"/>"><c:out value="${dscntSeMap[result.dscntCd]}"/></a></td>
+                <td>
+                    <c:if test="${result.dscntCd != 'DSCNT_ETC'}">
+                        <c:out value="${dscntSeMap[result.dscntCd]}"/>
+                    </c:if>
+                    <c:if test="${result.dscntCd == 'DSCNT_ETC'}">
+                        <c:out value="${result.dscntCdNm}"/>
+                    </c:if>
+                </td>
                 <td><c:out value="${result.dscntCnd}"/></td>
                 <td><c:out value="${result.dscntRate}"/>%</td>
                 <td>
-                    <span class="p-switcher p-switcher--single">
-                        <input id="piscYn_<c:out value="${result.dscntNo}"/>" type="checkbox" class="p-switcher__input"<c:if test="${result.piscYn eq 'Y'}"> checked</c:if> value="<c:out value="${result.dscntNo}"/>" onchange="fn_piscYnCheck(<c:out value="${result.dscntNo}"/>)">
-                        <label for="piscYn_<c:out value="${result.dscntNo}"/>" class="p-switcher__label"><em class="p-switcher__text blind">운영</em></label>
-                    </span>
+                    <c:if test="${result.piscYn == 'Y'}">비대면</c:if>
+                    <c:if test="${result.piscYn == 'N'}">서류직접제출</c:if>
                 </td>
                 <td>
                     <span class="p-switcher p-switcher--single">
-                        <input id="directYn_<c:out value="${result.dscntNo}"/>" type="checkbox" class="p-switcher__input"<c:if test="${result.directYn eq 'Y'}"> checked</c:if> value="<c:out value="${result.dscntNo}"/>" onchange="fn_directYnCheck(<c:out value="${result.dscntNo}"/>)">
-                        <label for="directYn_<c:out value="${result.dscntNo}"/>" class="p-switcher__label"><em class="p-switcher__text blind">운영</em></label>
+                        <input id="useYn_<c:out value="${result.dscntNo}"/>" type="checkbox" class="p-switcher__input"<c:if test="${result.useYn eq 'Y'}"> checked</c:if> value="<c:out value="${result.dscntNo}"/>" onchange="fn_useYnCheck(<c:out value="${result.dscntNo}"/>)">
+                        <label for="useYn_<c:out value="${result.dscntNo}"/>" class="p-switcher__label"><em class="p-switcher__text blind">운영</em></label>
                     </span>
                 </td>
                 <td>
@@ -122,56 +127,10 @@
     <div class="text_right">
         <a href="./addDscntView.do?<c:out value="${dscntSearchVO.params}"/>" class="p-button p-button--combine write">등록</a>
     </div>
-    
+
 </div>
 
 <script>
-
-    function fn_piscYnCheck(dscntNo) {
-        var para = document.location.href.split("?");
-        var url = './updateDscntPiscYn.do?' + para[1] + '&dscntNo=' + dscntNo;
-        var chkAt = $('#piscYn_' + dscntNo).is(":checked");
-
-        if (chkAt) {
-            if (confirm("비대면 사용여부를 사용으로 변경 하시겠습니까?")) {
-                window.location.href = url + "&piscYn=Y";
-            } else {
-                $('#piscYn_'+dscntNo).prop('checked', false);
-                return false;
-            }
-
-        } else {
-            if (confirm("비대면 사용여부를 미사용으로 변경 하시겠습니까?")) {
-                window.location.href = url + "&piscYn=N";
-            } else {
-                $('#piscYn_'+dscntNo).prop('checked', true);
-                return false;
-            }
-        }
-    }
-
-    function fn_directYnCheck(dscntNo) {
-        var para = document.location.href.split("?");
-        var url = './updateDscntDirectYn.do?' + para[1] + '&dscntNo=' + dscntNo;
-        var chkAt = $('#directYn_' + dscntNo).is(":checked");
-
-        if (chkAt) {
-            if (confirm("서류직접제출 사용여부를 사용으로 변경 하시겠습니까?")) {
-                window.location.href = url + "&directYn=Y";
-            } else {
-                $('#directYn_'+dscntNo).prop('checked', false);
-                return false;
-            }
-
-        } else {
-            if (confirm("서류직접제출 사용여부를 미사용으로 변경 하시겠습니까?")) {
-                window.location.href = url + "&directYn=N";
-            } else {
-                $('#directYn_'+dscntNo).prop('checked', true);
-                return false;
-            }
-        }
-    }
 
     function fn_useYnCheck(dscntNo) {
         var para = document.location.href.split("?");

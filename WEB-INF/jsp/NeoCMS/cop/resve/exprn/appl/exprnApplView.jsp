@@ -117,6 +117,7 @@
                 <c:out value="${exprnApplVO.applNm}"/>
                 <c:if test="${exprnApplVO.genderSe == 'M'}"> (남)</c:if>
                 <c:if test="${exprnApplVO.genderSe == 'F'}"> (여)</c:if>
+                <c:if test="${exprnApplVO.loginSe == 'MNGR'}"> / 관리자등록</c:if>
             </td>
         </tr>
         <tr>
@@ -181,13 +182,13 @@
     <table class="p-table">
         <caption>예약 정보 상세보기</caption>
         <colgroup>
-            <col class="w15p">
+            <col class="w10p">
             <col />
-            <col class="w15p">
+            <col class="w10p">
             <col />
-            <col class="w15p">
+            <col class="w10p">
             <col />
-            <col class="w15p">
+            <col class="w10p">
             <col />
         </colgroup>
         <tbody class="p-table--th-left">
@@ -217,8 +218,13 @@
                 <c:out value="${rsvSttusMap[exprnApplVO.rsvSttusCd]}"/>
             </td>
             <th scope="row">결제상태</th>
-            <td colspan="3">
+            <td>
                 <c:out value="${paySttusMap[exprnApplVO.paySttusCd]}"/>
+            </td>
+            <th scope="row">결제방법</th>
+            <td>
+                <c:out value="${payMthdMap[exprnApplVO.payMthdCd]}"/>
+                <c:if test="${exprnApplVO.payMthdCd == 'ELCTRN' && !empty exprnApplVO.tossMethod}">(<c:out value="${exprnApplVO.tossMethod}"/>)</c:if>
             </td>
         </tr>
         <tr>
@@ -230,10 +236,9 @@
             <td>
                 <fmt:formatNumber value="${exprnApplVO.totalPayAmt}" pattern="#,##0"/> 원
             </td>
-            <th scope="row">결제방법</th>
+            <th scope="row">체험료</th>
             <td>
-                <c:out value="${payMthdMap[exprnApplVO.payMthdCd]}"/>
-                <c:if test="${exprnApplVO.payMthdCd == 'ELCTRN' && !empty exprnApplVO.tossMethod}">(<c:out value="${exprnApplVO.tossMethod}"/>)</c:if>
+                <fmt:formatNumber value="${exprnVO.exprnAmt}" pattern="#,##0"/> 원
             </td>
         </tr>
         <tr>
@@ -241,14 +246,14 @@
             <td colspan="3">
                 <c:out value="${tsu:toDateFormat(exprnApplVO.cancelDt, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss')}"/>
             </td>
+            <th scope="row">감면신청</th>
+            <td>
+                <c:if test="${exprnApplVO.dscntSe != 'DSCNT_ETC'}"><c:out value="${dscntSeMap[exprnApplVO.dscntSe]}"/></c:if>
+                <c:if test="${exprnApplVO.dscntSe == 'DSCNT_ETC'}"><c:out value="${exprnApplVO.dscntCdNm}"/></c:if>
+            </td>
             <th scope="row">감면금액</th>
             <td>
-                <%--TODOSDB: 감면코드 같이 표출--%>
                 <fmt:formatNumber value="${exprnApplVO.dscntAmt}" pattern="#,##0"/> 원
-            </td>
-            <th scope="row">체험료</th>
-            <td>
-                <fmt:formatNumber value="${exprnVO.exprnAmt}" pattern="#,##0"/> 원
             </td>
         </tr>
         <tr>
@@ -289,8 +294,12 @@
         </tr>
         <tr>
             <th scope="row">환불처리일시</th>
-            <td colspan="3">
+            <td>
                 <c:out value="${tsu:toDateFormat(exprnApplVO.rfndCmplDt, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss')}"/>
+            </td>
+            <th scope="row">환불금액</th>
+            <td>
+                <fmt:formatNumber value="${exprnApplVO.rfndAmt}" pattern="#,##0"/> 원
             </td>
         </tr>
         </tbody>
@@ -299,11 +308,14 @@
     <div class="row margin_t_20">
         <div class="col-12">
             <c:set var="applListUrl" value="./selectExprnApplList.do?"/>
-            <c:if test="${isExprnList == 'Y'}">
+            <c:if test="${listSe == 'E'}">
                 <c:set var="applListUrl" value="./selectExprnApplListByExprn.do?"/>
             </c:if>
+            <c:if test="${listSe == 'R'}">
+                <c:set var="applListUrl" value="./selectExprnRfndList.do?"/>
+            </c:if>
             <c:set var="applListParam" value="${exprnApplSearchVO.params}${exprnApplSearchVO.paramsMng}"/>
-            <c:if test="${isExprnList == 'Y'}">
+            <c:if test="${listSe == 'E'}">
                 <c:set var="applListParam" value="${applListParam}&${exprnSearchVO.exprnParamsMng}&exprnNo=${exprnApplVO.exprnNo}"/>
             </c:if>
             <a href="<c:out value="${applListUrl}"/><c:out value="${applListParam}"/>" class="p-button cancel">목록 </a>

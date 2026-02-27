@@ -61,6 +61,10 @@
         <p class="iconText comment"><span class="point-color-red">*</span> 표시는 필수 입력 항목 입니다.</p>
         <table class="table program formTable" data-table-response>
             <caption>신청자 정보 입력 - 인원구분(개인/단체), 이름, 생년월일, 연락처, 성별, 주소, 신청인원, 이메일 등</caption>
+            <colgroup>
+                <col style="width:150px;"/>
+                <col />
+            </colgroup>
             <tbody>
             <input type="hidden" name="key" value="<c:out value="${key}"/>" />
             <input type="hidden" name="exprnNo" value="<c:out value="${exprnSchdWebVO.exprnNo}"/>" />
@@ -205,95 +209,95 @@
                 </td>
             </tr>
             <c:if test="${!(exprnVO.slctMthdCd == 'DRWLT' && fn:contains(exprnVO.nmprSeCd, 'IND'))}">
-            <tr>
-                <th scope="row" class="first">
-                    <div class="innerCell">
-                        <label for="totalCnt" title="필수 입력 항목입니다.">
-                            신청인원
-                            <span class="point-color-red">*</span>
-                        </label>
-                    </div>
-                </th>
-                <td>
-                    <c:set var="nmprMinCnt" value="1"/>
-                    <c:set var="nmprMaxCnt" value="${exprnVO.rcritCnt}"/>
-                    <c:if test="${exprnVO.nmprMinCnt > 0}">
-                        <c:set var="nmprMinCnt" value="${exprnVO.nmprMinCnt}"/>
-                    </c:if>
-                    <c:if test="${exprnVO.nmprMaxCnt > 0}">
-                        <c:set var="nmprMaxCnt" value="${exprnVO.nmprMaxCnt}"/>
-                    </c:if>
-                    <div class="innerCell">
-                        총  
-                        <div class="customSelect inlineBlock">
-                            <select id="totalCnt" name="totalCnt">
-                                <option value="0">선택</option>
-                                <c:forEach var="i" begin="${nmprMinCnt}" end="${nmprMaxCnt}" varStatus="status">
-                                    <option value="<c:out value="${i}"/>"<c:if test="${i == exprnApplVO.totalCnt}"> selected</c:if>><c:out value="${i}"/><c:out value="${exprnVO.rcritUnit}"/></option>
-                                </c:forEach>
-                            </select>
+                <tr>
+                    <th scope="row" class="first">
+                        <div class="innerCell">
+                            <label for="totalCnt" title="필수 입력 항목입니다.">
+                                신청인원
+                                <span class="point-color-red">*</span>
+                            </label>
                         </div>
-                        <c:if test="${exprnVO.detailNmprUseYn == 'Y' && exprnVO.rcritUnit == '명'}">
-                              ( 성인
-                            <div class="customSelect inlineBlock">
-                                <select id="adltCnt" name="adltCnt">
-                                    <option value="0">선택</option>
-                                    <c:forEach var="i" begin="${nmprMinCnt}" end="${nmprMaxCnt}" varStatus="status">
-                                        <option value="<c:out value="${i}"/>"<c:if test="${i == exprnApplVO.adltCnt}"> selected</c:if>><c:out value="${i}"/>명</option>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                            ,   청소년
-                            <div class="customSelect inlineBlock">
-                                <select id="teenCnt" name="teenCnt">
-                                    <option value="0">선택</option>
-                                    <c:forEach var="i" begin="${nmprMinCnt}" end="${nmprMaxCnt}" varStatus="status">
-                                        <option value="<c:out value="${i}"/>"<c:if test="${i == exprnApplVO.teenCnt}"> selected</c:if>><c:out value="${i}"/>명</option>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                            ,   초등학생
-                            <div class="customSelect inlineBlock">
-                                <select id="elmntCnt" name="elmntCnt">
-                                    <option value="0">선택</option>
-                                    <c:forEach var="i" begin="${nmprMinCnt}" end="${nmprMaxCnt}" varStatus="status">
-                                        <option value="<c:out value="${i}"/>"<c:if test="${i == exprnApplVO.elmntCnt}"> selected</c:if>><c:out value="${i}"/>명</option>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                            ,   아동
-                            <div class="customSelect inlineBlock">
-                                <select id="childCnt" name="childCnt">
-                                    <option value="0">선택</option>
-                                    <c:forEach var="i" begin="${nmprMinCnt}" end="${nmprMaxCnt}" varStatus="status">
-                                        <option value="<c:out value="${i}"/>"<c:if test="${i == exprnApplVO.childCnt}"> selected</c:if>><c:out value="${i}"/>명</option>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                            ,   영유아
-                            <div class="customSelect inlineBlock">
-                                <select id="infantCnt" name="infantCnt">
-                                    <option value="0">선택</option>
-                                    <c:forEach var="i" begin="${nmprMinCnt}" end="${nmprMaxCnt}" varStatus="status">
-                                        <option value="<c:out value="${i}"/>"<c:if test="${i == exprnApplVO.infantCnt}"> selected</c:if>><c:out value="${i}"/>명</option>
-                                    </c:forEach>
-                                </select>
-                            </div>  )
+                    </th>
+                    <td>
+                        <c:set var="nmprMinCnt" value="1"/>
+                        <c:set var="nmprMaxCnt" value="${exprnVO.rcritCnt}"/>
+                        <c:if test="${exprnVO.nmprMinCnt > 0}">
+                            <c:set var="nmprMinCnt" value="${exprnVO.nmprMinCnt}"/>
                         </c:if>
-                    </div>
-                    <c:if test="${exprnVO.nmprMinCnt > 0 || exprnVO.nmprMaxCnt > 0}">
-                        <p class="iconText caution">
-                            <c:if test="${exprnVO.nmprMinCnt > 0}">
-                                최소 신청 : <c:out value="${exprnVO.nmprMinCnt}"/> <c:out value="${exprnVO.rcritUnit}"/>
+                        <c:if test="${exprnVO.nmprMaxCnt > 0}">
+                            <c:set var="nmprMaxCnt" value="${exprnVO.nmprMaxCnt}"/>
+                        </c:if>
+                        <div class="innerCell">
+                            총  
+                            <div class="customSelect inlineBlock">
+                                <select id="totalCnt" name="totalCnt">
+                                    <option value="0">선택</option>
+                                    <c:forEach var="i" begin="${nmprMinCnt}" end="${nmprMaxCnt}" varStatus="status">
+                                        <option value="<c:out value="${i}"/>"<c:if test="${i == exprnApplVO.totalCnt}"> selected</c:if>><c:out value="${i}"/><c:out value="${exprnVO.rcritUnit}"/></option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                            <c:if test="${exprnVO.detailNmprUseYn == 'Y' && exprnVO.rcritUnit == '명'}">
+                                  ( 성인
+                                <div class="customSelect inlineBlock">
+                                    <select id="adltCnt" name="adltCnt">
+                                        <option value="0">선택</option>
+                                        <c:forEach var="i" begin="${nmprMinCnt}" end="${nmprMaxCnt}" varStatus="status">
+                                            <option value="<c:out value="${i}"/>"<c:if test="${i == exprnApplVO.adltCnt}"> selected</c:if>><c:out value="${i}"/>명</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                                ,   청소년
+                                <div class="customSelect inlineBlock">
+                                    <select id="teenCnt" name="teenCnt">
+                                        <option value="0">선택</option>
+                                        <c:forEach var="i" begin="${nmprMinCnt}" end="${nmprMaxCnt}" varStatus="status">
+                                            <option value="<c:out value="${i}"/>"<c:if test="${i == exprnApplVO.teenCnt}"> selected</c:if>><c:out value="${i}"/>명</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                                ,   초등학생
+                                <div class="customSelect inlineBlock">
+                                    <select id="elmntCnt" name="elmntCnt">
+                                        <option value="0">선택</option>
+                                        <c:forEach var="i" begin="${nmprMinCnt}" end="${nmprMaxCnt}" varStatus="status">
+                                            <option value="<c:out value="${i}"/>"<c:if test="${i == exprnApplVO.elmntCnt}"> selected</c:if>><c:out value="${i}"/>명</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                                ,   아동
+                                <div class="customSelect inlineBlock">
+                                    <select id="childCnt" name="childCnt">
+                                        <option value="0">선택</option>
+                                        <c:forEach var="i" begin="${nmprMinCnt}" end="${nmprMaxCnt}" varStatus="status">
+                                            <option value="<c:out value="${i}"/>"<c:if test="${i == exprnApplVO.childCnt}"> selected</c:if>><c:out value="${i}"/>명</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                                ,   영유아
+                                <div class="customSelect inlineBlock">
+                                    <select id="infantCnt" name="infantCnt">
+                                        <option value="0">선택</option>
+                                        <c:forEach var="i" begin="${nmprMinCnt}" end="${nmprMaxCnt}" varStatus="status">
+                                            <option value="<c:out value="${i}"/>"<c:if test="${i == exprnApplVO.infantCnt}"> selected</c:if>><c:out value="${i}"/>명</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>  )
                             </c:if>
-                            <c:if test="${exprnVO.nmprMinCnt > 0 && exprnVO.nmprMaxCnt > 0}"> / </c:if>
-                            <c:if test="${exprnVO.nmprMaxCnt > 0}">
-                                최대 신청 : <c:out value="${exprnVO.nmprMaxCnt}"/> <c:out value="${exprnVO.rcritUnit}"/>
-                            </c:if>
-                        </p>
-                    </c:if>
-                </td>
-            </tr>
+                        </div>
+                        <c:if test="${exprnVO.nmprMinCnt > 0 || exprnVO.nmprMaxCnt > 0}">
+                            <p class="iconText caution">
+                                <c:if test="${exprnVO.nmprMinCnt > 0}">
+                                    최소 신청 : <c:out value="${exprnVO.nmprMinCnt}"/> <c:out value="${exprnVO.rcritUnit}"/>
+                                </c:if>
+                                <c:if test="${exprnVO.nmprMinCnt > 0 && exprnVO.nmprMaxCnt > 0}"> / </c:if>
+                                <c:if test="${exprnVO.nmprMaxCnt > 0}">
+                                    최대 신청 : <c:out value="${exprnVO.nmprMaxCnt}"/> <c:out value="${exprnVO.rcritUnit}"/>
+                                </c:if>
+                            </p>
+                        </c:if>
+                    </td>
+                </tr>
             </c:if>
             <tr>
                 <th scope="row" class="first"><div class="innerCell">이메일</div></th>
@@ -350,7 +354,7 @@
                         <input type="hidden" name="resInqTxId" value="">
                         <input type="hidden" name="resInqResult" value="">
                         <div class="innerCell">
-                            <div class="juminNo" id="juminNoInput">
+                            <div class="juminNo" id="resJuminNoInput">
                                 <label for="resJuminNoPre">주민번호 앞자리</label>
                                 <input type="text" id="resJuminNoPre" placeholder="주민번호 앞자리" class="customInputDefault textAlignCenter onlyNumber" maxlength="6" value="<c:out value="${tsu:toDateFormat(exprnApplVO.birthDe, 'yyyyMMdd', 'yyMMdd')}"/>" autocomplete="off" disabled>
                                 &nbsp;-&nbsp;
@@ -371,21 +375,36 @@
                         </th>
                         <td>
                             <div class="innerCell">
+                                <input type="hidden" name="dscntTxId" value="" class="dscntValue">
                                 <div class="customSelect inlineBlock">
                                     <select id="dscntCd" name="dscntCd">
-                                        <option value="DSCNT_NONE">감면없음</option>
+                                        <option value="0" data-dscnt-cd="">해당없음</option>
                                         <c:forEach var="result" items="${dscntList}">
-                                            <c:if test="${result.piscYn == 'Y'}">
-                                                <option value="PISC_${result.dscntCd}" data-confirm-mthd="pisc"><c:out value="${dscntSeMap[result.dscntCd]}"/>(비대면)</option>
-                                            </c:if>
-                                            <c:if test="${result.directYn == 'Y'}">
-                                                <option value="DIRECT_${result.dscntCd}" data-confirm-mthd="direct"><c:out value="${dscntSeMap[result.dscntCd]}"/>(서류직접제출)</option>
-                                            </c:if>
+                                            <option value="<c:out value="${result.dscntNo}"/>" data-dscnt-cd="<c:out value="${result.dscntCd}"/>" data-pisc-yn="<c:out value="${result.piscYn}"/>"<c:if test="${result.dscntNo == exprnApplVO.dscntCd}"> selected</c:if>>
+                                                <c:if test="${result.dscntCd != 'DSCNT_ETC'}"><c:out value="${dscntSeMap[result.dscntCd]}"/></c:if>
+                                                <c:if test="${result.dscntCd == 'DSCNT_ETC'}"><c:out value="${result.dscntCdNm}"/></c:if>
+                                            </option>
                                         </c:forEach>
                                     </select>
                                 </div>
+                                <div class="juminNo" id="dscntJuminNoInput"<c:if test="${empty exprnApplVO.dscntSe || (exprnApplVO.dscntSe != 'DSCNT_ETC' && exprnApplVO.dscntSe != 'SENIOR_65')}"> style="display: none;"</c:if>>
+                                    <label for="dscntJuminNoPre">주민번호 앞자리</label>
+                                    <input type="text" id="dscntJuminNoPre" placeholder="주민번호 앞자리" class="customInputDefault textAlignCenter onlyNumber" maxlength="6" value="<c:out value="${tsu:toDateFormat(exprnApplVO.birthDe, 'yyyyMMdd', 'yyMMdd')}"/>" autocomplete="off" disabled>
+                                    &nbsp;-&nbsp;
+                                    <label for="resJuminNoPost">주민번호 뒷자리</label>
+                                    <input type="password" id="dscntJuminNoPost" placeholder="주민번호 뒷자리" class="customInputDefault textAlignCenter onlyNumber dscntValue" maxlength="7" name="resJuminNoPost" autocomplete="off">
+                                </div>
+                                <button type="button" class="customLink bgBlack bigHeight marginLeft10" id="dscntCnfirmBtn" onclick="fn_dscntCnfirmCheck();"<c:if test="${exprnApplVO.dscntSe != 'DSCNT_ETC'}"> style="display: none;"</c:if>><span>조회</span></button>
+                                <span id="dscntResultText" class="dscntResultText marginLeft10"></span>
+                                <p class="iconText caution">서류 직접 제출이 필요한 감면 혜택은 관리자의 승인 후 감면이 가능합니다. 관련 서류를 메일 또는 방문을 통해 제출해주시기 바랍니다.</p>
                                 <table class="table default">
                                     <caption>감면항목</caption>
+                                    <colgroup>
+                                        <col style="width:18%;"/>
+                                        <col />
+                                        <col style="width:22%;"/>
+                                        <col style="width:12%;"/>
+                                    </colgroup>
                                     <thead>
                                     <tr>
                                         <th scope="col" class="first">감면항목</th>
@@ -394,24 +413,23 @@
                                         <th scope="col">감면율</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody class="text_center">
                                     <c:forEach var="result" items="${dscntList}">
-                                    <tr>
-                                        <td class="first"><c:out value="${dscntSeMap[result.dscntCd]}"/></td>
-                                        <td><c:out value="${result.dscntCnd}"/></td>
-                                        <td>
-                                            <c:if test="${result.piscYn == 'Y'}">
-                                                비대면
-                                            </c:if>
-                                            <c:if test="${result.piscYn == 'Y' && result.directYn == 'Y'}">
-                                                ,
-                                            </c:if>
-                                            <c:if test="${result.directYn == 'Y'}">
-                                                서류직접제출
-                                            </c:if>
-                                        </td>
-                                        <td><c:out value="${result.dscntRate}"/>%</td>
-                                    </tr>
+                                        <tr>
+                                            <td class="first">
+                                                <c:if test="${result.dscntCd != 'DSCNT_ETC'}"><c:out value="${dscntSeMap[result.dscntCd]}"/></c:if>
+                                                <c:if test="${result.dscntCd == 'DSCNT_ETC'}"><c:out value="${result.dscntCdNm}"/></c:if>
+                                            </td>
+                                            <td class="text_left"><c:out value="${result.dscntCnd}"/></td>
+                                            <td>
+                                                <c:choose>
+                                                    <c:when test="${result.dscntCd == 'DSCNT_ETC'}">서류직접제출</c:when>
+                                                    <c:when test="${result.dscntCd == 'SENIOR_65'}">생년월일(로그인 정보 기준)</c:when>
+                                                    <c:otherwise>비대면</c:otherwise>
+                                                </c:choose>
+                                            </td>
+                                            <td><c:out value="${result.dscntRate}"/>%</td>
+                                        </tr>
                                     </c:forEach>
                                     </tbody>
                                 </table>
@@ -452,16 +470,16 @@
                         <strong>이용요금</strong>
                         <span><fmt:formatNumber value="${exprnVO.exprnAmt}" pattern="#,###"/>원</span>
                     </li>
-                    <c:if test="${exprnVO.dscntUseYn == 'Y'}">
+                    <c:if test="${exprnVO.exprnAmt > 0 && exprnVO.dscntUseYn == 'Y'}">
                         <li>
                             <strong>감면할인</strong>
-                            <span>0원</span>
+                            <span id="dscntAmt">0원</span>
                         </li>
                     </c:if>
                 </ul>
                 <p class="sumAmount">
                     <strong>총 결제금액</strong>
-                    <span><fmt:formatNumber value="${exprnVO.exprnAmt}" pattern="#,###"/>원</span>
+                    <span id="totalPayAmt"><fmt:formatNumber value="${exprnVO.exprnAmt}" pattern="#,###"/>원</span>
                 </p>
             </div>
         </div>
@@ -493,9 +511,17 @@
 
 <script>
 
+    var exprnAmt = <c:out value="${exprnVO.exprnAmt}"/>;
+
     $(document).ready(function () {
 
-    <c:if test="${fn:contains(exprnVO.nmprSeCd, 'GRP')}">
+        // 신청하기 순번대기 종료
+        nfStop({
+            projectKey: "service_1",
+            segmentKey: "segKey_exp_003"
+        });
+
+        <c:if test="${fn:contains(exprnVO.nmprSeCd, 'GRP')}">
         $('input[type=radio][name=nmprSeCd]').change(function () {
             if ($(this).val() == 'GRP') {
                 $('#grpNmInput').show();
@@ -504,7 +530,7 @@
                 $('#grpNm').val('');
             }
         });
-    </c:if>
+        </c:if>
 
         $('.onlyNumber').on('input',function() {
             this.value = this.value.replace(/[^0-9]/g, '');
@@ -519,6 +545,35 @@
                 $('input[name=email2]').val($('#emailDomainSelect').val());
             }
         });
+
+        <c:if test="${exprnVO.exprnAmt > 0 && exprnVO.dscntUseYn == 'Y'}">
+        $('#dscntCd').change(function () {
+            var opt = $(this).find('option:selected');
+            var piscYn = opt.data('piscYn');
+            var dscntCd = opt.data('dscntCd');
+
+            if (piscYn == 'Y') {
+
+                $('#dscntCnfirmBtn').show();
+
+                if (dscntCd == 'SENIOR_65') {
+                    $('#dscntJuminNoInput').hide();
+                    $('#dscntJuminNoPost').val('');
+                } else {
+                    $('#dscntJuminNoInput').show();
+                }
+            } else {
+                $('#dscntJuminNoInput').hide();
+                $('#dscntCnfirmBtn').hide();
+                $('#dscntJuminNoPost').val('');
+            }
+
+            $('.dscntValue').val('');
+            $('#dscntResultText').text('');
+            $('#dscntAmt').text('0원');
+            $('#totalPayAmt').text(exprnAmt.toLocaleString() + '원');
+        })
+        </c:if>
     });
 
     function openDaumZipAddress() {
@@ -531,6 +586,7 @@
         }).open();
     }
 
+    <c:if test="${exprnVO.resInqUseYn == 'Y' || exprnVO.dscntUseYn == 'Y'}">
     function fn_juminNoCheck(juminNoPost) {
 
         if(juminNoPost == "") {
@@ -550,7 +606,9 @@
 
         return true;
     }
+    </c:if>
 
+    <c:if test="${exprnVO.resInqUseYn == 'Y'}">
     function fn_ResideInsttCnfirmCheck() {
 
         $('#ResideInsttCnfirm').text('');
@@ -588,12 +646,11 @@
 
                 if (RESULT == 'Y') {
                     alert("거주지 조회가 완료되었습니다.");
-
-                    var hangkikCd = res['hangkikCd'];
-                    resInqResult = hangkikCd;
+                    resInqResult = 1;
 
                     var admDong = res['admDong'];
                     resInqResultText += '청주시민(' + admDong + ')';
+                    $('input[name=resInqTxId]').val(resInqTxId);
                 } else {
                     var msg = '거주지 조회 오류입니다. 관리자에게 문의해주세요.';
 
@@ -603,9 +660,10 @@
                     } else if(RESULT == 'PISC_FAIL_03') {
                         msg = '성명 오류입니다. 입력하신 성명을 다시 확인해주세요.';
                         resInqResult = 3;
-                    } else if(RESULT == 'PISC_FAIL_04') {
+                    } else if(RESULT == 'N') {
                         msg = '청주시 거주자가 아닙니다.';
                         resInqResult = 4;
+                        $('input[name=resInqTxId]').val(resInqTxId);
                     } else if(RESULT == 'PISC_FAIL_09') {
                         msg = '시스템 오류입니다. 관리자에게 문의해주세요.';
                         resInqResult = 9;
@@ -621,7 +679,6 @@
                     resInqResultText += msg;
                 }
 
-                $('input[name=resInqTxId]').val(resInqTxId);
                 $('input[name=resInqResult]').val(resInqResult);
                 $('#resInqResultText').text(resInqResultText);
             }, // success
@@ -634,6 +691,77 @@
             }
         });
     }
+    </c:if>
+
+    <c:if test="${exprnVO.exprnAmt > 0 && exprnVO.dscntUseYn == 'Y'}">
+
+    function fn_dscntCnfirmCheck() {
+
+        var dscntNo = $('#dscntCd').val();
+        var piscYn = $('#dscntCd').find('option:selected').data('piscYn');
+        var dscntSe = $('#dscntCd').find('option:selected').data('dscntCd');
+
+        if (dscntSe != 'SENIOR_65') {
+
+            if (piscYn != 'Y') {
+                alert('비대면인 경우에만 조회 가능합니다.');
+                $('#dscntCd').focus();
+                return false;
+            }
+
+            var juminNoPost = $('#dscntJuminNoPost').val();
+            if(!fn_juminNoCheck(juminNoPost)) {
+                $('#dscntJuminNoPost').focus();
+                return false;
+            }
+        }
+
+        $.ajax({
+            cache: false,
+            url: '/piscDscntAjax.do',
+            type: 'POST',
+            data: {
+                prgSe: 'EXP',
+                juminNoPost: juminNoPost,
+                prgNo: <c:out value="${exprnVO.exprnNo}"/>,
+                insttNo: <c:out value="${exprnVO.insttNo}"/>,
+                dscntNo: dscntNo,
+                stdrDe: <c:out value="${exprnSchdWebVO.exprnDe}"/>
+            },
+            success: function (res) {
+                var PISC = res['PISC'];
+                var MESSAGE = res['MESSAGE'];
+
+                if (PISC == 'Y') {
+                    alert(MESSAGE);
+
+                    var dscntTxId = res['dscntTxId'];
+
+                    $('input[name=dscntTxId]').val(dscntTxId);
+
+                    var dscntAmt = res['dscntAmt'];
+                    if (dscntAmt !== undefined && dscntAmt > 0) {
+                        var totalPayAmt = res['totalPayAmt'];
+                        $('#dscntAmt').text('-' + dscntAmt.toLocaleString() + '원');
+                        $('#totalPayAmt').text(totalPayAmt.toLocaleString() + '원');
+                    }
+                } else {
+                    alert(MESSAGE);
+                }
+
+                $('#dscntResultText').text(MESSAGE);
+                $('#dscntJuminNoPost').val('');
+            }, // success
+            error: function (request,xhr, status) {
+                //alert(request.responseText);
+                alert("에러가 발생하였습니다.");
+                console.log("code:",request.status);
+                console.log("message:",request.responseText);
+                console.log("error:"+error)
+            }
+        });
+    }
+    </c:if>
 
     function formCheck(form) {
 
@@ -765,6 +893,22 @@
         </c:if>
 
         <c:if test="${exprnVO.exprnAmt > 0}">
+        <c:if test="${exprnVO.dscntUseYn == 'Y'}">
+            if (!form.dscntCd.value) {
+                alert('감면 혜택을 확인해주세요.');
+                form.dscntCd.focus();
+                return false;
+            } else {
+                var piscYn = $('#dscntCd').find('option:selected').data('piscYn');
+
+                if (piscYn == 'Y' && !form.dscntTxId.value) {
+                    alert('비대면 감면 혜택을 받으실 경우 감면여부 조회가 필요합니다.\n' +
+                        '감면 대상이 아닌 경우 다른 감면 혜택을 조회하거나 헤당없음을 선택해주세요.');
+                    form.dscntCd.focus();
+                    return false;
+                }
+            }
+        </c:if>
         if (!form.payMthdCd.value) {
             alert("결제방식을 선택해주세요.");
             form.payMthdCd.focus();

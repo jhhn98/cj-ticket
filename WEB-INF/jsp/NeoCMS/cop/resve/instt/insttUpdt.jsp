@@ -54,8 +54,8 @@
                         <th scope="row"><form:label path="insttNm">운영기관명</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>
                         <td>
                             <form:input path="insttNm" style="width:200px" class="p-input"/>
-                            <button type="button" class="p-button primary" onclick="fn_insttNmCheck()">중복확인</button>
-                            <input type="hidden" name="insttNmCheckAt" value="Y"/>
+                            <%--<button type="button" class="p-button primary" onclick="fn_insttNmCheck()">중복확인</button>
+                            <input type="hidden" name="insttNmCheckAt" value="Y"/>--%>
                         </td>
                     </tr>
                     <tr>
@@ -186,6 +186,8 @@
             form.insttNm.focus();
             return false;
         }
+
+/*
         if (!form.insttNmCheckAt.value) {
             alert("운영기관명 중복확인이 필요합니다.");
             form.insttNm.focus();
@@ -196,6 +198,7 @@
             form.insttNm.focus();
             return false;
         }
+*/
 
         if (!form.useYn.value) {
             alert("운영여부를 확인해주세요.");

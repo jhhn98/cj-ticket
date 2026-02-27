@@ -117,8 +117,8 @@
         <colgroup>
             <col style="width:30px">
             <col style="width:80px">
-            <col style="width:120px">
-            <col />
+            <col style="width:100px">
+            <col style="width:250px">
             <col style="width:120px">
             <col style="width:80px">
             <col style="width:90px">
@@ -129,8 +129,9 @@
             <col style="width:50px">
             <col style="width:100px">
             <col style="width:90px">
+            <col style="width:80px">
             <col style="width:90px">
-            <col style="width:90px">
+            <col style="width:100px">
             <col style="width:50px">
         </colgroup>
         <thead>
@@ -149,6 +150,7 @@
             <th scope="col">인원</th>
             <th scope="col">체험일자</th>
             <th scope="col">거주지</th>
+            <th scope="col">감면혜택</th>
             <th scope="col">예약상태</th>
             <th scope="col">결제상태</th>
             <th scope="col">관리</th>
@@ -199,19 +201,30 @@
                 </td>
                 <td><c:out value="${lgldongMap[result.resInqCd]}"/></td>
                 <td>
-                    <c:out value="${rsvSttusMap[result.rsvSttusCd]}"/>
-                    <c:if test="${!fn:contains(result.rsvSttusCd, 'CNCL') && !empty result.drwtWinYn}">
-                        <br/>
-                        추첨완료(
-                        <c:if test="${result.drwtWinYn == 'Y'}">당첨</c:if>
-                        <c:if test="${result.drwtWinYn == 'N'}">미당첨</c:if>
-                        )
+                    <c:if test="${!empty result.dscntCd}">
+                        <c:if test="${result.piscYn == 'Y'}">감면혜택<br/>(비대면)</c:if>
+                        <c:if test="${result.piscYn == 'N'}">감면혜택<br/>(직접제출)</c:if>
                     </c:if>
                 </td>
                 <td>
-                    <%--TODOSDB: 감면관련 상태값 추가--%>
+                    <c:out value="${rsvSttusMap[result.rsvSttusCd]}"/>
+                    <c:if test="${!fn:contains(result.rsvSttusCd, 'CNCL') && !empty result.drwtWinYn}">
+                        <br/>
+                        추첨완료
+                        <c:if test="${result.drwtWinYn == 'Y'}"><br/>(당첨)</c:if>
+                        <c:if test="${result.drwtWinYn == 'N'}"><br/>(미당첨)</c:if>
+                    </c:if>
+                </td>
+                <td>
                     <c:out value="${paySttusMap[result.paySttusCd]}"/>
-                    <c:if test="${result.rsvSttusCd == 'APPL_CMPL' && result.paySttusCd == 'PAY_WAIT'}">
+                    <br/>
+                    <c:if test="${!empty result.payMthdCd && empty result.tossMethod}">
+                        (<c:out value="${payMthdMap[result.payMthdCd]}"/>)
+                    </c:if>
+                    <c:if test="${result.payMthdCd == 'ELCTRN' && !empty result.tossMethod}">
+                        (T<c:out value="${result.tossMethod}"/>)
+                    </c:if>
+                    <c:if test="${result.rsvSttusCd == 'APPL_CMPL' && result.paySttusCd == 'PAY_WAIT' && result.totalPayAmt > 0 && result.payMthdCd == 'ELCTRN' && empty result.tossMethod}">
                         <br/><c:out value="${tsu:toDateFormat(result.payDeadlineDt, 'yyyyMMddHHmmss', 'yyyy-MM-dd')}"/>
                         <br/><c:out value="${tsu:toDateFormat(result.payDeadlineDt, 'yyyyMMddHHmmss', 'HH:mm:ss')}"/>
                     </c:if>

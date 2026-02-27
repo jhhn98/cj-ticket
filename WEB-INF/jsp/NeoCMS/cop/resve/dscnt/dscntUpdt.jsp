@@ -56,16 +56,23 @@
                             <form:option value="" label="선택"/>
                             <form:options items="${dscntSeList}" itemValue="code" itemLabel="codeNm"/>
                         </form:select>
+                        <input type="text" name="dscntCdNm" id="dscntCdNm" value="<c:out value="${dscnt.dscntCdNm}"/>" class="p-input w30p"<c:if test="${dscnt.dscntCd != 'DSCNT_ETC'}"> disabled</c:if>/>
+                        <br/>
+                        <span class="p-table__content">
+                            <svg width="20" height="25" fill="#202e70" focusable="false"><use xlink:href="/common/images/program/p-icon.svg#info-circle"></use></svg>
+                            <em class="em_black">비대면 서비스 외 직접 서류제출이 필요한 감면 혜택의 경우 '기타'를 선택해주세요.</em>
+                        </span>
                     </td>
                 </tr>
                 <tr>
                     <th scope="row"><form:label path="dscntCnd">감면혜택 조건</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>
                     <td>
                         <form:input path="dscntCnd" class="p-input"/>
-                        <span class="p-table__content padding_l_10">
-                                <svg width="20" height="25" fill="#202e70" focusable="false"><use xlink:href="/common/images/program/p-icon.svg#info-circle"></use></svg>
-                                <em class="em_black">80자 이내로 입력해주세요.</em>
-                            </span>
+                        <br/>
+                        <span class="p-table__content">
+                            <svg width="20" height="25" fill="#202e70" focusable="false"><use xlink:href="/common/images/program/p-icon.svg#info-circle"></use></svg>
+                            <em class="em_black">80자 이내로 입력해주세요.</em>
+                        </span>
                     </td>
                 </tr>
                 <tr>
@@ -80,30 +87,30 @@
                         <span class="p-table__content">%</span>
                     </td>
                 </tr>
-                <tr>
-                    <th scope="row"><form:label path="piscYn">비대면 사용여부</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>
+                <tr style="display: none;">
+                    <th scope="row"><form:label path="piscYn">자격확인방법</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>
                     <td>
-                            <span class="p-form-checkbox">
-                                <input type="radio" name="piscYn" id="piscYn1" class="p-form-radio__input" value="Y"<c:if test="${dscnt.piscYn == 'Y'}"> checked</c:if> />
-                                <label for="piscYn1" class="p-form-radio__label">사용</label>
-                            </span>
                         <span class="p-form-checkbox">
-                                <input type="radio" name="piscYn" id="piscYn2" class="p-form-radio__input" value="N"<c:if test="${dscnt.piscYn == 'N'}"> checked</c:if>>
-                                <label for="piscYn2" class="p-form-radio__label">미사용</label>
-                            </span>
+                            <input type="radio" name="piscYn" id="piscYn1" class="p-form-radio__input" value="Y"<c:if test="${dscnt.piscYn == 'Y'}"> checked</c:if>>
+                            <label for="piscYn1" class="p-form-radio__label">비대면</label>
+                        </span>
+                        <span class="p-form-checkbox">
+                            <input type="radio" name="piscYn" id="piscYn2" class="p-form-radio__input" value="N"<c:if test="${dscnt.piscYn == 'N'}"> checked</c:if>>
+                            <label for="piscYn2" class="p-form-radio__label">직접제출</label>
+                        </span>
                     </td>
                 </tr>
                 <tr>
-                    <th scope="row"><form:label path="directYn">서류직접제출 사용여부</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>
+                    <th scope="row"><form:label path="useYn">사용여부</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>
                     <td>
-                            <span class="p-form-checkbox">
-                                <input type="radio" name="directYn" id="directYn1" class="p-form-radio__input" value="Y"<c:if test="${dscnt.directYn == 'Y'}"> checked</c:if>>
-                                <label for="directYn1" class="p-form-radio__label">사용</label>
-                            </span>
                         <span class="p-form-checkbox">
-                                <input type="radio" name="directYn" id="directYn2" class="p-form-radio__input" value="N"<c:if test="${dscnt.directYn == 'N'}"> checked</c:if>>
-                                <label for="directYn2" class="p-form-radio__label">미사용</label>
-                            </span>
+                            <input type="radio" name="useYn" id="useYn1" class="p-form-radio__input" value="Y"<c:if test="${dscnt.useYn == 'Y'}"> checked</c:if>>
+                            <label for="useYn1" class="p-form-radio__label">사용</label>
+                        </span>
+                        <span class="p-form-checkbox">
+                            <input type="radio" name="useYn" id="useYn2" class="p-form-radio__input" value="N"<c:if test="${dscnt.useYn == 'N'}"> checked</c:if>>
+                            <label for="useYn2" class="p-form-radio__label">미사용</label>
+                        </span>
                     </td>
                 </tr>
                 </tbody>
@@ -123,6 +130,21 @@
 
 <script>
 
+    $(document).ready(function() {
+
+        $('#dscntCd').change(function () {
+            if ($(this).val() == 'DSCNT_ETC') {
+                $('#dscntCdNm').prop('disabled', false);
+                $('#piscYn2').prop('checked', true);
+            } else {
+                $('#dscntCdNm').prop('disabled', true);
+                $('#dscntCdNm').val('');
+                $('#piscYn1').prop('checked', true);
+            }
+        });
+
+    });
+
     function fn_updateDscntCheck(form){
 
         if (!form.insttNo.value) {
@@ -132,9 +154,17 @@
         }
 
         if (!form.dscntCd.value) {
-            alert("감면혜택코드를 선택해주세요.");
+            alert("감면혜택구분을 선택해주세요.");
             form.dscntCd.focus();
             return false;
+        }
+
+        if(form.dscntCd.value == 'DSCNT_ETC') {
+            if (!form.dscntCdNm.value) {
+                alert("감면혜택구분 '기타'를 선택하신 경우 감면혜택구분명을 직접 입력해주세요.");
+                form.dscntCdNm.focus();
+                return false;
+            }
         }
 
         if (!form.dscntCnd.value) {
@@ -150,14 +180,14 @@
         }
 
         if (!form.piscYn.value) {
-            alert("비대면 사용여부를 확인해주세요.");
+            alert("자격확인방법을 확인해주세요.");
             $('#piscYn1').focus();
             return false;
         }
 
-        if (!form.directYn.value) {
-            alert("서류직접제출 사용여부를 확인해주세요.");
-            $('#directYn1').focus();
+        if (!form.useYn.value) {
+            alert("사용여부를 확인해주세요.");
+            $('#useYn1').focus();
             return false;
         }
 

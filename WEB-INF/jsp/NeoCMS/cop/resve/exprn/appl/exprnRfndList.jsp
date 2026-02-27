@@ -102,18 +102,17 @@
     <table class="p-table p-table--bordered">
         <caption>체험 신청 환불 목록 - 번호, 운영기관, 체험명, 예약번호, 체험일시, 신청자, 연락처, 결제방식/결제일시/결제금액, 환불요청일시/환불계좌정보, 환불금액, 환불처리일시, 결제상태 등 제공</caption>
         <colgroup>
-            <col style="width:100px">
-            <col style="width:150px">
+            <col style="width:80px">
+            <col style="width:120px">
             <col />
             <col style="width:180px">
             <col style="width:100px">
             <col style="width:100px">
             <col style="width:110px">
             <col style="width:150px">
+            <col style="width:200px">
             <col style="width:150px">
-            <col style="width:80px">
             <col style="width:100px">
-            <col style="width:80px">
         </colgroup>
         <thead>
         <tr>
@@ -126,8 +125,7 @@
             <th scope="col">연락처</th>
             <th scope="col">결제방식<br/>결제일시<br/>결제금액</th>
             <th scope="col">환불요청일시<br/>환불계좌정보</th>
-            <th scope="col">환불금액</th>
-            <th scope="col">환불처리일시</th>
+            <th scope="col">환불처리일시<br>환불금액</th>
             <th scope="col">결제상태</th>
         </tr>
         </thead>
@@ -142,7 +140,7 @@
                 </td>
                 <td class="text_left"><c:out value="${result.exprnNm}"/></td>
                 <td>
-                    <a href="./selectExprnApplView.do?exprnApplNo=<c:out value="${result.exprnApplNo}"/>&amp;<c:out value="${exprnApplSearchVO.params}"/><c:out value="${exprnApplSearchVO.paramsMng}"/><c:out value="${exprnSearchVO.exprnParamsMng}"/>">
+                    <a href="./selectExprnApplView.do?exprnApplNo=<c:out value="${result.exprnApplNo}"/>&amp;<c:out value="${exprnApplSearchVO.params}"/><c:out value="${exprnApplSearchVO.paramsMng}"/><c:out value="${exprnSearchVO.exprnParamsMng}"/>&amp;listSe=R">
                         <c:out value="${result.exprnApplId}"/>
                     </a>
                 </td>
@@ -157,31 +155,47 @@
                 <td>
                     <c:out value="${payMthdMap[result.payMthdCd]}"/>
                     <c:if test="${result.payMthdCd == 'ELCTRN' && !empty result.tossMethod}">(<c:out value="${result.tossMethod}"/>)</c:if><br/>
-                    <c:out value="${tsu:toDateFormat(result.payDt, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss')}"/><br/>
+                    <c:if test="${!empty result.payDt}">
+                        <c:out value="${tsu:toDateFormat(result.payDt, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss')}"/><br/>
+                    </c:if>
                     <fmt:formatNumber value="${result.totalPayAmt}" pattern="#,##0"/> 원
                 </td>
                 <td>
                     <c:out value="${tsu:toDateFormat(result.rfndReqDt, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss')}"/>
                     <c:if test="${!(result.payMthdCd == 'ELCTRN' && result.tossMethod != '가상계좌')}">
                         <br/>
-                        <c:out value="${bankMap[result.rfndBankNm]}"/><br>
-                        <c:out value="${result.rfndAcctNo}"/><br>
+                        <c:out value="${bankMap[result.rfndBankNm]}"/>
+                        <c:out value="${result.rfndAcctNo}"/><br/>
                         (예금주 : <c:out value="${result.rfndDpstrNm}"/>)
                     </c:if>
                 </td>
-                <td><fmt:formatNumber value="${result.rfndAmt}" pattern="#,##0"/> 원</td>
                 <td>
-                    <c:out value="${tsu:toDateFormat(result.rfndCmplDt, 'yyyyMMddHHmmss', 'yyyy-MM-dd')}"/><br>
-                    <c:out value="${tsu:toDateFormat(result.rfndCmplDt, 'yyyyMMddHHmmss', 'HH:mm:ss')}"/>
+                    <c:if test="${result.paySttusCd == 'RFND_CMPL' || result.paySttusCd == 'RFND_PART'}">
+                        <c:out value="${tsu:toDateFormat(result.rfndCmplDt, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss')}"/><br>
+                        <fmt:formatNumber value="${result.rfndAmt}" pattern="#,##0"/> 원
+                    </c:if>
                 </td>
                 <td>
                     <c:out value="${paySttusMap[result.paySttusCd]}"/>
                     <c:if test="${result.paySttusCd == 'RFND_REQ'}">
                         <c:if test="${result.payMthdCd == 'ELCTRN' && !empty result.tossMethod}">
-                            <a href="" class="p-button p-button--small restore" onclick="fn_exprnApplRfndToss('<c:out value="${result.exprnApplNo}"/>', <c:out value="${result.insttNo}"/>, '<c:out value="${result.tossPaymentKey}"/>'); return false;">환불처리</a>
+                            <button type="button" class="p-button p-button--small restore" id="rfnd-modal-button"
+                                    data-appl-no="<c:out value="${result.exprnApplNo}"/>"
+                                    data-instt-no="<c:out value="${result.insttNo}"/>"
+                                    data-pay-amt="<fmt:formatNumber value="${result.totalPayAmt}" pattern="#,##0"/>"
+                                    data-rfnd-se="tossRfnd">환불처리</button>
                         </c:if>
                         <c:if test="${result.payMthdCd == 'NBKRCP' || result.payMthdCd == 'DIRECT'}">
-                            <a href="" class="p-button p-button--small restore" onclick="fn_exprnApplRfnd('<c:out value="${result.exprnApplNo}"/>', <c:out value="${result.insttNo}"/>); return false;">환불처리</a>
+                            <button type="button" class="p-button p-button--small restore" id="rfnd-modal-button"
+                                    data-appl-no="<c:out value="${result.exprnApplNo}"/>"
+                                    data-instt-no="<c:out value="${result.insttNo}"/>"
+                                    data-pay-amt="<fmt:formatNumber value="${result.totalPayAmt}" pattern="#,##0"/>"
+                                    data-rfnd-se="onlyUpdt">환불처리</button>
+                        </c:if>
+                    </c:if>
+                    <c:if test="${result.rsvSttusCd == 'APPL_CMPL' && result.paySttusCd == 'PAY_WAIT'}">
+                        <c:if test="${result.payMthdCd == 'ELCTRN' && result.tossMethod == '가상계좌'}">
+                            <button type="button" class="p-button p-button--small darken" onclick="fn_exprnApplCncl('<c:out value="${result.exprnApplNo}"/>', <c:out value="${result.insttNo}"/>); return false;">취소처리</button>
                         </c:if>
                     </c:if>
                 </td>
@@ -233,16 +247,139 @@
             </div>
         </div>
     </div>
+    <div class="modal" id="rfnd-amt-modal" tabindex="0" role="dialog">
+        <div class="modal__body">
+            <div class="modal__header">
+                <div class="modal__title">환불 금액 입력</div>
+            </div>
+            <div class="modal__content">
+                <table class="p-table">
+                    <caption>환불 금액 입력</caption>
+                    <colgroup>
+                        <col class="w30p">
+                        <col />
+                    </colgroup>
+                    <tbody class="p-table--th-left">
+                    <tr>
+                        <th scope="row" style="text-align: center;">결제금액</th>
+                        <td id="payAmtTxt"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" style="text-align: center;">환불구분</th>
+                        <td>
+                            <span class="p-form-radio">
+                                <input type="radio" name="rfndSttus" id="rfndCmpl" class="p-form-radio__input" value="RFND_CMPL" checked>
+                                <label for="rfndCmpl" class="p-form-radio__label">전체환불</label>
+                            </span>
+                            <span class="p-form-radio">
+                                <input type="radio" name="rfndSttus" id="rfndPart" class="p-form-radio__input" value="RFND_PART">
+                                <label for="rfndPart" class="p-form-radio__label">부분환불</label>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row" style="text-align: center;">환불금액</th>
+                        <td>
+                            <input type="text" id="rfndAmt" class="p-input" placeholder="숫자만 입력바랍니다." disabled>
+                        </td>
+                    </tr>
+                    <input type="hidden" id="applNo"/>
+                    <input type="hidden" id="insttNo"/>
+                    <input type="hidden" id="rfndSe"/>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal__footer">
+                <button type="button" class="p-button primary" onclick="fn_exprnApplRfnd(); return false;">환불</button>
+                <button type="button" class="p-button default" data-close="modal">닫기</button>
+            </div>
+            <div class="modal__close">
+                <button type="button" data-close="modal" class="modal__close-button">
+                    <span>닫기</span>
+                </button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
 
-    function fn_exprnApplRfndToss(exprnApplNo, insttNo, tossPaymentKey) {
+    function fn_exprnApplCncl(exprnApplNo, insttNo) {
+
+        if (!confirm("취소처리하시겠습니까?")) {
+            return false;
+        }
+        fn_exprnApplRfndTossAjax(exprnApplNo, insttNo, '가상계좌 입금 전 취소처리', null);
+    }
+
+    $("#rfnd-modal-button").on("click", function () {
+
+        var payAmt = $(this).data('payAmt');
+        var applNo = $(this).data('applNo');
+        var insttNo = $(this).data('insttNo');
+        var rfndSe = $(this).data('rfndSe');
+
+        $('#payAmtTxt').text(payAmt + '원');
+        $('#applNo').val(applNo);
+        $('#insttNo').val(insttNo);
+        $('#rfndSe').val(rfndSe);
+
+        $(this).modalPop({
+            target : "#rfnd-amt-modal",
+            width  : "400",
+            height : "200"
+        });
+    });
+
+    $("input[name=rfndSttus]").on("change", function () {
+
+        var rfndSttus = $(this).val();
+        if (rfndSttus == 'RFND_CMPL') {
+            $('#rfndAmt').prop('disabled', true);
+            $('#rfndAmt').val('');
+        } else {
+            $('#rfndAmt').prop('disabled', false);
+        }
+    });
+
+    function fn_exprnApplRfnd() {
+
+        var applNo = $('#applNo').val();
+        var insttNo = $('#insttNo').val();
+        var rfndAmt = $('#rfndAmt').val();
+        var rfndSttus = $('input[name=rfndSttus]:checked').val();
+
+        if (!rfndAmt) {
+            if (rfndSttus == 'RFND_PART') {
+                alert('부분환불을 선택하신 경우 환불금액을 입력해주세요.');
+                $('#rfndAmt').focus();
+                return false;
+            } else {
+                rfndAmt = 0;
+            }
+        }
 
         if (!confirm("환불처리하시겠습니까?")) {
             return false;
         }
 
+        var rfndSe = $('#rfndSe').val();
+        if (rfndSe == 'tossRfnd') {
+            // 전자결제: 토스취소요청 후 환불완료처리
+            fn_exprnApplRfndTossAjax(applNo, insttNo, null, rfndAmt);
+        } else {
+            // 전자결제 외: 상태값만 수정처리
+            fn_exprnApplRfndAjax(applNo, insttNo, rfndSttus, rfndAmt);
+        }
+
+    }
+
+    function fn_exprnApplRfndTossAjax(exprnApplNo, insttNo, cancelReason, rfndAmt) {
+
+        console.log('exprnApplNo', exprnApplNo);
+        console.log('insttNo', insttNo);
+        console.log('cancelReason', cancelReason);
+        console.log('rfndAmt', rfndAmt);
         $.ajax({
             cache: false,
             url: '/tosspaymentsCancel.do',
@@ -251,23 +388,16 @@
                 applNo: exprnApplNo,
                 insttNo: insttNo,
                 prgSe: 'EXP',
-                paymentKey: tossPaymentKey
+                cancelReason: cancelReason,
+                cancelAmount: rfndAmt
             },
             success: function (res) {
-                if (res == 1) {
-                    alert("환불처리가 완료되었습니다.");
-                } else if (res == 0) {
-                    alert("토스페이먼츠 환불처리는 되었으나 상태값 변경 처리 중 오류가 발생했습니다.");
-                } else if (res == -1) {
-                    alert("프로그램구분 정보를 확인할 수 없습니다.");
-                } else if (res == -2) {
-                    alert("신청 고유번호 정보를 확인할 수 없습니다.");
-                } else if (res == -3) {
-                    alert("신청 정보를 확인할 수 없습니다.");
-                } else if (res == -999) {
-                    alert("토스페이먼츠 환불 요청 중 오류가 발생했습니다.");
+                var code = res['code'];
+                var msg = res['message'];
+                if (code == 'TOSS_CANCEL_SUCCESS') {
+                    alert(msg);
                 } else {
-                    alert("처리 중 오류가 발생했습니다.");
+                    alert(code + ":" + msg);
                 }
                 location.reload();
             }, // success
@@ -281,11 +411,7 @@
         });
     }
 
-    function fn_exprnApplRfnd(exprnApplNo, insttNo) {
-
-        if (!confirm("환불처리하시겠습니까?")) {
-            return false;
-        }
+    function fn_exprnApplRfndAjax(exprnApplNo, insttNo, rfndSttus, rfndAmt) {
 
         $.ajax({
             cache: false,
@@ -294,7 +420,8 @@
             data: {
                 exprnApplNo: exprnApplNo,
                 insttNo: insttNo,
-                paySttusCd: 'RFND_CMPL'
+                paySttusCd: rfndSttus,
+                rfndAmt: rfndAmt
             },
             success: function (res) {
                 if (res == 1) {

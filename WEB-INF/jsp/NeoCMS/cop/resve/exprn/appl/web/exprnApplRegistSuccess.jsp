@@ -89,10 +89,12 @@
                 <strong>이용요금</strong>
                 <span><fmt:formatNumber value="${tsu:xssNumberFilter(exprnApplVO.exprnAmt)}" pattern="#,###"/>원</span>
             </li>
+            <c:if test="${exprnVO.dscntUseYn == 'Y' && exprnApplVO.dscntAmt > 0}">
             <li>
-                <strong>할인(국가유공자감면)</strong>
+                <strong>할인(<c:out value="${dscntSeMap[exprnApplVO.dscntSe]}"/>)</strong>
                 <span>-<fmt:formatNumber value="${tsu:xssNumberFilter(exprnApplVO.dscntAmt)}" pattern="#,###"/>원</span>
             </li>
+            </c:if>
         </ul>
         </c:if>
         <p class="sumAmount">
@@ -102,7 +104,10 @@
     </div>
 </div>
 <div class="flexHAlignCenter marginTop20">
-    <p class="iconText caution">예약정보 수정, 예약취소 및 결제는 <span class="point-color-green">나의 예약현황'</span>에서 가능합니다.</p>
+    <p class="iconText caution">예약정보 수정, 예약취소 및 결제는 <span class="point-color-green">'나의 예약현황'</span>에서 가능합니다.</p>
+</div>
+<div class="flexHAlignCenter">
+    <p class="iconText caution">감면혜택 중 <span class="point-color-green">'서류직접제출'</span>이 필요한 경우 관리자 승인 후 할인 적용됩니다.</p>
 </div>
 <div class="formButtonGroup">
     <a href="./myPageList.do?key=59" class="button"><span>나의 예약현황 보기</span></a>

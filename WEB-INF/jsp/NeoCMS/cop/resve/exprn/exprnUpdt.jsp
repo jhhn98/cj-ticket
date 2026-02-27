@@ -303,7 +303,7 @@
                         <div class="p-form-group w20p">
                             <span class="p-form__split">예약일/추첨일/승인일로부터 </span>
                             <select name="payTmlmtCnt" id="payTmlmtCnt" class="p-input p-input--auto text_center"<c:if test="${exprnVO.exprnAmt == 0}"> disabled</c:if>>
-                                <c:forEach var="i" begin="3" end="30">
+                                <c:forEach var="i" begin="3" end="90">
                                     <option value="${i}"<c:if test="${exprnVO.payTmlmtCnt == i}"> selected</c:if>><c:out value="${i}"/></option>
                                 </c:forEach>
                             </select>
@@ -542,16 +542,15 @@
                 <tr>
                     <th scope="row"><form:label path="dscntUseYn">감면 사용여부</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>
                     <td>
-                        <%--TODOSDB: 감면 개발 진행 중으로 사용 못하도록 비활성화 처리--%>
                         <span class="p-form-radio">
-                            <input type="radio" name="dscntUseYn" id="dscntUseY" class="p-form-radio__input" value="Y"<c:if test="${exprnVO.dscntUseYn == 'Y'}"> checked</c:if> disabled>
+                            <input type="radio" name="dscntUseYn" id="dscntUseY" class="p-form-radio__input" value="Y"<c:if test="${exprnVO.dscntUseYn == 'Y'}"> checked</c:if> >
                             <label for="dscntUseY" class="p-form-radio__label">사용</label>
                         </span>
                         <span class="p-form-radio">
-                            <input type="radio" name="dscntUseYn" id="dscntUseN" class="p-form-radio__input" value="N"<c:if test="${exprnVO.dscntUseYn == 'N'}"> checked</c:if> disabled>
+                            <input type="radio" name="dscntUseYn" id="dscntUseN" class="p-form-radio__input" value="N"<c:if test="${exprnVO.dscntUseYn == 'N'}"> checked</c:if> >
                             <label for="dscntUseN" class="p-form-radio__label">미사용</label>
                         </span>
-                        <input type="hidden" name="dscntUseYn" value="N" />
+                        <%--<input type="hidden" name="dscntUseYn" value="N" />--%>
                     </td>
                 </tr>
                 <tr>

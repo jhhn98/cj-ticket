@@ -169,13 +169,13 @@
                     <th scope="row"><form:label path="mobileNo">연락처</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>
                     <td>
                         <div class="p-form-inline">
-                            <form:select path="mobileNo1" class="p-input w10p">
+                            <form:select path="mobileNo1" class="p-input w5p">
                                 <form:option value="010"/>
                             </form:select>
                             -
-                            <form:input path="mobileNo2" class="p-input w10p" />
+                            <form:input path="mobileNo2" class="p-input w5p" maxlength="4" />
                             -
-                            <form:input path="mobileNo3" class="p-input w10p" />
+                            <form:input path="mobileNo3" class="p-input w5p" maxlength="4" />
                         </div>
                     </td>
                 </tr>

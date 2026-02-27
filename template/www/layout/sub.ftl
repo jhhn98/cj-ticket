@@ -11,6 +11,15 @@ LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+    <script
+            src="https://wait.cheongju.go.kr/content/netfunnel-statics/agents/client/javascript/netfunnel-javascript-agent.js"
+            data-nf-server-url="https://wait.cheongju.go.kr"
+            data-nf-setting-url="https://wait.cheongju.go.kr/assets/nf-setting/1/nf-setting.json"
+            data-nf-vwr-page-url="https://wait.cheongju.go.kr/content/netfunnel-statics/assets/vwr-page/1/index.html"
+            data-nf-error-page-url="https://wait.cheongju.go.kr/content/netfunnel-statics/assets/vwr-page/error/errorPage.html"
+            data-nf-retry-count="0"
+            data-nf-network-timeout="3000"
+    ></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=5.0">
     <link rel="canonical" href="https://ticket.cheongju.go.kr/www/sub.do?key=@@{menuInfo.menuNo}">

@@ -245,7 +245,8 @@
                 <td><span class="mobile-th">결제상태</span>
                     <c:set var="todate" value="${result.today}${result.now}" />
                     <c:choose>
-                        <c:when test="${result.payMthdCd == 'ELCTRN' && result.rsvSttusCd == 'APPL_CMPL' && result.paySttusCd == 'PAY_WAIT' && empty result.tossMethod && todate <= result.payDeadlineDt}">
+                        <c:when test="${result.rsvSttusCd == 'APPL_CMPL' && result.paySttusCd == 'PAY_WAIT'
+                                        && result.totalPayAmt > 0 && result.payMthdCd == 'ELCTRN' && empty result.tossMethod}">
                             <a href="./myPageViewByExprn.do?key=<c:out value="${key}"/>&amp;exprnApplNo=<c:out value="${result.exprnApplNo}"/>&amp;myPageMode=VIEW" class="customLink bgBlack"><span>결제하기</span></a>
                         </c:when>
                         <c:otherwise>
@@ -283,7 +284,7 @@
                             무료(PAY_FREE) : 취소 가능
                             결제대기(PAY_WAIT)
                               - 전자결제 ELCTRN + 토스미결제 : 취소 가능
-                              - 전자결제 ELCTRN + 토스결제(가상계좌 신청만 한 상태) : 환불 가능
+                              - 전자결제 ELCTRN + 토스결제(가상계좌 신청만 한 상태) : 취소 가능(토스 취소처리)
                               - 무통장입금 NBKRCP, 현장결제 DIRECT : 취소 가능
                             결제완료(PAY_CMPL)
                               - 전자결제 ELCTRN (카드, 계좌이체, 간편결제) : 환불 가능
@@ -297,7 +298,8 @@
                             <c:when test="${result.paySttusCd == 'PAY_WAIT'}">
                                 <c:choose>
                                     <c:when test="${result.payMthdCd == 'ELCTRN' && result.tossMethod == '가상계좌'}">
-                                        <button type="button" class="customLink" onclick="fn_applRfndAjax('EXP', <c:out value="${result.exprnApplNo}"/>, null, null, null, null)"><span>환불요청</span></button>
+                                        <button type="button" class="customLink" onclick="fn_applCnclTossAjax('EXP', <c:out value="${result.exprnApplNo}"/>, <c:out value="${result.insttNo}"/>)"><span>취소</span>
+                                        </button>
                                     </c:when>
                                     <c:otherwise>
                                         <button type="button" class="customLink" onclick="fn_applCnclAjax('EXP', <c:out value="${result.exprnApplNo}"/>)"><span>취소</span></button>
@@ -498,47 +500,92 @@
             return false;
         }
 
+        if (!prgSe || !cancelApplNo) {
+            return false;
+        }
+
         var ajaxUrl = '';
         var ajaxData = {};
 
-        if (prgSe != '') {
-            if (prgSe == 'EXP') {
-                ajaxUrl = './updateExprnApplCnclAjax.do';
-                ajaxData = {
-                    exprnApplNo: cancelApplNo,
-                };
-            }
-
-            $.ajax({
-                cache: false,
-                url: ajaxUrl,
-                type: 'POST',
-                data: ajaxData,
-                success: function (res) {
-                    if (res == 1) {
-                        alert("취소 처리되었습니다.");
-                        location.reload();
-                    } else if (res == -1) {
-                        alert("신청 정보를 확인할 수 없습니다.");
-                    } else if (res == -2) {
-                        alert("이미 취소된 건입니다. 다시 확인해주시기 바랍니다.");
-                    } else if (res == -3) {
-                        alert("결제가 완료되었거나 환불 요청이 필요한 상태입니다. 다시 확인해주시기 바랍니다.");
-                    } else if (res == -4) {
-                        alert("취소가능일자가 지나 취소가 불가합니다.");
-                    } else {
-                        alert("처리된 내역이 없습니다.");
-                    }
-                }, // success
-                error: function (request, xhr, status) {
-                    //alert(request.responseText);
-                    alert("에러가 발생하였습니다.");
-                    console.log("code:", request.status);
-                    console.log("message:", request.responseText);
-                    console.log("error:" + error)
-                }
-            });
+        if (prgSe == 'EXP') {
+            ajaxUrl = './updateExprnApplCnclAjax.do';
+            ajaxData = {
+                exprnApplNo: cancelApplNo,
+            };
         }
+
+        $.ajax({
+            cache: false,
+            url: ajaxUrl,
+            type: 'POST',
+            data: ajaxData,
+            success: function (res) {
+                if (res == 1) {
+                    alert("취소 처리되었습니다.");
+                    location.reload();
+                } else if (res == -1) {
+                    alert("신청 정보를 확인할 수 없습니다.");
+                } else if (res == -2) {
+                    alert("취소가능일자가 지나 취소가 불가합니다.");
+                } else if (res == -3) {
+                    alert("이미 취소된 건입니다. 다시 확인해주시기 바랍니다.");
+                } else if (res == -4) {
+                    alert("결제가 완료되었거나 환불 요청이 필요한 상태입니다. 다시 확인해주시기 바랍니다.");
+                } else if (res == -5) {
+                    alert("잘못된 요청입니다.");
+                } else if (res == 0) {
+                    alert("처리된 내역이 없습니다.");
+                } else {
+                    alert("취소 처리 중 오류가 발생했습니다.");
+                }
+            }, // success
+            error: function (request, xhr, status) {
+                //alert(request.responseText);
+                alert("에러가 발생하였습니다.");
+                console.log("code:", request.status);
+                console.log("message:", request.responseText);
+                console.log("error:" + error)
+            }
+        });
+    }
+
+    function fn_applCnclTossAjax(prgSe, applNo, insttNo) {
+
+        if (!confirm("취소하시겠습니까?")) {
+            return false;
+        }
+
+        if (!prgSe || !applNo || !insttNo) {
+            return false;
+        }
+
+        $.ajax({
+            cache: false,
+            url: '/tosspaymentsCancelWeb.do',
+            type: 'POST',
+            data: {
+                prgSe: prgSe,
+                insttNo: insttNo,
+                applNo: applNo
+            },
+            success: function (res) {
+                var code = res['code'];
+                var msg = res['message'];
+                if (code == 'TOSS_CANCEL_SUCCESS') {
+                    alert(msg);
+                } else {
+                    alert(code + ":" + msg);
+                }
+                location.reload();
+            }, // success
+            error: function (request,xhr, status) {
+                //alert(request.responseText);
+                alert("에러가 발생하였습니다.");
+                console.log("code:",request.status);
+                console.log("message:",request.responseText);
+                console.log("error:"+error)
+            }
+        });
     }
 
     function fn_applRfnd() {
@@ -580,67 +627,71 @@
             return false;
         }
 
+        if (!prgSe) {
+            return false;
+        }
+
         var ajaxUrl = '';
         var ajaxData = {};
 
-        if (prgSe != '') {
-            if (prgSe == 'EXP') {
-                ajaxUrl = './updateExprnApplRfndAjax.do';
-                ajaxData = {
-                    exprnApplNo: rfndApplNo,
-                    rfndBankNm: rfndBankNm,
-                    rfndAcctNo: rfndAcctNo,
-                    rfndDpstrNm: rfndDpstrNm,
-                    rfndReason: rfndReason
-                };
-            } else if (prgSe == 'EDU') {
-                ajaxUrl = './updateEduAplctRfndAjax.do?key='+<c:out value="${key}"/>;
-                ajaxData = {
-                    eduAplyNo: rfndApplNo,
-                    rfndBankNm: rfndBankNm,
-                    rfndAcctNo: rfndAcctNo,
-                    rfndDpstrNm: rfndDpstrNm,
-                    rfndReason: rfndReason
-                };
-            } else {
-                alert("처리할 수 없는 프로그램 유형입니다.");
-                return false;
-            }
-
-            $.ajax({
-                cache: false,
-                url: ajaxUrl,
-                type: 'POST',
-                data: ajaxData,
-                success: function (res) {
-                    if (res == 1) {
-                        alert("환불요청이 접수되었습니다.");
-                        location.reload();
-                    } else if (res == -1) {
-                        alert("신청 정보를 확인할 수 없습니다.");
-                    } else if (res == -2) {
-                        alert("취소가능일자가 지나 취소가 불가합니다.");
-                    } else if (res == -3) {
-                        alert("이미 취소된 건입니다. 다시 확인해주시기 바랍니다.");
-                    } else if (res == -4) {
-                        alert("환불 요청이 불가능한 상태입니다.");
-                    } else if (res == -5) {
-                        alert("결제대기 중입니다. 결제가 완료된 건에 한하여 환불 요청이 가능합니다.");
-                    } else if (res == -6) {
-                        alert("환불요청 관련 입력 정보(계좌정보, 환불사유 등)를 다시 확인해주시기 바랍니다.");
-                    } else {
-                        alert("처리된 내역이 없습니다.");
-                    }
-                }, // success
-                error: function (request, xhr, status) {
-                    //alert(request.responseText);
-                    alert("에러가 발생하였습니다.");
-                    console.log("code:", request.status);
-                    console.log("message:", request.responseText);
-                    console.log("error:" + status)
-                }
-            });
+        if (prgSe == 'EXP') {
+            ajaxUrl = './updateExprnApplRfndAjax.do';
+            ajaxData = {
+                exprnApplNo: rfndApplNo,
+                rfndBankNm: rfndBankNm,
+                rfndAcctNo: rfndAcctNo,
+                rfndDpstrNm: rfndDpstrNm,
+                rfndReason: rfndReason
+            };
+        } else if (prgSe == 'EDU') {
+            ajaxUrl = './updateEduAplctRfndAjax.do?key='+<c:out value="${key}"/>;
+            ajaxData = {
+                eduAplyNo: rfndApplNo,
+                rfndBankNm: rfndBankNm,
+                rfndAcctNo: rfndAcctNo,
+                rfndDpstrNm: rfndDpstrNm,
+                rfndReason: rfndReason
+            };
+        } else {
+            alert("처리할 수 없는 프로그램 유형입니다.");
+            return false;
         }
+
+        $.ajax({
+            cache: false,
+            url: ajaxUrl,
+            type: 'POST',
+            data: ajaxData,
+            success: function (res) {
+                if (res == 1) {
+                    alert("환불요청이 접수되었습니다.");
+                    location.reload();
+                } else if (res == -1) {
+                    alert("신청 정보를 확인할 수 없습니다.");
+                } else if (res == -2) {
+                    alert("취소가능일자가 지나 취소가 불가합니다.");
+                } else if (res == -3) {
+                    alert("이미 취소된 건입니다. 다시 확인해주시기 바랍니다.");
+                } else if (res == -4) {
+                    alert("환불 요청이 불가능한 상태입니다.");
+                } else if (res == -5) {
+                    alert("결제대기 중입니다. 결제가 완료된 건에 한하여 환불 요청이 가능합니다.");
+                } else if (res == -6) {
+                    alert("환불요청 관련 입력 정보(계좌정보, 환불사유 등)를 다시 확인해주시기 바랍니다.");
+                } else if (res == 0) {
+                    alert("처리된 내역이 없습니다.");
+                } else {
+                    alert("환불 요청 처리 중 오류가 발생했습니다.");
+                }
+            }, // success
+            error: function (request, xhr, status) {
+                //alert(request.responseText);
+                alert("에러가 발생하였습니다.");
+                console.log("code:", request.status);
+                console.log("message:", request.responseText);
+                console.log("error:" + status)
+            }
+        });
     }
 
     /* 교육 취소 처리 */

@@ -117,6 +117,7 @@
                     <c:out value="${exprnApplVO.applNm}"/>
                     <c:if test="${exprnApplVO.genderSe == 'M'}"> (남)</c:if>
                     <c:if test="${exprnApplVO.genderSe == 'F'}"> (여)</c:if>
+                    <c:if test="${exprnApplVO.loginSe == 'MNGR'}"> / 관리자등록</c:if>
                 </td>
             </tr>
             <tr>
@@ -133,9 +134,9 @@
                             <option value="010">010</option>
                         </select>
                         <span class="p-form__split">-</span>
-                        <input type="text" name="mobileNo2" id="mobileNo2" class="p-input w5p" value="<c:out value="${exprnApplVO.mobileNo2}"/>" placeholder="" />
+                        <input type="text" name="mobileNo2" id="mobileNo2" class="p-input w5p" value="<c:out value="${exprnApplVO.mobileNo2}"/>" placeholder="" maxlength="4" />
                         <span class="p-form__split">-</span>
-                        <input type="text" name="mobileNo3" id="mobileNo3" class="p-input w5p" value="<c:out value="${exprnApplVO.mobileNo3}"/>" placeholder="" />
+                        <input type="text" name="mobileNo3" id="mobileNo3" class="p-input w5p" value="<c:out value="${exprnApplVO.mobileNo3}"/>" placeholder="" maxlength="4" />
                     </div>
                 </td>
             </tr>
@@ -308,13 +309,13 @@
                         </select>
                     </div>
                 </td>
-                <th scope="row">총결제금액</th>
-                <td>
-                    <fmt:formatNumber value="${exprnApplVO.totalPayAmt}" pattern="#,##0"/> 원
-                </td>
                 <th scope="row">결제방법</th>
                 <td>
                     <c:out value="${payMthdMap[exprnApplVO.payMthdCd]}"/>
+                </td>
+                <th scope="row">총결제금액</th>
+                <td>
+                    <fmt:formatNumber value="${exprnApplVO.totalPayAmt}" pattern="#,##0"/> 원
                 </td>
             </tr>
             <tr>
@@ -356,16 +357,28 @@
                             </c:forEach>
                         </select>
                     </div>
-                    취소가능일시 : <c:out value="${tsu:toDateFormat(exprnApplVO.canclClosDt, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss')}"/>
+                    <%--취소가능일시 : <c:out value="${tsu:toDateFormat(exprnApplVO.canclClosDt, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss')}"/>--%>
+                </td>
+                <th scope="row">감면신청</th>
+                <td>
+                    <div class="p-form-group w20p">
+                        <c:if test="${exprnApplVO.dscntSe != 'DSCNT_ETC'}"><c:out value="${dscntSeMap[exprnApplVO.dscntSe]}"/></c:if>
+                        <c:if test="${exprnApplVO.dscntSe == 'DSCNT_ETC'}"><c:out value="${exprnApplVO.dscntCdNm}"/></c:if>
+                        <c:if test="${exprnApplVO.piscYn == 'N' && empty exprnApplVO.dscntYn}">
+                            <span class="p-form-radio">
+                                <input type="radio" name="dscntYn" id="dscntYn_Y" class="p-form-radio__input" value="Y"<c:if test="${exprnApplVO.dscntYn == 'Y'}"> checked</c:if>>
+                                <label for="dscntYn_Y" class="p-form-radio__label">승인</label>
+                            </span>
+                            <span class="p-form-radio">
+                                <input type="radio" name="dscntYn" id="dscntYn_N" class="p-form-radio__input" value="N"<c:if test="${exprnApplVO.dscntYn == 'N'}"> checked</c:if>>
+                                <label for="dscntYn_N" class="p-form-radio__label">미승인</label>
+                            </span>
+                        </c:if>
+                    </div>
                 </td>
                 <th scope="row">감면금액</th>
                 <td>
-                    <%--TODOSDB: 감면코드 같이 표출--%>
                     <fmt:formatNumber value="${exprnApplVO.dscntAmt}" pattern="#,##0"/> 원
-                </td>
-                <th scope="row">체험료</th>
-                <td>
-                    <fmt:formatNumber value="${exprnApplVO.totalPayAmt}" pattern="#,##0"/> 원
                 </td>
             </tr>
             <tr>
@@ -452,7 +465,6 @@
                 <th scope="row">결제일시</th>
                 <td colspan="3">
                     <div class="p-form-group w20p">
-                        <c:out value="${tsu:toDateFormat(exprnApplVO.payDt, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss')}"/>
                         <c:set var="payDt" value="${exprnApplVO.payDt}"/>
                         <c:set var="payDe" value="${fn:substring(payDt,0,8)}"/>
                         <input type="text" name="payDe" style="width:100px;" class="p-input p-input--auto" placeholder="yyyy-MM-dd" value="<c:out value="${tsu:toDateFormat(payDe, 'yyyyMMdd', 'yyyy-MM-dd')}"/>" readonly/>
@@ -499,7 +511,6 @@
                     </form:select>
                     <form:input path="rfndAcctNo" style="width:300px" class="p-input" placeholder="계좌번호"/>
                     <form:input path="rfndDpstrNm" style="width:300px" class="p-input" placeholder="예금주"/>
-                    <pre><c:out value="${exprnApplVO.rfndAcctNo}"/></pre>
                 </td>
                 <th scope="row" rowspan="3">메모</th>
                 <td colspan="3" rowspan="3">
@@ -514,7 +525,7 @@
             </tr>
             <tr>
                 <th scope="row">환불처리일시</th>
-                <td colspan="3">
+                <td>
                     <div class="p-form-group w20p">
                         <c:out value="${tsu:toDateFormat(exprnApplVO.rfndCmplDt, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss')}"/>
                         <%--<form:input path="payDeadlineDt" style="width:100px;" class="p-input p-input--auto" placeholder="yyyy-MM-dd"/>
@@ -548,6 +559,10 @@
                         </form:select>--%>
                     </div>
                 </td>
+                <th scope="row">환불금액</th>
+                <td>
+                    <fmt:formatNumber value="${exprnApplVO.rfndAmt}" pattern="#,##0"/> 원
+                </td>
             </tr>
             </tbody>
         </table>
@@ -555,11 +570,14 @@
         <div class="row margin_t_20">
             <div class="col-12">
                 <c:set var="applListUrl" value="./selectExprnApplList.do?"/>
-                <c:if test="${isExprnList == 'Y'}">
+                <c:if test="${listSe == 'E'}">
                     <c:set var="applListUrl" value="./selectExprnApplListByExprn.do?"/>
                 </c:if>
+                <c:if test="${listSe == 'R'}">
+                    <c:set var="applListUrl" value="./selectExprnRfndList.do?"/>
+                </c:if>
                 <c:set var="applListParam" value="${exprnApplSearchVO.params}${exprnApplSearchVO.paramsMng}"/>
-                <c:if test="${isExprnList == 'Y'}">
+                <c:if test="${listSe == 'E'}">
                     <c:set var="applListParam" value="${applListParam}&${exprnSearchVO.exprnParamsMng}&exprnNo=${exprnApplVO.exprnNo}"/>
                 </c:if>
                 <a href="<c:out value="${applListUrl}"/><c:out value="${applListParam}"/>" class="p-button cancel">목록 </a>
