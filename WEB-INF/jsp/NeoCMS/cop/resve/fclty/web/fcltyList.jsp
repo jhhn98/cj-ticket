@@ -148,8 +148,8 @@
 </div>
 <div class="dataList-program">
     <div class="asideInformation">
-        <button type="button" class="viewType thumb <c:if test="${param.viewMode eq 'card' || empty param.viewMode}" data-list-view="thumbnail">썸네일 보기</button>
-        <button type="button" class="viewType detail <c:if test="${param.viewMode eq 'list'}" data-list-view="detail">리스트 보기</button>
+        <button type="button" class="viewType thumb <c:if test="${param.viewMode eq 'card' || empty param.viewMode}">active</c:if>" data-list-view="thumbnail">썸네일 보기</button>
+        <button type="button" class="viewType detail <c:if test="${param.viewMode eq 'list'}">active</c:if>" data-list-view="detail">리스트 보기</button>
     </div>
     <div class="listWrap thumbnail <c:if test="${param.viewMode eq 'card' || empty param.viewMode}">show</c:if>">
         <div class="dataCount">총 : <em><c:out value="${paginationInfo.totalRecordCount}"/></em>건 / 페이지 <c:out value="${paginationInfo.currentPageNo}"/>/<c:out value="${paginationInfo.totalPageCount}"/></div>

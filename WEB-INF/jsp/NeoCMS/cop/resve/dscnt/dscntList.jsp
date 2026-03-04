@@ -121,7 +121,7 @@
 
     <div class="p-pagination">
         <div class="p-page">
-            <ui:pagination paginationInfo="${paginationInfo}" type="board" jsFunction="./selectInsttList.do?${dscntSearchVO.paramsExclPi}&amp;pageIndex=" />
+            <ui:pagination paginationInfo="${paginationInfo}" type="board" jsFunction="./selectDscntList.do?${dscntSearchVO.paramsExclPi}&amp;pageIndex=" />
         </div>
     </div>
     <div class="text_right">

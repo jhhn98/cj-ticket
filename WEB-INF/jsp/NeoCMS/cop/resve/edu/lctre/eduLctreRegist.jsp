@@ -648,9 +648,9 @@
                                        cssStyle="width:100%;height:200px"/>
                     </td>
                 </tr>
-                <!-- 이미지 등록 -->
+                <!-- 썸네일 이미지 등록 -->
                 <tr>
-                    <th scope="row"><label for="atchImg_1">이미지</label></th>
+                    <th scope="row"><label for="atchImg_1">썸네일 이미지</label> <span class="p-form__required--icon">필수</span></th>
                     <td colspan="3">
                         <c:forEach var="i" begin="1" end="${cmmnAtchmnflInfoImg.fileMaxCo}">
                             <div class="p-upload">
@@ -1429,6 +1429,20 @@
                 $("#lctEndDe").focus();
                 return false;
             }
+        }
+
+        // 썸네일 이미지 필수 체크 - 1개 이상의 썸네일 이미지 파일이 선택되었는지 확인
+        var hasImage = false;
+        $("input[name='atchImg']").each(function () {
+            if ($(this).val()) {
+                hasImage = true;
+                return false;
+            }
+        });
+        if (!hasImage) {
+            alert("썸네일 이미지를 1개 이상 등록해주세요.");
+            $("input[name='atchImg']").first().focus();
+            return false;
         }
 
         // 문의전화 필수 체크

@@ -201,9 +201,9 @@
                 </td>
                 <td><c:out value="${lgldongMap[result.resInqCd]}"/></td>
                 <td>
-                    <c:if test="${!empty result.dscntCd}">
-                        <c:if test="${result.piscYn == 'Y'}">감면혜택<br/>(비대면)</c:if>
-                        <c:if test="${result.piscYn == 'N'}">감면혜택<br/>(직접제출)</c:if>
+                    <c:if test="${result.dscntCd > 0}">
+                        <c:if test="${result.dscntSe != 'DSCNT_ETC'}">감면혜택<br/>(비대면)</c:if>
+                        <c:if test="${result.dscntSe == 'DSCNT_ETC'}">감면혜택<br/>(직접제출)</c:if>
                     </c:if>
                 </td>
                 <td>

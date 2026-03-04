@@ -101,6 +101,7 @@
         </c:forEach>
         <form:hidden path="insttNo"/>
         <form:hidden path="exprnApplNo"/>
+        <input type="hidden" name="listSe" value="<c:out value="${listSe}"/>"/>
 
         <h3 class="col-12">신청자 정보</h3>
 
@@ -312,6 +313,16 @@
                 <th scope="row">결제방법</th>
                 <td>
                     <c:out value="${payMthdMap[exprnApplVO.payMthdCd]}"/>
+                    <c:if test="${exprnApplVO.payMthdCd == 'ELCTRN' && !empty exprnApplVO.tossMethod}">
+                        (<c:out value="${exprnApplVO.tossMethod}"/>)
+                        <c:if test="${exprnApplVO.tossMethod == '가상계좌'}">
+                            <br/>
+                            <c:out value="${bankMap[exprnApplVO.tossVaBankCode]}"/>
+                            <c:out value="${exprnApplVO.tossVaAccountNumber}"/>
+                            <br/>
+                            (입금기한 : <c:out value="${tsu:toDateFormat(exprnApplVO.tossVaDueDate, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss')}"/>)
+                        </c:if>
+                    </c:if>
                 </td>
                 <th scope="row">총결제금액</th>
                 <td>

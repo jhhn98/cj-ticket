@@ -821,9 +821,9 @@
                                                                           escapeXml="false"/></textarea>
                     </td>
                 </tr>
-                <!-- 이미지 등록 -->
+                <!-- 썸네일 이미지 등록 -->
                 <tr>
-                    <th scope="row"><label for="atchImg_1">이미지</label></th>
+                    <th scope="row"><label for="atchImg_1">썸네일 이미지</label> <span class="p-form__required--icon">필수</span></th>
                     <td colspan="3">
                         <ul class="attach">
                             <c:set var="imgFileCnt" value="0"/>
@@ -1699,6 +1699,31 @@
                 $("#lctEndDe").focus();
                 return false;
             }
+        }
+
+        // 썸네일 이미지 필수 체크 - 기존 유지(M) 이미지 또는 새로 첨부한 이미지가 1개 이상 있어야 함
+        var keepImgCnt = 0;
+        var newImgCnt = 0;
+
+        // 기존 썸네일 이미지 중 '유지(M)' 상태인 것 개수
+        <c:forEach var="cmmnAtchFile" items="${cmmnAtchImgList}">
+        if ($("input[name='fileStatus${cmmnAtchFile.fileNo}']:checked").val() === "M"
+            || $("input[name='fileStatus${cmmnAtchFile.fileNo}']:checked").val() === "U") {
+                keepImgCnt++;
+        }
+        </c:forEach>
+
+        // 새로 첨부한 썸네일 이미지 개수
+        $("input[name='atchImg']").each(function () {
+            if ($(this).val()) {
+                newImgCnt++;
+            }
+        });
+
+        if (keepImgCnt + newImgCnt === 0) {
+            alert("썸네일 이미지를 1개 이상 등록해주세요.");
+            $("input[name='atchImg']").first().focus();
+            return false;
         }
 
         // 문의전화 필수 체크

@@ -180,7 +180,20 @@
                                 <fmt:formatNumber value="${exprnApplVO.totalPayAmt}" pattern="#,##0"/> 원
                                 <c:if test="${exprnApplVO.dscntYn == 'Y'}">
                                     <p class="iconText caution point-color-green">
-                                        감면혜택 : <fmt:formatNumber value="${exprnApplVO.dscntAmt}" pattern="#,##0"/> 원
+                                        감면혜택(
+                                        <c:if test="${exprnApplVO.dscntSe != 'DSCNT_ETC'}">
+                                            <c:out value="${dscntSeMap[exprnApplVO.dscntSe]}"/>
+                                        </c:if>
+                                        <c:if test="${exprnApplVO.dscntSe == 'DSCNT_ETC'}">
+                                            <c:out value="${exprnApplVO.dscntCdNm}"/>
+                                        </c:if>
+                                        ) : <fmt:formatNumber value="${exprnApplVO.dscntAmt}" pattern="#,##0"/> 원
+                                    </p>
+                                </c:if>
+                                <c:if test="${empty exprnApplVO.dscntYn && exprnApplVO.dscntSe == 'DSCNT_ETC'}">
+                                    <p class="iconText caution point-color-green">
+                                        서류 직접 제출이 필요한 감면 혜택은 관리자의 승인 후 감면이 가능합니다.<br/>
+                                        관련 서류를 메일 또는 방문을 통해 제출해주시기 바랍니다.
                                     </p>
                                 </c:if>
                             </div>
@@ -212,6 +225,8 @@
                                         <c:if test="${exprnApplVO.payMthdCd == 'ELCTRN' && exprnApplVO.tossMethod == '가상계좌' && todate < exprnApplVO.tossVaDueDate}">
                                             <p class="iconText caution point-color-green">
                                                 입금계좌정보 : <c:out value="${bankMap[exprnApplVO.tossVaBankCode]}"/> <c:out value="${exprnApplVO.tossVaAccountNumber}"/>
+                                                <br/>
+                                                (입금기한 : <c:out value="${tsu:toDateFormat(exprnApplVO.tossVaDueDate, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss')}"/>)
                                             </p>
                                         </c:if>
                                     </c:if>
@@ -402,7 +417,7 @@
                     </tr>
                 </c:if>
                 <!-- 유료 옵션 -->
-                <%--<tr> TODOSDB: 감면신청 여부
+                <%--<tr>
                     <th scope="row" class="first"><div class="innerCell">감면신청</div></th>
                     <td><div class="innerCell">신청(국가유공자: 할인율 50%) / 아니오</div></td>
                 </tr>--%>
@@ -418,7 +433,7 @@
                 <a href="./myPageList.do?<c:out value="${myPageSearchVO.params}"/>" class="customLink lineGray"><span>목록</span></a>
             </div>
             <div class="flexRight">
-                <c:if test="${exprnApplVO.today < exprnApplVO.exprnDe}">
+                <c:if test="${!fn:contains(exprnApplVO.rsvSttusCd, 'CNCL') && exprnApplVO.today < exprnApplVO.exprnDe}">
                     <c:if test="${myPageMode == 'UPDT'}">
                         <button type="submit" class="customLink bgGreen" onclick="return formCheck(this);"><span>수정</span></button>
                     </c:if>

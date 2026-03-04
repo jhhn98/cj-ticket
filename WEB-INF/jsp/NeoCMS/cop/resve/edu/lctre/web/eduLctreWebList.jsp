@@ -25,6 +25,10 @@
     <form method="get" action="./selectEduLctreWebList.do">
         <input type="hidden" name="key" value="<c:out value="${key}"/>"/>
         <input type="hidden" name="viewMode" value="<c:out value="${empty param.viewMode ? card : param.viewMode}"/>" />
+        <input type="hidden" name="searchInsttNmEmd" value="<c:out value="${eduLctreVO.searchInsttNmEmd}"/>"/>
+        <c:forEach var="insttNo" items="${eduLctreVO.searchInsttNoList}">
+            <input type="hidden" name="searchInsttNoList" value="<c:out value="${insttNo}"/>"/>
+        </c:forEach>
         <fieldset>
             <legend>검색</legend>
             <div class="searchFormWrap default">

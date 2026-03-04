@@ -224,7 +224,16 @@
             <th scope="row">결제방법</th>
             <td>
                 <c:out value="${payMthdMap[exprnApplVO.payMthdCd]}"/>
-                <c:if test="${exprnApplVO.payMthdCd == 'ELCTRN' && !empty exprnApplVO.tossMethod}">(<c:out value="${exprnApplVO.tossMethod}"/>)</c:if>
+                <c:if test="${exprnApplVO.payMthdCd == 'ELCTRN' && !empty exprnApplVO.tossMethod}">
+                    (<c:out value="${exprnApplVO.tossMethod}"/>)
+                    <c:if test="${exprnApplVO.tossMethod == '가상계좌'}">
+                        <br/>
+                        <c:out value="${bankMap[exprnApplVO.tossVaBankCode]}"/>
+                        <c:out value="${exprnApplVO.tossVaAccountNumber}"/>
+                        <br/>
+                        (입금기한 : <c:out value="${tsu:toDateFormat(exprnApplVO.tossVaDueDate, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss')}"/>)
+                    </c:if>
+                </c:if>
             </td>
         </tr>
         <tr>
@@ -321,7 +330,7 @@
             <a href="<c:out value="${applListUrl}"/><c:out value="${applListParam}"/>" class="p-button cancel">목록 </a>
         </div>
         <div class="col-12 right">
-            <a href="./updateExprnApplView.do?exprnApplNo=<c:out value="${exprnApplVO.exprnApplNo}"/>&amp;<c:out value="${exprnApplSearchVO.params}"/>&amp;<c:out value="${exprnApplSearchVO.paramsMng}"/>" class="p-button p-button--small edit"">수정</a>
+            <a href="./updateExprnApplView.do?exprnApplNo=<c:out value="${exprnApplVO.exprnApplNo}"/>&amp;listSe=<c:out value="${listSe}"/>&amp;<c:out value="${exprnApplSearchVO.params}"/>&amp;<c:out value="${exprnApplSearchVO.paramsMng}"/>" class="p-button p-button--small edit">수정</a>
         </div>
     </div>
 
