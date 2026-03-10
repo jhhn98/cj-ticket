@@ -202,7 +202,7 @@
                 </div>
                 <div class="linkGroup marginTop30">
                     <c:if test="${(exprnVO.operSttus == 'RCPT_WAIT' || exprnVO.operSttus == 'RCPT_ING') && fn:contains(exprnVO.rcptMthdCd, 'ONLIN')}">
-                        <a href="" class="anchorButton wide line-color-green" onclick="applStart(); return false;">신청하기</a>
+                        <a id="applBtn" href="./exprnApplCalendarWebView.do?exprnNo=<c:out value="${exprnVO.exprnNo}"/>&amp;<c:out value="${exprnSearchVO.params}"/><c:out value="${exprnSearchVO.paramsWeb}"/>" class="anchorButton wide line-color-green" onclick="applStart(); return false;">신청하기</a>
                     </c:if>
                     <a href="./myPageList.do?key=59" class="anchorButton wide line-color-green">예약확인</a>
                     <a href="./selectExprnWebList.do?viewMode=<c:out value="${param.viewMode}"/>&amp;<c:out value="${exprnSearchVO.params}"/><c:out value="${exprnSearchVO.paramsWeb}"/>" class="anchorButton">목록</a>
@@ -282,16 +282,6 @@
     </div>
 </div>
 
-<form id="applForm" name="applForm" action="./exprnApplCalendarWebView.do" method="post">
-    <input type="hidden" name="exprnNo" value="<c:out value="${exprnVO.exprnNo}"/>">
-    <c:forEach var="map" items="${exprnSearchVO.paramsMap}">
-        <input type="hidden" name="${map.key}" value="${map.value}"/>
-    </c:forEach>
-    <c:forEach var="map" items="${exprnSearchVO.paramsMapWeb}">
-        <input type="hidden" name="${map.key}" value="${map.value}"/>
-    </c:forEach>
-</form>
-
 <script>
 
     function applStart() {
@@ -307,18 +297,19 @@
 
     function nfCallback(response) {
         const { status, statusCode, message } = response;
+        var url = $('#applBtn').attr("href");
 
         switch(status) {
             case 'Success':
-                $('#applForm').submit();
+                window.location = url;
                 break;
 
             case 'Error':
-                $('#applForm').submit();
+                window.location = url;
                 break;
 
             case 'NetworkError':
-                $('#applForm').submit();
+                window.location = url;
                 break;
 
             default:
