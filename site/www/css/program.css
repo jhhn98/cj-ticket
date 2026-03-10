@@ -4279,13 +4279,13 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
     width: 100%;
   }
   .programCalendar .calendar .calendarBody .day li {
-    height: 50px;
+    height: 52px;
   }
   .programCalendar .calendar .calendarBody .day button, .programCalendar .calendar .calendarBody .day .viewDay {
     width: 100%;
   }
   .programCalendar .calendar .calendarBody .day button .reserveCount, .programCalendar .calendar .calendarBody .day .viewDay .reserveCount {
-    display: none;
+
   }
   .programCalendar .calendar .calendarFooter {
     flex-wrap: wrap;
