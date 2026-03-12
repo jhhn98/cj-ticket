@@ -141,6 +141,7 @@
                     </div>
                 </td>
             </tr>
+            <c:if test="${exprnVO.addrUseAt eq 'Y'}">
             <tr>
                 <th scope="row"><label for="addrBtn">주소 <span class="p-form__required--icon">필수</span></label></th>
                 <td>
@@ -158,6 +159,7 @@
                     </div>
                 </td>
             </tr>
+            </c:if>
             <tr>
                 <th scope="row">개인 / 단체</th>
                 <td>

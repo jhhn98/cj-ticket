@@ -47,8 +47,6 @@
             <fieldset>
                 <legend>통계 검색</legend>
                 <form:hidden path="key"/>
-                <form:hidden path="pageUnit"/>
-                <form:hidden path="pageIndex"/>
                 <form:hidden path="prgSe"/>
                 <form:hidden path="statsSe"/>
                 <form:select path="searchOperYear" cssClass="p-input p-input--auto" title="운영년도">
@@ -70,6 +68,12 @@
                         </c:forEach>
                     </form:select>
                 </c:if>
+                <form:select path="pageUnit" cssClass="p-input p-input--auto" title="목록수">
+                    <form:option value="10">10개씩</form:option>
+                    <form:option value="20">20개씩</form:option>
+                    <form:option value="50">50개씩</form:option>
+                    <form:option value="100">100개씩</form:option>
+                </form:select>
                 <form:input path="searchKrwd" class="p-input w20p" title="검색어" placeholder="프로그램명 입력"/>
                 <input value="검색" type="submit" class="p-button p-button--small primary">
             </fieldset>

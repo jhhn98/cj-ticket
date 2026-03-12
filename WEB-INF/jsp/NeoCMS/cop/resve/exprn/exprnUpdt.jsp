@@ -456,7 +456,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <th scope="row"><label for="atchImg_1">이미지</label></th>
+                    <th scope="row"><label for="atchImg_1">이미지</label> <span class="p-form__required--icon margin_l_5">필수</span></th>
                     <td colspan="3">
                         <ul class="attach">
                             <c:set var="fileCnt" value="0" />
@@ -485,6 +485,10 @@
                                 </li>
                             </c:forEach>
                         </ul>
+                        <span class="p-table__content padding_t_5">
+                            <svg width="20" height="25" fill="#202e70" focusable="false"><use xlink:href="/common/images/program/p-icon.svg#info-circle"></use></svg>
+                            <em class="em_black"><c:out value="${cmmnAtchmnflInfoImg.fileMaxSize}"/>MB 이하 이미지(<c:out value="${fn:replace(cmmnAtchmnflInfoImg.fileLmttExtns, ',', ', ')}"/>)를 1장 이상 첨부해주세요.</em>
+                        </span>
                     </td>
                 </tr>
                 <tr>
@@ -517,6 +521,10 @@
                                 </li>
                             </c:forEach>
                         </ul>
+                        <span class="p-table__content padding_t_5">
+                            <svg width="20" height="25" fill="#202e70" focusable="false"><use xlink:href="/common/images/program/p-icon.svg#info-circle"></use></svg>
+                            <em class="em_black"><c:out value="${cmmnAtchmnflInfoFile.fileMaxSize}"/>MB 이하 파일(<c:out value="${fn:replace(cmmnAtchmnflInfoFile.fileLmttExtns, ',', ', ')}"/>)만 첨부 가능합니다.</em>
+                        </span>
                     </td>
                 </tr>
                 <tr>
@@ -524,6 +532,19 @@
                     <td>
                         <form:input path="aditIem1" class="p-input"/><br/>
                         <form:input path="aditIem2" class="p-input"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row"><form:label path="addrUseAt">주소 입력 받기</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>
+                    <td>
+                        <span class="p-form-radio">
+                            <input type="radio" name="addrUseAt" id="addrUseAt" class="p-form-radio__input" value="Y"<c:if test="${exprnVO.addrUseAt == 'Y'}"> checked</c:if>>
+                            <label for="addrUseAt" class="p-form-radio__label">예</label>
+                        </span>
+                        <span class="p-form-radio">
+                            <input type="radio" name="addrUseAt" id="addrUseAtN" class="p-form-radio__input" value="N"<c:if test="${exprnVO.addrUseAt == 'N'}"> checked</c:if>>
+                            <label for="addrUseAtN" class="p-form-radio__label">아니오</label>
+                        </span>
                     </td>
                 </tr>
                 <tr>
@@ -965,6 +986,33 @@
             if (nmprMaxCnt > rcritCnt) {
                 alert("모집수 제약 조건에서 최대값이 모집인원보다 클 수 없습니다.");
                 form.nmprMaxCnt.focus();
+                return false;
+            }
+        }
+
+        // 이미지 필수 체크 - 기존 유지(M) 이미지 또는 새로 첨부한 이미지가 1개 이상 있어야 함
+        let keepImgCnt = 0;
+        const maxImgCnt = Number(<c:out value="${cmmnAtchmnflInfoImg.fileMaxCo}" />-<c:out value="${fn:length(cmmnAtchImgList)}"/>);
+
+        // 기존 이미지 중 '유지(M)/변경(U)' 상태인 것 개수
+        <c:forEach var="cmmnAtchFile" items="${cmmnAtchImgList}">
+        if ($("input[name='fileStatus${cmmnAtchFile.fileNo}']:checked").val() === "M"
+            || $("input[name='fileStatus${cmmnAtchFile.fileNo}']:checked").val() === "U") {
+            keepImgCnt++;
+        }
+        </c:forEach>
+
+        if (keepImgCnt < 1 && maxImgCnt > 0) {
+            let hasImage = false;
+            $("input[name='atchImg']").each(function () {
+                if ($(this).val()) {
+                    hasImage = true;
+                    return false;
+                }
+            });
+            if (!hasImage) {
+                alert("이미지를 1개 이상 등록해주세요.");
+                $("input[name='atchImg']").first().focus();
                 return false;
             }
         }

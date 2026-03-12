@@ -179,23 +179,25 @@
                         </div>
                     </td>
                 </tr>
-                <tr>
-                    <th scope="row"><form:label path="zip">주소</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>
-                    <td>
-                        <div class="p-form-group w10p">
-                            <form:input path="zip" style="width:100px" class="p-input" placeholder="(우편번호)" readonly="true"/>
-                            <span class="p-input__addon">
-                                    <button type="button" class="p-button primary addressSearchButton" onclick="openDaumZipAddress();">주소검색</button>
-                                </span>
-                        </div>
-                        <div class="p-form-group w25p">
-                            <form:input path="addr" style="width:300px" class="p-input" placeholder="주소" readonly="true"/>
-                        </div>
-                        <div class="p-form-group w25p">
-                            <form:input path="detailAddr" style="width:300px" class="p-input" placeholder="상세주소"/>
-                        </div>
-                    </td>
-                </tr>
+                <c:if test="${exprnVO.addrUseAt eq 'Y'}">
+                    <tr>
+                        <th scope="row"><form:label path="zip">주소</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>
+                        <td>
+                            <div class="p-form-group w10p">
+                                <form:input path="zip" style="width:100px" class="p-input" placeholder="(우편번호)" readonly="true"/>
+                                <span class="p-input__addon">
+                                        <button type="button" class="p-button primary addressSearchButton" onclick="openDaumZipAddress();">주소검색</button>
+                                    </span>
+                            </div>
+                            <div class="p-form-group w25p">
+                                <form:input path="addr" style="width:300px" class="p-input" placeholder="주소" readonly="true"/>
+                            </div>
+                            <div class="p-form-group w25p">
+                                <form:input path="detailAddr" style="width:300px" class="p-input" placeholder="상세주소"/>
+                            </div>
+                        </td>
+                    </tr>
+                </c:if>
                 <tr>
                     <th scope="row"><form:label path="email1">이메일</form:label></th>
                     <td>

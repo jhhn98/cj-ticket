@@ -60,7 +60,7 @@
         <legend>신청자 정보</legend>
         <p class="iconText comment"><span class="point-color-red">*</span> 표시는 필수 입력 항목 입니다.</p>
         <table class="table program formTable" data-table-response>
-            <caption>신청자 정보 입력 - 인원구분(개인/단체), 이름, 생년월일, 연락처, 성별, 주소, 신청인원, 이메일 등</caption>
+            <caption>신청자 정보 입력 - 인원구분(개인/단체), 이름, 생년월일, 연락처, 성별, <c:if test="${exprnVO.addrUseAt eq 'Y'}">주소, </c:if>신청인원, 이메일 등</caption>
             <colgroup>
                 <col style="width:150px;"/>
                 <col />
@@ -186,28 +186,32 @@
                     </div>
                 </td>
             </tr>
-            <tr>
-                <th scope="row" class="first">
-                    <div class="innerCell">
-                        <label for="addressSearch" title="필수 입력 항목입니다.">
-                            주소
-                            <span class="point-color-red">*</span>
-                        </label>
-                    </div>
-                </th>
-                <td>
-                    <div class="innerCell">
-                        <div class="address">
-                            <label for="addressSearch">주소 검색</label>
-                            <input type="hidden" name="zip" id="zip" value="<c:out value="${exprnApplVO.zip}"/>" readonly autocomplete="off" />
-                            <input type="text" id="addressSearch" placeholder="주소(도로명/지번/건물명)를 입력해주세요." class="customInputDefault addressSearch" name="addr" value="<c:out value="${exprnApplVO.addr}"/>" readonly autocomplete="off">
-                            <button type="button" class="addressSearchButton" onclick="openDaumZipAddress();" title="새창"><span>주소검색</span></button>
-                            <label for="addressDetail">상세주소</label>
-                            <input type="text" id="addressDetail" placeholder="상세주소를 입력해주세요." class="customInputDefault addressDetail" name="detailAddr" value="<c:out value="${exprnApplVO.detailAddr}"/>" autocomplete="off">
+
+            <c:if test="${exprnVO.addrUseAt eq 'Y'}">
+                <tr>
+                    <th scope="row" class="first">
+                        <div class="innerCell">
+                            <label for="addressSearch" title="필수 입력 항목입니다.">
+                                주소
+                                <span class="point-color-red">*</span>
+                            </label>
                         </div>
-                    </div>
-                </td>
-            </tr>
+                    </th>
+                    <td>
+                        <div class="innerCell">
+                            <div class="address">
+                                <label for="addressSearch">주소 검색</label>
+                                <input type="hidden" name="zip" id="zip" value="<c:out value="${exprnApplVO.zip}"/>" readonly autocomplete="off" />
+                                <input type="text" id="addressSearch" placeholder="주소(도로명/지번/건물명)를 입력해주세요." class="customInputDefault addressSearch" name="addr" value="<c:out value="${exprnApplVO.addr}"/>" readonly autocomplete="off">
+                                <button type="button" class="addressSearchButton" onclick="openDaumZipAddress();" title="새창"><span>주소검색</span></button>
+                                <label for="addressDetail">상세주소</label>
+                                <input type="text" id="addressDetail" placeholder="상세주소를 입력해주세요." class="customInputDefault addressDetail" name="detailAddr" value="<c:out value="${exprnApplVO.detailAddr}"/>" autocomplete="off">
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </c:if>
+            
             <c:if test="${!(exprnVO.slctMthdCd == 'DRWLT' && fn:contains(exprnVO.nmprSeCd, 'IND'))}">
                 <tr>
                     <th scope="row" class="first">
@@ -575,7 +579,8 @@
         })
         </c:if>
     });
-
+    
+    <c:if test="${exprnVO.addrUseAt eq 'Y'}">
     function openDaumZipAddress() {
         new daum.Postcode({
             oncomplete:function(data) {
@@ -585,6 +590,7 @@
             }
         }).open();
     }
+    </c:if>
 
     <c:if test="${exprnVO.resInqUseYn == 'Y' || exprnVO.dscntUseYn == 'Y'}">
     function fn_juminNoCheck(juminNoPost) {
@@ -807,6 +813,7 @@
         }
         </c:if>
 
+        <c:if test="${exprnVO.addrUseAt eq 'Y'}">
         if (!form.zip.value || !form.addr.value) {
             alert("주소를 검색해주세요.");
             $('.addressSearchButton').focus();
@@ -818,6 +825,7 @@
             form.detailAddr.focus();
             return false;
         }
+        </c:if>
 
         if ((form.email1.value && !form.email2.value) || (!form.email1.value && form.email2.value)) {
             alert("올바른 형식의 이메일을 입력해주세요.");

@@ -458,7 +458,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <th scope="row"><label for="atchImg_1">이미지</label></th>
+                    <th scope="row"><label for="atchImg_1">이미지</label> <span class="p-form__required--icon margin_l_5">필수</span></th>
                     <td colspan="3">
                         <c:forEach var="i" begin="1" end="${cmmnAtchmnflInfoImg.fileMaxCo}">
                             <div class="p-upload">
@@ -474,6 +474,10 @@
                                 </div>
                             </div>
                         </c:forEach>
+                        <span class="p-table__content">
+                            <svg width="20" height="25" fill="#202e70" focusable="false"><use xlink:href="/common/images/program/p-icon.svg#info-circle"></use></svg>
+                            <em class="em_black"><c:out value="${cmmnAtchmnflInfoImg.fileMaxSize}"/>MB 이하 이미지(<c:out value="${fn:replace(cmmnAtchmnflInfoImg.fileLmttExtns, ',', ', ')}"/>)를 1장 이상 첨부해주세요.</em>
+                        </span>
                     </td>
                 </tr>
                 <tr>
@@ -493,6 +497,10 @@
                             </div>
                         </div>
                         </c:forEach>
+                        <span class="p-table__content">
+                            <svg width="20" height="25" fill="#202e70" focusable="false"><use xlink:href="/common/images/program/p-icon.svg#info-circle"></use></svg>
+                            <em class="em_black"><c:out value="${cmmnAtchmnflInfoFile.fileMaxSize}"/>MB 이하 파일(<c:out value="${fn:replace(cmmnAtchmnflInfoFile.fileLmttExtns, ',', ', ')}"/>)만 첨부 가능합니다.</em>
+                        </span>
                     </td>
                 </tr>
                 <tr>
@@ -500,6 +508,19 @@
                     <td>
                         <form:input path="aditIem1" class="p-input"/><br/>
                         <form:input path="aditIem2" class="p-input"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row"><form:label path="addrUseAt">주소 입력 받기</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>
+                    <td>
+                        <span class="p-form-radio">
+                            <input type="radio" name="addrUseAt" id="addrUseAt" class="p-form-radio__input" value="Y">
+                            <label for="addrUseAt" class="p-form-radio__label">예</label>
+                        </span>
+                        <span class="p-form-radio">
+                            <input type="radio" name="addrUseAt" id="addrUseAtN" class="p-form-radio__input" value="N" checked>
+                            <label for="addrUseAtN" class="p-form-radio__label">아니오</label>
+                        </span>
                     </td>
                 </tr>
                 <tr>
@@ -952,6 +973,20 @@
                 form.nmprMaxCnt.focus();
                 return false;
             }
+        }
+
+        // 이미지 필수 체크 - 1개 이상의 썸네일 이미지 파일이 선택되었는지 확인
+        let hasImage = false;
+        $("input[name='atchImg']").each(function () {
+            if ($(this).val()) {
+                hasImage = true;
+                return false;
+            }
+        });
+        if (!hasImage) {
+            alert("이미지를 1개 이상 등록해주세요.");
+            $("input[name='atchImg']").first().focus();
+            return false;
         }
 
         if (!form.dscntUseYn.value) {

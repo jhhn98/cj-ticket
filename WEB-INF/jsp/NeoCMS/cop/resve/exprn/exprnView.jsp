@@ -302,6 +302,17 @@
             </td>
         </tr>
         <tr>
+            <th scope="row">주소 입력 받기</th>
+            <td>
+                <c:if test="${exprnVO.addrUseAt == 'Y'}">
+                    예
+                </c:if>
+                <c:if test="${exprnVO.addrUseAt == 'N'}">
+                    아니오
+                </c:if>
+            </td>
+        </tr>
+        <tr>
             <th scope="row">거주지조회 사용여부</th>
             <td>
                 <c:if test="${exprnVO.resInqUseYn == 'Y'}">

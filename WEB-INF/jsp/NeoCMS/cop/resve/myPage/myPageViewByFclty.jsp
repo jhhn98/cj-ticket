@@ -374,39 +374,42 @@
                     </tr>
                 </c:if>
 
-                <tr>
-                    <th scope="row" class="first">
-                        <div class="innerCell">
-                            <c:if test="${myPageMode == 'VIEW'}">
-                                주소
-                            </c:if>
-                            <c:if test="${myPageMode == 'UPDT'}">
-                                <label for="addressInput1" title="필수 입력 항목입니다.">
+                <c:if test="${fcltyVO.addrUseAt eq 'Y'}">
+                    <tr>
+                        <th scope="row" class="first">
+                            <div class="innerCell">
+                                <c:if test="${myPageMode == 'VIEW'}">
                                     주소
-                                    <span class="point-color-red">*</span>
-                                </label>
-                            </c:if>
-                        </div>
-                    </th>
-                    <td>
-                        <div class="innerCell">
-                            <c:if test="${myPageMode == 'VIEW'}">
-                                (<c:out value="${fcltyApplVO.zip}"/>) <c:out value="${fcltyApplVO.addr}"/> <c:out value="${fcltyApplVO.detailAddr}"/>
-                            </c:if>
-                            <c:if test="${myPageMode == 'UPDT'}">
-                                <input type="hidden" name="zip" value="<c:out value="${fcltyApplVO.zip}"/>">
-                                <div class="addressForm">
-                                    <label for="addressInput1">검색 주소 입력</label>
-                                    <input type="text" name="addr" id="addressInput1" class="customInputDefault inputAddress simple" placeholder="도로명 또는 건물명을 입력해주세요" value="<c:out value="${fcltyApplVO.addr}"/>">
-                                    <%--<a href="" class="searchAddress"><span>우편번호</span></a>--%>
-                                    <button type="button" class="searchAddress" onclick="openDaumZipAddress();"><span>우편번호</span></button>
-                                    <label for="addressInput2">상세 주소 입력</label>
-                                    <input type="text" name="detailAddr" id="addressInput2" class="customInputDefault inputAddress detail" placeholder="상세주소 입력해주세요" value="<c:out value="${fcltyApplVO.detailAddr}"/>">
-                                </div>
-                            </c:if>
-                        </div>
-                    </td>
-                </tr>
+                                </c:if>
+                                <c:if test="${myPageMode == 'UPDT'}">
+                                    <label for="addressInput1" title="필수 입력 항목입니다.">
+                                        주소
+                                        <span class="point-color-red">*</span>
+                                    </label>
+                                </c:if>
+                            </div>
+                        </th>
+                        <td>
+                            <div class="innerCell">
+                                <c:if test="${myPageMode == 'VIEW'}">
+                                    (<c:out value="${fcltyApplVO.zip}"/>) <c:out value="${fcltyApplVO.addr}"/> <c:out value="${fcltyApplVO.detailAddr}"/>
+                                </c:if>
+                                <c:if test="${myPageMode == 'UPDT'}">
+                                    <input type="hidden" name="zip" value="<c:out value="${fcltyApplVO.zip}"/>">
+                                    <div class="addressForm">
+                                        <label for="addressInput1">검색 주소 입력</label>
+                                        <input type="text" name="addr" id="addressInput1" class="customInputDefault inputAddress simple" placeholder="도로명 또는 건물명을 입력해주세요" value="<c:out value="${fcltyApplVO.addr}"/>">
+                                            <%--<a href="" class="searchAddress"><span>우편번호</span></a>--%>
+                                        <button type="button" class="searchAddress" onclick="openDaumZipAddress();"><span>우편번호</span></button>
+                                        <label for="addressInput2">상세 주소 입력</label>
+                                        <input type="text" name="detailAddr" id="addressInput2" class="customInputDefault inputAddress detail" placeholder="상세주소 입력해주세요" value="<c:out value="${fcltyApplVO.detailAddr}"/>">
+                                    </div>
+                                </c:if>
+                            </div>
+                        </td>
+                    </tr>
+                </c:if>
+
                 <!-- 유료 옵션 -->
                 <%--<tr> TODOSDB: 감면신청 여부
                     <th scope="row" class="first"><div class="innerCell">감면신청</div></th>
@@ -457,6 +460,7 @@
         });
     });
 
+    <c:if test="${fcltyVO.addrUseAt eq 'Y'}">
     function openDaumZipAddress() {
         new daum.Postcode({
             oncomplete:function(data) {
@@ -466,7 +470,7 @@
             }
         }).open();
     }
-
+    </c:if>
 
     function formCheck(form) {
 
@@ -492,6 +496,7 @@
             }
         }
 
+        <c:if test="${fcltyVO.addrUseAt eq 'Y'}">
         if (!form.zip.value || !form.addr.value) {
             alert("주소를 검색해주세요.");
             $('.addressSearchButton').focus();
@@ -503,6 +508,7 @@
             form.detailAddr.focus();
             return false;
         }
+        </c:if>
 
         if ((form.email1.value && !form.email2.value) || (!form.email1.value && form.email2.value)) {
             alert("올바른 형식의 이메일을 입력해주세요.");

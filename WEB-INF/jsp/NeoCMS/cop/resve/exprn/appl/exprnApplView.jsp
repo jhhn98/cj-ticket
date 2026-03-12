@@ -132,12 +132,14 @@
                 <c:out value="${exprnApplVO.mobileNo1}"/> - <c:out value="${exprnApplVO.mobileNo2}"/> - <c:out value="${exprnApplVO.mobileNo3}"/>
             </td>
         </tr>
+        <c:if test="${exprnVO.addrUseAt eq 'Y'}">
         <tr>
             <th scope="row">주소</th>
             <td>
                 (<c:out value="${exprnApplVO.zip}"/>) <c:out value="${exprnApplVO.addr}"/> <c:out value="${exprnApplVO.detailAddr}"/>
             </td>
         </tr>
+        </c:if>
         <tr>
             <th scope="row">개인 / 단체</th>
             <td>
