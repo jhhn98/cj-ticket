@@ -796,19 +796,6 @@
                         </ul>
                     </td>
                 </tr>
-                <tr>
-                    <th scope="row"><form:label path="addrUseAt">주소 입력 받기</form:label> <span class="p-form__required--icon margin_l_5">필수</span></th>
-                    <td>
-                        <span class="p-form-radio">
-                            <input type="radio" name="addrUseAt" id="addrUseAt" class="p-form-radio__input" value="Y"<c:if test="${eduLctreVO.addrUseAt == 'Y'}"> checked</c:if>>
-                            <label for="addrUseAt" class="p-form-radio__label">예</label>
-                        </span>
-                        <span class="p-form-radio">
-                            <input type="radio" name="addrUseAt" id="addrUseAtN" class="p-form-radio__input" value="N"<c:if test="${eduLctreVO.addrUseAt == 'N'}"> checked</c:if>>
-                            <label for="addrUseAtN" class="p-form-radio__label">아니오</label>
-                        </span>
-                    </td>
-                </tr>
                 <!-- 상세내용 -->
                 <tr>
                     <th scope="row"><label for="detailCn">상세내용</label></th>

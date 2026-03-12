@@ -282,8 +282,6 @@
 						<span id="error_telNo" class="form_error"></span>
 					</td>
 				</tr>
-				
-				<c:if test="${eduLctreVO.addrUseAt eq 'Y'}">
 				<tr>
 					<th scope="row"><label for="zip">주소</label></th>
 					<td>
@@ -295,8 +293,6 @@
 						<span id="error_zip" class="form_error"></span>
 					</td>
 				</tr>
-				</c:if>
-				
 				<tr>
 					<th scope="row"><label for="email">이메일</label></th>
 					<td>

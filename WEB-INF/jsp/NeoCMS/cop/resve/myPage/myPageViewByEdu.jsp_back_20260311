@@ -392,7 +392,6 @@
                         </div>
                     </td>
                 </tr>
-                <c:if test="${eduLctreVO.addrUseAt eq 'Y'}">
                 <tr>
                     <th scope="row" class="first">
                         <div class="innerCell">
@@ -425,7 +424,6 @@
                         </div>
                     </td>
                 </tr>
-                </c:if>
                 <c:if test="${eduLctreVO.residenceUseYn == 'Y'}">
                 <tr>
                     <th scope="row" class="first"><div class="innerCell">거주지</div></th>
@@ -490,7 +488,6 @@
 		});
     });
 
-    <c:if test="${eduLctreVO.addrUseAt eq 'Y'}">
     function openDaumZipAddress() {
         new daum.Postcode({
             oncomplete:function(data) {
@@ -500,7 +497,6 @@
             }
         }).open();
     }
-    </c:if>
 
 
     function formCheck(form) {
@@ -524,7 +520,6 @@
         var telNo = form.telNo1.value + form.telNo2.value + form.telNo3.value;
         form.telNo.value = telNo;
 
-        <c:if test="${eduLctreVO.addrUseAt eq 'Y'}">
         if (!form.zip.value || !form.addr.value) {
             alert("주소를 검색해주세요.");
             $('.addressSearchButton').focus();
@@ -536,7 +531,6 @@
             form.detailAddr.focus();
             return false;
         }
-        </c:if>
 
         if ((form.email1.value && !form.email2.value) || (!form.email1.value && form.email2.value)) {
             alert("올바른 형식의 이메일을 입력해주세요.");

@@ -620,6 +620,7 @@
         });
     });
 
+    <c:if test="${exprnVO.addrUseAt eq 'Y'}">
     function openDaumZipAddress() {
         new daum.Postcode({
             oncomplete:function(data) {
@@ -629,6 +630,7 @@
             }
         }).open();
     }
+    </c:if>
 
     function fn_updateExprnApplCheck(form) {
 
@@ -654,6 +656,7 @@
             }
         }
 
+        <c:if test="${exprnVO.addrUseAt eq 'Y'}">
         if (!form.zip.value || !form.addr.value) {
             alert("주소를 검색해주세요.");
             $('.addressSearchButton').focus();
@@ -665,6 +668,7 @@
             form.detailAddr.focus();
             return false;
         }
+        </c:if>
 
         if ((form.email1.value && !form.email2.value) || (!form.email1.value && form.email2.value)) {
             alert("올바른 형식의 이메일을 입력해주세요.");

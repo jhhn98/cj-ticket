@@ -80,7 +80,7 @@
         <legend>신청자 정보</legend>
         <p class="iconText comment"><span class="point-color-red">*</span> 표시는 필수 입력 항목 입니다.</p>
         <table class="table program formTable" data-table-response>
-            <caption>신청자 정보 입력-이름, 전화번호, <c:if test="${eduLctreVO.addrUseAt eq 'Y'}">주소, </c:if>작성자, 메모, 선택항목, 이메일</caption>
+            <caption>신청자 정보 입력-이름, 전화번호, 주소, 작성자, 메모, 선택항목, 이메일</caption>
             <tbody>
             <tr>
                 <th scope="row" class="first">
@@ -150,8 +150,6 @@
                     </div>
                 </td>
             </tr>
-
-            <c:if test="${eduLctreVO.addrUseAt eq 'Y'}">
             <tr>
                 <th scope="row" class="first">
                     <div class="innerCell">
@@ -176,7 +174,6 @@
                     </div>
                 </td>
             </tr>
-            </c:if>
 
 <%--        // 텍스트 입력란
             <tr>
@@ -472,7 +469,6 @@
         var detailAddr = $("#addressDetail").val() || "";
     }
 
-    <c:if test="${eduLctreVO.addrUseAt eq 'Y'}">
     // 우편번호 찾기
     function fn_openDaumZipAddress() {
         new daum.Postcode({
@@ -485,7 +481,6 @@
             }
         }).open();
     }
-    </c:if>
 
     function fn_juminNoCheck(juminNo) {
 
@@ -619,7 +614,6 @@
             return false;
         }
 
-        <c:if test="${eduLctreVO.addrUseAt eq 'Y'}">
         // 주소 필수 체크
         var zip = $("#zip").val();
         var addr = $("#addr").val();
@@ -634,7 +628,6 @@
             $("#addressDetail").focus();
             return false;
         }
-        </c:if>
 
         // 이메일 필수 체크
         var emailId = $("#emailId").val();

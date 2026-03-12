@@ -247,7 +247,6 @@
                         </td>
                     </tr>
 
-                    <c:if test="${eduLctreVO.addrUseAt eq 'Y'}">
                     <tr>
                         <th scope="row"><label for="zip">주소 <span class="p-form__required--icon">필수</span></label></th>
                         <td>
@@ -263,7 +262,6 @@
                             <span id="error_zip" class="form_error"></span>
                         </td>
                     </tr>
-                    </c:if>
 
                     <tr>
                         <th scope="row"><label for="emailId">이메일 <span class="p-form__required--icon">필수</span></label></th>
@@ -405,7 +403,6 @@
 <!-- 다음 우편번호 API -->
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script nonce="NEOCMSSCRIPT">
-    <c:if test="${eduLctreVO.addrUseAt eq 'Y'}">
     // 우편번호 찾기
     function fn_openDaumZipAddress() {
         new daum.Postcode({
@@ -417,7 +414,6 @@
             }
         }).open();
     }
-    </c:if>
 
     // 감면코드 표시 토글
     function toggleDscntCd(show) {
@@ -503,7 +499,6 @@
         var telNo = frm.telNo1.value + frm.telNo2.value + frm.telNo3.value;
         frm.telNo.value = telNo;
 
-        <c:if test="${eduLctreVO.addrUseAt eq 'Y'}">
         // 주소 필수 체크
         if (!frm.zip.value.trim() || !frm.addr.value.trim()) {
             alert("주소를 입력해주세요. 우편번호찾기 버튼을 이용하여 주소를 검색해주세요.");
@@ -516,7 +511,6 @@
             frm.detailAddr.focus();
             return false;
         }
-        </c:if>
 
         // 이메일 필수 체크 및 조합
         if (!frm.email1.value.trim()) {
