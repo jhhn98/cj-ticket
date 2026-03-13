@@ -49,25 +49,25 @@
         <th scope="col" colspan="4">60대</th>
     </tr>
     <tr>
-        <th scope="col">접수인원</th>
+        <th scope="col">접수<c:out value="${(statsSearchVO.prgSe ne 'FCT') ? '인원' : '건수'}"/></th>
         <th scope="col">접수율(%)</th>
-        <th scope="col">취소인원</th>
+        <th scope="col">취소<c:out value="${(statsSearchVO.prgSe ne 'FCT') ? '인원' : '건수'}"/></th>
         <th scope="col">취소율(%)</th>
-        <th scope="col">접수인원</th>
+        <th scope="col">접수<c:out value="${(statsSearchVO.prgSe ne 'FCT') ? '인원' : '건수'}"/></th>
         <th scope="col">접수율(%)</th>
-        <th scope="col">취소인원</th>
+        <th scope="col">취소<c:out value="${(statsSearchVO.prgSe ne 'FCT') ? '인원' : '건수'}"/></th>
         <th scope="col">취소율(%)</th>
-        <th scope="col">접수인원</th>
+        <th scope="col">접수<c:out value="${(statsSearchVO.prgSe ne 'FCT') ? '인원' : '건수'}"/></th>
         <th scope="col">접수율(%)</th>
-        <th scope="col">취소인원</th>
+        <th scope="col">취소<c:out value="${(statsSearchVO.prgSe ne 'FCT') ? '인원' : '건수'}"/></th>
         <th scope="col">취소율(%)</th>
-        <th scope="col">접수인원</th>
+        <th scope="col">접수<c:out value="${(statsSearchVO.prgSe ne 'FCT') ? '인원' : '건수'}"/></th>
         <th scope="col">접수율(%)</th>
-        <th scope="col">취소인원</th>
+        <th scope="col">취소<c:out value="${(statsSearchVO.prgSe ne 'FCT') ? '인원' : '건수'}"/></th>
         <th scope="col">취소율(%)</th>
-        <th scope="col">접수인원</th>
+        <th scope="col">접수<c:out value="${(statsSearchVO.prgSe ne 'FCT') ? '인원' : '건수'}"/></th>
         <th scope="col">접수율(%)</th>
-        <th scope="col">취소인원</th>
+        <th scope="col">취소<c:out value="${(statsSearchVO.prgSe ne 'FCT') ? '인원' : '건수'}"/></th>
         <th scope="col">취소율(%)</th>
     </tr>
     </thead>

@@ -15,7 +15,7 @@
     <link rel="stylesheet" type="text/css" href="/common/css/default.css" />
     <link rel="stylesheet" type="text/css" href="/common/css/program.css" />
     <script src="/common/js/program.js"></script>
-    <title>${menuInfo.cntntsNm}</title>
+    <title><c:out value="${menuInfo.naviList[0].menuNm}"/> &gt; ${menuInfo.cntntsNm}</title>
 </head>
 <body>
 <c:set var="statsSe" value="${statsSearchVO.statsSe}"/>

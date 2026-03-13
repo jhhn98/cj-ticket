@@ -29,12 +29,12 @@
         <th scope="col">운영기관</th>
         <c:if test="${statsSearchVO.prgSe == 'EDU'}"><th scope="col">과목명</th></c:if>
         <th scope="col">프로그램명</th>
-        <th scope="col">정원</th>
+        <th scope="col"><c:out value="${(statsSearchVO.prgSe ne 'FCT') ? '정원' : '접수회차'}"/></th>
         <c:if test="${statsSearchVO.prgSe == 'EDU'}"><th scope="col">대기정원</th></c:if>
-        <th scope="col">접수인원</th>
+        <th scope="col">접수<c:out value="${(statsSearchVO.prgSe ne 'FCT') ? '인원' : '건수'}"/></th>
         <c:if test="${statsSearchVO.prgSe == 'EDU'}"><th scope="col">대기인원</th></c:if>
         <th scope="col">접수율(%)</th>
-        <th scope="col">취소인원</th>
+        <th scope="col">취소<c:out value="${(statsSearchVO.prgSe ne 'FCT') ? '인원' : '건수'}"/></th>
         <th scope="col">취소율(%)</th>
     </tr>
     </thead>
@@ -77,8 +77,8 @@
         </thead>
     </c:forEach>
     <c:if test="${fn:length(statsApplList) eq 0}">
-        <tr>
-            <td colspan="<c:out value="${statsSearchVO.prgSe == 'EDU' ? 9 : 8}"/>">등록된 내용이 없습니다.</td>
+        <tr class="text_center">
+            <td colspan="<c:out value="${statsSearchVO.prgSe == 'EDU' ? 11 : 8}"/>">등록된 내용이 없습니다.</td>
         </tr>
     </c:if>
     </tbody>

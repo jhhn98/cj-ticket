@@ -30,7 +30,7 @@
         <th scope="col">운영기관</th>
         <c:if test="${statsSearchVO.prgSe == 'EDU'}"><th scope="col">과목명</th></c:if>
         <th scope="col">프로그램명</th>
-        <th scope="col">접수인원</th>
+        <th scope="col"><c:out value="${(statsSearchVO.prgSe ne 'FCT') ? '접수' : '결제'}"/>인원</th>
         <th scope="col">무통장입금</th>
         <th scope="col">현장결제</th>
         <th scope="col">전자결제</th>

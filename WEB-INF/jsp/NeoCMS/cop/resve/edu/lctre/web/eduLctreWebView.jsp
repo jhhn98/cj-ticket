@@ -9,14 +9,38 @@
     <meta name="decorator" content="${menuInfo.siteId}" />
     <title>${menuInfo.cntntsNm} 상세</title>
     <script>
-        function fn_goApply() {
-            var operSttus = "${eduLctreVO.operSttus}";
-            if ( operSttus == 'RCPT_ING' || operSttus == 'WAIT_ING' || operSttus == 'RCPT_ADD' ) {
-                return true;
-            }
-            alert("접수가 마감되었습니다.");
-            return false;
+        function fn_goApply(url) {
+            // 신청하기 순번대기 시작
+            nfStart({
+                projectKey: "service_1",
+                segmentKey: "segKey_edu_003"
+            }, function(response) {
+                // TODO: response에 따라 상황에 맞는 콜백 함수를 구현합니다.
+                nfCallback(response, url);
+            });
         }
+
+        function nfCallback(response, url) {
+            const { status, statusCode, message } = response;
+
+            switch(status) {
+                case 'Success':
+                    window.location = url;
+                    break;
+
+                case 'Error':
+                    window.location = url;
+                    break;
+
+                case 'NetworkError':
+                    window.location = url;
+                    break;
+
+                default:
+                    console.log(`[NF] status: ${status}, code: ${statusCode}, message: ${message}`);
+            }
+        }
+
     </script>
 </head>
 <body>
@@ -47,12 +71,13 @@
             <strong><c:out value="${eduLctreVO.lctreNm}"/></strong>
         </div>
         <div class="linkGroup">
-            <c:if test="${(eduLctreVO.operSttus eq 'RCPT_ING'
+            <c:if test="${(eduLctreVO.operSttus eq 'RCPT_WAIT'
+                            or eduLctreVO.operSttus eq 'RCPT_ING'
                             or eduLctreVO.operSttus eq 'RCPT_ADD'
                             or eduLctreVO.operSttus eq 'WAIT_ING')
                             and fn:contains(eduLctreVO.rcptMthdCd, 'ONLIN')
                             }">
-                <a href="./eduAplctAgreWebView.do?lctreNo=<c:out value="${eduLctreVO.lctreNo}"/>&amp;<c:out value="${eduLctreVO.params}"/>" class="anchorButton wide line-color-green" onclick="return fn_goApply();">신청하기</a>
+                <a href="./eduAplctAgreWebView.do?lctreNo=<c:out value="${eduLctreVO.lctreNo}"/>&amp;<c:out value="${eduLctreVO.params}"/>" class="anchorButton wide line-color-green" onclick="fn_goApply(this.href); return false;">신청하기</a>
             </c:if>
             <a href="./myPageList.do?key=59" class="anchorButton wide line-color-green">예약확인</a>
             <a href="./selectEduLctreWebList.do?viewMode=<c:out value="${param.viewMode}"/>&amp;<c:out value="${eduLctreVO.params}"/>" class="anchorButton">목록</a>
@@ -281,12 +306,13 @@
                     </table>
                 </div>
                 <div class="linkGroup marginTop30">
-                    <c:if test="${(eduLctreVO.operSttus eq 'RCPT_ING'
+                    <c:if test="${(eduLctreVO.operSttus eq 'RCPT_WAIT'
+                                or eduLctreVO.operSttus eq 'RCPT_ING'
                                 or eduLctreVO.operSttus eq 'RCPT_ADD'
                                 or eduLctreVO.operSttus eq 'WAIT_ING')
                                 and fn:contains(eduLctreVO.rcptMthdCd, 'ONLIN')
                                 }">
-                        <a href="./eduAplctAgreWebView.do?lctreNo=<c:out value="${eduLctreVO.lctreNo}"/>&amp;<c:out value="${eduLctreVO.params}"/>" class="anchorButton wide line-color-green" onclick="return fn_goApply();">신청하기</a>
+                        <a href="./eduAplctAgreWebView.do?lctreNo=<c:out value="${eduLctreVO.lctreNo}"/>&amp;<c:out value="${eduLctreVO.params}"/>" class="anchorButton wide line-color-green" onclick="fn_goApply(this.href); return false;">신청하기</a>
                     </c:if>
                     <a href="./myPageList.do?key=59" class="anchorButton wide line-color-green">예약확인</a>
                     <a href="./selectEduLctreWebList.do?viewMode=<c:out value="${param.viewMode}"/>&amp;<c:out value="${eduLctreVO.params}"/>" class="anchorButton">목록</a>
@@ -397,12 +423,13 @@
                 <span class="stateType ${stateTypeClass}"><c:out value="${operSttusMap[eduLctreVO.operSttus]}"/></span>
             <strong><c:out value="${eduLctreVO.lctreNm}"/></strong>
             <div class="linkGroup">
-                <c:if test="${(eduLctreVO.operSttus eq 'RCPT_ING'
+                <c:if test="${(eduLctreVO.operSttus eq 'RCPT_WAIT'
+                            or eduLctreVO.operSttus eq 'RCPT_ING'
                             or eduLctreVO.operSttus eq 'RCPT_ADD'
                             or eduLctreVO.operSttus eq 'WAIT_ING')
                             and fn:contains(eduLctreVO.rcptMthdCd, 'ONLIN')
                             }">
-                    <a href="./eduAplctAgreWebView.do?lctreNo=<c:out value="${eduLctreVO.lctreNo}"/>&amp;<c:out value="${eduLctreVO.params}"/>" class="anchorButton wide line-color-green" onclick="return fn_goApply();">신청하기</a>
+                    <a href="./eduAplctAgreWebView.do?lctreNo=<c:out value="${eduLctreVO.lctreNo}"/>&amp;<c:out value="${eduLctreVO.params}"/>" class="anchorButton wide line-color-green" onclick="fn_goApply(this.href); return false;">신청하기</a>
                 </c:if>
 
                 <a href="./myPageList.do?key=59" class="anchorButton wide line-color-green">예약확인</a>

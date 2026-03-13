@@ -42,7 +42,7 @@
         </div>
         <div class="linkGroup">
             <c:if test="${(exprnVO.operSttus == 'RCPT_WAIT' || exprnVO.operSttus == 'RCPT_ING') && fn:contains(exprnVO.rcptMthdCd, 'ONLIN')}">
-                <a href="" class="anchorButton wide line-color-green" onclick="applStart(); return false;">신청하기</a>
+                <a href="./exprnApplCalendarWebView.do?exprnNo=<c:out value="${exprnVO.exprnNo}"/>&amp;<c:out value="${exprnSearchVO.params}"/><c:out value="${exprnSearchVO.paramsWeb}"/>" class="anchorButton wide line-color-green" onclick="applStart(this.href); return false;">신청하기</a>
             </c:if>
             <a href="./myPageList.do?key=59" class="anchorButton wide line-color-green">예약확인</a>
             <a href="./selectExprnWebList.do?viewMode=<c:out value="${param.viewMode}"/>&amp;<c:out value="${exprnSearchVO.params}"/><c:out value="${exprnSearchVO.paramsWeb}"/>" class="anchorButton">목록</a>
@@ -202,7 +202,7 @@
                 </div>
                 <div class="linkGroup marginTop30">
                     <c:if test="${(exprnVO.operSttus == 'RCPT_WAIT' || exprnVO.operSttus == 'RCPT_ING') && fn:contains(exprnVO.rcptMthdCd, 'ONLIN')}">
-                        <a id="applBtn" href="./exprnApplCalendarWebView.do?exprnNo=<c:out value="${exprnVO.exprnNo}"/>&amp;<c:out value="${exprnSearchVO.params}"/><c:out value="${exprnSearchVO.paramsWeb}"/>" class="anchorButton wide line-color-green" onclick="applStart(); return false;">신청하기</a>
+                        <a href="./exprnApplCalendarWebView.do?exprnNo=<c:out value="${exprnVO.exprnNo}"/>&amp;<c:out value="${exprnSearchVO.params}"/><c:out value="${exprnSearchVO.paramsWeb}"/>" class="anchorButton wide line-color-green" onclick="applStart(this.href); return false;">신청하기</a>
                     </c:if>
                     <a href="./myPageList.do?key=59" class="anchorButton wide line-color-green">예약확인</a>
                     <a href="./selectExprnWebList.do?viewMode=<c:out value="${param.viewMode}"/>&amp;<c:out value="${exprnSearchVO.params}"/><c:out value="${exprnSearchVO.paramsWeb}"/>" class="anchorButton">목록</a>
@@ -272,7 +272,7 @@
             <strong><c:out value="${exprnVO.exprnNm}"/></strong>
             <div class="linkGroup">
                 <c:if test="${(exprnVO.operSttus == 'RCPT_WAIT' || exprnVO.operSttus == 'RCPT_ING') && fn:contains(exprnVO.rcptMthdCd, 'ONLIN')}">
-                    <a href="" class="anchorButton wide line-color-green" onclick="applStart(); return false;">신청하기</a>
+                    <a href="./exprnApplCalendarWebView.do?exprnNo=<c:out value="${exprnVO.exprnNo}"/>&amp;<c:out value="${exprnSearchVO.params}"/><c:out value="${exprnSearchVO.paramsWeb}"/>" class="anchorButton wide line-color-green" onclick="applStart(this.href); return false;">신청하기</a>
                 </c:if>
                 <a href="./myPageList.do?key=59" class="anchorButton wide line-color-green">예약확인</a>
                 <a href="./selectExprnWebList.do?viewMode=<c:out value="${param.viewMode}"/>&amp;<c:out value="${exprnSearchVO.params}"/><c:out value="${exprnSearchVO.paramsWeb}"/>" class="anchorButton">목록</a>
@@ -284,20 +284,19 @@
 
 <script>
 
-    function applStart() {
+    function applStart(url) {
         // 신청하기 순번대기 시작
         nfStart({
             projectKey: "service_1",
             segmentKey: "segKey_exp_003"
         }, function(response) {
             // TODO: response에 따라 상황에 맞는 콜백 함수를 구현합니다.
-            nfCallback(response);
+            nfCallback(response, url);
         });
     }
 
-    function nfCallback(response) {
+    function nfCallback(response ,url) {
         const { status, statusCode, message } = response;
-        var url = $('#applBtn').attr("href");
 
         switch(status) {
             case 'Success':
