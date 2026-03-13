@@ -444,7 +444,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   background-image: url(../images/program/icon-searchOption1.png);
 }
 .programSearch .searchFormWrap.default .tourOptions .customIconOption .optionIcon::before, .programSearch .searchFormWrap.default .tourOptions .customIconOption .optionIcon::after {
-  background-image: url(../images/program/icon-searchOption3.png);
+  background-image: url(../images/program/icon-searchOption3.png?260313);
 }
 .programSearch .searchFormWrap.default .customIconOption .optionIcon.searchSvcTyCd0::after {
   background-position: -40px 0;
